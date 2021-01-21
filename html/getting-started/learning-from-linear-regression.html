@@ -1,0 +1,1314 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>一个稍微复杂些的线性回归模型 &#8212; MegEngine  文档</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="从线性回归到线性分类" href="from-linear-regression-to-linear-classification.html" />
+    <link rel="prev" title="天元 MegEngine 零基础入门" href="megengine-basic-concepts.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="from-linear-regression-to-linear-classification.html" title="从线性回归到线性分类"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="megengine-basic-concepts.html" title="天元 MegEngine 零基础入门"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MegEngine  文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">一个稍微复杂些的线性回归模型</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="一个稍微复杂些的线性回归模型">
+<h1>一个稍微复杂些的线性回归模型<a class="headerlink" href="#一个稍微复杂些的线性回归模型" title="永久链接至标题">¶</a></h1>
+<p>我们已经学习了如何去训练一个简单的线性回归模型 <span class="math notranslate nohighlight">\(y = w * x + b\)</span>, 接下来我们将稍微升级一下难度：</p>
+<ul class="simple">
+<li><p>线性回归由一元变为多元，我们对单个样本数据的表示形式将不再是简单的标量 <span class="math notranslate nohighlight">\(x\)</span>, 而是升级为多维的向量 <span class="math notranslate nohighlight">\(\mathbf {x}\)</span> 表示；</p></li>
+<li><p>我们将接触到更多不同形式的梯度下降策略，从而接触一个新的超参数 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>;</p></li>
+<li><p>我们将尝试将数据集封装成 MegEngine 支持的 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 类，方便在 <code class="docutils literal notranslate"><span class="pre">Dataloader</span></code> 中进行各种预处理操作；</p></li>
+<li><p>同时，我们的前向计算过程将变成矩阵运算形式，能够帮助你更好地理解向量化实现的优点，以及由框架完成求梯度操作的好处；</p></li>
+<li><p>在这个过程中，一些遗留问题会得到解答，同时我们将接触到一些新的机器学习概念。</p></li>
+</ul>
+<p>本教程的话题将围绕着<strong>“数据（Data）”</strong>进行，希望你能够有所收获～</p>
+<p>请先运行下面的代码，检验你的环境中是否已经安装好 MegEngine（<a class="reference external" href="https://megengine.org.cn/install">访问官网安装教程</a>）：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">megengine</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">megengine</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.2.0
+</pre></div></div>
+</div>
+<p>接下来，我们将对将要使用的数据集 <a class="reference external" href="https://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html">波士顿房价数据集</a> 进行一定的了解。</p>
+<div class="section" id="原始数据集的获取和分析">
+<h2>原始数据集的获取和分析<a class="headerlink" href="#原始数据集的获取和分析" title="永久链接至标题">¶</a></h2>
+<p>获取到真实的数据集原始文件后，往往需要做大量的数据格式处理工作，变成易于计算机理解的形式，才能被各种框架和库使用。</p>
+<p>但目前我们的重心不在此处，使用 Python 机器学习库 <a class="reference external" href="https://scikit-learn.org/stable/index.html">scikit-learn</a>，可以快速地获得波士顿房价数据集:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
+
+<span class="c1"># 获取 boston 房价数据集，需要安装有 scikit-learn 这个库</span>
+<span class="n">boston</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span>
+
+<span class="c1"># 查看 boston 对象内部的组成结构</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># 查看数据集描述，内容比较多，因此这里注释掉了</span>
+<span class="c1"># print(boston.DESCR)</span>
+
+<span class="c1"># 查看 data 和 target 信息，这里的 target 可以理解成 label</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">boston</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dict_keys([&#39;data&#39;, &#39;target&#39;, &#39;feature_names&#39;, &#39;DESCR&#39;, &#39;filename&#39;])
+(506, 13) (506,)
+</pre></div></div>
+</div>
+<p>我们已经认识过了数据 <code class="docutils literal notranslate"><span class="pre">data</span></code> 和标签 <code class="docutils literal notranslate"><span class="pre">label</span></code>（标签有时也叫目标 <code class="docutils literal notranslate"><span class="pre">target</span></code> ），那么 <code class="docutils literal notranslate"><span class="pre">feature</span></code> 是什么？</p>
+<p>我们在描述一个事物的时候，通常会寻找其属性（Attribute）或者说特征（Feature）：</p>
+<ul class="simple">
+<li><p>比如我们描述一个人的长相，会说这个人的鼻子如何、眼睛如何、额头如何等等</p></li>
+<li><p>又比如在游戏角色的属性经常有生命值、魔法值、攻击力、防御力等属性</p></li>
+<li><p>类比到一些支持自定义角色的游戏，这些特征就变成许多可量化和调整的数据</p></li>
+</ul>
+<p>实际上，你并不需要在意波士顿房价数据集中选用了哪些特征，我们在本教程中关注的更多是“特征维度变多”这一情况。</p>
+<p>为了方便后续的交流，我们需要引入一些数学符号来描述它们，不用害怕，理解起来非常简单：</p>
+<ul class="simple">
+<li><p>波士顿房价数据集的样本容量为 506，记为 <span class="math notranslate nohighlight">\(n\)</span>; （Number）</p></li>
+<li><p>每个样本的特征有 13 个维度，包括住宅平均房间数、城镇师生比例等等，记为 <span class="math notranslate nohighlight">\(d\)</span>. （Dimensionality）</p></li>
+<li><p>单个的样本可以用一个向量 <span class="math notranslate nohighlight">\(\mathbf {x}=(x_{1}, x_{2}, \ldots , x_{d})\)</span> 来表示，称为“特征向量”，里面的每个元素对应着该样本的某一维特征；</p></li>
+<li><p>数据集 <code class="docutils literal notranslate"><span class="pre">data</span></code> 由 <span class="math notranslate nohighlight">\(n\)</span> 行特征向量组成，每个特征向量有 <span class="math notranslate nohighlight">\(d\)</span> 维度特征，因此整个数据集可以用一个形状为 <span class="math notranslate nohighlight">\((n, d)\)</span> 的数据矩阵 <span class="math notranslate nohighlight">\(X\)</span> 来表示；</p></li>
+<li><p>标签 <code class="docutils literal notranslate"><span class="pre">label</span></code> 的每个元素是一个标量值，记录着房价值，因此它本身是一个含有 <span class="math notranslate nohighlight">\(n\)</span> 个元素的标签向量 <span class="math notranslate nohighlight">\(\mathbf {y}\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}X = \begin{bmatrix}
+- \mathbf {x}_1 - \\
+- \mathbf {x}_2 - \\
+\vdots \\
+- \mathbf {x}_n -
+\end{bmatrix}
+= \begin{bmatrix}
+x_{1,1} &amp; x_{1,2} &amp; \cdots &amp; x_{1,d} \\
+x_{2,1} &amp; x_{2,2} &amp; \cdots &amp; x_{2,d} \\
+\vdots  &amp;         &amp;        &amp; \vdots \\
+x_{n,1} &amp; x_{n,2} &amp; \cdots &amp; x_{n,d}
+\end{bmatrix}
+\quad
+\mathbf {y} =  (y_{1}, y_{2}, \ldots, y_{n})\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(x_{i,j}\)</span> 表示第 <span class="math notranslate nohighlight">\(i\)</span> 个样本 <span class="math notranslate nohighlight">\(\mathbf {x}_i\)</span> 的第 <span class="math notranslate nohighlight">\(j\)</span> 维特征，<span class="math notranslate nohighlight">\(y_i\)</span> 为样本 <span class="math notranslate nohighlight">\(\mathbf {x}_i\)</span> 对应的标签。</p>
+<ul class="simple">
+<li><p><strong>不同的人会对数学符号的使用有着不同的约定，一定需要搞清楚这些符号的定义，或者在交流时采用比较通用的定义方式</strong></p></li>
+<li><p>为了简洁美观，我们这里用粗体表示向量 <span class="math notranslate nohighlight">\(\mathbf {x}\)</span>; 而在手写时粗细体并不容易辨别，所以板书时常用上标箭头来表示向量 <span class="math notranslate nohighlight">\(\vec {x}\)</span>.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">boston</span><span class="o">.</span><span class="n">target</span>
+<span class="n">num</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># 取出第一个样本，查看对应的特征向量和标签值</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[6.320e-03 1.800e+01 2.310e+00 0.000e+00 5.380e-01 6.575e+00 6.520e+01
+ 4.090e+00 1.000e+00 2.960e+02 1.530e+01 3.969e+02 4.980e+00] 24.0
+</pre></div></div>
+</div>
+<div class="section" id="数据集的几种类型">
+<h3>数据集的几种类型<a class="headerlink" href="#数据集的几种类型" title="永久链接至标题">¶</a></h3>
+<p>对于常见的机器学习任务，用作基准（Benchmark）的数据集通常会被分为训练集（Training dataset）和测试集（Test dataset）两部分；</p>
+<ul class="simple">
+<li><p>我们利用训练集的数据，通过优化损失函数的形式将模型训练好，在测试集上对模型进行测试，根据选用的评估指标（Metrics）评价模型性能</p></li>
+<li><p>测试集的数据不能参与模型训练，因为我们希望测试集数据代表着将来会被用于预测的真实数据，它们现在是“不可见的”，当作标签未知</p></li>
+</ul>
+<p>训练模型时为了调整和选取合适的超参数，通常还会在训练集的基础上划分出验证集（Validation dataset）或者说开发集（Develop dataset）</p>
+<ul class="simple">
+<li><p>在一些机器学习竞赛中，比赛方会将测试集中一部分拿出来做为 Public Leaderboard 评分和排名，剩下的部分作为 Private Leaderboard 的评分和排名。</p></li>
+<li><p>选手可以根据 Public Leaderboard 上的评估结果及时地对算法和超参数进行调整优化，但最终的排名将以 Private Leaderboard 为准</p></li>
+<li><p>对应地，可以将 Public Leaderboard 所使用的数据集理解为验证集，将 Private Leaderboard 所使用的数据集理解为测试集</p></li>
+<li><p>为了避免在短时间内引入过多密集的新知识，我们目前将不会进行验证集和开发集的代码实践和讨论</p></li>
+</ul>
+<p>数据集该如何划分是一个值得讨论与研究的话题，它是数据预处理的一个环节，目前我们只需要对它有一个基本概念，通过不断实践来加深理解。</p>
+<p>对于波士顿房价数据集，我们可以将 506 张样本划分为 500 张训练样本，6 张测试样本：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">mask</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># 这个值是随意设计的，不用想太多背后的原因</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">test_dataset</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">mask</span><span class="p">:</span><span class="n">num</span><span class="p">]</span>
+<span class="n">train_label</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">test_label</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">:</span><span class="n">num</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_label</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_label</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+500 500
+6 6
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="模型定义、训练和测试">
+<h2>模型定义、训练和测试<a class="headerlink" href="#模型定义、训练和测试" title="永久链接至标题">¶</a></h2>
+<p>对于单个的样本 <span class="math notranslate nohighlight">\(\mathbf {x}\)</span>, 想要预测输出 <span class="math notranslate nohighlight">\(y\)</span>, 即尝试找到映射关系 <span class="math notranslate nohighlight">\(f: \mathbf {x} \in \mathbb {R}^{d} \mapsto y\)</span>, 同样可以建立线性模型：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+y &amp;= f(\mathbf {x}) = \mathbf {w} \cdot \mathbf {x} + b \\
+&amp; = (w_{1}, w_{2}, \ldots, w_{13}) \cdot (x_{1}, x_{2}, \ldots, x_{13}) + b\\
+&amp; = w_{1} x_{1} + w_{2} x_{2} + \ldots + w_{13} x_{13} + b
+\end{aligned}\end{split}\]</div>
+<p><strong>注意在表示不同的乘积（Product）时，不仅使用的符号有所不同，数学概念和编程代码之间又有所区别：</strong></p>
+<ul class="simple">
+<li><p>上个教程中用的星乘 <span class="math notranslate nohighlight">\(*\)</span> 符号指的是元素间相乘（有时用 <span class="math notranslate nohighlight">\(\odot\)</span> 表示），也适用于标量乘法，编程对应于 <code class="docutils literal notranslate"><span class="pre">np.multiply()</span></code> 方法</p></li>
+<li><p>对于点乘我们用 <span class="math notranslate nohighlight">\(\cdot\)</span> 符号表示，编程对应于 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 方法，在作用于两个向量时它等同于内积 <code class="docutils literal notranslate"><span class="pre">np.inner()</span></code> 方法</p></li>
+<li><p>根据传入参数的形状，<code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 的行为也可以等同于矩阵乘法，对应于 <code class="docutils literal notranslate"><span class="pre">numpy.matmul()</span></code> 方法或 <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> 运算符</p></li>
+<li><p>严谨地说，点积或者数量积只是内积的一种特例，<strong>但我们在编程时，应该习惯先查询文档中的说明，并进行简单验证</strong></p></li>
+</ul>
+<p>比如样本 <span class="math notranslate nohighlight">\(\mathbf {x}\)</span> 和参数 <span class="math notranslate nohighlight">\(\mathbf {w}\)</span> 都是 13 维的向量，二者的点积结果是一个标量：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">13</span><span class="p">,))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># 一维 ndarray，即为向量</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>        <span class="c1"># 此时 dot() 逻辑是进行向量点乘</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>          <span class="c1"># 零维 ndarray，即为标量</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(13,) (13,)
+()
+</pre></div></div>
+</div>
+<p>我们之前已经实现过类似的训练过程，现在一起来看下面这份新实现的代码：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">13</span><span class="p">,))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(())</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">train_dataset</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">train_label</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">linear_model</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>   <span class="c1"># 已经不再是 x * w</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">sum_grad_w</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sum_grad_b</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="n">sum_grad_w</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">sum_grad_b</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="n">grad_w</span> <span class="o">=</span> <span class="n">sum_grad_w</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">grad_b</span> <span class="o">=</span> <span class="n">sum_grad_b</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad_w</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad_b</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 0, loss = 594.442
+epoch = 1, loss = 197.173
+epoch = 2, loss = 138.077
+epoch = 3, loss = 126.176
+epoch = 4, loss = 121.148
+</pre></div></div>
+</div>
+<p>现在，我们可以使用训练得到的 <code class="docutils literal notranslate"><span class="pre">w</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 在测试数据上进行评估，这里我们可以选择使用平均绝对误差（Mean Absolute Error, MAE）作为评估指标：</p>
+<div class="math notranslate nohighlight">
+\[\ell(y_{pred}, y_{real})= \frac{1}{n }\sum_{i=1}^{n}\left | \hat{y}_{i}-{y}_{i}\right |\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">test_dataset</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">test_label</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">loss</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pred = </span><span class="si">{:.3f}</span><span class="s2">, Real = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">n</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average error = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pred = 21.814, Real = 16.800
+Pred = 18.942, Real = 22.400
+Pred = 19.130, Real = 20.600
+Pred = 19.191, Real = 23.900
+Pred = 19.075, Real = 22.000
+Pred = 19.148, Real = 11.900
+Average error = 4.137
+</pre></div></div>
+</div>
+<div class="section" id="不同的梯度下降形式">
+<h3>不同的梯度下降形式<a class="headerlink" href="#不同的梯度下降形式" title="永久链接至标题">¶</a></h3>
+<p>我们可以发现：上面的代码中，我们每训练一个完整的 <code class="docutils literal notranslate"><span class="pre">epoch</span></code>, 将根据所有样本的平均梯度进行一次参数更新。</p>
+<p>这种通过对所有的样本的计算来求解梯度的方法叫做<strong>批梯度下降法(Batch Gradient Descent)</strong>.</p>
+<p>当碰到样本容量特别大的情况时，可能会导致无法一次性将所有数据给读入内存，遇到内存用尽（Out of memory，OOM）的情况。</p>
+<p>这时你可能会想：“其实我们完全可以在每个样本经过前向传播计算损失、反向传播计算得到梯度后时，就立即对参数进行更新呀！”</p>
+<p>Bingo~ 这种思路叫做<strong>随机梯度下降（Stochastic Gradient Descent，常缩写成 SGD)</strong>，动手改写后，整体代码实现如下：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">13</span><span class="p">,))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(())</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">train_dataset</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">train_label</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">linear_model</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="n">w</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">b</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 0, loss = 45.178
+epoch = 1, loss = 42.856
+epoch = 2, loss = 42.358
+epoch = 3, loss = 41.948
+epoch = 4, loss = 41.595
+</pre></div></div>
+</div>
+<p>可以看到，在同样的训练周期内，使用随机梯度下降得到的训练损失更低，即损失收敛得更快。这是因为参数的实际更新次数要多得多。</p>
+<p>接下来我们用随机梯度下降得到的参数 <code class="docutils literal notranslate"><span class="pre">w</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 进行测试：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">test_dataset</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">test_label</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">loss</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pred = </span><span class="si">{:.3f}</span><span class="s2">, Real = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">n</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average error = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pred = 18.598, Real = 16.800
+Pred = 16.334, Real = 22.400
+Pred = 16.458, Real = 20.600
+Pred = 16.556, Real = 23.900
+Pred = 16.423, Real = 22.000
+Pred = 16.492, Real = 11.900
+Average error = 4.920
+</pre></div></div>
+</div>
+<p>可以看到，虽然我们在训练集上的损失远低于使用批梯度下降的损失，但测试时得到的损失反而略高于批梯度下降的测试结果。为什么会这样？</p>
+<p><strong>抛开数据、模型、损失函数和评估指标本身的因素不谈，背后的原因可能是：</strong></p>
+<ul class="simple">
+<li><p>使用随机梯度下降时，考虑到噪声数据的存在，并不一定参数每次更新都是朝着模型整体最优化的方向；</p></li>
+<li><p>若样本噪声较多，很容易陷入局部最优解而收敛到不理想的状态；</p></li>
+<li><p>如果更新次数过多，还容易出现在训练数据过拟合的情况，导致泛化能力变差。</p></li>
+</ul>
+<p>既然两种梯度下降策略各有千秋，因此有一种折衷的方式，即采用<strong>小批量梯度下降法（Mini-Batch Gradient Descent）</strong>：</p>
+<ul class="simple">
+<li><p>我们设定一个 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> 值，将数据划分为多个 <code class="docutils literal notranslate"><span class="pre">batch</span></code>，每个 <code class="docutils literal notranslate"><span class="pre">batch</span></code> 的数据采取批梯度下降策略来更新参数；</p></li>
+<li><p>设置合适的 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> 值，既可以避免出现内存爆掉的情况，也使得损失可能更加平滑地收敛；</p></li>
+<li><p>不难发现 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> 是一个超参数；当 <code class="docutils literal notranslate"><span class="pre">batch_size=1</span></code> 时，小批量梯度下降其实就等同于随机梯度下降</p></li>
+</ul>
+<p>注意：天元 MegEngine 的优化器 <code class="docutils literal notranslate"><span class="pre">Optimizer</span></code> 中实现的 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 优化策略，实际上就是对小批量梯度下降法逻辑的实现。</p>
+<p>这种折衷方案的效果比“真”随机梯度下降要好得多，<strong>因为可以利用向量化加速批数据的运算，而不是分别计算每个样本。</strong></p>
+<p>在这里我们先卖个关子，把向量化的介绍放在更后面，因为我们的当务之急是：获取小批量数据（Mini-batch data）.</p>
+</div>
+<div class="section" id="采样器（Sampler）">
+<h3>采样器（Sampler）<a class="headerlink" href="#采样器（Sampler）" title="永久链接至标题">¶</a></h3>
+<p>想要从完整的数据集中获得小批量的数据，则需要对已有数据进行采样。</p>
+<p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">data</span></code> 模块中，提供了多种采样器 <code class="docutils literal notranslate"><span class="pre">Sampler</span></code>：</p>
+<ul class="simple">
+<li><p>对于训练数据，通常使用顺序采样器 <code class="docutils literal notranslate"><span class="pre">SequentialSampler</span></code>, 我们即将用到；</p></li>
+<li><p>对于测试数据，通常使用 <code class="docutils literal notranslate"><span class="pre">RandomSampler</span></code> 进行随机采样，在本教程的测试部分就能见到；</p></li>
+<li><p>对于 <code class="docutils literal notranslate"><span class="pre">dataset</span></code> 的样本容量不是 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> 整数倍的情况，采样器也能进行很好的处理</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">megengine.data</span> <span class="kn">import</span> <span class="n">SequentialSampler</span>
+
+<span class="n">sequential_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># SequentialSampler 每次返回的是顺序索引，而不是划分后的数据本身</span>
+<span class="k">for</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">sequential_sampler</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span> <span class="n">indices</span><span class="p">[</span><span class="mi">95</span><span class="p">:</span><span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0, 1, 2, 3, 4] ... [95, 96, 97, 98, 99]
+[100, 101, 102, 103, 104] ... [195, 196, 197, 198, 199]
+[200, 201, 202, 203, 204] ... [295, 296, 297, 298, 299]
+[300, 301, 302, 303, 304] ... [395, 396, 397, 398, 399]
+[400, 401, 402, 403, 404] ... [495, 496, 497, 498, 499]
+</pre></div></div>
+</div>
+<p>但需要注意到，采样器 <code class="docutils literal notranslate"><span class="pre">Sampler</span></code> 返回的是索引值，要得到划分后的批数据，还需要结合使用 MegEngine 中的 <code class="docutils literal notranslate"><span class="pre">Dataloader</span></code> 模块。</p>
+<p>同时也要注意，如果想要使用 <code class="docutils literal notranslate"><span class="pre">Dataloader</span></code>, 需要先将原始数据集变成 MegEngine 支持的 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 对象。</p>
+</div>
+</div>
+<div class="section" id="利用-Dataset-封装一个数据集">
+<h2>利用 Dataset 封装一个数据集<a class="headerlink" href="#利用-Dataset-封装一个数据集" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 是 MegEngine 中表示数据集最原始的的抽象类，可被其它类继承（如 <code class="docutils literal notranslate"><span class="pre">StreamDataset</span></code>），可阅读 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 模块的文档了解更多的细节。</p>
+<p>通常我们自定义的数据集类应该继承 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 类，并重写下列方法：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__()</span></code> ：一般在其中实现读取数据源文件的功能。也可以添加任何其它的必要功能；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__getitem__()</span></code> ：通过索引操作来获取数据集中某一个样本，使得可以通过 for 循环来遍历整个数据集；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">__len__()</span></code> ：返回数据集大小</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">megengine.data.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="k">class</span> <span class="nc">BostonTrainDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">train_dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">train_label</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">boston_train_dataset</span> <span class="o">=</span> <span class="n">BostonTrainDataset</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">boston_train_dataset</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+500
+</pre></div></div>
+</div>
+<p>其实，对于这种单个或多个 NumPy 数组构成的数据，在 MegEngine 中也可以使用 <code class="docutils literal notranslate"><span class="pre">ArrayDataset</span></code> 对它进行初始化，它将自动完成以上方法的重写：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">megengine.data.dataset</span> <span class="kn">import</span> <span class="n">ArrayDataset</span>
+
+<span class="n">boston_train_dataset</span> <span class="o">=</span> <span class="n">ArrayDataset</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">train_label</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">boston_train_dataset</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+500
+</pre></div></div>
+</div>
+<div class="section" id="数据载入器（Dataloader）">
+<h3>数据载入器（Dataloader）<a class="headerlink" href="#数据载入器（Dataloader）" title="永久链接至标题">¶</a></h3>
+<p>接下来便可以通过 <code class="docutils literal notranslate"><span class="pre">Dataloader</span></code> 来生成批数据，每个元素由对应的 <code class="docutils literal notranslate"><span class="pre">batch_data</span></code> 和 <code class="docutils literal notranslate"><span class="pre">batch_label</span></code> 组成：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">megengine.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="n">sequential_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">boston_train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">boston_train_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">sequential_sampler</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span> <span class="ow">in</span> <span class="n">train_dataloader</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">batch_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">batch_label</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">))</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(100, 13) (100,) 5
+</pre></div></div>
+</div>
+<p>接下来我们一起来看看，使用批数据为什么能够加速整体的运算效率。</p>
+</div>
+</div>
+<div class="section" id="通过向量化加速运算">
+<h2>通过向量化加速运算<a class="headerlink" href="#通过向量化加速运算" title="永久链接至标题">¶</a></h2>
+<p>在 NumPy 内部，向量化运算的速度是优于 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环的，我们很容易验证这一点：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000000</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="n">time_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For loop version:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">time_end</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)),</span> <span class="s1">&#39;ms&#39;</span><span class="p">)</span>
+
+<span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">time_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Vectorized version:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">time_end</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)),</span> <span class="s1">&#39;ms&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+For loop version: 492.236852645874 ms
+Vectorized version: 5.43975830078125 ms
+</pre></div></div>
+</div>
+<p>重新阅读模型训练的代码，不难发现，每个 <code class="docutils literal notranslate"><span class="pre">epoch</span></code> 内部存在着 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环，根据模型定义的 <span class="math notranslate nohighlight">\(y_i = \mathbf {w} \cdot \mathbf {x_i} + b\)</span> 进行了 <span class="math notranslate nohighlight">\(n\)</span> 次计算。</p>
+<p>我们在前面已经将数据集表示成了形状为 <span class="math notranslate nohighlight">\((n, d)\)</span> 的数据矩阵 <span class="math notranslate nohighlight">\(X\)</span>, 将标签表示成了 <span class="math notranslate nohighlight">\(y\)</span> 向量，这启发我们一次性完成所有样本的前向计算过程：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}(y_{1}, y_{2}, \ldots, y_{n}) =
+\begin{bmatrix}
+x_{1,1} &amp; x_{1,2} &amp; \cdots &amp; x_{1,d} \\
+x_{2,1} &amp; x_{2,2} &amp; \cdots &amp; x_{2,d} \\
+\vdots  &amp;         &amp;        &amp; \vdots \\
+x_{n,1} &amp; x_{n,2} &amp; \cdots &amp; x_{n,d}
+\end{bmatrix}
+\cdot (w_{1}, w_{2}, \ldots, w_{d}) +
+b\end{split}\]</div>
+<p>一种比较容易理解的形式是将其看成是矩阵运算 <span class="math notranslate nohighlight">\(Y=XW+B\)</span>：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{bmatrix}
+y_{1} \\
+y_{2} \\
+\vdots \\
+y_{n}
+\end{bmatrix} =
+\begin{bmatrix}
+x_{1,1} &amp; x_{1,2} &amp; \cdots &amp; x_{1,d} \\
+x_{2,1} &amp; x_{2,2} &amp; \cdots &amp; x_{2,d} \\
+\vdots  &amp;         &amp;        &amp; \vdots \\
+x_{n,1} &amp; x_{n,2} &amp; \cdots &amp; x_{n,d}
+\end{bmatrix}
+\begin{bmatrix}
+w_1 \\
+w_2 \\
+\vdots \\
+w_d
+\end{bmatrix} +
+\begin{bmatrix}
+b \\
+b \\
+\vdots \\
+b
+\end{bmatrix}\end{split}\]</div>
+<ul class="simple">
+<li><p>形状为 <span class="math notranslate nohighlight">\((n,d)\)</span> 的矩阵 <span class="math notranslate nohighlight">\(X\)</span> 和维度为 <span class="math notranslate nohighlight">\((d,)\)</span> 的向量 <span class="math notranslate nohighlight">\(w\)</span> 进行点乘，此时不妨理解成 <span class="math notranslate nohighlight">\(w\)</span> 变成了一个形状为 <span class="math notranslate nohighlight">\((d, 1)\)</span> 的矩阵 <span class="math notranslate nohighlight">\(W\)</span></p></li>
+<li><p>两个矩阵进行乘法运算，此时的 <code class="docutils literal notranslate"><span class="pre">np.dot(X,</span> <span class="pre">w)</span></code> 等效于 <code class="docutils literal notranslate"><span class="pre">np.matmul(X,</span> <span class="pre">W)</span></code>, 底层效率比 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环快许多，得到形状为 <span class="math notranslate nohighlight">\((n, 1)\)</span> 的中间矩阵 <span class="math notranslate nohighlight">\(P\)</span></p></li>
+<li><p>中间矩阵 <span class="math notranslate nohighlight">\(P\)</span> 和标量 <span class="math notranslate nohighlight">\(b\)</span> 相加，此时标量 <span class="math notranslate nohighlight">\(b\)</span> 广播成 <span class="math notranslate nohighlight">\((n, 1)\)</span> 的矩阵 <span class="math notranslate nohighlight">\(B\)</span> 进行矩阵加法，得到形状为 <span class="math notranslate nohighlight">\((n,1)\)</span> 的标签矩阵 <span class="math notranslate nohighlight">\(Y\)</span></p></li>
+<li><p>显然，这样的处理逻辑还需要将标签矩阵 <span class="math notranslate nohighlight">\(Y\)</span> 去掉冗余的那一维，变成形状为 <span class="math notranslate nohighlight">\((n, )\)</span> 的标签向量 <span class="math notranslate nohighlight">\(y\)</span></p></li>
+</ul>
+<p><strong>矩阵/张量运算的思路在深度学习中十分常见，在后续会被反复提及。</strong> NumPy 的官方文档中写着此时 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 的真实逻辑：</p>
+<ul class="simple">
+<li><p>If a is an N-D array and b is a 1-D array, it is a sum product over the last axis of a and b.</p></li>
+<li><p>如果 <code class="docutils literal notranslate"><span class="pre">a</span></code> 是 N 维度数组且 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是 1 维数组，将对 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 最后一轴上对元素进行乘积并求和。</p></li>
+</ul>
+<p>这样的计算逻辑也可以由爱因斯坦求和约定 <code class="docutils literal notranslate"><span class="pre">np.einsum('ij,j-&gt;i',</span> <span class="pre">X,</span> <span class="pre">w)</span></code> 来实现，感兴趣的读者可查阅 <code class="docutils literal notranslate"><span class="pre">np.einsum()</span></code> 文档。</p>
+<p>我们可以设计一套简单的测试样例，来看一下 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code>, <code class="docutils literal notranslate"><span class="pre">np.einsum()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">np.matmul()</span></code> 相较于 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环是否能得到同样的结果：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="p">))</span>            <span class="c1"># 在 NumPy 中向量有三种表现形式，这里的 w 是一维数组（1-D ndarray），即向量</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>                  <span class="c1"># 这里的 W 已经是二维数组（2-D ndarray）的“列”向量，即矩阵的特殊形式之一；“行”向量同理</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(())</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>         <span class="c1"># 此时 dot() 等同于向量内积，官方推荐 np.inner(a, b) 写法</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;For loop version:&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;np.dot() version:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;np.einsum() version:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,j-&gt;i&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;np.matmul() version:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span>   <span class="c1"># np.squeeze() 可以去掉冗余的那一维</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+For loop version: [1.12491947 1.58637594 1.41419402]
+np.dot() version: [1.12491947 1.58637594 1.41419402]
+np.einsum() version: [1.12491947 1.58637594 1.41419402]
+np.matmul() version: [1.12491947 1.58637594 1.41419402]
+</pre></div></div>
+</div>
+<p>接下来加大数据规模，测试向量化是否起到了加速效果：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">50000</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">d</span><span class="p">))</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(())</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>    <span class="c1"># 提前生成 B 矩阵，避免将广播操作的开销计算在内</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="p">))</span>
+
+
+<span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">time_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;For loop version:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">time_end</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)),</span> <span class="s1">&#39;ms&#39;</span><span class="p">)</span>
+
+<span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">time_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;np.dot() version:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">time_end</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)),</span> <span class="s1">&#39;ms&#39;</span><span class="p">)</span>
+
+<span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,j-&gt;i&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">time_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;np.einsum() version:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">time_end</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)),</span> <span class="s1">&#39;ms&#39;</span><span class="p">)</span>
+
+<span class="n">time_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">B</span>
+<span class="n">time_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;np.matmul() version:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="p">(</span><span class="n">time_end</span> <span class="o">-</span> <span class="n">time_start</span><span class="p">)),</span> <span class="s1">&#39;ms&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+For loop version: 129.14156913757324 ms
+np.dot() version: 10.778427124023438 ms
+np.einsum() version: 42.95825958251953 ms
+np.matmul() version: 10.247468948364258 ms
+</pre></div></div>
+</div>
+<p>可以发现 <code class="docutils literal notranslate"><span class="pre">dot()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">matmul()</span></code> 的向量化实现都有明显的加速效果，<code class="docutils literal notranslate"><span class="pre">einsum()</span></code> 虽然是全能型选手，但也以更多的开销作为了代价，一般不做考虑。</p>
+<div class="section" id="NumPy-实现">
+<h3>NumPy 实现<a class="headerlink" href="#NumPy-实现" title="永久链接至标题">¶</a></h3>
+<p>我们先尝试使用 NumPy 的 <code class="docutils literal notranslate"><span class="pre">dot()</span></code> 实现一下向量化的批梯度下降的代码：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">13</span><span class="p">,))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(())</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">train_dataset</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">train_label</span>
+
+<span class="k">def</span> <span class="nf">linear_model</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># 对应地，反向传播计算梯度的代码也需要改成向量化形式，这里不解释矩阵求导的推导过程</span>
+    <span class="n">w</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 0, loss = 594.442
+epoch = 1, loss = 197.173
+epoch = 2, loss = 138.077
+epoch = 3, loss = 126.176
+epoch = 4, loss = 121.148
+</pre></div></div>
+</div>
+<p>上面的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 收敛状况与我们最开始实现的 <code class="docutils literal notranslate"><span class="pre">sum_grad</span></code> 的数值一致，可以自行测试一下 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环写法和向量化写法的用时差异。</p>
+<p>同时我们也可以发现，当前向传播使用批数据变成矩阵计算带来极大加速的同时，也为我们的反向传播梯度计算提出了更高的要求：</p>
+<ul class="simple">
+<li><p>尽管存在着链式法则，但是对于不熟悉矩阵求导的人来说，还是很难理解一些梯度公式推导的过程，比如为什么出现了转置 <code class="docutils literal notranslate"><span class="pre">data.T</span></code></p></li>
+<li><p>当前向传播的计算变得更加复杂，由框架实现自动求导 <code class="docutils literal notranslate"><span class="pre">autograde</span></code> 机制就显得更加必要和方便</p></li>
+</ul>
+</div>
+<div class="section" id="MegEngine-实现">
+<h3>MegEngine 实现<a class="headerlink" href="#MegEngine-实现" title="永久链接至标题">¶</a></h3>
+<p>最后，让我们利用上小批量（Mini-batch）的数据把完整的训练流程代码在 MegEngine 中实现：</p>
+<ul class="simple">
+<li><p>为了后续教程理解的连贯性，我们做一些改变，使用 <code class="docutils literal notranslate"><span class="pre">F.matmul()</span></code> 来代替 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code>，前面已经证明了这种情况下的计算结果值是等价的，但形状不同</p></li>
+<li><p>对应地，我们的 <code class="docutils literal notranslate"><span class="pre">w</span></code> 将由向量变为矩阵，<code class="docutils literal notranslate"><span class="pre">b</span></code> 在进行加法操作时将自动进行广播变成矩阵，输出 <code class="docutils literal notranslate"><span class="pre">pred</span></code> 也是一个矩阵，即 2 维 Tensor</p></li>
+<li><p>在计算单个 <code class="docutils literal notranslate"><span class="pre">batch</span></code> 的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 时，内部通过 <code class="docutils literal notranslate"><span class="pre">sum()</span></code> 计算已经去掉了冗余的维度，最终得到的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 是一个 0 维 Tensor</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
+<span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span>
+<span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.data.dataset</span> <span class="kn">import</span> <span class="n">ArrayDataset</span>
+<span class="kn">from</span> <span class="nn">megengine.data</span> <span class="kn">import</span> <span class="n">SequentialSampler</span><span class="p">,</span> <span class="n">RandomSampler</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">megengine.autodiff</span> <span class="kn">import</span> <span class="n">GradManager</span>
+<span class="kn">import</span> <span class="nn">megengine.optimizer</span> <span class="k">as</span> <span class="nn">optim</span>
+
+<span class="c1"># 设置超参数</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="c1"># 读取原始数据集</span>
+<span class="n">boston</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">boston</span><span class="o">.</span><span class="n">target</span>
+<span class="n">total_num</span><span class="p">,</span> <span class="n">num_features</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c1"># 训练数据加载与预处理</span>
+<span class="n">boston_train_dataset</span> <span class="o">=</span> <span class="n">ArrayDataset</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="n">mask</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">mask</span><span class="p">])</span>
+<span class="n">train_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">boston_train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">bs</span><span class="p">)</span>
+<span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">boston_train_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">)</span>
+
+<span class="c1"># 初始化参数</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_features</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(()))</span>
+
+<span class="c1"># 定义模型</span>
+<span class="k">def</span> <span class="nf">linear_model</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 定义求导器和优化器</span>
+<span class="n">gm</span> <span class="o">=</span> <span class="n">GradManager</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">([</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+<span class="c1"># 模型训练</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span> <span class="ow">in</span> <span class="n">train_dataloader</span><span class="p">:</span>
+        <span class="n">batch_data</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+        <span class="n">batch_label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">square_loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">batch_label</span><span class="p">)</span>
+            <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
+        <span class="n">total_loss</span> <span class="o">+=</span>  <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 0, loss = 261.126
+epoch = 1, loss = 135.167
+epoch = 2, loss = 122.774
+epoch = 3, loss = 115.320
+epoch = 4, loss = 110.772
+</pre></div></div>
+</div>
+<p>对我们训练好的模型进行测试：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">boston_test_dataset</span> <span class="o">=</span> <span class="n">ArrayDataset</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">mask</span><span class="p">:</span><span class="n">num</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">:</span><span class="n">num</span><span class="p">])</span>
+<span class="n">test_sampler</span> <span class="o">=</span> <span class="n">RandomSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">boston_test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 测试时通常随机采样</span>
+<span class="n">test_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">boston_test_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">test_sampler</span><span class="p">)</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span> <span class="ow">in</span> <span class="n">test_dataloader</span><span class="p">:</span>
+    <span class="n">batch_data</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+    <span class="n">batch_label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pred = </span><span class="si">{:.3f}</span><span class="s2">, Real = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">batch_label</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+    <span class="n">loss</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">-</span> <span class="n">batch_label</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average error = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Pred = 18.916, Real = 22.400
+Pred = 19.173, Real = 20.600
+Pred = 19.733, Real = 16.800
+Pred = 19.251, Real = 23.900
+Pred = 19.195, Real = 11.900
+Pred = 19.091, Real = 22.000
+Average error = 3.783
+</pre></div></div>
+</div>
+<p>可以发现，使用小批量梯度下降策略更新参数，最终在测试时得到的平均绝对值损失比单独采用批梯度下降和随机梯度下降策略时还要好一些。</p>
+</div>
+</div>
+<div class="section" id="总结回顾">
+<h2>总结回顾<a class="headerlink" href="#总结回顾" title="永久链接至标题">¶</a></h2>
+<p>有些时候，添加一些额外的条件，看似简单的问题就变得更加复杂有趣起来了，启发我们进行更多的思考和探索。</p>
+<p>我们需要及时总结学习过的知识，并在之后的时间内不断通过实践来强化记忆，这次的教程中出现了以下新的概念：</p>
+<ul class="simple">
+<li><p>数据集（Dataset）：想要将现实中的数据集变成能够被 MegEngine 使用的格式，必须将其处理成 <code class="docutils literal notranslate"><span class="pre">MapDataset</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">StreamDateset</span></code> 类</p></li>
+<li><p>继承基类的同时，还需要实现 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code>, <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 和 <code class="docutils literal notranslate"><span class="pre">__len__()</span></code> 三种内置方法</p></li>
+<li><p>我们对事物的抽象——特征（Feature）有了一定的认识，并接触了一些数学形式的表达如数据矩阵 <span class="math notranslate nohighlight">\(X\)</span> 和标签向量 <span class="math notranslate nohighlight">\(y\)</span> 等</p></li>
+<li><p>我们接触到了训练集（Trainining dataset）、测试集（Test dataset）和验证集（Validation dataset）/ 开发集（Develop dataset）的概念</p></li>
+<li><p>除了训练时我们会设计一个损失函数外，在测试模型性能时，我们也需要设计一个评估指标（Metric），不同任务的指标不尽相同</p></li>
+<li><p>采样器（Sampler）：可以帮助我们自动地获得一个采样序列，常见的有顺序采样器 <code class="docutils literal notranslate"><span class="pre">SequentialSampler</span></code> 和随机采样器 <code class="docutils literal notranslate"><span class="pre">RandomSampler</span></code></p></li>
+<li><p>数据载入器（Dataloader）：根据 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Sampler</span></code> 来获得对应的小批量数据（Mini-batch data）</p></li>
+<li><p>我们认识了一个新的超参数 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>，并且对不同形式的梯度下降各自的优缺点有了一定的认识</p></li>
+<li><p>我们理解了批数据向量化计算带来的好处，能够大大加快计算效率；同时为了避免推导向量化的梯度，实现自动求导机制是相当必要的</p></li>
+</ul>
+<p>我们要养成及时查阅文档的好习惯，比如 NumPy 的 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 在接受的 ndarray 形状不同时，运算逻辑也将发生变化 - 在写代码时，Tensor 的维度形状变化是尤其需要关注的地方，理清楚逻辑可以减少遇到相关报错的可能 - 不同库和框架之间，相同 API 命名背后的实现可能完全不同</p>
+</div>
+<div class="section" id="问题思考">
+<h2>问题思考<a class="headerlink" href="#问题思考" title="永久链接至标题">¶</a></h2>
+<p>旧问题的解决往往伴随着新问题的诞生，让我们一起来思考一下：</p>
+<ul class="simple">
+<li><p>我们在标记和收集数据的时候，特征的选取是否科学，数据集的规模应该要有多大？数据集的划分又应该选用什么样的比例？</p></li>
+<li><p>这次见着了 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>, 它的设定是否有经验可循？接触到的超参数越来越多了，验证集和开发集是如何帮助我们对合适的超参数进行选取的？</p></li>
+<li><p>我们对 NumPy 支持的 ndarray 的数据如何导入 MegEngine 已经有了经验，更复杂的数据集（图片、视频、音频）要如何处理呢？</p></li>
+<li><p>噪声数据会对参数的学习进行干扰，<code class="docutils literal notranslate"><span class="pre">Dataloader</span></code> 中是否有对应的预处理方法来做一些统计意义上的处理？</p></li>
+<li><p>我们知道了向量化可以加速运算，在硬件底层是如何实现“加速”这一效果的？</p></li>
+</ul>
+<div class="section" id="关于数学表示的习惯">
+<h3>关于数学表示的习惯<a class="headerlink" href="#关于数学表示的习惯" title="永久链接至标题">¶</a></h3>
+<p>由于数据矩阵 <span class="math notranslate nohighlight">\(X\)</span> 的形状排布为 <span class="math notranslate nohighlight">\((n, d)\)</span>, 因此 MegEngine 中实现的矩阵形式的线性回归为 <span class="math notranslate nohighlight">\(\hat {Y} = f(X) = XW+B\)</span> （这里将 <span class="math notranslate nohighlight">\(B\)</span> 视为 <span class="math notranslate nohighlight">\(b\)</span> 广播后的矩阵）</p>
+<p>然而在线性代数中为了方便运算表示，向量通常默认为列向量 <span class="math notranslate nohighlight">\(\mathbf {x} = (x_1; x_2; \ldots x_n)\)</span>, 单样本线性回归为 <span class="math notranslate nohighlight">\(f(\mathbf {x};\mathbf {w},b) = \mathbf {w}^T\mathbf {x} + b\)</span>，</p>
+<p>对应有形状为 <span class="math notranslate nohighlight">\((d, n)\)</span> 的数据矩阵：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}X = \begin{bmatrix}
+| &amp; | &amp; &amp; | \\
+\mathbf {x}_1 &amp; \mathbf {x}_2 &amp; \cdots &amp; \mathbf {x}_n  \\
+| &amp; | &amp; &amp; |
+\end{bmatrix}
+= \begin{bmatrix}
+x_{1,1} &amp; x_{1,2} &amp; \cdots &amp; x_{1,n} \\
+x_{2,1} &amp; x_{2,2} &amp; \cdots &amp; x_{2,n} \\
+\vdots  &amp;         &amp;        &amp; \vdots \\
+x_{d,1} &amp; x_{d,2} &amp; \cdots &amp; x_{d,n}
+\end{bmatrix}\end{split}\]</div>
+<p>因此可以得到 <span class="math notranslate nohighlight">\(\hat {Y} = f(X) = W^{T}X+B\)</span>, 这反而是比较常见的形式（类似于 <span class="math notranslate nohighlight">\(y=Ax+b\)</span>）。</p>
+<p><strong>为什么我们在教程中要使用 :math:`hat {Y} = f(X) = XW+B` 这种不常见的表述形式呢？数据布局不同会有什么影响？</strong></p>
+<p>深度学习，简单开发。我们鼓励你在实践中不断思考，并启发自己去探索直觉性或理论性的解释。</p>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <h3><a href="../index.html">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">一个稍微复杂些的线性回归模型</a><ul>
+<li><a class="reference internal" href="#原始数据集的获取和分析">原始数据集的获取和分析</a><ul>
+<li><a class="reference internal" href="#数据集的几种类型">数据集的几种类型</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#模型定义、训练和测试">模型定义、训练和测试</a><ul>
+<li><a class="reference internal" href="#不同的梯度下降形式">不同的梯度下降形式</a></li>
+<li><a class="reference internal" href="#采样器（Sampler）">采样器（Sampler）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#利用-Dataset-封装一个数据集">利用 Dataset 封装一个数据集</a><ul>
+<li><a class="reference internal" href="#数据载入器（Dataloader）">数据载入器（Dataloader）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#通过向量化加速运算">通过向量化加速运算</a><ul>
+<li><a class="reference internal" href="#NumPy-实现">NumPy 实现</a></li>
+<li><a class="reference internal" href="#MegEngine-实现">MegEngine 实现</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#总结回顾">总结回顾</a></li>
+<li><a class="reference internal" href="#问题思考">问题思考</a><ul>
+<li><a class="reference internal" href="#关于数学表示的习惯">关于数学表示的习惯</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="megengine-basic-concepts.html"
+                        title="上一章">天元 MegEngine 零基础入门</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="from-linear-regression-to-linear-classification.html"
+                        title="下一章">从线性回归到线性分类</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="from-linear-regression-to-linear-classification.html" title="从线性回归到线性分类"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="megengine-basic-concepts.html" title="天元 MegEngine 零基础入门"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MegEngine  文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">一个稍微复杂些的线性回归模型</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Megvii Inc.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>

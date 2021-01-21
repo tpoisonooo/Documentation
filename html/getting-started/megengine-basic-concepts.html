@@ -1,0 +1,1341 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>天元 MegEngine 零基础入门 &#8212; MegEngine  文档</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="一个稍微复杂些的线性回归模型" href="learning-from-linear-regression.html" />
+    <link rel="prev" title="欢迎使用天元 MegEngine (๑•̀ㅂ•́)و✧" href="../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="learning-from-linear-regression.html" title="一个稍微复杂些的线性回归模型"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="欢迎使用天元 MegEngine (๑•̀ㅂ•́)و✧"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MegEngine  文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">天元 MegEngine 零基础入门</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="天元-MegEngine-零基础入门">
+<h1>天元 MegEngine 零基础入门<a class="headerlink" href="#天元-MegEngine-零基础入门" title="永久链接至标题">¶</a></h1>
+<p>我们为第一次接触天元 MegEngine 框架的用户提供了此系列教程，通过本部分的学习，你将会：</p>
+<ul class="simple">
+<li><p>对天元 MegEngine 框架中的 <code class="docutils literal notranslate"><span class="pre">Tensor</span></code>, <code class="docutils literal notranslate"><span class="pre">Operator</span></code>, <code class="docutils literal notranslate"><span class="pre">GradManager</span></code> 等基本概念有一定的了解；</p></li>
+<li><p>对深度学习中的前向传播、反向传播和参数更新的具体过程有更加清晰的认识；</p></li>
+<li><p>通过写代码训练一个线性回归模型，对上面提到的这些概念进行具体的实践，加深理解。</p></li>
+</ul>
+<p>请先运行下面的代码，检验你的环境中是否已经安装好 MegEngine（<a class="reference external" href="https://megengine.org.cn/install">访问官网安装教程</a>）：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">megengine</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">megengine</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.2.0
+</pre></div></div>
+</div>
+<p>接下来，我们将学习框架中一些基本模块的使用，先从最基础的张量（Tensor）和算子（Operator）开始吧～</p>
+<div class="section" id="张量（Tensor）">
+<h2>张量（Tensor）<a class="headerlink" href="#张量（Tensor）" title="永久链接至标题">¶</a></h2>
+<p>真实世界中的很多非结构化的数据，如文字、图片、音频、视频等，都可以表达成更容易被计算机理解的形式。</p>
+<p>MegEngine 使用张量（Tensor）来表示数据。类似于 <a class="reference external" href="https://numpy.org/">NumPy</a> 中的多维数组（ndarray），张量可以是标量、向量、矩阵或者多维数组。</p>
+<p>在 MegEngine 中得到一个 Tensor 的方式有很多：</p>
+<ul class="simple">
+<li><p>我们可以通过 <code class="docutils literal notranslate"><span class="pre">megengine.functional.tensor</span></code> 的 <code class="docutils literal notranslate"><span class="pre">arange()</span></code>, <code class="docutils literal notranslate"><span class="pre">ones()</span></code> 等方法来生成 Tensor，<code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块我们会在后面介绍；</p></li>
+<li><p>也可以通过 <code class="docutils literal notranslate"><span class="pre">Tensor()</span></code> 或 <code class="docutils literal notranslate"><span class="pre">tensor()</span></code> 方法，传入 Python list 或者 ndarray 来创建一个 Tensor</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span> <span class="c1"># 我们习惯将 MegEngine 缩写为 mge</span>
+<span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span> <span class="c1"># 我们习惯将 functional 缩写为 F</span>
+
+<span class="c1"># 1. 生成 Python List，然后转化为 MegEngine Tensor</span>
+<span class="n">py_list</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">py_list</span><span class="p">))</span>
+
+<span class="c1"># 2. 生成 Numpy ndarray，然后转化为 MegEngine Tensor</span>
+<span class="n">np_ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np_ndarray</span><span class="p">))</span>
+
+<span class="c1"># 3. 使用 functional 模块直接生成 MegEngine Tensor</span>
+<span class="n">mge_tensor</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mge_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([0 1 2 3 4], dtype=int32, device=xpux:0)
+Tensor([0. 1. 2. 3. 4.], device=xpux:0)
+Tensor([0. 1. 2. 3. 4.], device=xpux:0)
+</pre></div></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 属性我们可以获取 Tensor 的数据类型，默认为 <code class="docutils literal notranslate"><span class="pre">float32</span></code>：</p>
+<ul class="simple">
+<li><p>为了方便，统一使用 NumPy 的 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 表示；</p></li>
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">type()</span></code> 可以获取实际的类型，用来区分 ndarray 和 Tensor</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">mge_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">mge_tensor</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;numpy.float32&#39;&gt;
+&lt;class &#39;megengine.tensor.Tensor&#39;&gt;
+</pre></div></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">astype()</span></code> 方法我们可以拷贝创建一个指定数据类型的新 Tensor ，原 Tensor 不变：</p>
+<ul class="simple">
+<li><p>MegEngine Tensor 目前不支持转化成 <code class="docutils literal notranslate"><span class="pre">float64</span></code> 类型；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float64</span></code> 类型的 ndarray 转化成 Tensor 时会变成 <code class="docutils literal notranslate"><span class="pre">float32</span></code> 类型</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">new_tensor</span> <span class="o">=</span> <span class="n">mge_tensor</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float16&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_tensor</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([0. 1. 2. 3. 4.], dtype=float16, device=xpux:0)
+</pre></div></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">device</span></code> 属性，我们可以获取 Tensor 当前所在的设备：</p>
+<ul class="simple">
+<li><p>一般地，如果在创建 Tensor 时不指定 <code class="docutils literal notranslate"><span class="pre">device</span></code>，其 <code class="docutils literal notranslate"><span class="pre">device</span></code> 属性默认为 <code class="docutils literal notranslate"><span class="pre">xpux</span></code>，表示当前任意一个可用的设备；</p></li>
+<li><p>在 GPU 和 CPU 同时存在时，<strong>MegEngine 将自动使用 GPU 作为默认设备进行训练</strong>，查看 <code class="docutils literal notranslate"><span class="pre">device</span></code> 文档了解更多细节。</p></li>
+</ul>
+<p>通过 Tensor 自带的 <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> 方法，可以拷贝 Tensor 并转化对应的 ndarray，原 Tensor 不变：:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">mge_tensor</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;numpy.ndarray&#39;&gt;
+</pre></div></div>
+</div>
+<p>可以发现，不同类型之间的转化比较灵活，但需要注意：</p>
+<ul class="simple">
+<li><p>MegEngine Tensor 没有 <code class="docutils literal notranslate"><span class="pre">mge.numpy(mge_tensor)</span></code> 这种用法；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tensor</span></code> 是 <code class="docutils literal notranslate"><span class="pre">Tensor</span></code> 的一个别名（Alias），也可以尝试直接这样导入：</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">tensor</span>
+<span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>      <span class="c1"># 实际上我们更希望使用 float32 类型的 Tensor</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">]))</span>   <span class="c1"># 因此我们会习惯性地加上一个点表示这是浮点数</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([1 2 3], dtype=int32, device=xpux:0)
+Tensor([1. 2. 3.], device=xpux:0)
+</pre></div></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">shape</span></code> 属性，我们可以获取 Tensor 的形状：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">matrix_tensor</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span>
+                            <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">matrix_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(2, 3)
+</pre></div></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">size</span></code> 属性，我们可以获取 Tensor 中元素的个数：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">matrix_tensor</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>   <span class="c1"># 2 * 3 = 6</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+6
+</pre></div></div>
+</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">item()</span></code> 方法，我们可以获得对应的 Python 标量对象：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">a</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">5.</span><span class="p">]])</span>      <span class="c1"># 可以多维，但必须确保其中只有一个元素</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5.0 &lt;class &#39;float&#39;&gt;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="算子（Operator）">
+<h2>算子（Operator）<a class="headerlink" href="#算子（Operator）" title="永久链接至标题">¶</a></h2>
+<p>MegEngine 中通过算子 (Operator） 来表示运算。MegEngine 中的算子支持基于 Tensor 的常见数学运算和操作。</p>
+<p>比如 Tensor 的元素间（Element-wise）加法、减法和乘法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">A</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]])</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span> <span class="o">/</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([[3. 6. 3.]
+ [3. 6. 3.]], device=xpux:0)
+Tensor([[1. 2. 1.]
+ [1. 2. 1.]], device=xpux:0)
+Tensor([[2. 8. 2.]
+ [2. 8. 2.]], device=xpux:0)
+Tensor([[2. 2. 2.]
+ [2. 2. 2.]], device=xpux:0)
+</pre></div></div>
+</div>
+<p>你也可以使用 MegEngine 中的 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中的各种方法来完成对应计算：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([[3. 6. 3.]
+ [3. 6. 3.]], device=xpux:0)
+Tensor([[1. 2. 1.]
+ [1. 2. 1.]], device=xpux:0)
+Tensor([[2. 8. 2.]
+ [2. 8. 2.]], device=xpux:0)
+Tensor([[2. 2. 2.]
+ [2. 2. 2.]], device=xpux:0)
+</pre></div></div>
+</div>
+<p>Tensor 支持 Python 中常见的切片（Slicing）操作：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">A</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([4. 5.], device=xpux:0)
+</pre></div></div>
+</div>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">reshape()</span></code> 方法，可以得到修改形状后的 Tensor:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">A</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(2, 3)
+(3, 2)
+</pre></div></div>
+</div>
+<p>另外， <code class="docutils literal notranslate"><span class="pre">reshape()</span></code> 方法的参数允许存在单个维度的缺省值，用 -1 表示。此时，<code class="docutils literal notranslate"><span class="pre">reshape()</span></code> 会自动推理该维度的值：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">A</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(2, 3, 4, 5)
+(2, 12, 5)
+</pre></div></div>
+</div>
+<p>在 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中提供了更多的算子，比如 Tensor 的矩阵乘可以使用 <code class="docutils literal notranslate"><span class="pre">matmul()</span></code> 方法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">x</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]])</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]])</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([[35. 44.]
+ [44. 56.]], device=xpux:0)
+</pre></div></div>
+</div>
+<p>我们可以使用 NumPy 的矩阵乘来验证一下这个结果：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]])</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]])</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[35. 44.]
+ [44. 56.]]
+</pre></div></div>
+</div>
+<p>更多算子可以参考 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块的文档部分。</p>
+<p>现在你可以适当休息一下，脑海中回想一下张量（Tensor）和算子（Operator）的概念，然后继续阅读教程后面的部分。</p>
+</div>
+<div class="section" id="计算图（Computing-Graph）">
+<h2>计算图（Computing Graph）<a class="headerlink" href="#计算图（Computing-Graph）" title="永久链接至标题">¶</a></h2>
+<p>MegEngine 是基于计算图（Computing Graph）的深度神经网络学习框架，下面通过一个简单的数学表达式 <span class="math notranslate nohighlight">\(y=(w * x)+b\)</span> 来介绍计算图的基本概念，如下图所示：</p>
+<p><img alt="Computing Graph" src="../_images/computing_graph.png" /></p>
+<p>计算之间的各种流程依赖关系可以构成一张计算图，从中可以看到，计算图中存在：</p>
+<ul class="simple">
+<li><p>数据节点（图中的实心圈）：如输入数据 <span class="math notranslate nohighlight">\(x\)</span>、<strong>参数</strong> <span class="math notranslate nohighlight">\(w\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span>，运算得到的中间数据 <span class="math notranslate nohighlight">\(p\)</span>，以及最终的运算输出 <span class="math notranslate nohighlight">\(y\)</span>；</p></li>
+<li><p>计算节点（图中的空心圈）：图中 <span class="math notranslate nohighlight">\(*\)</span> 和 <span class="math notranslate nohighlight">\(+\)</span> 分别表示计算节点 <strong>乘法</strong> 和 <strong>加法</strong>，是施加在数据节点上的运算；</p></li>
+<li><p>边（图中的箭头）：表示数据的流向，体现了数据节点和计算节点之间的依赖关系</p></li>
+</ul>
+<p><strong>在 MegEngine 中，用张量（Tensor）表示计算图中的数据节点，用算子（Operator）实现数据节点之间的运算。</strong></p>
+<p><strong>在深度学习领域，任何复杂的深度神经网络模型本质上都可以用一个计算图表示出来。</strong></p>
+<p>我们可以理解成，神经网络模型的训练其实就是在重复以下过程：</p>
+<ul class="simple">
+<li><p><strong>前向传播</strong>：计算由计算图表示的数学表达式的值的过程。在上图中则是：</p></li>
+<li><p>输入 <span class="math notranslate nohighlight">\(x\)</span> 和参数 <span class="math notranslate nohighlight">\(w\)</span> 首先经过乘法运算得到中间结果 <span class="math notranslate nohighlight">\(p\)</span>，</p></li>
+<li><p>接着 <span class="math notranslate nohighlight">\(p\)</span> 和参数 <span class="math notranslate nohighlight">\(b\)</span> 经过加法运算，得到右侧最终的输出 <span class="math notranslate nohighlight">\(y\)</span>，这就是一个完整的前向传播过程。</p></li>
+<li><p><strong>反向传播</strong>：根据需要优化的目标（假设这里就为 <span class="math notranslate nohighlight">\(y\)</span>），通过链式求导法则，对所有的参数求梯度。在上图中，即计算 <span class="math notranslate nohighlight">\(\frac{\partial y}{\partial w}\)</span> 和 <span class="math notranslate nohighlight">\(\frac{\partial y}{\partial b}\)</span>.</p></li>
+<li><p><strong>参数更新</strong>：得到梯度后，需要使用梯度下降法（Gradient Descent）对参数做更新，从而达到模型优化的效果。在上图中，即对 <span class="math notranslate nohighlight">\(w\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 做更新。</p></li>
+</ul>
+<p>模型训练完成后便可用于测试（或者说推理），此时我们不需要再对模型本身做任何更改，只需要将数据经过前向传播得到对应的输出即可。</p>
+<div class="section" id="链式法则计算梯度">
+<h3>链式法则计算梯度<a class="headerlink" href="#链式法则计算梯度" title="永久链接至标题">¶</a></h3>
+<p>例如，为了得到上图中 <span class="math notranslate nohighlight">\(y\)</span> 关于参数 <span class="math notranslate nohighlight">\(w\)</span> 的梯度，反向传播的过程如下图所示：</p>
+<p><img alt="Backpropagation" src="../_images/back_prop.png" /></p>
+<ul class="simple">
+<li><p>首先 <span class="math notranslate nohighlight">\(y = p + b\)</span>，因此 <span class="math notranslate nohighlight">\(\frac{\partial y}{\partial p} = 1\)</span></p></li>
+<li><p>接着，反向追溯，<span class="math notranslate nohighlight">\(p = w * x\)</span> ，因此，<span class="math notranslate nohighlight">\(\frac{\partial p}{\partial w}=x\)</span></p></li>
+<li><p>根据链式求导法则，<span class="math notranslate nohighlight">\(\frac{\partial y}{\partial w}=\frac{\partial y}{\partial p} * \frac{\partial p}{\partial w} = 1 * x\)</span></p></li>
+<li><p>因此最终 <span class="math notranslate nohighlight">\(y\)</span> 关于参数 <span class="math notranslate nohighlight">\(w\)</span> 的梯度为 <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="求导器（Grade-Manager）">
+<h2>求导器（Grade Manager）<a class="headerlink" href="#求导器（Grade-Manager）" title="永久链接至标题">¶</a></h2>
+<p>推导梯度是件枯燥的事情，尤其是当模型的前向传播计算输出的过程变得相对复杂时，根据链式法则计算梯度会变得异常枯燥无味。</p>
+<p>自动求导是深度学习框架对使用者而言最有用的特性之一，它自动地完成了反向传播过程中根据链式法则去推导参数梯度的过程。</p>
+<p>MegEngine 的 <code class="docutils literal notranslate"><span class="pre">autodiff</span></code> 模块为计算图中的张量提供了自动求导功能，继续以上图的例子进行说明：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">megengine.autodiff</span> <span class="kn">import</span> <span class="n">GradManager</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">3.</span><span class="p">])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span>
+
+<span class="n">gm</span> <span class="o">=</span> <span class="n">GradManager</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>   <span class="c1"># 新建一个求导器，绑定需要求导的变量，实例通常习惯写成 gm</span>
+<span class="k">with</span> <span class="n">gm</span><span class="p">:</span>                            <span class="c1"># 开始记录计算图</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>                  <span class="c1"># 计算 y 关于参数的导数，过程中不断地使用链式法则</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>                       <span class="c1"># 得到结果为 x</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>                       <span class="c1"># 得到结果为 1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([2.], device=xpux:0)
+Tensor([1.], device=xpux:0)
+</pre></div></div>
+</div>
+<p>可以看到，求出的梯度本身也是 Tensor，<code class="docutils literal notranslate"><span class="pre">GradManager</span></code> 负责管理和计算梯度（在默认情况下，Tensor 是不需要计算梯度的）。</p>
+<p>我们可以使用 <code class="docutils literal notranslate"><span class="pre">attach()</span></code> 来绑定需要计算梯度的变量（绑定后可使用 <code class="docutils literal notranslate"><span class="pre">detach()</span></code> 将其取消绑定），使用 <code class="docutils literal notranslate"><span class="pre">backward()</span></code> 进行梯度的计算。</p>
+<p>上面 <code class="docutils literal notranslate"><span class="pre">with</span></code> 代码段中的前向运算都会被求导器记录，有关求导器的原理，可以查看 <code class="docutils literal notranslate"><span class="pre">GradManager</span></code> 文档了解细节。</p>
+</div>
+<div class="section" id="优化器（Optimizer）">
+<h2>优化器（Optimizer）<a class="headerlink" href="#优化器（Optimizer）" title="永久链接至标题">¶</a></h2>
+<p>你应该注意到了，我们使用参数（Parameter）来称呼张量（Tensor）<span class="math notranslate nohighlight">\(w\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span>, 因为与输入 <span class="math notranslate nohighlight">\(x\)</span> 不同，计算图中的 <span class="math notranslate nohighlight">\(w\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 是需要进行更新/优化的变量。</p>
+<p>MegEngine 中使用 <code class="docutils literal notranslate"><span class="pre">Parameter</span></code> 来表示参数（注意没有小写形式），Parameter 是 Tensor 的子类，其对象（即网络参数）可以被优化器更新。</p>
+<p>显然，GradManager 支持对于 Parameter 的梯度计算：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">([</span><span class="mf">3.</span><span class="p">])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mf">2.</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+
+<span class="n">gm</span> <span class="o">=</span> <span class="n">GradManager</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>   <span class="c1"># 这次 attach() 传入的是 Parameter 而不是 Tensor</span>
+<span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="p">))</span>                 <span class="c1"># 计算得到的梯度依然是 Tensor</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;megengine.tensor.Parameter&#39;&gt;
+&lt;class &#39;megengine.tensor.Parameter&#39;&gt;
+&lt;class &#39;megengine.tensor.Tensor&#39;&gt;
+</pre></div></div>
+</div>
+<p>前向传播和反向传播的过程完成后，我们得到了参数对应需要更新的梯度，如 <code class="docutils literal notranslate"><span class="pre">w</span></code> 相对于输出 <span class="math notranslate nohighlight">\(y\)</span> 的梯度 <code class="docutils literal notranslate"><span class="pre">w.grad</span></code>.</p>
+<p>根据梯度下降的思想，参数 <span class="math notranslate nohighlight">\(w\)</span> 的更新规则为：<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">=</span> <span class="pre">w</span> <span class="pre">-</span> <span class="pre">lr</span> <span class="pre">*</span> <span class="pre">w.grad</span></code>, 其中 <code class="docutils literal notranslate"><span class="pre">lr</span></code> 是学习率（Learning Rate），控制参数更新速度。</p>
+<p>P.S: 类似学习率这种，训练前人为进行设定的，而非由模型学得的参数，通常被称为超参数（Hyperparameter）。</p>
+<p>MegEngine 的 <code class="docutils literal notranslate"><span class="pre">Optimizer</span></code> 模块提供了基于各种常见优化策略的优化器，如 Adam 和 SGD 等。</p>
+<p>它们都继承自 Optimizer 基类，主要包含参数梯度的清空 <code class="docutils literal notranslate"><span class="pre">clear_grad()</span></code> 和参数更新 <code class="docutils literal notranslate"><span class="pre">step()</span></code> 这两个方法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">megengine.optimizer</span> <span class="k">as</span> <span class="nn">optim</span>      <span class="c1"># 我们习惯将 optimizer 缩写为 optim</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>   <span class="c1"># 实例化随机梯度下降（SGD）优化器，传入 Parameter w 和 b</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>                         <span class="c1"># 更新参数值 w = w - lr * w.grad</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>                   <span class="c1"># 将参数的梯度清空，节省内存，以便下一次计算，w.grad 变为 None</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Tensor([2.98], device=xpux:0) None
+</pre></div></div>
+</div>
+<p><strong>提示：</strong>多次实践表明，用户经常忘记在更新参数后做梯度清空操作，因此推荐使用这样的写法：<code class="docutils literal notranslate"><span class="pre">optimizer.step().clear_grad()</span></code></p>
+<p>我们使用 Numpy 来手动模拟一次参数 <code class="docutils literal notranslate"><span class="pre">w</span></code> 的更新过程：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.</span><span class="p">])</span>
+<span class="n">dw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.</span><span class="p">])</span>             <span class="c1"># 前面我们已经计算出了 w.grad = x, 这里用 dw 表示</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">dw</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>                        <span class="c1"># 和 optimizer.step() 更新后得到的 w 应该一致</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[2.98]
+</pre></div></div>
+</div>
+<p>这样我们便成功地进行了一次参数更新，在实际训练模型时，参数的更新会迭代进行很多次，迭代次数 <code class="docutils literal notranslate"><span class="pre">epochs</span></code> 也是一种超参数，需要人为设定。</p>
+</div>
+<div class="section" id="损失函数（Loss-Function）">
+<h2>损失函数（Loss Function）<a class="headerlink" href="#损失函数（Loss-Function）" title="永久链接至标题">¶</a></h2>
+<p>深度神经网络模型的优化过程，实际上就是使用梯度下降算法来优化一个目标函数，从而更新网络模型中的参数。</p>
+<p>但请注意，上面用于举例的表达式的输出值其实并不是需要被优化的对象，我们的目标是：模型预测的输出结果和真实标签尽可能一致。</p>
+<p>我们已经知道了，通过前向传播可以得到模型预测的输出，此时我们用 <strong>损失函数（Loss Function）</strong> 来度量模型输出与真实结果之间的差距。</p>
+<p>MegEngine 的 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块提供了各种常见的损失函数，具体可见文档中的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 部分。</p>
+<p>对于 <span class="math notranslate nohighlight">\(w * x + b\)</span> 这样的范围在实数域 <span class="math notranslate nohighlight">\(\mathbb R\)</span> 上的输出，我们可以使用均方误差（Mean Squared Error, MSE）表示模型输出 <span class="math notranslate nohighlight">\(y_{pred}\)</span> 和实际值 <span class="math notranslate nohighlight">\(y_{real}\)</span> 的差距：</p>
+<div class="math notranslate nohighlight">
+\[\ell(y_{pred}, y_{real})= \frac{1}{n }\sum_{i=1}^{n}\left(\hat{y}_{i}-{y}_{i}\right)^{2}\]</div>
+<p>注：在上面的公式中 <span class="math notranslate nohighlight">\(\left(\hat{y}_{i}-{y}_{i}\right)^{2}\)</span> 计算的是单个样本 <span class="math notranslate nohighlight">\(x_{i}\)</span> 输入模型后得到的输出 <span class="math notranslate nohighlight">\(\hat{y}_{i}\)</span> 和实际标签值 <span class="math notranslate nohighlight">\({y}_{i}\)</span> 的差异，数据集中有 <span class="math notranslate nohighlight">\(n\)</span> 个样本。</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+<span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">real</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">pred</span> <span class="o">-</span> <span class="n">real</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>       <span class="c1"># 根据公式定义计算</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+<span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">square_loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">real</span><span class="p">)</span>    <span class="c1"># MegEngine 中的实现</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+9.75
+9.75
+</pre></div></div>
+</div>
+<p>选定损失函数作为优化目标后，我们便可在训练的过程中通过梯度下降不断地更新参数 <span class="math notranslate nohighlight">\(w\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span>, 从而达到模型优化的效果：</p>
+<div class="math notranslate nohighlight">
+\[w^{*}, b^{*}=\underset{w, b}{\operatorname{argmin}} \ell\left(w, b\right) .\]</div>
+</div>
+<div class="section" id="练习：线性回归">
+<h2>练习：线性回归<a class="headerlink" href="#练习：线性回归" title="永久链接至标题">¶</a></h2>
+<p>接下来，我们用一个非常简单的例子，帮助你将前面提到的概念给联系起来。</p>
+<p>假设有人提供给你一些包含数据 <code class="docutils literal notranslate"><span class="pre">data</span></code> 和标签 <code class="docutils literal notranslate"><span class="pre">label</span></code> 的样本集合 <span class="math notranslate nohighlight">\(S\)</span> 用于训练模型，希望将来给出输入 <span class="math notranslate nohighlight">\(x\)</span>, 模型能对输出 <span class="math notranslate nohighlight">\(y\)</span> 进行较好地预测：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+data &amp;= [x_1, x_2, \ldots , x_n] \\
+label &amp;= [y_1, y_2, \ldots , y_n] \\
+S &amp;= \{(x_1, y_1), (x_2, y_2), \ldots (x_n, y_n)\}
+\end{aligned}\end{split}\]</div>
+<p>请运行下面的代码以随机生成包含 <code class="docutils literal notranslate"><span class="pre">data</span></code> 和 <code class="docutils literal notranslate"><span class="pre">label</span></code> 的样本:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">generate_random_examples</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The real w: </span><span class="si">{}</span><span class="s2">, b: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+    <span class="c1"># 初始化 data 和 label</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,))</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,))</span>
+
+    <span class="c1"># 生成 n 个随机样本数据，并添加一定的噪声干扰</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">noise</span><span class="p">,</span> <span class="n">noise</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>  <span class="c1"># 将样本点绘制在坐标图上</span>
+
+    <span class="c1"># 展示样本数据的分布</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span>
+
+<span class="n">original_data</span><span class="p">,</span> <span class="n">original_label</span> <span class="o">=</span> <span class="n">generate_random_examples</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The real w: 7, b: 7
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/getting-started_megengine-basic-concepts_53_1.png" src="../_images/getting-started_megengine-basic-concepts_53_1.png" />
+</div>
+</div>
+<p>通过可视化观察样本的分布规律，不难发现，我们可以: 1. 尝试拟合 <span class="math notranslate nohighlight">\(y = w * x + b\)</span> 这样一个线性模型（均为标量）； 2. 选择使用均方误差损失作为优化目标； 3. 通过梯度下降法来更新参数 <span class="math notranslate nohighlight">\(w\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span>.</p>
+<div class="section" id="Numpy-实现">
+<h3>Numpy 实现<a class="headerlink" href="#Numpy-实现" title="永久链接至标题">¶</a></h3>
+<p>对于这种非常简单的模型，完全可以使用 Numpy 进行算法实现，我们借此了解一下整个模型训练的流程：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># 设置超参数</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1"># 获取数据</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">original_data</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">original_label</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># 参数初始化</span>
+<span class="n">w</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># 定义模型</span>
+<span class="k">def</span> <span class="nf">linear_model</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 模型训练</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+
+    <span class="c1"># 初始化单个 epoch 训练得到的损失</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># 梯度初始化，等同于 Optimizer 中的 clear_grad()</span>
+    <span class="n">sum_grad_w</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sum_grad_b</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># 为了方便理解，这里没有使用 “向量化实现”，而是使用了 for 循环写法</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+
+        <span class="c1"># 前向传播，主要计算预测值 pred 以及损失值 loss</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>      <span class="c1"># 通常 pred 为将 data 代入 “模型” 得到的输出，即 model(data)</span>
+        <span class="n">loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>    <span class="c1"># 等同于对每个样本使用 F.nn.loss(pred, label) 计算后求和</span>
+
+        <span class="c1"># 反向传播，根据均方误差损失计算参数的梯度，这里不解释推导过程，等同于 gm.backward()</span>
+        <span class="n">sum_grad_w</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">sum_grad_b</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="c1"># 计算平均损失，因为对于不同的输入，求得的损失都会不同，所以通常求和后取平均</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="c1"># 计算平均梯度，因为对于不同的输入，求得的梯度都会不同，所以通常求和后取平均</span>
+    <span class="n">grad_w</span> <span class="o">=</span> <span class="n">sum_grad_w</span> <span class="o">/</span> <span class="n">n</span>
+    <span class="n">grad_b</span> <span class="o">=</span> <span class="n">sum_grad_b</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="c1"># 更新参数，等同于 Optimizer 中的 step()</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad_w</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">grad_b</span>
+
+    <span class="c1"># 查看参数和损失</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, w = </span><span class="si">{:.3f}</span><span class="s2">, b = </span><span class="si">{:.3f}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">loss</span><span class="p">))</span>
+
+    <span class="c1"># 绘图查看拟合情况</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 0, w = 4.866, b = 0.154, loss = 1799.225
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/getting-started_megengine-basic-concepts_55_1.png" src="../_images/getting-started_megengine-basic-concepts_55_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 1, w = 6.426, b = 0.296, loss = 233.461
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/getting-started_megengine-basic-concepts_55_3.png" src="../_images/getting-started_megengine-basic-concepts_55_3.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 2, w = 6.926, b = 0.432, loss = 70.735
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/getting-started_megengine-basic-concepts_55_5.png" src="../_images/getting-started_megengine-basic-concepts_55_5.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 3, w = 7.087, b = 0.565, loss = 52.384
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/getting-started_megengine-basic-concepts_55_7.png" src="../_images/getting-started_megengine-basic-concepts_55_7.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 4, w = 7.138, b = 0.695, loss = 48.946
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/getting-started_megengine-basic-concepts_55_9.png" src="../_images/getting-started_megengine-basic-concepts_55_9.png" />
+</div>
+</div>
+<p>可以看到，在 5 个 <code class="docutils literal notranslate"><span class="pre">epoch</span></code> 的迭代训练中，已经得到了一个拟合状况不错的线性模型。</p>
+</div>
+<div class="section" id="MegEngine-实现">
+<h3>MegEngine 实现<a class="headerlink" href="#MegEngine-实现" title="永久链接至标题">¶</a></h3>
+<p>上面的流程，完全可以使用 MegEngine 来实现（有兴趣的读者可以参照上面的注释，先尝试自己实现）：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span>
+<span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.autodiff</span> <span class="kn">import</span> <span class="n">GradManager</span>
+<span class="kn">import</span> <span class="nn">megengine.optimizer</span> <span class="k">as</span> <span class="nn">optim</span>
+
+<span class="c1"># 设置超参数</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="c1"># 获取数据</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">original_label</span><span class="p">)</span>
+
+<span class="c1"># 初始化参数</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])</span>
+
+<span class="c1"># 定义模型</span>
+<span class="k">def</span> <span class="nf">linear_model</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 定义求导器和优化器</span>
+<span class="n">gm</span> <span class="o">=</span> <span class="n">GradManager</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+<span class="c1"># 模型训练</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">square_loss</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+        <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, w = </span><span class="si">{:.3f}</span><span class="s2">, b = </span><span class="si">{:.3f}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span>
+          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">b</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 0, w = 4.866, b = 0.154, loss = 1799.225
+epoch = 1, w = 6.426, b = 0.296, loss = 233.461
+epoch = 2, w = 6.926, b = 0.432, loss = 70.735
+epoch = 3, w = 7.087, b = 0.565, loss = 52.384
+epoch = 4, w = 7.138, b = 0.695, loss = 48.946
+</pre></div></div>
+</div>
+<p>你应该会得到相同的 <code class="docutils literal notranslate"><span class="pre">w</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> 以及 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 值，下面直线的拟合程度也应该和 Numpy 实现一致：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># 绘图查看拟合情况</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;-b&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/getting-started_megengine-basic-concepts_59_0.png" src="../_images/getting-started_megengine-basic-concepts_59_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="总结回顾">
+<h2>总结回顾<a class="headerlink" href="#总结回顾" title="永久链接至标题">¶</a></h2>
+<p>祝贺你完成了入门教程的学习，现在是时候休息一下，做一个简单的回顾了：</p>
+<p>到目前为止，我们已经掌握了天元 MegEngine 框架中的以下概念：</p>
+<ul class="simple">
+<li><p>计算图（Computing Graph）：MegEngine 是基于计算图的框架，计算图中存在数据节点、计算节点和边</p></li>
+<li><p>前向传播：输入的数据在计算图中经过计算得到预测值，接着我们使用损失 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 表示预测值和实际值的差异</p></li>
+<li><p>反向传播：根据链式法则，得到计算图中所有参数 w 关于 loss 的梯度 dw ，实现在 <code class="docutils literal notranslate"><span class="pre">autodiff</span></code> 模块，由 <code class="docutils literal notranslate"><span class="pre">GradManager</span></code> 进行管理</p></li>
+<li><p>参数更新：根据梯度下降算法，更新图中参数，从而达到优化最终 loss 的效果，实现在 <code class="docutils literal notranslate"><span class="pre">optimzer</span></code> 模块</p></li>
+<li><p>张量（Tensor）：MegEngine 中的基础数据结构，用来表示计算图中的数据节点，可以灵活地与 Numpy 数据结构转化</p></li>
+<li><p>参数（Parameter）：用于和张量做概念上的区分，模型优化的过程实际上就是优化器对参数进行了更新</p></li>
+<li><p>超参数（Hype-parameter）：其值无法由模型直接经过训练学得，需要人为（或通过其它方法）设定</p></li>
+<li><p>算子（Operator）：基于 Tensor 的各种计算的实现（包括损失函数），实现在 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块</p></li>
+</ul>
+<p>我们通过拟合 <span class="math notranslate nohighlight">\(f(x) = w * x + b\)</span> 完成了一个最简单的线性回归模型的训练，干得漂亮！</p>
+</div>
+<div class="section" id="问题思考">
+<h2>问题思考<a class="headerlink" href="#问题思考" title="永久链接至标题">¶</a></h2>
+<p>我们的 MegEngine 打怪升级之旅还没有结束，在前往下一关之前，尝试思考一些问题吧。</p>
+<p>关于向量化实现：</p>
+<ul class="simple">
+<li><p>当你发现 Python 代码运行较慢时，通常可以将数据处理移入 NumPy 并采用向量化（Vectorization）写法，实现最高速度的处理</p></li>
+<li><p>线性模型训练的 NumPy 写法中，单个 <code class="docutils literal notranslate"><span class="pre">epoch</span></code> 训练内出现了 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环，实际上可以采取向量化的实现（参考 MegEngine 实现的写法）</p></li>
+<li><p>使用向量化的实现，通常计算的效率会更高，因此建议：代码中能够用向量化代替 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环的地方，就尽可能地使用向量化实现</p></li>
+</ul>
+<p>关于设备：</p>
+<ul class="simple">
+<li><p>都说 GPU 训练神经网络模型速度会比 CPU 训练快非常多，为什么？</p></li>
+<li><p>我们可以把 Tensor 指定计算设备为 GPU 或 CPU，而原生 NumPy 只支持 CPU 计算，Tensor 转化为 ndarray 的过程是什么样的？</p></li>
+<li><p>训练的速度是否会受到训练设备数量的影响呢？可不可以多个设备一起进行训练？</p></li>
+</ul>
+<p>关于参数与超参数：</p>
+<ul class="simple">
+<li><p>现在我们接触到了两个超参数 <code class="docutils literal notranslate"><span class="pre">epochs</span></code> 和 <code class="docutils literal notranslate"><span class="pre">lr</span></code>, 调整它们的值是否会对模型的训练产生影响？（不妨自己动手调整试试）</p></li>
+<li><p>更新参数所用的梯度 <code class="docutils literal notranslate"><span class="pre">grad_w</span></code>，是所有样本的梯度之和 <code class="docutils literal notranslate"><span class="pre">sum_grad_w</span></code> 求均值，为什么不在每个样本反向传播后立即更新参数 <code class="docutils literal notranslate"><span class="pre">w</span></code>？</p></li>
+<li><p>我们看上去得到了一条拟合得很不错的曲线，但是得到的 <code class="docutils literal notranslate"><span class="pre">b</span></code> 距离真实的 <code class="docutils literal notranslate"><span class="pre">b</span></code> 还比较遥远，为什么？如何解决这种情况？</p></li>
+<li><p>如何选取合适的超参数，对于超参数的选取是否有一定的规律或者经验可寻？</p></li>
+</ul>
+<p>关于数据集：</p>
+<ul class="simple">
+<li><p>我们在线性模型中使用的是从 NumPy 代码生成的随机数据，修改数据集的样本数量 <code class="docutils literal notranslate"><span class="pre">n</span></code> 和噪声扰动程度 <code class="docutils literal notranslate"><span class="pre">noise</span></code> 会有什么影响？</p></li>
+<li><p>对于现实中的数据集，如何转换成 MegEngine Tensor 的形式进行使用？</p></li>
+<li><p>这中间需要经过什么样的预处理（Preprocessing）过程，有哪些流程是可以交由框架来完成的？</p></li>
+</ul>
+<p>关于模型：</p>
+<ul class="simple">
+<li><p>我们学会了定义了非常简单的线性模型 <code class="docutils literal notranslate"><span class="pre">linear_model</span></code>, 更复杂的模型要如何去写？</p></li>
+<li><p>既然任何神经网络模型本质上都可以用计算图来表示，那么神经网络模型的搭建流程是什么样的？</p></li>
+</ul>
+<p>关于最佳实践：</p>
+<ul class="simple">
+<li><p>在编写代码时，经常会有根据前人经验总结出的最佳实践（Best Practice）作为参考，例如：</p></li>
+<li><p>参数的更新和梯度的清空可以写在一起 <code class="docutils literal notranslate"><span class="pre">optimizer.step().clear_grad()</span></code></p></li>
+<li><p>在导入某些包的时候，通常有约定俗成的缩写如 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">megengine</span> <span class="pre">as</span> <span class="pre">mge</span></code></p></li>
+<li><p>除此以外，还有什么样的编程习惯和最佳实践值得参考？如何将一份玩具代码整理变成工程化的代码？</p></li>
+</ul>
+<p>深度学习，简单开发。我们鼓励你在实践中不断思考，并启发自己去探索直觉性或理论性的解释。</p>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+  <h3><a href="../index.html">目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">天元 MegEngine 零基础入门</a><ul>
+<li><a class="reference internal" href="#张量（Tensor）">张量（Tensor）</a></li>
+<li><a class="reference internal" href="#算子（Operator）">算子（Operator）</a></li>
+<li><a class="reference internal" href="#计算图（Computing-Graph）">计算图（Computing Graph）</a><ul>
+<li><a class="reference internal" href="#链式法则计算梯度">链式法则计算梯度</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#求导器（Grade-Manager）">求导器（Grade Manager）</a></li>
+<li><a class="reference internal" href="#优化器（Optimizer）">优化器（Optimizer）</a></li>
+<li><a class="reference internal" href="#损失函数（Loss-Function）">损失函数（Loss Function）</a></li>
+<li><a class="reference internal" href="#练习：线性回归">练习：线性回归</a><ul>
+<li><a class="reference internal" href="#Numpy-实现">Numpy 实现</a></li>
+<li><a class="reference internal" href="#MegEngine-实现">MegEngine 实现</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#总结回顾">总结回顾</a></li>
+<li><a class="reference internal" href="#问题思考">问题思考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../index.html"
+                        title="上一章">欢迎使用天元 MegEngine (๑•̀ㅂ•́)و✧</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="learning-from-linear-regression.html"
+                        title="下一章">一个稍微复杂些的线性回归模型</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="learning-from-linear-regression.html" title="一个稍微复杂些的线性回归模型"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="欢迎使用天元 MegEngine (๑•̀ㅂ•́)و✧"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">MegEngine  文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">天元 MegEngine 零基础入门</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; 版权所有 2021, Megvii Inc.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+    </div>
+  </body>
+</html>
