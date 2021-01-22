@@ -746,8 +746,8 @@ Tensor([[35. 44.]
 </ul>
 </div>
 </div>
-<div class="section" id="求导器（Grade-Manager）">
-<h2>求导器（Grade Manager）<a class="headerlink" href="#求导器（Grade-Manager）" title="永久链接至标题">¶</a></h2>
+<div class="section" id="求导器（GradManager）">
+<h2>求导器（GradManager）<a class="headerlink" href="#求导器（GradManager）" title="永久链接至标题">¶</a></h2>
 <p>推导梯度是件枯燥的事情，尤其是当模型的前向传播计算输出的过程变得相对复杂时，根据链式法则计算梯度会变得异常枯燥无味。</p>
 <p>自动求导是深度学习框架对使用者而言最有用的特性之一，它自动地完成了反向传播过程中根据链式法则去推导参数梯度的过程。</p>
 <p>MegEngine 的 <code class="docutils literal notranslate"><span class="pre">autodiff</span></code> 模块为计算图中的张量提供了自动求导功能，继续以上图的例子进行说明：</p>
@@ -1293,7 +1293,7 @@ epoch = 4, w = 7.138, b = 0.695, loss = 48.946
 <li><a class="reference internal" href="#链式法则计算梯度">链式法则计算梯度</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#求导器（Grade-Manager）">求导器（Grade Manager）</a></li>
+<li><a class="reference internal" href="#求导器（GradManager）">求导器（GradManager）</a></li>
 <li><a class="reference internal" href="#优化器（Optimizer）">优化器（Optimizer）</a></li>
 <li><a class="reference internal" href="#损失函数（Loss-Function）">损失函数（Loss Function）</a></li>
 <li><a class="reference internal" href="#练习：线性回归">练习：线性回归</a><ul>
