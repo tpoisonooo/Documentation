@@ -1,0 +1,6 @@
+megengine.functional.clip
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: clip

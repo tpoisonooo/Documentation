@@ -1,0 +1,29 @@
+megengine.distributed.Client
+============================
+
+.. currentmodule:: megengine.distributed
+
+.. autoclass:: Client
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Client.__init__
+      ~Client.check_is_grad
+      ~Client.check_remote_tracer
+      ~Client.connect
+      ~Client.get_mm_server_port
+      ~Client.group_barrier
+      ~Client.set_is_grad
+      ~Client.set_remote_tracer
+      ~Client.user_get
+      ~Client.user_set
+   
+   
+
+   
+   
+   

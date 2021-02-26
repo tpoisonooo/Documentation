@@ -1,0 +1,20 @@
+megengine.data.dataset.StreamDataset
+====================================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: StreamDataset
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StreamDataset.__init__
+   
+   
+
+   
+   
+   

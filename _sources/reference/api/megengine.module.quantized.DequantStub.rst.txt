@@ -1,0 +1,40 @@
+megengine.module.quantized.DequantStub
+======================================
+
+.. currentmodule:: megengine.module.quantized
+
+.. autoclass:: DequantStub
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DequantStub.__init__
+      ~DequantStub.apply
+      ~DequantStub.buffers
+      ~DequantStub.children
+      ~DequantStub.disable_quantize
+      ~DequantStub.eval
+      ~DequantStub.forward
+      ~DequantStub.from_qat_module
+      ~DequantStub.load_state_dict
+      ~DequantStub.modules
+      ~DequantStub.named_buffers
+      ~DequantStub.named_children
+      ~DequantStub.named_modules
+      ~DequantStub.named_parameters
+      ~DequantStub.parameters
+      ~DequantStub.register_forward_hook
+      ~DequantStub.register_forward_pre_hook
+      ~DequantStub.replace_param
+      ~DequantStub.state_dict
+      ~DequantStub.train
+      ~DequantStub.zero_grad
+   
+   
+
+   
+   
+   

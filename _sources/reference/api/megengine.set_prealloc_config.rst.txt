@@ -1,0 +1,6 @@
+megengine.set\_prealloc\_config
+===============================
+
+.. currentmodule:: megengine
+
+.. autofunction:: set_prealloc_config

@@ -1,0 +1,6 @@
+megengine.functional.matmul
+===========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: matmul

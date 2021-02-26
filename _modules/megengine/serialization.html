@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.serialization &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.serialization 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">from</span> <span class="nn">.device</span> <span class="kn">import</span> <span class="n">_valid_device</span><span class="p">,</span> <span class="n">get_default_device</span>
+<span class="kn">from</span> <span class="nn">.tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">.utils.max_recursion_limit</span> <span class="kn">import</span> <span class="n">max_recursion_limit</span>
+
+
+<div class="viewcode-block" id="save"><a class="viewcode-back" href="../../reference/api/megengine.save.html#megengine.save">[文档]</a><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle_module</span><span class="o">=</span><span class="n">pickle</span><span class="p">,</span> <span class="n">pickle_protocol</span><span class="o">=</span><span class="n">pickle</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save an object to disk file.</span>
+
+<span class="sd">    :type obj: object</span>
+<span class="sd">    :param obj: object to save. Only ``module`` or ``state_dict`` are allowed.</span>
+<span class="sd">    :type f: text file object</span>
+<span class="sd">    :param f: a string of file name or a text file object to which ``obj`` is saved to.</span>
+<span class="sd">    :type pickle_module:</span>
+<span class="sd">    :param pickle_module: Default: ``pickle``.</span>
+<span class="sd">    :type pickle_protocol:</span>
+<span class="sd">    :param pickle_protocol: Default: ``pickle.HIGHEST_PROTOCOL``.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+            <span class="n">save</span><span class="p">(</span>
+                <span class="n">obj</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">pickle_module</span><span class="o">=</span><span class="n">pickle_module</span><span class="p">,</span> <span class="n">pickle_protocol</span><span class="o">=</span><span class="n">pickle_protocol</span>
+            <span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">with</span> <span class="n">max_recursion_limit</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;write&quot;</span><span class="p">),</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> does not support write&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">pickle_module</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">pickle_protocol</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">dmap</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_location</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">map_location</span> <span class="o">=</span> <span class="n">map_location</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Tensor</span><span class="o">.</span><span class="n">dmap_callback</span> <span class="o">=</span> <span class="nb">staticmethod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_location</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="n">Tensor</span><span class="o">.</span><span class="n">dmap_callback</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_get_callable_map_location</span><span class="p">(</span><span class="n">map_location</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">map_location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">callable_map_location</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">get_default_device</span><span class="p">())</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">map_location</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">callable_map_location</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">map_location</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">map_location</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">map_location</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># dict key and values can only be &quot;xpux&quot;, &quot;cpux&quot;, &quot;gpu0&quot;, etc.</span>
+            <span class="k">assert</span> <span class="n">_valid_device</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="s2">&quot;Invalid locator_map key value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">_valid_device</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="s2">&quot;Invalid locator_map key value </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">value</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">callable_map_location</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">state</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="ow">in</span> <span class="n">map_location</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">map_location</span><span class="p">[</span><span class="n">state</span><span class="p">[:</span><span class="mi">4</span><span class="p">]]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">map_location</span><span class="p">),</span> <span class="s2">&quot;map_location should be str, dict or function&quot;</span>
+        <span class="n">callable_map_location</span> <span class="o">=</span> <span class="n">map_location</span>
+    <span class="k">return</span> <span class="n">callable_map_location</span>
+
+
+<span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pickle_module</span><span class="o">=</span><span class="n">pickle</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load an object saved with save() from a file.</span>
+
+<span class="sd">    :type f: text file object</span>
+<span class="sd">    :param f: a string of file name or a text file object from which to load.</span>
+<span class="sd">    :type map_location: str, dict or a function specifying the map rules</span>
+<span class="sd">    :param map_location: Default: ``None``.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        map_location defines device mapping. See examples for usage.</span>
+
+<span class="sd">    :type pickle_module:</span>
+<span class="sd">    :param pickle_module: Default: ``pickle``.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        If you will call :func:`mge.set_default_device()`, please do it</span>
+<span class="sd">        before :func:`mge.load()`.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode:</span>
+
+<span class="sd">        import megengine as mge</span>
+<span class="sd">        # Load tensors to the same device as defined in model.mge</span>
+<span class="sd">        mge.load(&#39;model.mge&#39;)</span>
+<span class="sd">        # Load all tensors to gpu0.</span>
+<span class="sd">        mge.load(&#39;model.mge&#39;, map_location=&#39;gpu0&#39;)</span>
+<span class="sd">        # Load all tensors originally on gpu0 to cpu0</span>
+<span class="sd">        mge.load(&#39;model.mge&#39;, map_location={&#39;gpu0&#39;:&#39;cpu0&#39;})</span>
+<span class="sd">        # Load all tensors to cpu0</span>
+<span class="sd">        mge.load(&#39;model.mge&#39;, map_location=lambda dev: &#39;cpu0&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">load</span><span class="p">(</span><span class="n">fin</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="n">map_location</span><span class="p">,</span> <span class="n">pickle_module</span><span class="o">=</span><span class="n">pickle_module</span><span class="p">)</span>
+
+    <span class="n">map_location</span> <span class="o">=</span> <span class="n">_get_callable_map_location</span><span class="p">(</span><span class="n">map_location</span><span class="p">)</span>  <span class="c1"># callable map_location</span>
+
+    <span class="k">with</span> <span class="n">dmap</span><span class="p">(</span><span class="n">map_location</span><span class="p">)</span> <span class="k">as</span> <span class="n">dm</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pickle_module</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

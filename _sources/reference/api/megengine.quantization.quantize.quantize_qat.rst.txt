@@ -1,0 +1,6 @@
+megengine.quantization.quantize.quantize\_qat
+=============================================
+
+.. currentmodule:: megengine.quantization.quantize
+
+.. autofunction:: quantize_qat

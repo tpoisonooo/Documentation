@@ -1,0 +1,6 @@
+megengine.functional.asin
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: asin

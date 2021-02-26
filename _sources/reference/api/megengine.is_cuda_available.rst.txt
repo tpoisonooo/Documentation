@@ -1,0 +1,6 @@
+megengine.is\_cuda\_available
+=============================
+
+.. currentmodule:: megengine
+
+.. autofunction:: is_cuda_available

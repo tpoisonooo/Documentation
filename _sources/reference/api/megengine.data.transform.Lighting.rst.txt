@@ -1,0 +1,22 @@
+megengine.data.transform.Lighting
+=================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: Lighting
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Lighting.__init__
+      ~Lighting.apply
+      ~Lighting.apply_batch
+   
+   
+
+   
+   
+   

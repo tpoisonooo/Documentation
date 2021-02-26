@@ -1,0 +1,6 @@
+megengine.functional.concat
+===========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: concat

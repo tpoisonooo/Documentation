@@ -1,0 +1,22 @@
+megengine.data.transform.CenterCrop
+===================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: CenterCrop
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CenterCrop.__init__
+      ~CenterCrop.apply
+      ~CenterCrop.apply_batch
+   
+   
+
+   
+   
+   

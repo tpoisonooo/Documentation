@@ -1,0 +1,6 @@
+megengine.functional.right\_shift
+=================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: right_shift

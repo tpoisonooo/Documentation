@@ -1,0 +1,53 @@
+megengine.Tensor
+================
+
+.. currentmodule:: megengine
+
+.. autoclass:: Tensor
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Tensor.__init__
+      ~Tensor.astype
+      ~Tensor.detach
+      ~Tensor.flatten
+      ~Tensor.isscalar
+      ~Tensor.item
+      ~Tensor.max
+      ~Tensor.mean
+      ~Tensor.min
+      ~Tensor.numpy
+      ~Tensor.prod
+      ~Tensor.reset_zero
+      ~Tensor.reshape
+      ~Tensor.set_value
+      ~Tensor.setscalar
+      ~Tensor.sum
+      ~Tensor.to
+      ~Tensor.tolist
+      ~Tensor.transpose
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Tensor.T
+      ~Tensor.device
+      ~Tensor.dmap_callback
+      ~Tensor.dtype
+      ~Tensor.grad
+      ~Tensor.ndim
+      ~Tensor.q_dict
+      ~Tensor.requires_grad
+      ~Tensor.shape
+      ~Tensor.size
+   
+   

@@ -1,0 +1,6 @@
+megengine.functional.ceil
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: ceil

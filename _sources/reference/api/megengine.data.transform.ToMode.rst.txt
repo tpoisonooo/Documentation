@@ -1,0 +1,22 @@
+megengine.data.transform.ToMode
+===============================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: ToMode
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ToMode.__init__
+      ~ToMode.apply
+      ~ToMode.apply_batch
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+megengine.functional.arange
+===========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: arange

@@ -1,0 +1,22 @@
+megengine.data.transform.TorchTransformCompose
+==============================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: TorchTransformCompose
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TorchTransformCompose.__init__
+      ~TorchTransformCompose.apply
+      ~TorchTransformCompose.apply_batch
+   
+   
+
+   
+   
+   

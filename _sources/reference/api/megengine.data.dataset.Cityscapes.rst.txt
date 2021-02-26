@@ -1,0 +1,27 @@
+megengine.data.dataset.Cityscapes
+=================================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: Cityscapes
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Cityscapes.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Cityscapes.class_names
+      ~Cityscapes.supported_order
+   
+   

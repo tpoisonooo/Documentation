@@ -1,0 +1,60 @@
+megengine.module.qat.ConvBnRelu2d
+=================================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: ConvBnRelu2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConvBnRelu2d.__init__
+      ~ConvBnRelu2d.apply
+      ~ConvBnRelu2d.apply_quant_activation
+      ~ConvBnRelu2d.apply_quant_weight
+      ~ConvBnRelu2d.buffers
+      ~ConvBnRelu2d.calc_conv_bn_qat
+      ~ConvBnRelu2d.children
+      ~ConvBnRelu2d.disable_quantize
+      ~ConvBnRelu2d.eval
+      ~ConvBnRelu2d.fold_weight_bias
+      ~ConvBnRelu2d.forward
+      ~ConvBnRelu2d.from_float_module
+      ~ConvBnRelu2d.get_activation_dtype
+      ~ConvBnRelu2d.get_activation_qparams
+      ~ConvBnRelu2d.get_batch_mean_var
+      ~ConvBnRelu2d.get_weight_dtype
+      ~ConvBnRelu2d.get_weight_qparams
+      ~ConvBnRelu2d.load_state_dict
+      ~ConvBnRelu2d.modules
+      ~ConvBnRelu2d.named_buffers
+      ~ConvBnRelu2d.named_children
+      ~ConvBnRelu2d.named_modules
+      ~ConvBnRelu2d.named_parameters
+      ~ConvBnRelu2d.parameters
+      ~ConvBnRelu2d.register_forward_hook
+      ~ConvBnRelu2d.register_forward_pre_hook
+      ~ConvBnRelu2d.replace_param
+      ~ConvBnRelu2d.set_fake_quant
+      ~ConvBnRelu2d.set_observer
+      ~ConvBnRelu2d.set_qconfig
+      ~ConvBnRelu2d.state_dict
+      ~ConvBnRelu2d.train
+      ~ConvBnRelu2d.update_running_mean_and_running_var
+      ~ConvBnRelu2d.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ConvBnRelu2d.with_act
+      ~ConvBnRelu2d.with_weight
+   
+   

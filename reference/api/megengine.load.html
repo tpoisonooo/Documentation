@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.load &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="随机（Random）" href="../random.html" />
+    <link rel="prev" title="megengine.save" href="megengine.save.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      <li class="toctree-l2">
+ <a class="reference internal" href="../data.html">
+  数据（Data）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../tensor.html">
+  张量（Tensor）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../functional.html">
+  函数式（Functional）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../module.html">
+  模块式（Module）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../autodiff.html">
+  自动微分（Auto-diff）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../optimizer.html">
+  优化器（Optimizer）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../jit.html">
+  即时编译（JIT）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../distributed.html">
+  分布式训练（Distributed）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../quantization.html">
+  量化（Quantization）
+ </a>
+</li>
+
+<li class="toctree-l2 current active">
+ <a class="reference internal" href="../serialization.html">
+  序列化（Serialization）
+ </a>
+ <ul class="current">
+  <li class="toctree-l3">
+   <a class="reference internal" href="megengine.save.html">
+    megengine.save
+   </a>
+  </li>
+  <li class="toctree-l3 current active">
+   <a class="current reference internal" href="#">
+    megengine.load
+   </a>
+  </li>
+ </ul>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../random.html">
+  随机（Random）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../hub.html">
+  模型中心（Hub）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../logger.html">
+  日志（Logger）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../device.html">
+  设备（Device）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../version.html">
+  查询版本信息
+ </a>
+</li>
+
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="megengine-load">
+<h1>megengine.load<a class="headerlink" href="#megengine-load" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt id="megengine.load">
+<code class="sig-name descname"><span class="pre">load</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">f</span></em>, <em class="sig-param"><span class="pre">map_location=None</span></em>, <em class="sig-param"><span class="pre">pickle_module=&lt;module</span> <span class="pre">'pickle'</span> <span class="pre">from</span> <span class="pre">'/opt/hostedtoolcache/Python/3.6.13/x64/lib/python3.6/pickle.py'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/megengine/serialization.html#load"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#megengine.load" title="永久链接至目标">¶</a></dt>
+<dd><p>Load an object saved with save() from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> (<em>text file object</em>) – a string of file name or a text file object from which to load.</p></li>
+<li><p><strong>map_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.9)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(在 Python v3.9)"><em>dict</em></a><em> or </em><em>a function specifying the map rules</em>) – Default: <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>map_location defines device mapping. See examples for usage.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>pickle_module</strong> – Default: <code class="docutils literal notranslate"><span class="pre">pickle</span></code>.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>If you will call <code class="xref py py-func docutils literal notranslate"><span class="pre">mge.set_default_device</span></code>, please do it
+before <code class="xref py py-func docutils literal notranslate"><span class="pre">mge.load</span></code>.</p>
+</div>
+<p>Examples:</p>
+</dd></dl>
+
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

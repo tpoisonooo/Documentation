@@ -1,0 +1,6 @@
+megengine.functional.max
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: max

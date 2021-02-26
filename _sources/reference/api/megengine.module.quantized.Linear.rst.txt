@@ -1,0 +1,40 @@
+megengine.module.quantized.Linear
+=================================
+
+.. currentmodule:: megengine.module.quantized
+
+.. autoclass:: Linear
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Linear.__init__
+      ~Linear.apply
+      ~Linear.buffers
+      ~Linear.children
+      ~Linear.disable_quantize
+      ~Linear.eval
+      ~Linear.forward
+      ~Linear.from_qat_module
+      ~Linear.load_state_dict
+      ~Linear.modules
+      ~Linear.named_buffers
+      ~Linear.named_children
+      ~Linear.named_modules
+      ~Linear.named_parameters
+      ~Linear.parameters
+      ~Linear.register_forward_hook
+      ~Linear.register_forward_pre_hook
+      ~Linear.replace_param
+      ~Linear.state_dict
+      ~Linear.train
+      ~Linear.zero_grad
+   
+   
+
+   
+   
+   

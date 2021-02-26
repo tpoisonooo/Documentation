@@ -1,0 +1,6 @@
+megengine.functional.floor
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: floor

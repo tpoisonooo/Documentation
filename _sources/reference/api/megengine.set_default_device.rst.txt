@@ -1,0 +1,6 @@
+megengine.set\_default\_device
+==============================
+
+.. currentmodule:: megengine
+
+.. autofunction:: set_default_device

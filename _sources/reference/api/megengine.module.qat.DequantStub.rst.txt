@@ -1,0 +1,56 @@
+megengine.module.qat.DequantStub
+================================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: DequantStub
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DequantStub.__init__
+      ~DequantStub.apply
+      ~DequantStub.apply_quant_activation
+      ~DequantStub.apply_quant_weight
+      ~DequantStub.buffers
+      ~DequantStub.children
+      ~DequantStub.disable_quantize
+      ~DequantStub.eval
+      ~DequantStub.forward
+      ~DequantStub.from_float_module
+      ~DequantStub.get_activation_dtype
+      ~DequantStub.get_activation_qparams
+      ~DequantStub.get_weight_dtype
+      ~DequantStub.get_weight_qparams
+      ~DequantStub.load_state_dict
+      ~DequantStub.modules
+      ~DequantStub.named_buffers
+      ~DequantStub.named_children
+      ~DequantStub.named_modules
+      ~DequantStub.named_parameters
+      ~DequantStub.parameters
+      ~DequantStub.register_forward_hook
+      ~DequantStub.register_forward_pre_hook
+      ~DequantStub.replace_param
+      ~DequantStub.set_fake_quant
+      ~DequantStub.set_observer
+      ~DequantStub.set_qconfig
+      ~DequantStub.state_dict
+      ~DequantStub.train
+      ~DequantStub.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DequantStub.with_act
+      ~DequantStub.with_weight
+   
+   

@@ -1,0 +1,6 @@
+megengine.functional.atan
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: atan

@@ -1,0 +1,41 @@
+megengine.module.BatchNorm1d
+============================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: BatchNorm1d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BatchNorm1d.__init__
+      ~BatchNorm1d.apply
+      ~BatchNorm1d.buffers
+      ~BatchNorm1d.children
+      ~BatchNorm1d.disable_quantize
+      ~BatchNorm1d.eval
+      ~BatchNorm1d.forward
+      ~BatchNorm1d.load_state_dict
+      ~BatchNorm1d.modules
+      ~BatchNorm1d.named_buffers
+      ~BatchNorm1d.named_children
+      ~BatchNorm1d.named_modules
+      ~BatchNorm1d.named_parameters
+      ~BatchNorm1d.parameters
+      ~BatchNorm1d.register_forward_hook
+      ~BatchNorm1d.register_forward_pre_hook
+      ~BatchNorm1d.replace_param
+      ~BatchNorm1d.reset_parameters
+      ~BatchNorm1d.reset_running_stats
+      ~BatchNorm1d.state_dict
+      ~BatchNorm1d.train
+      ~BatchNorm1d.zero_grad
+   
+   
+
+   
+   
+   

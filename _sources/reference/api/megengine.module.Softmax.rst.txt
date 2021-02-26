@@ -1,0 +1,39 @@
+megengine.module.Softmax
+========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Softmax
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Softmax.__init__
+      ~Softmax.apply
+      ~Softmax.buffers
+      ~Softmax.children
+      ~Softmax.disable_quantize
+      ~Softmax.eval
+      ~Softmax.forward
+      ~Softmax.load_state_dict
+      ~Softmax.modules
+      ~Softmax.named_buffers
+      ~Softmax.named_children
+      ~Softmax.named_modules
+      ~Softmax.named_parameters
+      ~Softmax.parameters
+      ~Softmax.register_forward_hook
+      ~Softmax.register_forward_pre_hook
+      ~Softmax.replace_param
+      ~Softmax.state_dict
+      ~Softmax.train
+      ~Softmax.zero_grad
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+megengine.distributed.synchronized
+==================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: synchronized

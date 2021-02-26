@@ -1,0 +1,6 @@
+megengine.functional.ones\_like
+===============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: ones_like

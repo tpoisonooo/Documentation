@@ -1,0 +1,6 @@
+megengine.jit.trace.dump
+========================
+
+.. currentmodule:: megengine.jit
+
+.. automethod:: trace.dump

@@ -1,0 +1,6 @@
+megengine.hub.load
+==================
+
+.. currentmodule:: megengine.hub
+
+.. autofunction:: load

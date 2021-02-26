@@ -1,0 +1,6 @@
+megengine.functional.equal
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: equal

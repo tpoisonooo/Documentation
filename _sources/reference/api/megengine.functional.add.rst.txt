@@ -1,0 +1,6 @@
+megengine.functional.add
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: add

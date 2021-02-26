@@ -1,0 +1,28 @@
+megengine.optimizer.Adagrad
+===========================
+
+.. currentmodule:: megengine.optimizer
+
+.. autoclass:: Adagrad
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Adagrad.__init__
+      ~Adagrad.add_param_group
+      ~Adagrad.backward
+      ~Adagrad.bcast_param
+      ~Adagrad.clear_grad
+      ~Adagrad.load_state_dict
+      ~Adagrad.state_dict
+      ~Adagrad.step
+      ~Adagrad.zero_grad
+   
+   
+
+   
+   
+   

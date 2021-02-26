@@ -1,0 +1,6 @@
+megengine.functional.acosh
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: acosh

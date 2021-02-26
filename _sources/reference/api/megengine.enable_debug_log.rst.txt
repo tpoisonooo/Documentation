@@ -1,0 +1,6 @@
+megengine.enable\_debug\_log
+============================
+
+.. currentmodule:: megengine
+
+.. autofunction:: enable_debug_log

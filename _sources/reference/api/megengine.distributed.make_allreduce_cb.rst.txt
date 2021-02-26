@@ -1,0 +1,20 @@
+megengine.distributed.make\_allreduce\_cb
+=========================================
+
+.. currentmodule:: megengine.distributed
+
+.. autoclass:: make_allreduce_cb
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~make_allreduce_cb.__init__
+   
+   
+
+   
+   
+   

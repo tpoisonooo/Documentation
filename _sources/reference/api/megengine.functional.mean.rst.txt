@@ -1,0 +1,6 @@
+megengine.functional.mean
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: mean

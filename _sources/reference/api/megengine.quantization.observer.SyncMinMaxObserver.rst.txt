@@ -1,0 +1,43 @@
+megengine.quantization.observer.SyncMinMaxObserver
+==================================================
+
+.. currentmodule:: megengine.quantization.observer
+
+.. autoclass:: SyncMinMaxObserver
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SyncMinMaxObserver.__init__
+      ~SyncMinMaxObserver.apply
+      ~SyncMinMaxObserver.buffers
+      ~SyncMinMaxObserver.children
+      ~SyncMinMaxObserver.disable
+      ~SyncMinMaxObserver.disable_quantize
+      ~SyncMinMaxObserver.enable
+      ~SyncMinMaxObserver.eval
+      ~SyncMinMaxObserver.forward
+      ~SyncMinMaxObserver.get_dtype
+      ~SyncMinMaxObserver.get_qparams
+      ~SyncMinMaxObserver.load_state_dict
+      ~SyncMinMaxObserver.modules
+      ~SyncMinMaxObserver.named_buffers
+      ~SyncMinMaxObserver.named_children
+      ~SyncMinMaxObserver.named_modules
+      ~SyncMinMaxObserver.named_parameters
+      ~SyncMinMaxObserver.parameters
+      ~SyncMinMaxObserver.register_forward_hook
+      ~SyncMinMaxObserver.register_forward_pre_hook
+      ~SyncMinMaxObserver.replace_param
+      ~SyncMinMaxObserver.state_dict
+      ~SyncMinMaxObserver.train
+      ~SyncMinMaxObserver.zero_grad
+   
+   
+
+   
+   
+   

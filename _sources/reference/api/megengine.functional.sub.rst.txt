@@ -1,0 +1,6 @@
+megengine.functional.sub
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sub

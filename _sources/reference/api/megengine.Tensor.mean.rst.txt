@@ -1,0 +1,6 @@
+megengine.Tensor.mean
+=====================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.mean

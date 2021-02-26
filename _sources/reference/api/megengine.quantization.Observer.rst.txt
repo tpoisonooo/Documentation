@@ -1,0 +1,43 @@
+megengine.quantization.Observer
+===============================
+
+.. currentmodule:: megengine.quantization
+
+.. autoclass:: Observer
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Observer.__init__
+      ~Observer.apply
+      ~Observer.buffers
+      ~Observer.children
+      ~Observer.disable
+      ~Observer.disable_quantize
+      ~Observer.enable
+      ~Observer.eval
+      ~Observer.forward
+      ~Observer.get_dtype
+      ~Observer.get_qparams
+      ~Observer.load_state_dict
+      ~Observer.modules
+      ~Observer.named_buffers
+      ~Observer.named_children
+      ~Observer.named_modules
+      ~Observer.named_parameters
+      ~Observer.parameters
+      ~Observer.register_forward_hook
+      ~Observer.register_forward_pre_hook
+      ~Observer.replace_param
+      ~Observer.state_dict
+      ~Observer.train
+      ~Observer.zero_grad
+   
+   
+
+   
+   
+   

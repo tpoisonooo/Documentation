@@ -1,0 +1,22 @@
+megengine.data.transform.SaturationTransform
+============================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: SaturationTransform
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SaturationTransform.__init__
+      ~SaturationTransform.apply
+      ~SaturationTransform.apply_batch
+   
+   
+
+   
+   
+   

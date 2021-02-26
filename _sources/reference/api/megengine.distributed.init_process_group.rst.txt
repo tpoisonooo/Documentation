@@ -1,0 +1,6 @@
+megengine.distributed.init\_process\_group
+==========================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: init_process_group

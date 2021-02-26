@@ -1,0 +1,22 @@
+megengine.data.transform.Normalize
+==================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: Normalize
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Normalize.__init__
+      ~Normalize.apply
+      ~Normalize.apply_batch
+   
+   
+
+   
+   
+   

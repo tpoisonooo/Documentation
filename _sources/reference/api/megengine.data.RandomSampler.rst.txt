@@ -1,0 +1,23 @@
+megengine.data.RandomSampler
+============================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: RandomSampler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RandomSampler.__init__
+      ~RandomSampler.batch
+      ~RandomSampler.sample
+      ~RandomSampler.scatter
+   
+   
+
+   
+   
+   

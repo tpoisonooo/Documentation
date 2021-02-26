@@ -1,0 +1,39 @@
+megengine.module.Identity
+=========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Identity
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Identity.__init__
+      ~Identity.apply
+      ~Identity.buffers
+      ~Identity.children
+      ~Identity.disable_quantize
+      ~Identity.eval
+      ~Identity.forward
+      ~Identity.load_state_dict
+      ~Identity.modules
+      ~Identity.named_buffers
+      ~Identity.named_children
+      ~Identity.named_modules
+      ~Identity.named_parameters
+      ~Identity.parameters
+      ~Identity.register_forward_hook
+      ~Identity.register_forward_pre_hook
+      ~Identity.replace_param
+      ~Identity.state_dict
+      ~Identity.train
+      ~Identity.zero_grad
+   
+   
+
+   
+   
+   

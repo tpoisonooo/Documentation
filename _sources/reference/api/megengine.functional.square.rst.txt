@@ -1,0 +1,6 @@
+megengine.functional.square
+===========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: square

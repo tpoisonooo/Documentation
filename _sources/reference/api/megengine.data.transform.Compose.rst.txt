@@ -1,0 +1,22 @@
+megengine.data.transform.Compose
+================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: Compose
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Compose.__init__
+      ~Compose.apply
+      ~Compose.apply_batch
+   
+   
+
+   
+   
+   

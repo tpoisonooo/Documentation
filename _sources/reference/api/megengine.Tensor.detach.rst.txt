@@ -1,0 +1,6 @@
+megengine.Tensor.detach
+=======================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.detach

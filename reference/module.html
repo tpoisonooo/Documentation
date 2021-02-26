@@ -1,0 +1,1132 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>模块式（Module） &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"], "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="megengine.module.Module" href="api/megengine.module.Module.html" />
+    <link rel="prev" title="megengine.functional.topk_accuracy" href="api/megengine.functional.topk_accuracy.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../index.html">
+        <img src="../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      <li class="toctree-l2">
+ <a class="reference internal" href="data.html">
+  数据（Data）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="tensor.html">
+  张量（Tensor）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="functional.html">
+  函数式（Functional）
+ </a>
+</li>
+
+<li class="toctree-l2 current active">
+ <a class="current reference internal" href="#">
+  模块式（Module）
+ </a>
+ <ul>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Module.html">
+    megengine.module.Module
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Sequential.html">
+    megengine.module.Sequential
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.fill_.html">
+    megengine.module.init.fill_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.zeros_.html">
+    megengine.module.init.zeros_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.ones_.html">
+    megengine.module.init.ones_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.uniform_.html">
+    megengine.module.init.uniform_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.normal_.html">
+    megengine.module.init.normal_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.calculate_gain.html">
+    megengine.module.init.calculate_gain
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.calculate_fan_in_and_fan_out.html">
+    megengine.module.init.calculate_fan_in_and_fan_out
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.calculate_correct_fan.html">
+    megengine.module.init.calculate_correct_fan
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.xavier_uniform_.html">
+    megengine.module.init.xavier_uniform_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.xavier_normal_.html">
+    megengine.module.init.xavier_normal_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.msra_uniform_.html">
+    megengine.module.init.msra_uniform_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.init.msra_normal_.html">
+    megengine.module.init.msra_normal_
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Elemwise.html">
+    megengine.module.Elemwise
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Concat.html">
+    megengine.module.Concat
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Conv1d.html">
+    megengine.module.Conv1d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Conv2d.html">
+    megengine.module.Conv2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.ConvRelu2d.html">
+    megengine.module.ConvRelu2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.ConvTranspose2d.html">
+    megengine.module.ConvTranspose2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.LocalConv2d.html">
+    megengine.module.LocalConv2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.AvgPool2d.html">
+    megengine.module.AvgPool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.MaxPool2d.html">
+    megengine.module.MaxPool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.AdaptiveAvgPool2d.html">
+    megengine.module.AdaptiveAvgPool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.AdaptiveMaxPool2d.html">
+    megengine.module.AdaptiveMaxPool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Sigmoid.html">
+    megengine.module.Sigmoid
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Softmax.html">
+    megengine.module.Softmax
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.ReLU.html">
+    megengine.module.ReLU
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.LeakyReLU.html">
+    megengine.module.LeakyReLU
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.PReLU.html">
+    megengine.module.PReLU
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.BatchNorm1d.html">
+    megengine.module.BatchNorm1d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.BatchNorm2d.html">
+    megengine.module.BatchNorm2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.SyncBatchNorm.html">
+    megengine.module.SyncBatchNorm
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.GroupNorm.html">
+    megengine.module.GroupNorm
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.InstanceNorm.html">
+    megengine.module.InstanceNorm
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.LayerNorm.html">
+    megengine.module.LayerNorm
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Linear.html">
+    megengine.module.Linear
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Identity.html">
+    megengine.module.Identity
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Dropout.html">
+    megengine.module.Dropout
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.Embedding.html">
+    megengine.module.Embedding
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.ConvBn2d.html">
+    megengine.module.ConvBn2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.ConvBnRelu2d.html">
+    megengine.module.ConvBnRelu2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.BatchMatMulActivation.html">
+    megengine.module.BatchMatMulActivation
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.QuantStub.html">
+    megengine.module.QuantStub
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.DequantStub.html">
+    megengine.module.DequantStub
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.QATModule.html">
+    megengine.module.qat.QATModule
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.Linear.html">
+    megengine.module.qat.Linear
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.Elemwise.html">
+    megengine.module.qat.Elemwise
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.Concat.html">
+    megengine.module.qat.Concat
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.Conv2d.html">
+    megengine.module.qat.Conv2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.ConvRelu2d.html">
+    megengine.module.qat.ConvRelu2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.ConvBn2d.html">
+    megengine.module.qat.ConvBn2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.ConvBnRelu2d.html">
+    megengine.module.qat.ConvBnRelu2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.BatchMatMulActivation.html">
+    megengine.module.qat.BatchMatMulActivation
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.QuantStub.html">
+    megengine.module.qat.QuantStub
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.qat.DequantStub.html">
+    megengine.module.qat.DequantStub
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html">
+    megengine.module.quantized.QuantizedModule
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.Linear.html">
+    megengine.module.quantized.Linear
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.Elemwise.html">
+    megengine.module.quantized.Elemwise
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.Concat.html">
+    megengine.module.quantized.Concat
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.Conv2d.html">
+    megengine.module.quantized.Conv2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.ConvRelu2d.html">
+    megengine.module.quantized.ConvRelu2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.ConvBn2d.html">
+    megengine.module.quantized.ConvBn2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.ConvBnRelu2d.html">
+    megengine.module.quantized.ConvBnRelu2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.BatchMatMulActivation.html">
+    megengine.module.quantized.BatchMatMulActivation
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.QuantStub.html">
+    megengine.module.quantized.QuantStub
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.module.quantized.DequantStub.html">
+    megengine.module.quantized.DequantStub
+   </a>
+  </li>
+ </ul>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="autodiff.html">
+  自动微分（Auto-diff）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="optimizer.html">
+  优化器（Optimizer）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="jit.html">
+  即时编译（JIT）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="distributed.html">
+  分布式训练（Distributed）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="quantization.html">
+  量化（Quantization）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="serialization.html">
+  序列化（Serialization）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="random.html">
+  随机（Random）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="hub.html">
+  模型中心（Hub）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="logger.html">
+  日志（Logger）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="device.html">
+  设备（Device）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="version.html">
+  查询版本信息
+ </a>
+</li>
+
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#float-module">
+   Float Module
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     基础容器
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     初始化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     算子支持
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     卷积层
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     池化层
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     非线性激活层
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     归一化层
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     线性层
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     随机失活层
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     稀疏层
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     融合操作
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     量化支持
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#qat-module">
+   QAT Module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantized-module">
+   Quantized Module
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <span class="target" id="module-megengine.module"></span><div class="section" id="module">
+<h1>模块式（Module）<a class="headerlink" href="#module" title="永久链接至标题">¶</a></h1>
+<div class="section" id="float-module">
+<h2>Float Module<a class="headerlink" href="#float-module" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id1">
+<h3>基础容器<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Module</span></code></a></p></td>
+<td><p>Base Module class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.Sequential.html#megengine.module.Sequential" title="megengine.module.Sequential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sequential</span></code></a></p></td>
+<td><p>A sequential container.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.module.init"></span></div>
+<div class="section" id="id2">
+<h3>初始化<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.init.fill_.html#megengine.module.init.fill_" title="megengine.module.init.fill_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fill_</span></code></a></p></td>
+<td><p>Fills the given <code class="docutils literal notranslate"><span class="pre">tensor</span></code> with value <code class="docutils literal notranslate"><span class="pre">val</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.init.zeros_.html#megengine.module.init.zeros_" title="megengine.module.init.zeros_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zeros_</span></code></a></p></td>
+<td><p>Fills the given <code class="docutils literal notranslate"><span class="pre">tensor</span></code> with scalar value <cite>0</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.init.ones_.html#megengine.module.init.ones_" title="megengine.module.init.ones_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ones_</span></code></a></p></td>
+<td><p>Fills the given <code class="docutils literal notranslate"><span class="pre">tensor</span></code> with the scalar value <cite>1</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.init.uniform_.html#megengine.module.init.uniform_" title="megengine.module.init.uniform_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uniform_</span></code></a></p></td>
+<td><p>Fills the given <code class="docutils literal notranslate"><span class="pre">tensor</span></code> with random value sampled from uniform distribution <span class="math notranslate nohighlight">\(\mathcal{U}(\text{a}, \text{b})\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.init.normal_.html#megengine.module.init.normal_" title="megengine.module.init.normal_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normal_</span></code></a></p></td>
+<td><p>Fills the given <code class="docutils literal notranslate"><span class="pre">tensor</span></code> with random value sampled from normal distribution <span class="math notranslate nohighlight">\(\mathcal{N}(\text{mean}, \text{std}^2)\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.init.calculate_gain.html#megengine.module.init.calculate_gain" title="megengine.module.init.calculate_gain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_gain</span></code></a></p></td>
+<td><p>Returns a recommended gain value (see the table below) for the given nonlinearity function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.init.calculate_fan_in_and_fan_out.html#megengine.module.init.calculate_fan_in_and_fan_out" title="megengine.module.init.calculate_fan_in_and_fan_out"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_fan_in_and_fan_out</span></code></a></p></td>
+<td><p>Calculates fan_in / fan_out value for given weight tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.init.calculate_correct_fan.html#megengine.module.init.calculate_correct_fan" title="megengine.module.init.calculate_correct_fan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_correct_fan</span></code></a></p></td>
+<td><p>Calculates fan_in / fan_out value for given weight tensor, depending on given <code class="docutils literal notranslate"><span class="pre">mode</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.init.xavier_uniform_.html#megengine.module.init.xavier_uniform_" title="megengine.module.init.xavier_uniform_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xavier_uniform_</span></code></a></p></td>
+<td><p>Fills tensor with random values sampled from <span class="math notranslate nohighlight">\(\mathcal{U}(-a, a)\)</span> where</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.init.xavier_normal_.html#megengine.module.init.xavier_normal_" title="megengine.module.init.xavier_normal_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xavier_normal_</span></code></a></p></td>
+<td><p>Fills tensor with random values sampled from <span class="math notranslate nohighlight">\(\mathcal{N}(0, \text{std}^2)\)</span> where</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.init.msra_uniform_.html#megengine.module.init.msra_uniform_" title="megengine.module.init.msra_uniform_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msra_uniform_</span></code></a></p></td>
+<td><p>Fills tensor wilth random values sampled from <span class="math notranslate nohighlight">\(\mathcal{U}(-\text{bound}, \text{bound})\)</span> where</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.init.msra_normal_.html#megengine.module.init.msra_normal_" title="megengine.module.init.msra_normal_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msra_normal_</span></code></a></p></td>
+<td><p>Fills tensor wilth random values sampled from <span class="math notranslate nohighlight">\(\mathcal{N}(0, \text{std}^2)\)</span> where</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id3">
+<h3>算子支持<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Elemwise.html#megengine.module.Elemwise" title="megengine.module.Elemwise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Elemwise</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> to do elemwise operator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.Concat.html#megengine.module.Concat" title="megengine.module.Concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Concat</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> to do functional concat.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h3>卷积层<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Conv1d.html#megengine.module.Conv1d" title="megengine.module.Conv1d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Conv1d</span></code></a></p></td>
+<td><p>Applies a 1D convolution over an input tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Conv2d</span></code></a></p></td>
+<td><p>Applies a 2D convolution over an input tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.ConvRelu2d.html#megengine.module.ConvRelu2d" title="megengine.module.ConvRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvRelu2d</span></code></a></p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including Conv2d and relu.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.ConvTranspose2d.html#megengine.module.ConvTranspose2d" title="megengine.module.ConvTranspose2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvTranspose2d</span></code></a></p></td>
+<td><p>Applies a 2D transposed convolution over an input tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.LocalConv2d.html#megengine.module.LocalConv2d" title="megengine.module.LocalConv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalConv2d</span></code></a></p></td>
+<td><p>Applies a spatial convolution with untied kernels over an groupped channeled input 4D tensor.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id5">
+<h3>池化层<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.AvgPool2d.html#megengine.module.AvgPool2d" title="megengine.module.AvgPool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AvgPool2d</span></code></a></p></td>
+<td><p>Applies a 2D average pooling over an input.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.MaxPool2d.html#megengine.module.MaxPool2d" title="megengine.module.MaxPool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaxPool2d</span></code></a></p></td>
+<td><p>Applies a 2D max pooling over an input.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.AdaptiveAvgPool2d.html#megengine.module.AdaptiveAvgPool2d" title="megengine.module.AdaptiveAvgPool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdaptiveAvgPool2d</span></code></a></p></td>
+<td><p>Applies a 2D average pooling over an input.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.AdaptiveMaxPool2d.html#megengine.module.AdaptiveMaxPool2d" title="megengine.module.AdaptiveMaxPool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdaptiveMaxPool2d</span></code></a></p></td>
+<td><p>Applies a 2D max adaptive pooling over an input.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id6">
+<h3>非线性激活层<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Sigmoid.html#megengine.module.Sigmoid" title="megengine.module.Sigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sigmoid</span></code></a></p></td>
+<td><p>Applies the element-wise function:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.Softmax.html#megengine.module.Softmax" title="megengine.module.Softmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Softmax</span></code></a></p></td>
+<td><p>Applies a softmax function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.ReLU.html#megengine.module.ReLU" title="megengine.module.ReLU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReLU</span></code></a></p></td>
+<td><p>Applies the element-wise function:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.LeakyReLU.html#megengine.module.LeakyReLU" title="megengine.module.LeakyReLU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeakyReLU</span></code></a></p></td>
+<td><p>Applies the element-wise function:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.PReLU.html#megengine.module.PReLU" title="megengine.module.PReLU"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PReLU</span></code></a></p></td>
+<td><p>Applies the element-wise function:</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id7">
+<h3>归一化层<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.BatchNorm1d.html#megengine.module.BatchNorm1d" title="megengine.module.BatchNorm1d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchNorm1d</span></code></a></p></td>
+<td><p>Applies Batch Normalization over a 2D/3D tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.BatchNorm2d.html#megengine.module.BatchNorm2d" title="megengine.module.BatchNorm2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchNorm2d</span></code></a></p></td>
+<td><p>Applies Batch Normalization over a 4D tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.SyncBatchNorm.html#megengine.module.SyncBatchNorm" title="megengine.module.SyncBatchNorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SyncBatchNorm</span></code></a></p></td>
+<td><p>Applies Synchronization Batch Normalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.GroupNorm.html#megengine.module.GroupNorm" title="megengine.module.GroupNorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupNorm</span></code></a></p></td>
+<td><p>Simple implementation of GroupNorm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.InstanceNorm.html#megengine.module.InstanceNorm" title="megengine.module.InstanceNorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InstanceNorm</span></code></a></p></td>
+<td><p>Simple implementation of InstanceNorm.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.LayerNorm.html#megengine.module.LayerNorm" title="megengine.module.LayerNorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LayerNorm</span></code></a></p></td>
+<td><p>Simple implementation of LayerNorm.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id8">
+<h3>线性层<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Linear.html#megengine.module.Linear" title="megengine.module.Linear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Linear</span></code></a></p></td>
+<td><p>Applies a linear transformation to the input.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.Identity.html#megengine.module.Identity" title="megengine.module.Identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Identity</span></code></a></p></td>
+<td><p>A placeholder identity operator that will ignore any argument.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id9">
+<h3>随机失活层<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Dropout.html#megengine.module.Dropout" title="megengine.module.Dropout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dropout</span></code></a></p></td>
+<td><p>Randomly sets input elements to zeros with the probability <span class="math notranslate nohighlight">\(drop\_prob\)</span> during training.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id10">
+<h3>稀疏层<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Embedding.html#megengine.module.Embedding" title="megengine.module.Embedding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Embedding</span></code></a></p></td>
+<td><p>A simple lookup table that stores embeddings of a fixed dictionary and size.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id11">
+<h3>融合操作<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.ConvBn2d.html#megengine.module.ConvBn2d" title="megengine.module.ConvBn2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBn2d</span></code></a></p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including Conv2d, BatchNorm2d.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.ConvBnRelu2d.html#megengine.module.ConvBnRelu2d" title="megengine.module.ConvBnRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code></a></p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including Conv2d, BatchNorm2d and relu.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.BatchMatMulActivation.html#megengine.module.BatchMatMulActivation" title="megengine.module.BatchMatMulActivation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a></p></td>
+<td><p>Batched MatMul with activation(only relu supported), no transpose anywhere.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id12">
+<h3>量化支持<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.QuantStub.html#megengine.module.QuantStub" title="megengine.module.QuantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantStub</span></code></a></p></td>
+<td><p>A helper <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> simply returning input.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.DequantStub.html#megengine.module.DequantStub" title="megengine.module.DequantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DequantStub</span></code></a></p></td>
+<td><p>A helper <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> simply returning input.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.module.qat"></span></div>
+</div>
+<div class="section" id="qat-module">
+<h2>QAT Module<a class="headerlink" href="#qat-module" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QATModule</span></code></a></p></td>
+<td><p>Base class of quantized-float related Module, basically for QAT and Calibration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.Linear.html#megengine.module.qat.Linear" title="megengine.module.qat.Linear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Linear</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Linear</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.Elemwise.html#megengine.module.qat.Elemwise" title="megengine.module.qat.Elemwise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Elemwise</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to do elemwise operator with QAT support.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.Concat.html#megengine.module.qat.Concat" title="megengine.module.qat.Concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Concat</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to do functional concat with QAT support.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.Conv2d.html#megengine.module.qat.Conv2d" title="megengine.module.qat.Conv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Conv2d</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> Conv2d with QAT support.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.ConvRelu2d.html#megengine.module.qat.ConvRelu2d" title="megengine.module.qat.ConvRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvRelu2d</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> include Conv2d and Relu with QAT support.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.ConvBn2d.html#megengine.module.qat.ConvBn2d" title="megengine.module.qat.ConvBn2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBn2d</span></code></a></p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> including Conv2d, BatchNorm2d with QAT support.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.ConvBnRelu2d.html#megengine.module.qat.ConvBnRelu2d" title="megengine.module.qat.ConvBnRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code></a></p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> including Conv2d, BatchNorm2d and relu with QAT support.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.BatchMatMulActivation.html#megengine.module.qat.BatchMatMulActivation" title="megengine.module.qat.BatchMatMulActivation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.QuantStub.html#megengine.module.qat.QuantStub" title="megengine.module.qat.QuantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantStub</span></code></a></p></td>
+<td><p>A helper QATModule simply return input, but will quantize input after converted to <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.DequantStub.html#megengine.module.qat.DequantStub" title="megengine.module.qat.DequantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DequantStub</span></code></a></p></td>
+<td><p>A helper QATModule simply return input, but will de-quantize input after converted to <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a>.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.module.quantized"></span></div>
+<div class="section" id="quantized-module">
+<h2>Quantized Module<a class="headerlink" href="#quantized-module" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a></p></td>
+<td><p>Base class of quantized Module, which should be converted from QATModule and not support traning.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.Linear.html#megengine.module.quantized.Linear" title="megengine.module.quantized.Linear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Linear</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Linear</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.Elemwise.html#megengine.module.quantized.Elemwise" title="megengine.module.quantized.Elemwise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Elemwise</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Elemwise</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.Concat.html#megengine.module.quantized.Concat" title="megengine.module.quantized.Concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Concat</span></code></a></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a> to do quantized concat, used for inference only.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.Conv2d.html#megengine.module.quantized.Conv2d" title="megengine.module.quantized.Conv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Conv2d</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.ConvRelu2d.html#megengine.module.quantized.ConvRelu2d" title="megengine.module.quantized.ConvRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvRelu2d</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvRelu2d</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.ConvBn2d.html#megengine.module.quantized.ConvBn2d" title="megengine.module.quantized.ConvBn2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBn2d</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvBn2d</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.ConvBnRelu2d.html#megengine.module.quantized.ConvBnRelu2d" title="megengine.module.quantized.ConvBnRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.BatchMatMulActivation.html#megengine.module.quantized.BatchMatMulActivation" title="megengine.module.quantized.BatchMatMulActivation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.QuantStub.html#megengine.module.quantized.QuantStub" title="megengine.module.quantized.QuantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantStub</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">QuantStub</span></code>, will convert input to quantized dtype.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.DequantStub.html#megengine.module.quantized.DequantStub" title="megengine.module.quantized.DequantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DequantStub</span></code></a></p></td>
+<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">DequantStub</span></code>, will restore quantized input to float32 dtype.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

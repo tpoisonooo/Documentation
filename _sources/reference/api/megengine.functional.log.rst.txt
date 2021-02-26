@@ -1,0 +1,6 @@
+megengine.functional.log
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: log

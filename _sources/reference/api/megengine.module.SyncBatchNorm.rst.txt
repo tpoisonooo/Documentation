@@ -1,0 +1,41 @@
+megengine.module.SyncBatchNorm
+==============================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: SyncBatchNorm
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SyncBatchNorm.__init__
+      ~SyncBatchNorm.apply
+      ~SyncBatchNorm.buffers
+      ~SyncBatchNorm.children
+      ~SyncBatchNorm.disable_quantize
+      ~SyncBatchNorm.eval
+      ~SyncBatchNorm.forward
+      ~SyncBatchNorm.load_state_dict
+      ~SyncBatchNorm.modules
+      ~SyncBatchNorm.named_buffers
+      ~SyncBatchNorm.named_children
+      ~SyncBatchNorm.named_modules
+      ~SyncBatchNorm.named_parameters
+      ~SyncBatchNorm.parameters
+      ~SyncBatchNorm.register_forward_hook
+      ~SyncBatchNorm.register_forward_pre_hook
+      ~SyncBatchNorm.replace_param
+      ~SyncBatchNorm.reset_parameters
+      ~SyncBatchNorm.reset_running_stats
+      ~SyncBatchNorm.state_dict
+      ~SyncBatchNorm.train
+      ~SyncBatchNorm.zero_grad
+   
+   
+
+   
+   
+   

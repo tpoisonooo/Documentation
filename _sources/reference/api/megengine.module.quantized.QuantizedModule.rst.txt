@@ -1,0 +1,40 @@
+megengine.module.quantized.QuantizedModule
+==========================================
+
+.. currentmodule:: megengine.module.quantized
+
+.. autoclass:: QuantizedModule
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QuantizedModule.__init__
+      ~QuantizedModule.apply
+      ~QuantizedModule.buffers
+      ~QuantizedModule.children
+      ~QuantizedModule.disable_quantize
+      ~QuantizedModule.eval
+      ~QuantizedModule.forward
+      ~QuantizedModule.from_qat_module
+      ~QuantizedModule.load_state_dict
+      ~QuantizedModule.modules
+      ~QuantizedModule.named_buffers
+      ~QuantizedModule.named_children
+      ~QuantizedModule.named_modules
+      ~QuantizedModule.named_parameters
+      ~QuantizedModule.parameters
+      ~QuantizedModule.register_forward_hook
+      ~QuantizedModule.register_forward_pre_hook
+      ~QuantizedModule.replace_param
+      ~QuantizedModule.state_dict
+      ~QuantizedModule.train
+      ~QuantizedModule.zero_grad
+   
+   
+
+   
+   
+   

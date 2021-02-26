@@ -1,0 +1,6 @@
+megengine.Tensor.device
+=======================
+
+.. currentmodule:: megengine
+
+.. autoattribute:: Tensor.device

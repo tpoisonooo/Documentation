@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>概览：模块代码 &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../index.html">
+        <img src="../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>代码可用的所有模块</h1>
+<ul><li><a href="megengine/autodiff/grad_manager.html">megengine.autodiff.grad_manager</a></li>
+<li><a href="megengine/core/tensor/array_method.html">megengine.core.tensor.array_method</a></li>
+<li><a href="megengine/data/collator.html">megengine.data.collator</a></li>
+<li><a href="megengine/data/dataloader.html">megengine.data.dataloader</a></li>
+<li><a href="megengine/data/dataset/meta_dataset.html">megengine.data.dataset.meta_dataset</a></li>
+<li><a href="megengine/data/dataset/vision/cifar.html">megengine.data.dataset.vision.cifar</a></li>
+<li><a href="megengine/data/dataset/vision/cityscapes.html">megengine.data.dataset.vision.cityscapes</a></li>
+<li><a href="megengine/data/dataset/vision/coco.html">megengine.data.dataset.vision.coco</a></li>
+<li><a href="megengine/data/dataset/vision/folder.html">megengine.data.dataset.vision.folder</a></li>
+<li><a href="megengine/data/dataset/vision/imagenet.html">megengine.data.dataset.vision.imagenet</a></li>
+<li><a href="megengine/data/dataset/vision/mnist.html">megengine.data.dataset.vision.mnist</a></li>
+<li><a href="megengine/data/dataset/vision/objects365.html">megengine.data.dataset.vision.objects365</a></li>
+<li><a href="megengine/data/dataset/vision/voc.html">megengine.data.dataset.vision.voc</a></li>
+<li><a href="megengine/data/sampler.html">megengine.data.sampler</a></li>
+<li><a href="megengine/data/transform/vision/transform.html">megengine.data.transform.vision.transform</a></li>
+<li><a href="megengine/device.html">megengine.device</a></li>
+<li><a href="megengine/distributed/functional.html">megengine.distributed.functional</a></li>
+<li><a href="megengine/distributed/group.html">megengine.distributed.group</a></li>
+<li><a href="megengine/distributed/helper.html">megengine.distributed.helper</a></li>
+<li><a href="megengine/distributed/launcher.html">megengine.distributed.launcher</a></li>
+<li><a href="megengine/distributed/server.html">megengine.distributed.server</a></li>
+<li><a href="megengine/functional/elemwise.html">megengine.functional.elemwise</a></li>
+<li><a href="megengine/functional/loss.html">megengine.functional.loss</a></li>
+<li><a href="megengine/functional/math.html">megengine.functional.math</a></li>
+<li><a href="megengine/functional/nn.html">megengine.functional.nn</a></li>
+<li><a href="megengine/functional/tensor.html">megengine.functional.tensor</a></li>
+<li><a href="megengine/functional/utils.html">megengine.functional.utils</a></li>
+<li><a href="megengine/hub/hub.html">megengine.hub.hub</a></li>
+<li><a href="megengine/jit/sublinear_memory_config.html">megengine.jit.sublinear_memory_config</a></li>
+<li><a href="megengine/jit/tracing.html">megengine.jit.tracing</a></li>
+<li><a href="megengine/logger.html">megengine.logger</a></li>
+<li><a href="megengine/module/activation.html">megengine.module.activation</a></li>
+<li><a href="megengine/module/adaptive_pooling.html">megengine.module.adaptive_pooling</a></li>
+<li><a href="megengine/module/batch_matmul_activation.html">megengine.module.batch_matmul_activation</a></li>
+<li><a href="megengine/module/batchnorm.html">megengine.module.batchnorm</a></li>
+<li><a href="megengine/module/concat.html">megengine.module.concat</a></li>
+<li><a href="megengine/module/conv.html">megengine.module.conv</a></li>
+<li><a href="megengine/module/conv_bn.html">megengine.module.conv_bn</a></li>
+<li><a href="megengine/module/dropout.html">megengine.module.dropout</a></li>
+<li><a href="megengine/module/elemwise.html">megengine.module.elemwise</a></li>
+<li><a href="megengine/module/embedding.html">megengine.module.embedding</a></li>
+<li><a href="megengine/module/identity.html">megengine.module.identity</a></li>
+<li><a href="megengine/module/init.html">megengine.module.init</a></li>
+<li><a href="megengine/module/linear.html">megengine.module.linear</a></li>
+<li><a href="megengine/module/module.html">megengine.module.module</a></li>
+<li><a href="megengine/module/normalization.html">megengine.module.normalization</a></li>
+<li><a href="megengine/module/pooling.html">megengine.module.pooling</a></li>
+<li><a href="megengine/module/qat/batch_matmul_activation.html">megengine.module.qat.batch_matmul_activation</a></li>
+<li><a href="megengine/module/qat/concat.html">megengine.module.qat.concat</a></li>
+<li><a href="megengine/module/qat/conv.html">megengine.module.qat.conv</a></li>
+<li><a href="megengine/module/qat/conv_bn.html">megengine.module.qat.conv_bn</a></li>
+<li><a href="megengine/module/qat/elemwise.html">megengine.module.qat.elemwise</a></li>
+<li><a href="megengine/module/qat/linear.html">megengine.module.qat.linear</a></li>
+<li><a href="megengine/module/qat/module.html">megengine.module.qat.module</a></li>
+<li><a href="megengine/module/qat/quant_dequant.html">megengine.module.qat.quant_dequant</a></li>
+<li><a href="megengine/module/quant_dequant.html">megengine.module.quant_dequant</a></li>
+<li><a href="megengine/module/quantized/batch_matmul_activation.html">megengine.module.quantized.batch_matmul_activation</a></li>
+<li><a href="megengine/module/quantized/concat.html">megengine.module.quantized.concat</a></li>
+<li><a href="megengine/module/quantized/conv.html">megengine.module.quantized.conv</a></li>
+<li><a href="megengine/module/quantized/conv_bn.html">megengine.module.quantized.conv_bn</a></li>
+<li><a href="megengine/module/quantized/elemwise.html">megengine.module.quantized.elemwise</a></li>
+<li><a href="megengine/module/quantized/linear.html">megengine.module.quantized.linear</a></li>
+<li><a href="megengine/module/quantized/module.html">megengine.module.quantized.module</a></li>
+<li><a href="megengine/module/quantized/quant_dequant.html">megengine.module.quantized.quant_dequant</a></li>
+<li><a href="megengine/module/sequential.html">megengine.module.sequential</a></li>
+<li><a href="megengine/optimizer/adadelta.html">megengine.optimizer.adadelta</a></li>
+<li><a href="megengine/optimizer/adagrad.html">megengine.optimizer.adagrad</a></li>
+<li><a href="megengine/optimizer/adam.html">megengine.optimizer.adam</a></li>
+<li><a href="megengine/optimizer/lr_scheduler.html">megengine.optimizer.lr_scheduler</a></li>
+<li><a href="megengine/optimizer/multi_step_lr.html">megengine.optimizer.multi_step_lr</a></li>
+<li><a href="megengine/optimizer/optimizer.html">megengine.optimizer.optimizer</a></li>
+<li><a href="megengine/optimizer/sgd.html">megengine.optimizer.sgd</a></li>
+<li><a href="megengine/quantization/fake_quant.html">megengine.quantization.fake_quant</a></li>
+<li><a href="megengine/quantization/observer.html">megengine.quantization.observer</a></li>
+<li><a href="megengine/quantization/qconfig.html">megengine.quantization.qconfig</a></li>
+<li><a href="megengine/quantization/quantize.html">megengine.quantization.quantize</a></li>
+<li><a href="megengine/quantization/utils.html">megengine.quantization.utils</a></li>
+<li><a href="megengine/random/distribution.html">megengine.random.distribution</a></li>
+<li><a href="megengine/random/rng.html">megengine.random.rng</a></li>
+<li><a href="megengine/serialization.html">megengine.serialization</a></li>
+<li><a href="megengine/tensor.html">megengine.tensor</a></li>
+</ul>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

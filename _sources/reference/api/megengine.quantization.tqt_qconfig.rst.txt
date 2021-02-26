@@ -1,0 +1,6 @@
+megengine.quantization.tqt\_qconfig
+===================================
+
+.. currentmodule:: megengine.quantization
+
+.. autodata:: tqt_qconfig

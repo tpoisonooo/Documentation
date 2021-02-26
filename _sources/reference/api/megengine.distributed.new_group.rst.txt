@@ -1,0 +1,6 @@
+megengine.distributed.new\_group
+================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: new_group

@@ -1,0 +1,22 @@
+megengine.data.transform.ContrastTransform
+==========================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: ContrastTransform
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ContrastTransform.__init__
+      ~ContrastTransform.apply
+      ~ContrastTransform.apply_batch
+   
+   
+
+   
+   
+   

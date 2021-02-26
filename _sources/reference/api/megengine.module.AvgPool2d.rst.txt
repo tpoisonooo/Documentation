@@ -1,0 +1,39 @@
+megengine.module.AvgPool2d
+==========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: AvgPool2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AvgPool2d.__init__
+      ~AvgPool2d.apply
+      ~AvgPool2d.buffers
+      ~AvgPool2d.children
+      ~AvgPool2d.disable_quantize
+      ~AvgPool2d.eval
+      ~AvgPool2d.forward
+      ~AvgPool2d.load_state_dict
+      ~AvgPool2d.modules
+      ~AvgPool2d.named_buffers
+      ~AvgPool2d.named_children
+      ~AvgPool2d.named_modules
+      ~AvgPool2d.named_parameters
+      ~AvgPool2d.parameters
+      ~AvgPool2d.register_forward_hook
+      ~AvgPool2d.register_forward_pre_hook
+      ~AvgPool2d.replace_param
+      ~AvgPool2d.state_dict
+      ~AvgPool2d.train
+      ~AvgPool2d.zero_grad
+   
+   
+
+   
+   
+   

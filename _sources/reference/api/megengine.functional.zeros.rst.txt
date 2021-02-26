@@ -1,0 +1,6 @@
+megengine.functional.zeros
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: zeros

@@ -1,0 +1,39 @@
+megengine.module.AdaptiveAvgPool2d
+==================================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: AdaptiveAvgPool2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AdaptiveAvgPool2d.__init__
+      ~AdaptiveAvgPool2d.apply
+      ~AdaptiveAvgPool2d.buffers
+      ~AdaptiveAvgPool2d.children
+      ~AdaptiveAvgPool2d.disable_quantize
+      ~AdaptiveAvgPool2d.eval
+      ~AdaptiveAvgPool2d.forward
+      ~AdaptiveAvgPool2d.load_state_dict
+      ~AdaptiveAvgPool2d.modules
+      ~AdaptiveAvgPool2d.named_buffers
+      ~AdaptiveAvgPool2d.named_children
+      ~AdaptiveAvgPool2d.named_modules
+      ~AdaptiveAvgPool2d.named_parameters
+      ~AdaptiveAvgPool2d.parameters
+      ~AdaptiveAvgPool2d.register_forward_hook
+      ~AdaptiveAvgPool2d.register_forward_pre_hook
+      ~AdaptiveAvgPool2d.replace_param
+      ~AdaptiveAvgPool2d.state_dict
+      ~AdaptiveAvgPool2d.train
+      ~AdaptiveAvgPool2d.zero_grad
+   
+   
+
+   
+   
+   

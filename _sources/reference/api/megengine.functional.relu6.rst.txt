@@ -1,0 +1,6 @@
+megengine.functional.relu6
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: relu6

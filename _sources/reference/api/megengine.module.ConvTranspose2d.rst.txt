@@ -1,0 +1,40 @@
+megengine.module.ConvTranspose2d
+================================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: ConvTranspose2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConvTranspose2d.__init__
+      ~ConvTranspose2d.apply
+      ~ConvTranspose2d.buffers
+      ~ConvTranspose2d.children
+      ~ConvTranspose2d.disable_quantize
+      ~ConvTranspose2d.eval
+      ~ConvTranspose2d.forward
+      ~ConvTranspose2d.load_state_dict
+      ~ConvTranspose2d.modules
+      ~ConvTranspose2d.named_buffers
+      ~ConvTranspose2d.named_children
+      ~ConvTranspose2d.named_modules
+      ~ConvTranspose2d.named_parameters
+      ~ConvTranspose2d.parameters
+      ~ConvTranspose2d.register_forward_hook
+      ~ConvTranspose2d.register_forward_pre_hook
+      ~ConvTranspose2d.replace_param
+      ~ConvTranspose2d.reset_parameters
+      ~ConvTranspose2d.state_dict
+      ~ConvTranspose2d.train
+      ~ConvTranspose2d.zero_grad
+   
+   
+
+   
+   
+   

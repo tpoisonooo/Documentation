@@ -1,0 +1,22 @@
+megengine.data.transform.RandomVerticalFlip
+===========================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: RandomVerticalFlip
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RandomVerticalFlip.__init__
+      ~RandomVerticalFlip.apply
+      ~RandomVerticalFlip.apply_batch
+   
+   
+
+   
+   
+   

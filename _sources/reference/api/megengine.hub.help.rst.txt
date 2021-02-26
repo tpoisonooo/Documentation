@@ -1,0 +1,6 @@
+megengine.hub.help
+==================
+
+.. currentmodule:: megengine.hub
+
+.. autofunction:: help

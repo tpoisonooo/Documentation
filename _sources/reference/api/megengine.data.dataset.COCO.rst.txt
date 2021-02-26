@@ -1,0 +1,30 @@
+megengine.data.dataset.COCO
+===========================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: COCO
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~COCO.__init__
+      ~COCO.get_img_info
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~COCO.class_names
+      ~COCO.classes_originID
+      ~COCO.keypoint_names
+      ~COCO.supported_order
+   
+   

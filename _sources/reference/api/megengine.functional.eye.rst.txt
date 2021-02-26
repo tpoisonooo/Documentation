@@ -1,0 +1,6 @@
+megengine.functional.eye
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: eye

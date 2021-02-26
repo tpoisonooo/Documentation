@@ -1,0 +1,6 @@
+megengine.set\_log\_file
+========================
+
+.. currentmodule:: megengine
+
+.. autofunction:: set_log_file

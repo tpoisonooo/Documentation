@@ -1,0 +1,57 @@
+megengine.module.qat.BatchMatMulActivation
+==========================================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: BatchMatMulActivation
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BatchMatMulActivation.__init__
+      ~BatchMatMulActivation.apply
+      ~BatchMatMulActivation.apply_quant_activation
+      ~BatchMatMulActivation.apply_quant_weight
+      ~BatchMatMulActivation.buffers
+      ~BatchMatMulActivation.children
+      ~BatchMatMulActivation.disable_quantize
+      ~BatchMatMulActivation.eval
+      ~BatchMatMulActivation.forward
+      ~BatchMatMulActivation.from_float_module
+      ~BatchMatMulActivation.get_activation_dtype
+      ~BatchMatMulActivation.get_activation_qparams
+      ~BatchMatMulActivation.get_weight_dtype
+      ~BatchMatMulActivation.get_weight_qparams
+      ~BatchMatMulActivation.load_state_dict
+      ~BatchMatMulActivation.modules
+      ~BatchMatMulActivation.named_buffers
+      ~BatchMatMulActivation.named_children
+      ~BatchMatMulActivation.named_modules
+      ~BatchMatMulActivation.named_parameters
+      ~BatchMatMulActivation.parameters
+      ~BatchMatMulActivation.register_forward_hook
+      ~BatchMatMulActivation.register_forward_pre_hook
+      ~BatchMatMulActivation.replace_param
+      ~BatchMatMulActivation.reset_parameters
+      ~BatchMatMulActivation.set_fake_quant
+      ~BatchMatMulActivation.set_observer
+      ~BatchMatMulActivation.set_qconfig
+      ~BatchMatMulActivation.state_dict
+      ~BatchMatMulActivation.train
+      ~BatchMatMulActivation.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BatchMatMulActivation.with_act
+      ~BatchMatMulActivation.with_weight
+   
+   

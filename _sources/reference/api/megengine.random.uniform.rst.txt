@@ -1,0 +1,6 @@
+megengine.random.uniform
+========================
+
+.. currentmodule:: megengine.random
+
+.. autofunction:: uniform

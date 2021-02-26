@@ -1,0 +1,6 @@
+megengine.quantization.ema\_fakequant\_qconfig
+==============================================
+
+.. currentmodule:: megengine.quantization
+
+.. autodata:: ema_fakequant_qconfig

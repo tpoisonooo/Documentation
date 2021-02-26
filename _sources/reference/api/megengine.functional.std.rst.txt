@@ -1,0 +1,6 @@
+megengine.functional.std
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: std

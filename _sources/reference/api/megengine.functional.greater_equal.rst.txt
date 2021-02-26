@@ -1,0 +1,6 @@
+megengine.functional.greater\_equal
+===================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: greater_equal

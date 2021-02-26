@@ -1,0 +1,39 @@
+megengine.module.AdaptiveMaxPool2d
+==================================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: AdaptiveMaxPool2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~AdaptiveMaxPool2d.__init__
+      ~AdaptiveMaxPool2d.apply
+      ~AdaptiveMaxPool2d.buffers
+      ~AdaptiveMaxPool2d.children
+      ~AdaptiveMaxPool2d.disable_quantize
+      ~AdaptiveMaxPool2d.eval
+      ~AdaptiveMaxPool2d.forward
+      ~AdaptiveMaxPool2d.load_state_dict
+      ~AdaptiveMaxPool2d.modules
+      ~AdaptiveMaxPool2d.named_buffers
+      ~AdaptiveMaxPool2d.named_children
+      ~AdaptiveMaxPool2d.named_modules
+      ~AdaptiveMaxPool2d.named_parameters
+      ~AdaptiveMaxPool2d.parameters
+      ~AdaptiveMaxPool2d.register_forward_hook
+      ~AdaptiveMaxPool2d.register_forward_pre_hook
+      ~AdaptiveMaxPool2d.replace_param
+      ~AdaptiveMaxPool2d.state_dict
+      ~AdaptiveMaxPool2d.train
+      ~AdaptiveMaxPool2d.zero_grad
+   
+   
+
+   
+   
+   

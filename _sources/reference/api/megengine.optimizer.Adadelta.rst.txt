@@ -1,0 +1,28 @@
+megengine.optimizer.Adadelta
+============================
+
+.. currentmodule:: megengine.optimizer
+
+.. autoclass:: Adadelta
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Adadelta.__init__
+      ~Adadelta.add_param_group
+      ~Adadelta.backward
+      ~Adadelta.bcast_param
+      ~Adadelta.clear_grad
+      ~Adadelta.load_state_dict
+      ~Adadelta.state_dict
+      ~Adadelta.step
+      ~Adadelta.zero_grad
+   
+   
+
+   
+   
+   

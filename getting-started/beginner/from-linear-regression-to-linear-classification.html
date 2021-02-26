@@ -1,0 +1,1359 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>从线性回归到线性分类 &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"], "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="更多教程资源" href="../more-tutorials.html" />
+    <link rel="prev" title="一个稍微复杂些的线性回归模型" href="learning-from-linear-regression.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      <li class="toctree-l2">
+ <a class="reference internal" href="../install.html">
+  安装
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../quick-start.html">
+  天元 MegEngine 快速上手
+ </a>
+</li>
+
+<li class="toctree-l2 current active">
+ <a class="reference internal" href="index.html">
+  为深度学习新手准备的教程
+ </a>
+ <ul class="current">
+  <li class="toctree-l3">
+   <a class="reference internal" href="megengine-basic-concepts.html">
+    天元 MegEngine 基础概念
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="learning-from-linear-regression.html">
+    一个稍微复杂些的线性回归模型
+   </a>
+  </li>
+  <li class="toctree-l3 current active">
+   <a class="current reference internal" href="#">
+    从线性回归到线性分类
+   </a>
+  </li>
+ </ul>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="../more-tutorials.html">
+  更多教程资源
+ </a>
+</li>
+
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#MNIST-手写数字数据集">
+   MNIST 手写数字数据集
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#理解图像数据">
+     理解图像数据
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#图像数据的特征向量表示">
+     图像数据的特征向量表示
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#线性分类模型">
+   线性分类模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Logistic-回归">
+     Logistic 回归
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#Softmax-回归">
+     Softmax 回归
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#交叉熵（Cross-Entropy）">
+     交叉熵（Cross Entropy）
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#练习：线性分类">
+   练习：线性分类
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#总结回顾">
+   总结回顾
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#问题思考">
+   问题思考
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#机器学习背后的数学知识">
+     机器学习背后的数学知识
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="从线性回归到线性分类">
+<h1>从线性回归到线性分类<a class="headerlink" href="#从线性回归到线性分类" title="永久链接至标题">¶</a></h1>
+<p>回归和分类问题在机器学习中十分常见，我们接触过了线性回归，那么线性模型是否可用于分类任务呢？本次教程中，我们将：</p>
+<ul class="simple">
+<li><p>接触经典的 MNIST 数据集和对应的分类任务，对计算机视觉领域的图像编码有一个基础认知；</p></li>
+<li><p>将线性回归经过“简单改造”，则可以用来解决分类问题——我们将接触到 Logistic 回归和 Softmax 回归；</p></li>
+<li><p>结合之前的学习，<strong>实现一个最简单的线性分类器，并尝试用它来识别手写数字。</strong></p></li>
+</ul>
+<p>请先运行下面的代码，检验你的环境中是否已经安装好 MegEngine（<a class="reference external" href="https://megengine.org.cn/install">访问官网安装教程</a>）：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">megengine</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">megengine</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.2.0
+</pre></div></div>
+</div>
+<p>接下来，我们将先了解一下这次要使用到的分类问题经典数据集：<a class="reference external" href="http://yann.lecun.com/exdb/mnist/">MNIST 手写数字数据集</a>。</p>
+<div class="section" id="MNIST-手写数字数据集">
+<h2>MNIST 手写数字数据集<a class="headerlink" href="#MNIST-手写数字数据集" title="永久链接至标题">¶</a></h2>
+<p>MNIST 的训练数据集中存在着 60000 张手写数字 0～9 的黑白图片样例，每张图片的长和宽均为 28 像素。</p>
+<p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">dataset</span></code> 模块中内置了 MNIST 等经典数据集的接口，方便初学者进行相关调用：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">megengine.data.dataset</span> <span class="kn">import</span> <span class="n">MNIST</span>
+
+<span class="c1"># 强烈推荐使用 MegStudio 平台，可在项目设置中直接选用 MNIST 数据集，无需再进行下载</span>
+<span class="c1"># 如果使用 MegStudio 环境，请将 MNIST_DATA_PATH 为 /home/megstudio/dataset/MNIST/</span>
+<span class="n">MNIST_DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;/data/datasets/MNIST/&quot;</span>
+
+<span class="c1"># 国内网络环境从 MNIST 数据集官方主页下载数据集可能会有些慢，可人为下载好以下文件后，放置在 MNIST_DATA_PATH 对应的路径</span>
+<span class="c1">#     t10k-images-idx3-ubyte.gz</span>
+<span class="c1">#     t10k-labels-idx1-ubyte.gz</span>
+<span class="c1">#     train-images-idx3-ubyte.gz</span>
+<span class="c1">#     train-labels-idx1-ubyte.gz</span>
+
+<span class="c1"># 获取训练数据集，如果本地没有数据集，请将 download 参数设置为 True</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">MNIST_DATA_PATH</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+<span class="ansi-green-fg">19 20:11:04 </span>process the raw files of train set...
+100%|██████████████████████████████████| 60000/60000 [00:03&lt;00:00, 18365.46it/s]
+100%|████████████████████████████████| 60000/60000 [00:00&lt;00:00, 1359286.16it/s]
+</pre></div></div>
+</div>
+<p>以训练集为例，你最终将得到一个长度为 60000 的 <code class="docutils literal notranslate"><span class="pre">train_dataset</span></code> 列表，其中的每个元素是一个包含样本和标签的元组。</p>
+<p>为了方便理解，我们这里选择将数据集拆分为样本和标签，处理成 Numpy 的 ndarray 格式：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">train_dataset</span><span class="p">])</span>
+<span class="n">train_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">train_dataset</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">train_label</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(60000, 28, 28, 1) (60000,)
+</pre></div></div>
+</div>
+<p>经过上面的整理，我们得到了训练数据 <code class="docutils literal notranslate"><span class="pre">train_data</span></code> 和对应的标签 <code class="docutils literal notranslate"><span class="pre">train_label</span></code>:</p>
+<ul class="simple">
+<li><p>可以发现此时的训练数据的形状是 <span class="math notranslate nohighlight">\((60000, 28, 28, 1)\)</span>, 分别对应数据量（Number）、高度（Height）、宽度（Width）和通道数（Channel），简记为 NHWC；</p></li>
+<li><p>其中通道（Channel）是图像领域常见的概念，对计算机而言，1 通道通常表示灰度图（Grayscale），即将黑色到白色之间分为 256 阶表示；</p></li>
+<li><p>布局（Layout）表示了数据在内存中的表示方式，在 MegEngine 中，通常以 NCHW 作为默认的数据布局，我们在将来会接触到布局的转换。</p></li>
+</ul>
+<div class="section" id="理解图像数据">
+<h3>理解图像数据<a class="headerlink" href="#理解图像数据" title="永久链接至标题">¶</a></h3>
+<p>我们先尝试对数据进行随机抽样，并进行可视化显示：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">]</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+<span class="n">samples_per_class</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="c1"># 注意：初学者在接触本小节的可视化代码时可不求甚解，只在意其展示效果并阅读后面的部分，学有余力者可尝试搞清楚代码细节。</span>
+<span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">classes</span><span class="p">):</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">train_label</span> <span class="o">==</span> <span class="n">y</span><span class="p">))</span>
+    <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">idxs</span><span class="p">,</span> <span class="n">samples_per_class</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">idxs</span><span class="p">):</span>
+        <span class="n">plt_idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">num_classes</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">samples_per_class</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">,</span> <span class="n">plt_idx</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_9_0.png" src="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_9_0.png" />
+</div>
+</div>
+<p>挑选出一张图片（下方的 <code class="docutils literal notranslate"><span class="pre">idx</span></code> 可修改），进行二维和三维视角的可视化：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">LinearLocator</span><span class="p">,</span> <span class="n">FormatStrFormatter</span>
+
+<span class="n">idx</span> <span class="o">=</span> <span class="mi">28204</span> <span class="c1"># 可以修改这个值</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;The label is: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">train_label</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 注意：初学者在接触本小节的可视化代码时可不求甚解，只在意其展示效果并阅读后面的部分，学有余力者可尝试搞清楚代码细节。</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">elev</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">azim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">28</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">28</span><span class="p">))</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">train_data</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+<span class="n">surf</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_11_0.png" src="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_11_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_11_1.png" src="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_11_1.png" />
+</div>
+</div>
+<p>在灰度图中，每个像素值用 0（黑色）~ 255（白色）进行表示，即一个 <code class="docutils literal notranslate"><span class="pre">int8</span></code> 所能表示的范围。</p>
+</div>
+<div class="section" id="图像数据的特征向量表示">
+<h3>图像数据的特征向量表示<a class="headerlink" href="#图像数据的特征向量表示" title="永久链接至标题">¶</a></h3>
+<p>回想一下我们在使用波士顿房价数据集时，单个样本的特征通常以特征向量 <span class="math notranslate nohighlight">\(\mathbf {x} \in \mathbb R^D\)</span> 的形式进行表示，而图像的样本特征空间为 <span class="math notranslate nohighlight">\(\mathbf {x} \in \mathbb R ^{H \times W \times C}\)</span>。</p>
+<p>对于图像类型的数据输入，在没有想到更好的特征抽取和表征形式时，不妨也粗线条一些，考虑直接将像素点“铺”成向量的形式，即 <span class="math notranslate nohighlight">\(\mathbb R ^{H \times W \times C} \mapsto \mathbb R^D\)</span>：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">original_image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">flattened_image</span> <span class="o">=</span> <span class="n">original_image</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># 铺成一个行向量</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original Image:&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">original_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Flattened Image:&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flattened_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_13_0.png" src="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_13_0.png" />
+</div>
+</div>
+<p>上面是一个简单的例子，这种扁平化（Flatten）的操作同样也可以对整个 <code class="docutils literal notranslate"><span class="pre">train_data</span></code> 使用：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nums</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">train_data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nums</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="c1"># 缺省值 -1 表示自动计算剩下的维度 28 x 28 x 1 = 784</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(60000, 784)
+</pre></div></div>
+</div>
+<p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中，提供了 <code class="docutils literal notranslate"><span class="pre">flatten()</span></code> 方法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">tensor</span>
+<span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">start_axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end_axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 将从 start_axis 维到 end_axis 维的子张量展平</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(10, 28, 28, 1)
+(10, 784)
+</pre></div></div>
+</div>
+<p>这样的话，就可以把问题和我们所了解的线性回归模型 <span class="math notranslate nohighlight">\(f(\mathbf {x}) = \mathbf {w} \cdot \mathbf {x} + b\)</span> 联系起来了，但情况有那么一些不同：</p>
+<p>线性回归的输出值在 <span class="math notranslate nohighlight">\(\mathbb R\)</span> 上连续，并不能很好的处理标签值离散的多分类问题，因此需要寻找新的解决思路。</p>
+</div>
+</div>
+<div class="section" id="线性分类模型">
+<h2>线性分类模型<a class="headerlink" href="#线性分类模型" title="永久链接至标题">¶</a></h2>
+<p>我们先从较为简单的二分类问题，即标签 <span class="math notranslate nohighlight">\(y \in \{0, 1\}\)</span> 情况开始讨论，再将情况推广到多分类。</p>
+<p>对于离散的标签，我们可以引入非线性的决策函数来预测输出类别（决策边界依然是线性超平面，依旧是线性模型）。</p>
+<p>一个简单的思路是，考虑将 <span class="math notranslate nohighlight">\(f(\mathbf {x}) = \mathbf {x} \cdot \mathbf {w} + b\)</span> 的输出以 0 为阈值做划分（即此时决策边界为 <span class="math notranslate nohighlight">\(f(\mathbf {x}) = 0\)</span>）：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat {y} = g(f(\mathbf {x}))=\left\{\begin{array}{lll}
+1 &amp; \text {if} &amp; f(\mathbf {x})&gt;0 \\
+0 &amp; \text {if} &amp; f(\mathbf {x})&lt;0
+\end{array}\right.\end{split}\]</div>
+<p>这种决策方法虽然简单直观，但缺点也很明显：</p>
+<ul class="simple">
+<li><p>如果看成是一个优化问题，它的数学性质导致其不适合用于梯度下降算法；</p></li>
+<li><p>如果数据集不同的类别之间没有明确的关系，分段决策在多分类的情况下不适用；</p></li>
+<li><p>比如手写数字分类，将输出值平均到 0～9 附近，依据四舍五入分类，不同分类之间存在着“距离度量”；</p></li>
+<li><p>这暗示着不同的分类之间也有相似度/连续性，则等同于假设图像 1 和图像 2 的相似度会比 1 和 7 的相似度更高</p></li>
+</ul>
+<div class="section" id="Logistic-回归">
+<h3>Logistic 回归<a class="headerlink" href="#Logistic-回归" title="永久链接至标题">¶</a></h3>
+<p>Logistic 回归是一种常见的处理二分类问题的线性模型，使用 Sigmoid 函数 <span class="math notranslate nohighlight">\(\sigma (\cdot)\)</span> 作为决策函数（其中 <code class="docutils literal notranslate"><span class="pre">exp()</span></code> 指以自然常数 <span class="math notranslate nohighlight">\(e\)</span> 为底的指数函数）：</p>
+<div class="math notranslate nohighlight">
+\[\sigma (x) = \frac{1}{1+\exp( -x)}\]</div>
+<p>Sigmoid 这样的 S 型函数最早被人们设计出来并使用，它有如下优点：</p>
+<ul class="simple">
+<li><p>Sigmoid 函数的导数非常容易求出：<span class="math notranslate nohighlight">\(\sigma '(x) = \sigma (x)(1- \sigma (x))\)</span>, 其处处可微的性质保证了在优化过程中梯度的可计算性；</p></li>
+<li><p>Sigmoid 函数还可以将值压缩到 <span class="math notranslate nohighlight">\((0, 1)\)</span> 范围内，很适合用来表示预测结果是某个分类的概率：</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_20_0.png" src="../../_images/getting-started_beginner_from-linear-regression-to-linear-classification_20_0.png" />
+</div>
+</div>
+<p>Logistic 是比利时数学家 Pierre François Verhulst 在 1844 或 1845 年在研究人口增长的关系时命名的，和 Sigmoid 一样指代 S 形函数：</p>
+<p>起初阶段大致是指数增长；然后随着开始变得饱和，增加变慢最后，达到成熟时增加停止。</p>
+<p>以下是 Verhulst 对命名的解释：</p>
+<blockquote>
+<div><p>“We will give the name logistic [logistique] to the curve” (1845 p.8). Though he does not explain this choice, there is a connection with the logarithmic basis of the function. Logarithm was coined by John Napier (1550-1617) from Greek logos (ratio, proportion, reckoning) and arithmos (number). Logistic comes from the Greek logistikos (computational). In the 1700’s, logarithmic and logistic were synonymous. Since computation is needed to predict the supplies an army requires, logistics has
+come to be also used for the movement and supply of troops. So it appears the other meaning of “logistics” comes from the same logic as Verhulst terminology, but is independent (?). Verhulst paper is accessible; the definition is on page 8 (page 21 in the volume), and the picture is after the article (page 54 in the volume). ” —— <a class="reference external" href="https://rasch.org/rmt/rmt64k.htm">Why logistic (sigmoid) ogive and not autocatalytic curve?</a></p>
+</div></blockquote>
+<p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中，提供了 <code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code> 方法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">inp_ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">inp_ndarray</span><span class="p">))</span>  <span class="c1"># 这里调用了上面实现的 NumPy 版本 Sigmoid</span>
+
+<span class="n">inp_tensor</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">inp_tensor</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0.73105858 0.88079708 0.95257413]
+[0.7310586  0.880797   0.95257413]
+</pre></div></div>
+</div>
+<p>根据二分类问题 <span class="math notranslate nohighlight">\(y \in \{0, 1\}\)</span> 的特性，标签值不是 <span class="math notranslate nohighlight">\(1\)</span> 即是 <span class="math notranslate nohighlight">\(0\)</span>，可以使用如下形式表示预测分类为 <span class="math notranslate nohighlight">\(1\)</span> 或 <span class="math notranslate nohighlight">\(0\)</span> 的概率：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+p(y=1 \mid \mathbf {x}) &amp;= \sigma (f(\mathbf {x})) = \frac{1}{1+\exp \left( -f(\mathbf {x}) \right)} \\
+p(y=0 \mid \mathbf {x}) &amp;= 1 - p(y=1 \mid \mathbf {x})
+\end{aligned}\end{split}\]</div>
+<p>在处理二分类问题时，我们进行优化的最终目的是，希望最终预测的概率值 <span class="math notranslate nohighlight">\(\hat{y}=\sigma(f(\mathbf x))\)</span> 尽可能地接近真实标签 <span class="math notranslate nohighlight">\(y\)</span>;</p>
+<p>为了能够正确地优化我们的任务目标，需要选用合适的损失（目标）函数。有了线性回归的经验，不妨用均方误差 MSE 试一下：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\ell_{\operatorname{MSE}} &amp;= \frac {1}{2} \sum_{n} \left( \hat{y} - y \right )^2 \\
+\frac {\partial (\hat{y} - y)^2}{\partial \mathbf {w}} &amp;=
+2 (\hat{y} - y) \cdot \frac {\partial \hat{y}}{\partial f(\mathbf {x})}
+\cdot \frac {\partial f(\mathbf {x})}{\partial w} \\
+&amp;= 2 (\hat{y} - y) \cdot \color{blue} {\hat{y} \cdot (1 - \hat{y})} \cdot \color{black} {\mathbf {x}}
+\end{aligned}\end{split}\]</div>
+<ul class="simple">
+<li><p>虽然可以求得相应的梯度，但随着参数的更新，单样本上求得的梯度越来越接近 <span class="math notranslate nohighlight">\(0\)</span>, 即出现了梯度消失（Gradient Vanishing）的情况；</p></li>
+<li><p>另外使用 Sigmoid + MSE 得到的是一个非凸函数（可通过求二阶导证明），使用梯度下降算法容易收敛到局部最小值点，而非全局最优点。</p></li>
+</ul>
+<p>所以应该设计什么样的损失函数，才是比较合理的呢？在揭晓答案之前，我们先直接将二分类问题推广到多分类的情况。</p>
+</div>
+<div class="section" id="Softmax-回归">
+<h3>Softmax 回归<a class="headerlink" href="#Softmax-回归" title="永久链接至标题">¶</a></h3>
+<p>Softmax 回归可以看成是 Logistic 回归在多分类问题上的推广，也称为多项（Multinomial）Logistic 回归，或多类（Muti-Class）Logistic 回归。</p>
+<p>对于多分类问题，类别标签 <span class="math notranslate nohighlight">\(y \in \{1, 2, \ldots, C \}\)</span> 可以有 <span class="math notranslate nohighlight">\(C\)</span> 个取值 —— 前面提到，如何将我们的输出和这几个值较好地对应起来，是需要解决的难题之一。</p>
+<p>在处理二分类问题时，我们使用 Sigmoid 函数将输出变成了 <span class="math notranslate nohighlight">\((0,1)\)</span> 范围内的值，将其视为概率。对于多分类问题的标签，我们也可以进行形式上的处理。</p>
+<p>我们可以将真实的类别标签值 <span class="math notranslate nohighlight">\(y\)</span> 处理成 One-hot 编码的形式进行表示：只在对应的类别标签位置为 1，其它位置为 0.</p>
+<p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中，提供了 <code class="docutils literal notranslate"><span class="pre">one_hot()</span></code> 方法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># 举例：某张手写数字图片的对应标签为 3，进行 one-hot 编码表示</span>
+<span class="n">inp</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span> <span class="c1"># 输出是 2-D 的，因为将数量 n 也包括进去了，此时 n=1</span>
+
+<span class="c1"># 也可以选择将整个 train_label 转换成 one_hot 编码</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">train_label</span><span class="p">),</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[0 0 0 1 0 0 0 0 0 0]]
+(60000, 10)
+</pre></div></div>
+</div>
+<p>不难发现，One-hot 编码以向量 <span class="math notranslate nohighlight">\(\mathbf y\)</span> 的形式给出了样本属于每一个类别的概率。</p>
+<p>自然地，我们希望线性分类器最终输出的预测值是一个形状为 <span class="math notranslate nohighlight">\((C,)\)</span> 的向量 <span class="math notranslate nohighlight">\(\hat {\mathbf y}\)</span>，这样方便设计和计算损失函数。</p>
+<ul class="simple">
+<li><p>我们已经知道线性输出 <span class="math notranslate nohighlight">\(\hat y = f(\mathbf x; \mathbf w, b) = \mathbf x \cdot \mathbf w + b \in \mathbb R\)</span> , 现在我们希望能够得到 <span class="math notranslate nohighlight">\(\hat {\mathbf y} \in \mathbb R^C\)</span> 这样的输出;</p></li>
+<li><p>可以设计 <span class="math notranslate nohighlight">\(C\)</span> 个不同的 <span class="math notranslate nohighlight">\(f(\mathbf x; \mathbf w, b\)</span>) 分别进行计算得到 <span class="math notranslate nohighlight">\(C\)</span> 个输出，也可以直接利用矩阵 <span class="math notranslate nohighlight">\(W\)</span> 和向量 <span class="math notranslate nohighlight">\(b\)</span> 的形式直接计算：</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 设置随机种子，每次可以得到一样的随机值</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">train_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">num_features</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">num_features</span><span class="p">,))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(())</span>
+<span class="n">y_reg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_reg</span><span class="p">,</span> <span class="n">y_reg</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">num_classes</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">y_cls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_cls</span><span class="p">,</span> <span class="n">y_cls</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+13044.699427857662 ()
+[13469.6227653  13984.33880404 13222.26198744 14459.78086955
+ 13531.92700947 13761.72257265 13721.3955121  13568.95728431
+ 14097.15055322 13401.91409062] (10,)
+</pre></div></div>
+</div>
+<p>得到的输出虽然有 <span class="math notranslate nohighlight">\(C\)</span> 个值了，但仍然不是概率的形式，这时我们希望设计这样一个决策函数：</p>
+<ul class="simple">
+<li><p>通过这个函数，可以将输出的 <span class="math notranslate nohighlight">\(C\)</span> 个值转换为样本 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 属于某一类别 <span class="math notranslate nohighlight">\(c\)</span> 的概率 <span class="math notranslate nohighlight">\(p(y=c | \mathbf{x}) \in (0,1)\)</span>；</p></li>
+<li><p>满足不同预测标签类别的概率和为 1.</p></li>
+</ul>
+<p>一个直接的想法是使用 <span class="math notranslate nohighlight">\(\operatorname{ArgMax}\)</span> 函数，将对应位置的概率设置为 1，其它位置为 0</p>
+<ul class="simple">
+<li><p>这样也可以得到作为最终预测的 One-hot 编码形式的向量，但问题在于：</p></li>
+<li><p>和分段函数类似，此时的 <span class="math notranslate nohighlight">\(\operatorname{ArgMax}\)</span> 函数是不可导的，对梯度下降法不友好；</p></li>
+<li><p>这种处理方式过于简单粗暴，没有考虑到在其它类别上预测的概率值所带来的影响。</p></li>
+</ul>
+<p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中，提供了 <code class="docutils literal notranslate"><span class="pre">argmax()</span></code> 方法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">inp</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="n">y_cls</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>  <span class="c1"># 返回最大值对应的索引</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">F</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+<span class="n">onehot</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">onehot</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3 14459.781
+[[0 0 0 1 0 0 0 0 0 0]]
+</pre></div></div>
+</div>
+<p>为了解决上面的问题，人们设计出了 <span class="math notranslate nohighlight">\(\operatorname{Softmax}\)</span> 归一化指数函数（也叫 <span class="math notranslate nohighlight">\(\operatorname{SoftArgmax}\)</span>, 即柔和版 <span class="math notranslate nohighlight">\(\operatorname{Argmax}\)</span>）：</p>
+<div class="math notranslate nohighlight">
+\[p(y=c | \mathbf {x}) = \operatorname {Softmax}(y_c)=\frac{\exp y_c}{\sum_{i} \exp y_i}\]</div>
+<ul class="simple">
+<li><p>将线性输出 <span class="math notranslate nohighlight">\(y_c = f(\mathbf x)\)</span> 经过指数归一化计算后得到一个概率 <span class="math notranslate nohighlight">\(p(y=c | \mathbf{x})\)</span>, 我们通常经过类似处理后得到的分类概率值叫做 Logits.</p></li>
+<li><p>由于指数 <span class="math notranslate nohighlight">\(e^x\)</span> 容易随着输入值 <span class="math notranslate nohighlight">\(x\)</span> 的变大发生指数爆炸，真正的 <span class="math notranslate nohighlight">\(\operatorname {Softmax}\)</span> 实现中还会有一些额外处理来增加数值稳定性，我们不在这里介绍。</p></li>
+</ul>
+<p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中，提供了 <code class="docutils literal notranslate"><span class="pre">softmax()</span></code> 方法：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">inp</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">])</span>
+<span class="n">average</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">F</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">inp</span><span class="p">))</span>
+<span class="n">softmax</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">average</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">softmax</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0.1 0.2 0.3 0.4]
+[0.0321 0.0871 0.2369 0.6439]
+</pre></div></div>
+</div>
+<p>我们为什么不采用均值归一化或其它的的方法，而要引入指数的形式呢？可以这样解释： - 指数函数具有“马太效应”：我们认为较大的原始值在归一化后得到的概率值也应该更大； - 与 <span class="math notranslate nohighlight">\(\operatorname{ArgMax}\)</span> 相比，使用 <span class="math notranslate nohighlight">\(\operatorname{SoftMax}\)</span> 还可以找到 Top-K 候选项，即前 <span class="math notranslate nohighlight">\(k\)</span> 大概率的分类，有利于模型性能评估；</p>
+<p>分类问题中 <span class="math notranslate nohighlight">\(\operatorname{SoftMax}\)</span> 函数的选用也和影响了所对应的损失函数的设计。</p>
+</div>
+<div class="section" id="交叉熵（Cross-Entropy）">
+<h3>交叉熵（Cross Entropy）<a class="headerlink" href="#交叉熵（Cross-Entropy）" title="永久链接至标题">¶</a></h3>
+<p>我们已经得到了预测的类别标签向量 <span class="math notranslate nohighlight">\(\mathbf {\hat{y}}\)</span>, 也已经使用 One-hot 编码表示了真实的类别标签向量 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. 二者各自代表一种概率分布。</p>
+<p>在信息论中，如果对同一个随机变量 <span class="math notranslate nohighlight">\(x\)</span> 有两个单独的概率分布 <span class="math notranslate nohighlight">\(p(x)\)</span> 和 <span class="math notranslate nohighlight">\(q(x)\)</span>，可以使用相对熵（KL 散度）来表示两个分布的差异：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathrm{KL}(p \| q) &amp;=-\int p(x) \ln q(x) d x-\left(-\int p(x) \ln p(x) d x\right) \\
+&amp;= H(p,q) - H(p)
+\end{aligned}\end{split}\]</div>
+<ul class="simple">
+<li><p>相对熵的特点是，两个概率分布完全相同时，其值为零。二者分布之间的差异越大，相对熵值越大。</p></li>
+<li><p>由公式可知，<span class="math notranslate nohighlight">\(\mathrm{KL}(p \| q) \neq \mathrm{KL}(q \| p)\)</span>. 不具对称性，所以其表示的不是严格意义上的“距离”，适合分类任务。</p></li>
+<li><p>感兴趣的读者可以自行了解信息论中有关熵（Entropy）的概念，目前我们只要知道这些东西能做什么就行。</p></li>
+</ul>
+<p>我们希望设计一个损失函数，可用来评估当前训练得到的概率分布 <span class="math notranslate nohighlight">\(q(x)\)</span>，与真实分布 <span class="math notranslate nohighlight">\(p(x)\)</span> 之间有多么大的差异，同时整体要是凸函数。</p>
+<p>而在训练的过程中，代表 <span class="math notranslate nohighlight">\(p(x)\)</span> 的 One-hot 编码是一个确定的常数，其 <span class="math notranslate nohighlight">\(H(p)\)</span> 值不会随着训练而改变，也不会影响梯度计算，所以可省略。</p>
+<p>剩下的 <span class="math notranslate nohighlight">\(H(p,q)\)</span> 部分则被定义为我们常用的交叉熵（Cross Entropy, CE），用我们现在的例子中的离散概率值来表示则为：</p>
+<div class="math notranslate nohighlight">
+\[\ell_{\operatorname{CE}} = H(\mathbf{y}, \hat{\mathbf{y}})=-\sum_{i=1}^C y_i \ln \hat{y}_i\]</div>
+<p>这即是 Softmax 分类器需要优化的损失函数，对应于 MegEngine 中的 <code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code> 损失函数：</p>
+<ul class="simple">
+<li><p>在 MegEngine 的 <code class="docutils literal notranslate"><span class="pre">cross_entropy()</span></code> 函数中，会自动对原始标签 <span class="math notranslate nohighlight">\(y\)</span> 进行 One-hot 编码得到 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>，所以 <code class="docutils literal notranslate"><span class="pre">pred</span></code> 应该比 <code class="docutils literal notranslate"><span class="pre">label</span></code> 多一个 <span class="math notranslate nohighlight">\(\mathbb R^C\)</span> 维度；</p></li>
+<li><p>设置 <code class="docutils literal notranslate"><span class="pre">with_logits=True</span></code> 时，将使用 Softmax 函数把分类输出标准化成概率分布，下面的代码示例中 <code class="docutils literal notranslate"><span class="pre">pred</span></code> 已经为概率分布的形式；</p></li>
+<li><p>二分类问题使用的 Sigmoid 函数其实是 Sotfmax 函数的一个特例（读者可尝试证明），对应 MegEngine 中的 <code class="docutils literal notranslate"><span class="pre">binary_cross_entropy()</span></code> 方法。</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># 预测值完全准确的情况，loss 应该为 0</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>
+               <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">with_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+<span class="c1"># 预测值比较准确的情况</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>
+               <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">with_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+
+<span class="c1"># 预测值不那么准确的情况</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>
+               <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">([</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">with_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.0
+0.3566749691963196
+1.2039728164672852
+</pre></div></div>
+</div>
+<p>我们还可以发现，使用 Softmax + Cross Entropy 结合的形式，二者的 <span class="math notranslate nohighlight">\(\exp\)</span> 和 <span class="math notranslate nohighlight">\(\ln\)</span> 计算一定程度上可以相互抵消，简化计算流程。</p>
+<p>现在我们找到了 MNIST 手写图像分类任务的决策函数和损失函数，是时候尝试自己利用 MegEngine 构建一个线性分类器了。</p>
+</div>
+</div>
+<div class="section" id="练习：线性分类">
+<h2>练习：线性分类<a class="headerlink" href="#练习：线性分类" title="永久链接至标题">¶</a></h2>
+<p>我们使用 MegEngine 对线性分类器进行实现：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span>
+<span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.data.dataset</span> <span class="kn">import</span> <span class="n">MNIST</span>
+<span class="kn">from</span> <span class="nn">megengine.data</span> <span class="kn">import</span> <span class="n">SequentialSampler</span><span class="p">,</span> <span class="n">RandomSampler</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">megengine.autodiff</span> <span class="kn">import</span> <span class="n">GradManager</span>
+<span class="kn">import</span> <span class="nn">megengine.optimizer</span> <span class="k">as</span> <span class="nn">optim</span>
+
+<span class="n">MNIST_DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;/data/datasets/MNIST/&quot;</span>  <span class="c1"># 记得修改这里的路径</span>
+
+<span class="c1"># 设置超参数</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># 读取原始数据集</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">MNIST_DATA_PATH</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">num_features</span> <span class="o">=</span> <span class="mi">784</span>   <span class="c1"># (28, 28, 1) Flatten -&gt; 784</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 训练数据加载与预处理</span>
+<span class="n">train_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">bs</span><span class="p">)</span>
+<span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">)</span>
+
+<span class="c1"># 初始化参数</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_classes</span><span class="p">,)))</span>
+
+<span class="c1"># 定义模型</span>
+<span class="k">def</span> <span class="nf">linear_cls</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 定义求导器和优化器</span>
+<span class="n">gm</span> <span class="o">=</span> <span class="n">GradManager</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">([</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+<span class="c1"># 模型训练</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span> <span class="ow">in</span> <span class="n">train_dataloader</span><span class="p">:</span>
+        <span class="n">batch_data</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">batch_label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_cls</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">batch_label</span><span class="p">)</span>
+            <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
+        <span class="n">total_loss</span> <span class="o">+=</span>  <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+<span class="ansi-green-fg">19 20:11:15 </span>process the raw files of train set...
+100%|██████████████████████████████████| 60000/60000 [00:03&lt;00:00, 19249.91it/s]
+100%|████████████████████████████████| 60000/60000 [00:00&lt;00:00, 1334384.47it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+epoch = 0, loss = 0.533
+epoch = 1, loss = 0.362
+epoch = 2, loss = 0.335
+epoch = 3, loss = 0.322
+epoch = 4, loss = 0.313
+</pre></div></div>
+</div>
+<p>接着我们要实现测试部分，分类问题可使用预测精度（Accuracy）来评估模型性能，即被正确预测的比例：</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">MNIST_DATA_PATH</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">test_sampler</span> <span class="o">=</span> <span class="n">RandomSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">test_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">test_sampler</span><span class="p">)</span>
+
+<span class="n">nums_correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span> <span class="ow">in</span> <span class="n">test_dataloader</span><span class="p">:</span>
+    <span class="n">batch_data</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">batch_label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">linear_cls</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nums_correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">==</span> <span class="n">batch_label</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nums_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+<span class="ansi-green-fg">19 20:11:27 </span>process the raw files of test set...
+100%|██████████████████████████████████| 10000/10000 [00:00&lt;00:00, 20024.93it/s]
+100%|████████████████████████████████| 10000/10000 [00:00&lt;00:00, 1334448.16it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Accuracy = 91.700
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<p>这意味着我们只训练了 5 个周期的线性分类器，在测试集的 10,000 张图片中，就有 9,170 张图片被正确地预测了分类。</p>
+<p>你可以尝试增大上方的 <code class="docutils literal notranslate"><span class="pre">epochs</span></code> 超参数，最终结果不会提升很多，说明我们现在所实现的线性分类器存在一定的局限性，需要寻找更好的方法。</p>
+</div>
+<div class="section" id="总结回顾">
+<h2>总结回顾<a class="headerlink" href="#总结回顾" title="永久链接至标题">¶</a></h2>
+<p>我们依据对线性回归的认知发展衍生出了线性分类器，并完成了 MNIST 手写数字识别任务，请回忆一下整个探索的过程。</p>
+<ul class="simple">
+<li><p>理解机器学习知识的角度有很多种，不同的角度之间存在着千丝万缕的联系：</p>
+<ul>
+<li><p>预测（Predict）：线性回归输出的标量是 <span class="math notranslate nohighlight">\(\mathbb R\)</span> 连续值，使用 Sigmoid 将其映射到 <span class="math notranslate nohighlight">\((0, 1)\)</span>, 而 Softmax 可将 <span class="math notranslate nohighlight">\(C\)</span> 个输出值变成对应分类上的概率；</p></li>
+<li><p>优化（Optimize）：线性回归模型通常选择均方误差（MSE）作为损失（目标）函数，而线性分类模型通常使用交叉熵（CE）；</p></li>
+<li><p>评估（Evaluate）：线性回归模型可以选者平均误差或总误差作为评估指标，而线性分类模型可以使用精度（Accuracy）；</p></li>
+</ul>
+</li>
+<li><p>对于特征的处理：我们接触了计算机领域的灰度栅格图，并尝试使用 <code class="docutils literal notranslate"><span class="pre">flatten()</span></code> 方法将每个样本的高维特征处理为特征向量。</p></li>
+</ul>
+</div>
+<div class="section" id="问题思考">
+<h2>问题思考<a class="headerlink" href="#问题思考" title="永久链接至标题">¶</a></h2>
+<p>旧问题的解决往往伴随着新问题的诞生，让我们一起来思考一下：</p>
+<ul class="simple">
+<li><p>对于同样的任务（如 MNIST 手写数字识别），我们可以选用不同的模型和算法（比如 K 近邻算法）来解决，我们只接触了机器学习算法的冰山一角；</p></li>
+<li><p>对于具有 HWC 属性的图像，教程中展平成特征向量的处理方式似乎有些直接（比如忽视掉了像素点在平面空间上的临接性），是否有更好的方法？</p></li>
+<li><p>我们在处理分类问题的输出时使用了 Softmax 达到了归一化的效果，那么对于输入数据的特征，是否也可以进行归一化呢？</p></li>
+<li><p>天元 MegEngine 的自动求导机制帮助我们省掉了很多计算，可以尝试推导 Softmax + Cross Entropy 的反向传播过程，感受框架的便捷之处。</p></li>
+</ul>
+<p>我们已经训练了一个识别手写数字的分类器，可以尝试用它在一些实际的数据上进行测试（而不仅仅是官方提供的测试集），可以尝试写代码测试一下：</p>
+<ul class="simple">
+<li><p>如何将常见的 jpg, png, gif 等图像格式处理成 NumPy 的 ndarray 格式？（提示：可使用 OpenCV 或 Pillow 等库）</p></li>
+<li><p>我想要测试的图像的长和宽和 MNIST 所使用的 <span class="math notranslate nohighlight">\(28 \times 28\)</span> 形状不一致，此时要如何处理？</p></li>
+<li><p>我想要测试的图像是一张三通道的彩色图片，MNIST 数据集中是黑白图，此时又要如何处理？</p></li>
+</ul>
+<div class="section" id="机器学习背后的数学知识">
+<h3>机器学习背后的数学知识<a class="headerlink" href="#机器学习背后的数学知识" title="永久链接至标题">¶</a></h3>
+<p>天元 MegEngine 教程内容以相关代码实践为主，为了避免引入过多的理论导致“学究”，我们对一些数学细节的介绍比较笼统，感兴趣读者可进行拓展性的阅读：</p>
+<ul class="simple">
+<li><p>斯坦福 <a class="reference external" href="http://cs229.stanford.edu/">CS 229</a> 是非常好的机器学习课程，可以在课程主页找到有关广义线性模型、指数族分布和最大熵模型的讲义</p></li>
+<li><p>对于线性回归问题的最小二乘估计，可以尝试推导正规方程得到其解析解（Analytical solution）或者说闭式解（Close-form solution）</p></li>
+<li><p>对于均方误差（MSE）和交叉熵（CE）的使用，可以用使用极大似然估计（Maximum likelihood estimation）进行推导和解释</p></li>
+<li><p>对支持向量机（Support Vector Machine）和感知机模型（Perceptron）等经典二分类模型，属于机器学习领域，本教程中也没有进行介绍</p></li>
+</ul>
+<p>至于统计机器学习的理论解释，也分为频率派和贝叶斯派两大类，二者探讨「不确定性」这件事时的出发点与立足点不同，均作了解有助于拓宽视野。</p>
+<ul class="simple">
+<li><p>对于新知识，我们提倡先建立直觉性的解释，搞清楚它如何生效（How it works），优缺点在哪里（Why we use it），人们如何定义（What is it），从而建立共同的认知；</p></li>
+<li><p>当你不断进步，达到当前阶段的认知边界后，自然会对更深层次的解释好奇，这个时候不妨利用数学的严谨性探索一番，最终恍然大悟：“原来如此。”；</p></li>
+<li><p>数学的严谨性让人赞叹，对于解释性不够强的理论，我们要勇于质疑，大胆探索，就像前人从地心说到日心说所付出的一样，不懈追求。</p></li>
+</ul>
+<p>在机器学习领域，线性模型比较适合初学者入门，过渡到神经网络模型也比较自然，接下来我们就要打开深度学习的大门。</p>
+<p>深度学习，简单开发。我们鼓励你在实践中不断思考，并启发自己去探索直觉性或理论性的解释。</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

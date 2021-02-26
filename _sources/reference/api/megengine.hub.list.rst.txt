@@ -1,0 +1,6 @@
+megengine.hub.list
+==================
+
+.. currentmodule:: megengine.hub
+
+.. autofunction:: list

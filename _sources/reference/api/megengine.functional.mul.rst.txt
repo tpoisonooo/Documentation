@@ -1,0 +1,6 @@
+megengine.functional.mul
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: mul

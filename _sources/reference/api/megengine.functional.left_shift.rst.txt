@@ -1,0 +1,6 @@
+megengine.functional.left\_shift
+================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: left_shift

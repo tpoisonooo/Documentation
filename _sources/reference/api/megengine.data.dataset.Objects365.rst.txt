@@ -1,0 +1,28 @@
+megengine.data.dataset.Objects365
+=================================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: Objects365
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Objects365.__init__
+      ~Objects365.get_img_info
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Objects365.class_names
+      ~Objects365.supported_order
+   
+   

@@ -1,0 +1,6 @@
+megengine.module.init.msra\_uniform\_
+=====================================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: msra_uniform_

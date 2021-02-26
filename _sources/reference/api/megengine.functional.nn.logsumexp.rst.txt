@@ -1,0 +1,6 @@
+megengine.functional.nn.logsumexp
+=================================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: logsumexp

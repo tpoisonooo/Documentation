@@ -1,0 +1,6 @@
+megengine.module.init.zeros\_
+=============================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: zeros_

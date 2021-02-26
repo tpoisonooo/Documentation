@@ -1,0 +1,6 @@
+megengine.Tensor.astype
+=======================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.astype

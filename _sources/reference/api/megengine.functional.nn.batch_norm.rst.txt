@@ -1,0 +1,6 @@
+megengine.functional.nn.batch\_norm
+===================================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: batch_norm

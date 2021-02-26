@@ -1,0 +1,6 @@
+megengine.functional.distributed.broadcast
+==========================================
+
+.. currentmodule:: megengine.functional.distributed
+
+.. autofunction:: broadcast

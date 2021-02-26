@@ -1,0 +1,6 @@
+megengine.functional.logical\_xor
+=================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: logical_xor

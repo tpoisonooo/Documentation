@@ -1,0 +1,20 @@
+megengine.distributed.launcher
+==============================
+
+.. currentmodule:: megengine.distributed
+
+.. autoclass:: launcher
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~launcher.__init__
+   
+   
+
+   
+   
+   

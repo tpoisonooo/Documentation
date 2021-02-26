@@ -1,0 +1,6 @@
+megengine.functional.min
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: min

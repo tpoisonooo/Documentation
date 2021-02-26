@@ -1,0 +1,6 @@
+megengine.functional.reshape
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: reshape

@@ -1,0 +1,6 @@
+megengine.functional.normalize
+==============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: normalize

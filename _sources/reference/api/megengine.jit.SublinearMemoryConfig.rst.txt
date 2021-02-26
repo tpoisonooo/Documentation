@@ -1,0 +1,20 @@
+megengine.jit.SublinearMemoryConfig
+===================================
+
+.. currentmodule:: megengine.jit
+
+.. autoclass:: SublinearMemoryConfig
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SublinearMemoryConfig.__init__
+   
+   
+
+   
+   
+   

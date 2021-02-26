@@ -1,0 +1,39 @@
+megengine.module.LeakyReLU
+==========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: LeakyReLU
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LeakyReLU.__init__
+      ~LeakyReLU.apply
+      ~LeakyReLU.buffers
+      ~LeakyReLU.children
+      ~LeakyReLU.disable_quantize
+      ~LeakyReLU.eval
+      ~LeakyReLU.forward
+      ~LeakyReLU.load_state_dict
+      ~LeakyReLU.modules
+      ~LeakyReLU.named_buffers
+      ~LeakyReLU.named_children
+      ~LeakyReLU.named_modules
+      ~LeakyReLU.named_parameters
+      ~LeakyReLU.parameters
+      ~LeakyReLU.register_forward_hook
+      ~LeakyReLU.register_forward_pre_hook
+      ~LeakyReLU.replace_param
+      ~LeakyReLU.state_dict
+      ~LeakyReLU.train
+      ~LeakyReLU.zero_grad
+   
+   
+
+   
+   
+   

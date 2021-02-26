@@ -1,0 +1,23 @@
+megengine.data.ReplacementSampler
+=================================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: ReplacementSampler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ReplacementSampler.__init__
+      ~ReplacementSampler.batch
+      ~ReplacementSampler.sample
+      ~ReplacementSampler.scatter
+   
+   
+
+   
+   
+   

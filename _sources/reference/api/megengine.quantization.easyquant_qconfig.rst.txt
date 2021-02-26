@@ -1,0 +1,6 @@
+megengine.quantization.easyquant\_qconfig
+=========================================
+
+.. currentmodule:: megengine.quantization
+
+.. autodata:: easyquant_qconfig

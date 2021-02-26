@@ -1,0 +1,6 @@
+megengine.functional.abs
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: abs

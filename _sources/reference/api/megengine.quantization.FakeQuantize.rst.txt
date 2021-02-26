@@ -1,0 +1,43 @@
+megengine.quantization.FakeQuantize
+===================================
+
+.. currentmodule:: megengine.quantization
+
+.. autoclass:: FakeQuantize
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~FakeQuantize.__init__
+      ~FakeQuantize.apply
+      ~FakeQuantize.buffers
+      ~FakeQuantize.children
+      ~FakeQuantize.disable
+      ~FakeQuantize.disable_quantize
+      ~FakeQuantize.enable
+      ~FakeQuantize.eval
+      ~FakeQuantize.fake_quant_forward
+      ~FakeQuantize.forward
+      ~FakeQuantize.load_state_dict
+      ~FakeQuantize.modules
+      ~FakeQuantize.named_buffers
+      ~FakeQuantize.named_children
+      ~FakeQuantize.named_modules
+      ~FakeQuantize.named_parameters
+      ~FakeQuantize.normal_foward
+      ~FakeQuantize.parameters
+      ~FakeQuantize.register_forward_hook
+      ~FakeQuantize.register_forward_pre_hook
+      ~FakeQuantize.replace_param
+      ~FakeQuantize.state_dict
+      ~FakeQuantize.train
+      ~FakeQuantize.zero_grad
+   
+   
+
+   
+   
+   

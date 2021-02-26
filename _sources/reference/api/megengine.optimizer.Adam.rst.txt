@@ -1,0 +1,28 @@
+megengine.optimizer.Adam
+========================
+
+.. currentmodule:: megengine.optimizer
+
+.. autoclass:: Adam
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Adam.__init__
+      ~Adam.add_param_group
+      ~Adam.backward
+      ~Adam.bcast_param
+      ~Adam.clear_grad
+      ~Adam.load_state_dict
+      ~Adam.state_dict
+      ~Adam.step
+      ~Adam.zero_grad
+   
+   
+
+   
+   
+   

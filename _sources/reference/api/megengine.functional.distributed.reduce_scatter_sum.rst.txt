@@ -1,0 +1,6 @@
+megengine.functional.distributed.reduce\_scatter\_sum
+=====================================================
+
+.. currentmodule:: megengine.functional.distributed
+
+.. autofunction:: reduce_scatter_sum

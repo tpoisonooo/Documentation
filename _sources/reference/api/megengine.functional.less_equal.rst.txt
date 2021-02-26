@@ -1,0 +1,6 @@
+megengine.functional.less\_equal
+================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: less_equal

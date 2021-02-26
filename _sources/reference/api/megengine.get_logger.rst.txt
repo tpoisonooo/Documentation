@@ -1,0 +1,6 @@
+megengine.get\_logger
+=====================
+
+.. currentmodule:: megengine
+
+.. autofunction:: get_logger

@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.hub.hub &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.hub.hub 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">types</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+
+<span class="kn">from</span> <span class="nn">megengine.utils.http_download</span> <span class="kn">import</span> <span class="n">download_from_url</span>
+
+<span class="kn">from</span> <span class="nn">..distributed</span> <span class="kn">import</span> <span class="n">is_distributed</span>
+<span class="kn">from</span> <span class="nn">..logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">..serialization</span> <span class="kn">import</span> <span class="n">load</span> <span class="k">as</span> <span class="n">_mge_load_serialized</span>
+<span class="kn">from</span> <span class="nn">.const</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DEFAULT_CACHE_DIR</span><span class="p">,</span>
+    <span class="n">DEFAULT_GIT_HOST</span><span class="p">,</span>
+    <span class="n">DEFAULT_PROTOCOL</span><span class="p">,</span>
+    <span class="n">ENV_MGE_HOME</span><span class="p">,</span>
+    <span class="n">ENV_XDG_CACHE_HOME</span><span class="p">,</span>
+    <span class="n">HTTP_READ_TIMEOUT</span><span class="p">,</span>
+    <span class="n">HUBCONF</span><span class="p">,</span>
+    <span class="n">HUBDEPENDENCY</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">InvalidProtocol</span>
+<span class="kn">from</span> <span class="nn">.fetcher</span> <span class="kn">import</span> <span class="n">GitHTTPSFetcher</span><span class="p">,</span> <span class="n">GitSSHFetcher</span>
+<span class="kn">from</span> <span class="nn">.tools</span> <span class="kn">import</span> <span class="n">cd</span><span class="p">,</span> <span class="n">check_module_exists</span><span class="p">,</span> <span class="n">load_module</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="n">PROTOCOLS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;HTTPS&quot;</span><span class="p">:</span> <span class="n">GitHTTPSFetcher</span><span class="p">,</span>
+    <span class="s2">&quot;SSH&quot;</span><span class="p">:</span> <span class="n">GitSSHFetcher</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_get_megengine_home</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MGE_HOME setting complies with the XDG Base Directory Specification</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">megengine_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
+            <span class="n">ENV_MGE_HOME</span><span class="p">,</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">ENV_XDG_CACHE_HOME</span><span class="p">,</span> <span class="n">DEFAULT_CACHE_DIR</span><span class="p">),</span> <span class="s2">&quot;megengine&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">megengine_home</span>
+
+
+<span class="k">def</span> <span class="nf">_get_repo</span><span class="p">(</span>
+    <span class="n">git_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">repo_info</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">use_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">commit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROTOCOL</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">protocol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">PROTOCOLS</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidProtocol</span><span class="p">(</span>
+            <span class="s2">&quot;Invalid protocol, the value should be one of </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROTOCOLS</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_get_megengine_home</span><span class="p">(),</span> <span class="s2">&quot;hub&quot;</span><span class="p">))</span>
+    <span class="k">with</span> <span class="n">cd</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">):</span>
+        <span class="n">fetcher</span> <span class="o">=</span> <span class="n">PROTOCOLS</span><span class="p">[</span><span class="n">protocol</span><span class="p">]</span>
+        <span class="n">repo_dir</span> <span class="o">=</span> <span class="n">fetcher</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">git_host</span><span class="p">,</span> <span class="n">repo_info</span><span class="p">,</span> <span class="n">use_cache</span><span class="p">,</span> <span class="n">commit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">,</span> <span class="n">repo_dir</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_check_dependencies</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">HUBDEPENDENCY</span><span class="p">):</span>
+        <span class="k">return</span>
+
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">HUBDEPENDENCY</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dependencies</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">missing_deps</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">dependencies</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">check_module_exists</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_deps</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Missing dependencies: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing_deps</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">_init_hub</span><span class="p">(</span>
+    <span class="n">repo_info</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">git_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">use_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">commit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROTOCOL</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Imports hubmodule like python import.</span>
+
+<span class="sd">    :param repo_info:</span>
+<span class="sd">        a string with format ``&quot;repo_owner/repo_name[:tag_name/:branch_name]&quot;`` with an optional</span>
+<span class="sd">        tag/branch. The default branch is ``master`` if not specified.</span>
+<span class="sd">        Example: ``&quot;brain_sdk/MegBrain[:hub]&quot;``</span>
+<span class="sd">    :param git_host:</span>
+<span class="sd">        host address of git repo.</span>
+<span class="sd">        Example: github.com</span>
+<span class="sd">    :param use_cache:</span>
+<span class="sd">        whether to use locally cached code or completely re-fetch.</span>
+<span class="sd">    :param commit:</span>
+<span class="sd">        commit id on github or gitlab.</span>
+<span class="sd">    :param protocol:</span>
+<span class="sd">        which protocol to use to get the repo, and HTTPS protocol only supports public repo on github.</span>
+<span class="sd">        The value should be one of HTTPS, SSH.</span>
+<span class="sd">    :return:</span>
+<span class="sd">        a python module.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_get_megengine_home</span><span class="p">(),</span> <span class="s2">&quot;hub&quot;</span><span class="p">))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">absolute_repo_dir</span> <span class="o">=</span> <span class="n">_get_repo</span><span class="p">(</span>
+        <span class="n">git_host</span><span class="p">,</span> <span class="n">repo_info</span><span class="p">,</span> <span class="n">use_cache</span><span class="o">=</span><span class="n">use_cache</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="n">commit</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="n">protocol</span>
+    <span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">absolute_repo_dir</span><span class="p">)</span>
+    <span class="n">hubmodule</span> <span class="o">=</span> <span class="n">load_module</span><span class="p">(</span><span class="n">HUBCONF</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">absolute_repo_dir</span><span class="p">,</span> <span class="n">HUBCONF</span><span class="p">))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">absolute_repo_dir</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">hubmodule</span>
+
+
+<div class="viewcode-block" id="import_module"><a class="viewcode-back" href="../../../reference/api/megengine.hub.import_module.html#megengine.hub.import_module">[文档]</a><span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">_init_hub</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">import_module</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_init_hub</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="list"><a class="viewcode-back" href="../../../reference/api/megengine.hub.list.html#megengine.hub.list">[文档]</a><span class="k">def</span> <span class="nf">list</span><span class="p">(</span>
+    <span class="n">repo_info</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">git_host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_GIT_HOST</span><span class="p">,</span>
+    <span class="n">use_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">commit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROTOCOL</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Lists all entrypoints available in repo hubconf.</span>
+
+<span class="sd">    :param repo_info:</span>
+<span class="sd">        a string with format ``&quot;repo_owner/repo_name[:tag_name/:branch_name]&quot;`` with an optional</span>
+<span class="sd">        tag/branch. The default branch is ``master`` if not specified.</span>
+<span class="sd">        Example: ``&quot;brain_sdk/MegBrain[:hub]&quot;``</span>
+<span class="sd">    :param git_host:</span>
+<span class="sd">        host address of git repo.</span>
+<span class="sd">        Example: github.com</span>
+<span class="sd">    :param use_cache:</span>
+<span class="sd">        whether to use locally cached code or completely re-fetch.</span>
+<span class="sd">    :param commit:</span>
+<span class="sd">        commit id on github or gitlab.</span>
+<span class="sd">    :param protocol:</span>
+<span class="sd">        which protocol to use to get the repo, and HTTPS protocol only supports public repo on github.</span>
+<span class="sd">        The value should be one of HTTPS, SSH.</span>
+<span class="sd">    :return:</span>
+<span class="sd">        all entrypoint names of the model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hubmodule</span> <span class="o">=</span> <span class="n">_init_hub</span><span class="p">(</span><span class="n">repo_info</span><span class="p">,</span> <span class="n">git_host</span><span class="p">,</span> <span class="n">use_cache</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">_</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">,</span> <span class="n">_</span><span class="p">))</span>
+    <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../reference/api/megengine.hub.load.html#megengine.hub.load">[文档]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span>
+    <span class="n">repo_info</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">entry</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="n">git_host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_GIT_HOST</span><span class="p">,</span>
+    <span class="n">use_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">commit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROTOCOL</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads model from github or gitlab repo, with pretrained weights.</span>
+
+<span class="sd">    :param repo_info:</span>
+<span class="sd">        a string with format ``&quot;repo_owner/repo_name[:tag_name/:branch_name]&quot;`` with an optional</span>
+<span class="sd">        tag/branch. The default branch is ``master`` if not specified.</span>
+<span class="sd">        Example: ``&quot;brain_sdk/MegBrain[:hub]&quot;``</span>
+<span class="sd">    :param entry:</span>
+<span class="sd">        an entrypoint defined in hubconf.</span>
+<span class="sd">    :param git_host:</span>
+<span class="sd">        host address of git repo.</span>
+<span class="sd">        Example: github.com</span>
+<span class="sd">    :param use_cache:</span>
+<span class="sd">        whether to use locally cached code or completely re-fetch.</span>
+<span class="sd">    :param commit:</span>
+<span class="sd">        commit id on github or gitlab.</span>
+<span class="sd">    :param protocol:</span>
+<span class="sd">        which protocol to use to get the repo, and HTTPS protocol only supports public repo on github.</span>
+<span class="sd">        The value should be one of HTTPS, SSH.</span>
+<span class="sd">    :return:</span>
+<span class="sd">        a single model with corresponding pretrained weights.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hubmodule</span> <span class="o">=</span> <span class="n">_init_hub</span><span class="p">(</span><span class="n">repo_info</span><span class="p">,</span> <span class="n">git_host</span><span class="p">,</span> <span class="n">use_cache</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">,</span> <span class="n">entry</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Cannot find callable </span><span class="si">{}</span><span class="s2"> in hubconf.py&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+
+    <span class="n">_check_dependencies</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">)</span>
+
+    <span class="n">module</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">,</span> <span class="n">entry</span><span class="p">)(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">module</span></div>
+
+
+<div class="viewcode-block" id="help"><a class="viewcode-back" href="../../../reference/api/megengine.hub.help.html#megengine.hub.help">[文档]</a><span class="k">def</span> <span class="nf">help</span><span class="p">(</span>
+    <span class="n">repo_info</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">entry</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">git_host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_GIT_HOST</span><span class="p">,</span>
+    <span class="n">use_cache</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">commit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DEFAULT_PROTOCOL</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function returns docstring of entrypoint ``entry`` by following steps:</span>
+
+<span class="sd">    1. Pull the repo code specified by git and repo_info.</span>
+<span class="sd">    2. Load the entry defined in repo&#39;s hubconf.py</span>
+<span class="sd">    3. Return docstring of function entry.</span>
+
+<span class="sd">    :param repo_info:</span>
+<span class="sd">        a string with format ``&quot;repo_owner/repo_name[:tag_name/:branch_name]&quot;`` with an optional</span>
+<span class="sd">        tag/branch. The default branch is ``master`` if not specified.</span>
+<span class="sd">        Example: ``&quot;brain_sdk/MegBrain[:hub]&quot;``</span>
+<span class="sd">    :param entry:</span>
+<span class="sd">        an entrypoint defined in hubconf.py</span>
+<span class="sd">    :param git_host:</span>
+<span class="sd">        host address of git repo.</span>
+<span class="sd">        Example: github.com</span>
+<span class="sd">    :param use_cache:</span>
+<span class="sd">        whether to use locally cached code or completely re-fetch.</span>
+<span class="sd">    :param commit:</span>
+<span class="sd">        commit id on github or gitlab.</span>
+<span class="sd">    :param protocol:</span>
+<span class="sd">        which protocol to use to get the repo, and HTTPS protocol only supports public repo on github.</span>
+<span class="sd">        The value should be one of HTTPS, SSH.</span>
+<span class="sd">    :return:</span>
+<span class="sd">        docstring of entrypoint ``entry``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hubmodule</span> <span class="o">=</span> <span class="n">_init_hub</span><span class="p">(</span><span class="n">repo_info</span><span class="p">,</span> <span class="n">git_host</span><span class="p">,</span> <span class="n">use_cache</span><span class="p">,</span> <span class="n">commit</span><span class="p">,</span> <span class="n">protocol</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">,</span> <span class="n">entry</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Cannot find callable </span><span class="si">{}</span><span class="s2"> in hubconf.py&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="p">))</span>
+
+    <span class="n">doc</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">hubmodule</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span><span class="o">.</span><span class="vm">__doc__</span>
+    <span class="k">return</span> <span class="n">doc</span></div>
+
+
+<div class="viewcode-block" id="load_serialized_obj_from_url"><a class="viewcode-back" href="../../../reference/api/megengine.hub.load_serialized_obj_from_url.html#megengine.hub.load_serialized_obj_from_url">[文档]</a><span class="k">def</span> <span class="nf">load_serialized_obj_from_url</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads MegEngine serialized object from the given URL.</span>
+
+<span class="sd">    If the object is already present in ``model_dir``, it&#39;s deserialized and</span>
+<span class="sd">    returned. If no ``model_dir`` is specified, it will be ``MGE_HOME/serialized``.</span>
+
+<span class="sd">    :param url: url to serialized object.</span>
+<span class="sd">    :param model_dir: dir to cache target serialized file.</span>
+
+<span class="sd">    :return: loaded object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">model_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">model_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_get_megengine_home</span><span class="p">(),</span> <span class="s2">&quot;serialized&quot;</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">parts</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># use hash as prefix to avoid filename conflict from different urls</span>
+    <span class="n">sha256</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
+    <span class="n">sha256</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">digest</span> <span class="o">=</span> <span class="n">sha256</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">digest</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+
+    <span class="n">cached_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;load_serialized_obj_from_url: download to or using cached </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">cached_file</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cached_file</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_distributed</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Downloading serialized object in DISTRIBUTED mode</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;    File may be downloaded multiple times. We recommend</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;    users to download in single process first.&quot;</span>
+            <span class="p">)</span>
+        <span class="n">download_from_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cached_file</span><span class="p">,</span> <span class="n">HTTP_READ_TIMEOUT</span><span class="p">)</span>
+
+    <span class="n">state_dict</span> <span class="o">=</span> <span class="n">_mge_load_serialized</span><span class="p">(</span><span class="n">cached_file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">state_dict</span></div>
+
+
+<div class="viewcode-block" id="pretrained"><a class="viewcode-back" href="../../../reference/api/megengine.hub.pretrained.html#megengine.hub.pretrained">[文档]</a><span class="k">class</span> <span class="nc">pretrained</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator which helps to download pretrained weights from the given url.</span>
+
+<span class="sd">    For example, we can decorate a resnet18 function as follows</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">        @hub.pretrained(&quot;https://url/to/pretrained_resnet18.pkl&quot;)</span>
+<span class="sd">        def resnet18(**kwargs):</span>
+<span class="sd">            return ResNet(BasicBlock, [2, 2, 2, 2], **kwargs)</span>
+
+<span class="sd">    When decorated function is called with ``pretrained=True``, MegEngine will automatically</span>
+<span class="sd">    download and fill the returned model with pretrained weights.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">pretrained_model_func</span><span class="p">(</span>
+            <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>  <span class="c1"># pylint: disable=redefined-outer-name</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">pretrained</span><span class="p">:</span>
+                <span class="n">weights</span> <span class="o">=</span> <span class="n">load_serialized_obj_from_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">model</span>
+
+        <span class="k">return</span> <span class="n">pretrained_model_func</span></div>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;list&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;help&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;load_serialized_obj_from_url&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pretrained&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;import_module&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

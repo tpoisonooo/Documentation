@@ -1,0 +1,6 @@
+megengine.functional.norm
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: norm

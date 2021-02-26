@@ -1,0 +1,6 @@
+megengine.Tensor.to
+===================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.to

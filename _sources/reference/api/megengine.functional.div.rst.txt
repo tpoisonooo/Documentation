@@ -1,0 +1,6 @@
+megengine.functional.div
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: div

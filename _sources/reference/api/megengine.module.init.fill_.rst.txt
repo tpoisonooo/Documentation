@@ -1,0 +1,6 @@
+megengine.module.init.fill\_
+============================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: fill_

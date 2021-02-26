@@ -1,0 +1,6 @@
+megengine.functional.distributed.all\_to\_all
+=============================================
+
+.. currentmodule:: megengine.functional.distributed
+
+.. autofunction:: all_to_all

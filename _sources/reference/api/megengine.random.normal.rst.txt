@@ -1,0 +1,6 @@
+megengine.random.normal
+=======================
+
+.. currentmodule:: megengine.random
+
+.. autofunction:: normal

@@ -1,0 +1,6 @@
+megengine.functional.acos
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: acos

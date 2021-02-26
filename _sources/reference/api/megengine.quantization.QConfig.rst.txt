@@ -1,0 +1,20 @@
+megengine.quantization.QConfig
+==============================
+
+.. currentmodule:: megengine.quantization
+
+.. autoclass:: QConfig
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QConfig.__init__
+   
+   
+
+   
+   
+   

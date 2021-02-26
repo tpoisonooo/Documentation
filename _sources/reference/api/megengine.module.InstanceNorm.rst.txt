@@ -1,0 +1,40 @@
+megengine.module.InstanceNorm
+=============================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: InstanceNorm
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~InstanceNorm.__init__
+      ~InstanceNorm.apply
+      ~InstanceNorm.buffers
+      ~InstanceNorm.children
+      ~InstanceNorm.disable_quantize
+      ~InstanceNorm.eval
+      ~InstanceNorm.forward
+      ~InstanceNorm.load_state_dict
+      ~InstanceNorm.modules
+      ~InstanceNorm.named_buffers
+      ~InstanceNorm.named_children
+      ~InstanceNorm.named_modules
+      ~InstanceNorm.named_parameters
+      ~InstanceNorm.parameters
+      ~InstanceNorm.register_forward_hook
+      ~InstanceNorm.register_forward_pre_hook
+      ~InstanceNorm.replace_param
+      ~InstanceNorm.reset_parameters
+      ~InstanceNorm.state_dict
+      ~InstanceNorm.train
+      ~InstanceNorm.zero_grad
+   
+   
+
+   
+   
+   

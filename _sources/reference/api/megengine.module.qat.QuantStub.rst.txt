@@ -1,0 +1,56 @@
+megengine.module.qat.QuantStub
+==============================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: QuantStub
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QuantStub.__init__
+      ~QuantStub.apply
+      ~QuantStub.apply_quant_activation
+      ~QuantStub.apply_quant_weight
+      ~QuantStub.buffers
+      ~QuantStub.children
+      ~QuantStub.disable_quantize
+      ~QuantStub.eval
+      ~QuantStub.forward
+      ~QuantStub.from_float_module
+      ~QuantStub.get_activation_dtype
+      ~QuantStub.get_activation_qparams
+      ~QuantStub.get_weight_dtype
+      ~QuantStub.get_weight_qparams
+      ~QuantStub.load_state_dict
+      ~QuantStub.modules
+      ~QuantStub.named_buffers
+      ~QuantStub.named_children
+      ~QuantStub.named_modules
+      ~QuantStub.named_parameters
+      ~QuantStub.parameters
+      ~QuantStub.register_forward_hook
+      ~QuantStub.register_forward_pre_hook
+      ~QuantStub.replace_param
+      ~QuantStub.set_fake_quant
+      ~QuantStub.set_observer
+      ~QuantStub.set_qconfig
+      ~QuantStub.state_dict
+      ~QuantStub.train
+      ~QuantStub.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~QuantStub.with_act
+      ~QuantStub.with_weight
+   
+   

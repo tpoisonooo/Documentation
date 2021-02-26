@@ -1,0 +1,6 @@
+megengine.quantization.calibration\_qconfig
+===========================================
+
+.. currentmodule:: megengine.quantization
+
+.. autodata:: calibration_qconfig

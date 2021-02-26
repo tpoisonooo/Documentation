@@ -1,0 +1,6 @@
+megengine.get\_device\_count
+============================
+
+.. currentmodule:: megengine
+
+.. autofunction:: get_device_count

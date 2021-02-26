@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.autodiff.grad_manager &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.autodiff.grad_manager 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">from</span> <span class="nn">..core.autodiff.grad</span> <span class="kn">import</span> <span class="n">Grad</span>
+<span class="kn">from</span> <span class="nn">..logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">..utils.future</span> <span class="kn">import</span> <span class="n">Future</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">backwarding_grad_manager</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">get_backwarding_grad_manager</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">backwarding_grad_manager</span>
+
+
+<span class="k">class</span> <span class="nc">AttachSpec</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="s2">&quot;tensor&quot;</span><span class="p">,</span> <span class="s2">&quot;callbacks&quot;</span>
+
+
+<div class="viewcode-block" id="GradManager"><a class="viewcode-back" href="../../../reference/autodiff.html#megengine.autodiff.GradManager">[文档]</a><span class="k">class</span> <span class="nc">GradManager</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    GradManager computes gradients or more generally, vector-Jacobian product, by reverse mode</span>
+<span class="sd">    automatic differentiation (a.k.a. back propagation).</span>
+
+<span class="sd">    Reverse mode autodiff normally reuses many intermediate tensors for best computation efficiency.</span>
+<span class="sd">    In a read-eval-print-loop (REPL) environment however, it is impossible to known how the user</span>
+<span class="sd">    would take gradients later thus which tensors to keep. To solve this problem, the user must</span>
+<span class="sd">    somehow declare beforehand which gradient could possibly be taken. With GradManager, users are</span>
+<span class="sd">    required to call the :meth:`attach` method on a tensor if they want to take gradients with</span>
+<span class="sd">    respect to it later. Furthermore, any computation on a tensor before it is attached is</span>
+<span class="sd">    completely ignored from the autodiff perspective, so :meth:`attach` must be called before any</span>
+<span class="sd">    computation that needs differentiation.</span>
+
+<span class="sd">    For example, the following symbolic differentiation code</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">        x = get_x()</span>
+<span class="sd">        y = f(x)</span>
+<span class="sd">        dy = ones_like(y)</span>
+<span class="sd">        dx = vjp(y, x, dy) # vector-Jacobian product</span>
+
+<span class="sd">    can be rewriten using GradManager for REPL environment as</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">        with GradManager() as gm:</span>
+<span class="sd">            x = get_x()</span>
+<span class="sd">            gm.attach(x) # must be placed before any computation on x that needs differentiation</span>
+<span class="sd">            y = f(x)</span>
+<span class="sd">            dy = ones_like(y)</span>
+<span class="sd">            gm.backward(y, dy) # doesn&#39;t need x, already known via attach()</span>
+<span class="sd">            dx = x.grad # backward() saves result to .grad attribute</span>
+
+<span class="sd">    A more realistic example of training a neural network would be like</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">        gm = GradManager()</span>
+<span class="sd">        gm.attach(model.parameters())</span>
+
+<span class="sd">        for data in dataset:</span>
+<span class="sd">            with gm:</span>
+<span class="sd">                loss = model(data)</span>
+<span class="sd">                gm.backward(loss)</span>
+<span class="sd">            # gradients w.r.t. parameters is accumulated into their .grad attributes</span>
+
+<span class="sd">    You can also use ``record()`` and ``release()`` method instead of ``with`` context:</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">        gm = GradManager()</span>
+<span class="sd">        gm.attach(model.parameters())</span>
+
+<span class="sd">        for data in dataset:</span>
+<span class="sd">            gm.record()</span>
+<span class="sd">            loss = model(data)</span>
+<span class="sd">            gm.backward(loss)</span>
+<span class="sd">            # backward() will clear recorded history and free resources</span>
+<span class="sd">            # call release() if backward() is not called</span>
+<span class="sd">            # gm.release()</span>
+
+<span class="sd">    For your convenience, GradManager may (not must) be reused. As shown in the examples, you</span>
+<span class="sd">    only need to attach a tensor once and GradManager will remember it afterwards.</span>
+<span class="sd">    However, a single GradManager can record only one computation history at a time. To run</span>
+<span class="sd">    multiple differentiations simultaneously or perform high order differentiation, create</span>
+<span class="sd">    as many GradManager as you need.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        Mutable tensors introduce ambiguities when doing symbolic differentiation: which version</span>
+<span class="sd">        of the tensor are we referring to? For attached tensors, GradManager resolves this</span>
+<span class="sd">        ambiguity by &quot;snapshoting&quot; them on first encounter, either on :meth:`record` (or entering</span>
+<span class="sd">        with statement) if tensor is attached before :meth:`record`, or on :meth:`attach` if</span>
+<span class="sd">        GradManager is already recording. Attached tensors will then be interpreted as their</span>
+<span class="sd">        snapshotted version for differentiation purpose. The same ambiguity on the first parameter</span>
+<span class="sd">        of :meth:`backward` is simply resolved by using the latest version.</span>
+
+<span class="sd">    Typically, in data parallel, we would like to average the gradients across</span>
+<span class="sd">    processes. Users will finally get the averaged gradients if an &quot;AllReduce&quot;</span>
+<span class="sd">    callback is registered as follows:</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">        import megengine.distributed as dist</span>
+
+<span class="sd">        gm = GradManager()</span>
+<span class="sd">        gm.attach(model.parameters(), callback=dist.make_allreduce_cb(&quot;MEAN&quot;))</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attach_specs</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># id(Tensor) -&gt; AttachSpec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_after_backward_callback</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="GradManager.attach"><a class="viewcode-back" href="../../../reference/autodiff.html#megengine.autodiff.GradManager.attach">[文档]</a>    <span class="k">def</span> <span class="nf">attach</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensors</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instruct GradManager to track operations on tensors, so that gradients with respect</span>
+<span class="sd">        to those tensors could be evaluated later.</span>
+
+<span class="sd">        :meth:`attach` also accepts a list of callbacks, which will be called with the tensor and</span>
+<span class="sd">        its gradient during :meth:`backward`. The signature of callbacks should look like:</span>
+
+<span class="sd">            .. code-block::</span>
+
+<span class="sd">                def callback(tensor: Tensor, grad: Tensor) -&gt; Tensor:</span>
+<span class="sd">                    ...</span>
+<span class="sd">                    # returned grad is passed to subsequent callbacks</span>
+<span class="sd">                    # and finally accumulated to the .grad attribute of tensor</span>
+<span class="sd">                    return grad</span>
+
+<span class="sd">        :meth:`attach` calls with overlapping tensors will result in their callbacks concatenated,</span>
+<span class="sd">        independently for each tensor. For example,</span>
+
+<span class="sd">            .. code-block::</span>
+
+<span class="sd">                gm.attach([x, y], callbacks=[f])</span>
+<span class="sd">                gm.attach([y], callbacks=[g])</span>
+
+<span class="sd">        is equivalent to</span>
+
+<span class="sd">            .. code-block::</span>
+
+<span class="sd">                gm.attach([x], callbacks=[f])</span>
+<span class="sd">                gm.attach([y], callbacks=[f, g])</span>
+
+<span class="sd">        The effect of :meth:`attach` will persist across multiple uses of the GradManager. When</span>
+<span class="sd">        reusing a GradManager, it is likely a mistake to call :meth:`attach` on the same set of</span>
+<span class="sd">        tensors and callbacks repeatedly, which may grow the callback list indefinitely.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            When reusing a GradManager, it is sometimes desirable to attach temporary tensors each</span>
+<span class="sd">            time, e.g. for computing gradients of inputs of a neural network. GradManager tries to</span>
+<span class="sd">            accommodate such usages by holding weak references to attached tensors. Most of the</span>
+<span class="sd">            times, this should be enough to prevent resource leak. Unfortunately, there are still</span>
+<span class="sd">            some pitfalls left:</span>
+
+<span class="sd">                - Callbacks should not hold strong references, directly or indirectly, to attached</span>
+<span class="sd">                  tensors. Any strong reference, including those from callbacks, will prevent</span>
+<span class="sd">                  garbage collection (even by the cycle collector!) of a attached tensor, until</span>
+<span class="sd">                  the GradManager object is garbage collected.</span>
+
+<span class="sd">            Please also note that GradManager might hold additional strong references to attached</span>
+<span class="sd">            tensors when it is in use. This note only covers potential resource leaks across</span>
+<span class="sd">            multiple uses of a GradManager, which is unrelated to whether resources is timely</span>
+<span class="sd">            released within a single use.</span>
+
+<span class="sd">        :param tensors: tensor or list of tensors to track</span>
+<span class="sd">        :param callbacks: callback or list of callbacks</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">callbacks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+            <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">callbacks</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tensors</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+            <span class="n">tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">tensors</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">make_spec</span><span class="p">(</span><span class="n">tensor</span><span class="p">):</span>
+            <span class="n">selfref</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">deleter</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+                <span class="bp">self</span> <span class="o">=</span> <span class="n">selfref</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attach_specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+            <span class="n">spec</span> <span class="o">=</span> <span class="n">AttachSpec</span><span class="p">()</span>
+            <span class="n">spec</span><span class="o">.</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">deleter</span><span class="p">)</span>
+            <span class="n">spec</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">return</span> <span class="n">spec</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tensors</span><span class="p">:</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attach_specs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+            <span class="n">new_attach</span> <span class="o">=</span> <span class="n">spec</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">spec</span> <span class="o">=</span> <span class="n">make_spec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_attach_specs</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="n">spec</span>
+            <span class="n">spec</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">callbacks</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">new_attach</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recording</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_do_record</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_register_after_backward_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_after_backward_callback</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+<div class="viewcode-block" id="GradManager.backward"><a class="viewcode-back" href="../../../reference/autodiff.html#megengine.autodiff.GradManager.backward">[文档]</a>    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute gradients (or vector-Jacobian product) for all attached tensors, accumulate to</span>
+<span class="sd">        corresponding .grad attribute, and release resources along the way.</span>
+
+<span class="sd">        :meth:`backward` computes the vector-Jacobian product :math:`dx_j = \sum_{i} dy_i J_{ij}`</span>
+<span class="sd">        where :math:`J_{ij} = ∂y_i/∂x_j` is the Jacobian matrix between vector variables :math:`y`</span>
+<span class="sd">        and :math:`x`, with all vectors involved represented as a list of tensors, in the sense of</span>
+<span class="sd">        direct sums (or flatten-and-concatenate). :math:`y` and :math:`dy` are passed as the first</span>
+<span class="sd">        and second parameter respectively, whereas :math:`x` is directly taken from the list of</span>
+<span class="sd">        all attached tensors. The result :math:`dx` is also not returned. Instead, it is directly</span>
+<span class="sd">        accumulated into the .grad attribute of matching attached tensors (a.k.a. :math:`x`). This</span>
+<span class="sd">        can be done unambiguously since :math:`dx` as a list of tensors has the same structure as</span>
+<span class="sd">        :math:`x`.</span>
+
+<span class="sd">        If :math:`y` is a scalar and :math:`dy` is chosen to be 1, the vector-Jacobian product</span>
+<span class="sd">        yield gradient of :math:`y` with repect to :math:`x` as a special case. In that case,</span>
+<span class="sd">        you will be able to omit the :math:`dy` parameter and :meth:`backward` will automatically</span>
+<span class="sd">        use 1 for it and compute the gradient.</span>
+
+<span class="sd">        :meth:`backward` consumes all resources held by this GradManager and releases them in the</span>
+<span class="sd">        process of this call. When the call successfully finishes, the GradManager will be put back</span>
+<span class="sd">        to an inactive state.</span>
+
+<span class="sd">        :param y: tensor or list of tensors</span>
+<span class="sd">        :param dy: tensor or list of tensors. Defaults to 1 if y is scalar</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">..functional</span> <span class="kn">import</span> <span class="n">ones_like</span>
+
+        <span class="k">global</span> <span class="n">backwarding_grad_manager</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="n">backwarding_grad_manager</span>
+        <span class="n">backwarding_grad_manager</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recording</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;no computation history. &quot;</span>
+                <span class="s2">&quot;did you forget record() or &quot;</span>
+                <span class="s2">&quot;call a method that clears the history?&quot;</span>
+            <span class="p">)</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dys</span> <span class="o">=</span> <span class="p">[</span><span class="n">ones_like</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dy</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="n">dys</span> <span class="o">=</span> <span class="n">ys</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dys</span> <span class="o">=</span> <span class="p">[</span><span class="n">dy</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">dys</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_after_backward_callback</span><span class="p">:</span>
+                <span class="n">callback</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">grad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">Future</span><span class="p">):</span>
+                    <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attach_specs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+                <span class="n">tensor</span> <span class="o">=</span> <span class="n">spec</span> <span class="ow">and</span> <span class="n">spec</span><span class="o">.</span><span class="n">tensor</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">tensor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">grad</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">tensor</span><span class="o">.</span><span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">tensor</span><span class="o">.</span><span class="n">grad</span> <span class="o">+=</span> <span class="n">grad</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="n">backwarding_grad_manager</span> <span class="o">=</span> <span class="n">cache</span></div>
+
+<div class="viewcode-block" id="GradManager.record"><a class="viewcode-back" href="../../../reference/autodiff.html#megengine.autodiff.GradManager.record">[文档]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start recording operations</span>
+
+<span class="sd">        After this call, you will be able to call :meth:`backward`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recording</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;already recording&quot;</span><span class="p">)</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">Grad</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span> <span class="o">=</span> <span class="n">grad</span>
+        <span class="k">for</span> <span class="n">spec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attach_specs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_do_record</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="n">grad</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_do_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">tensor</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tensor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">callbacks</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
+                <span class="n">grad</span> <span class="o">=</span> <span class="n">cb</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">grad</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">tensor</span><span class="p">)]</span> <span class="o">=</span> <span class="n">grad</span>
+
+        <span class="c1"># NOTE: override prev callback wrt when called serval times</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span><span class="o">.</span><span class="n">wrt</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GradManager.release"><a class="viewcode-back" href="../../../reference/autodiff.html#megengine.autodiff.GradManager.release">[文档]</a>    <span class="k">def</span> <span class="nf">release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stop recording operations and release resources kept for gradient computation</span>
+
+<span class="sd">        After this call, you will not be able to call :meth:`backward`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_grad</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">record</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

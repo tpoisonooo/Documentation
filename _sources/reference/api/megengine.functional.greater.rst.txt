@@ -1,0 +1,6 @@
+megengine.functional.greater
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: greater

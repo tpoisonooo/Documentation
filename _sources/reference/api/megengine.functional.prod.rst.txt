@@ -1,0 +1,6 @@
+megengine.functional.prod
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: prod

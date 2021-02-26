@@ -1,0 +1,533 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.module.init &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.module.init 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..functional</span> <span class="kn">import</span> <span class="n">full</span>
+<span class="kn">from</span> <span class="nn">..random</span> <span class="kn">import</span> <span class="n">normal</span><span class="p">,</span> <span class="n">uniform</span>
+<span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+
+<div class="viewcode-block" id="fill_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.fill_.html#megengine.module.init.fill_">[文档]</a><span class="k">def</span> <span class="nf">fill_</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills the given ``tensor`` with value ``val``.</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    :param val: value to be filled throughout the tensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tensor</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="zeros_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.zeros_.html#megengine.module.init.zeros_">[文档]</a><span class="k">def</span> <span class="nf">zeros_</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills the given ``tensor`` with scalar value `0`.</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fill_</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ones_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.ones_.html#megengine.module.init.ones_">[文档]</a><span class="k">def</span> <span class="nf">ones_</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills the given ``tensor`` with the scalar value `1`.</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fill_</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="uniform_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.uniform_.html#megengine.module.init.uniform_">[文档]</a><span class="k">def</span> <span class="nf">uniform_</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills the given ``tensor`` with random value sampled from uniform distribution</span>
+<span class="sd">    :math:`\mathcal{U}(\text{a}, \text{b})`.</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    :param a: lower bound of the sampling interval.</span>
+<span class="sd">    :param b: upper bound of the sampling interval.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tensor</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="normal_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.normal_.html#megengine.module.init.normal_">[文档]</a><span class="k">def</span> <span class="nf">normal_</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">mean</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills the given ``tensor`` with random value sampled from normal distribution</span>
+<span class="sd">    :math:`\mathcal{N}(\text{mean}, \text{std}^2)`.</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    :param mean: mean of the normal distribution.</span>
+<span class="sd">    :param std: standard deviation of the normal distribution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tensor</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="calculate_gain"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.calculate_gain.html#megengine.module.init.calculate_gain">[文档]</a><span class="k">def</span> <span class="nf">calculate_gain</span><span class="p">(</span>
+    <span class="n">nonlinearity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">param</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a recommended gain value (see the table below) for the given nonlinearity</span>
+<span class="sd">    function.</span>
+
+<span class="sd">    ================= ====================================================</span>
+<span class="sd">    nonlinearity      gain</span>
+<span class="sd">    ================= ====================================================</span>
+<span class="sd">    Linear / Identity :math:`1`</span>
+<span class="sd">    Conv{1,2,3}D      :math:`1`</span>
+<span class="sd">    Sigmoid           :math:`1`</span>
+<span class="sd">    Tanh              :math:`\frac{5}{3}`</span>
+<span class="sd">    ReLU              :math:`\sqrt{2}`</span>
+<span class="sd">    Leaky Relu        :math:`\sqrt{\frac{2}{1 + {\text{negative}_\text{slope}}^2}}`</span>
+<span class="sd">    ================= ====================================================</span>
+
+<span class="sd">    :param nonlinearity: name of the non-linear function.</span>
+<span class="sd">    :param param: optional parameter for leaky_relu. Only effective when</span>
+<span class="sd">        ``nonlinearity`` is &quot;leaky_relu&quot;.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linear_fns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;conv1d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;conv2d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;conv3d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;conv_transpose1d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;conv_transpose2d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;conv_transpose3d&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="n">nonlinearity</span> <span class="ow">in</span> <span class="n">linear_fns</span> <span class="ow">or</span> <span class="n">nonlinearity</span> <span class="o">==</span> <span class="s2">&quot;sigmoid&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">nonlinearity</span> <span class="o">==</span> <span class="s2">&quot;tanh&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">5.0</span> <span class="o">/</span> <span class="mi">3</span>
+    <span class="k">if</span> <span class="n">nonlinearity</span> <span class="o">==</span> <span class="s2">&quot;relu&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nonlinearity</span> <span class="o">==</span> <span class="s2">&quot;leaky_relu&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">param</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">negative_slope</span> <span class="o">=</span> <span class="mf">0.01</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="c1"># True/False are instances of int, hence check above</span>
+            <span class="n">negative_slope</span> <span class="o">=</span> <span class="n">param</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;negative_slope </span><span class="si">{}</span><span class="s2"> not a valid number&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">negative_slope</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsupported nonlinearity </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nonlinearity</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="calculate_fan_in_and_fan_out"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.calculate_fan_in_and_fan_out.html#megengine.module.init.calculate_fan_in_and_fan_out">[文档]</a><span class="k">def</span> <span class="nf">calculate_fan_in_and_fan_out</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates fan_in / fan_out value for given weight tensor. This function assumes</span>
+<span class="sd">    input tensor is stored in ``NCHW`` format.</span>
+
+<span class="sd">    :param tensor: weight tensor in ``NCHW`` format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;fan_in and fan_out can not be computed for tensor with fewer than 2 &quot;</span>
+            <span class="s2">&quot;dimensions&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Linear</span>
+        <span class="n">fan_in</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">fan_out</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num_input_fmaps</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">num_output_fmaps</span> <span class="o">=</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">receptive_field_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">receptive_field_size</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">fan_in</span> <span class="o">=</span> <span class="n">num_input_fmaps</span> <span class="o">*</span> <span class="n">receptive_field_size</span>
+        <span class="n">fan_out</span> <span class="o">=</span> <span class="n">num_output_fmaps</span> <span class="o">*</span> <span class="n">receptive_field_size</span>
+    <span class="k">return</span> <span class="n">fan_in</span><span class="p">,</span> <span class="n">fan_out</span></div>
+
+
+<div class="viewcode-block" id="calculate_correct_fan"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.calculate_correct_fan.html#megengine.module.init.calculate_correct_fan">[文档]</a><span class="k">def</span> <span class="nf">calculate_correct_fan</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates fan_in / fan_out value for given weight tensor, depending on given</span>
+<span class="sd">    ``mode``.</span>
+
+<span class="sd">    See :func:`calculate_fan_in_and_fan_out` for details.</span>
+
+<span class="sd">    :param tensor: weight tensor in ``NCHW`` format.</span>
+<span class="sd">    :param mode: &quot;fan_in&quot; or &quot;fan_out&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">valid_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fan_in&quot;</span><span class="p">,</span> <span class="s2">&quot;fan_out&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_modes</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Mode </span><span class="si">{}</span><span class="s2"> not supported, please use one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">valid_modes</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">fan_in</span><span class="p">,</span> <span class="n">fan_out</span> <span class="o">=</span> <span class="n">calculate_fan_in_and_fan_out</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fan_in</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;fan_in&quot;</span> <span class="k">else</span> <span class="n">fan_out</span></div>
+
+
+<div class="viewcode-block" id="xavier_uniform_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.xavier_uniform_.html#megengine.module.init.xavier_uniform_">[文档]</a><span class="k">def</span> <span class="nf">xavier_uniform_</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills tensor with random values sampled from :math:`\mathcal{U}(-a, a)`</span>
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        a = \text{gain} \times \sqrt{\frac{6}{\text{fan_in} + \text{fan_out}}}</span>
+
+<span class="sd">    Also known as Glorot initialization. Detailed information can be retrieved from</span>
+<span class="sd">    `Understanding the difficulty of training deep feedforward neural networks` -</span>
+<span class="sd">    Glorot, X. &amp; Bengio, Y. (2010).</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    :param gain: scaling factor for :math:`a`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fan_in</span><span class="p">,</span> <span class="n">fan_out</span> <span class="o">=</span> <span class="n">calculate_fan_in_and_fan_out</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">gain</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">fan_in</span> <span class="o">+</span> <span class="n">fan_out</span><span class="p">))</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span>
+    <span class="n">uniform_</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="xavier_normal_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.xavier_normal_.html#megengine.module.init.xavier_normal_">[文档]</a><span class="k">def</span> <span class="nf">xavier_normal_</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills tensor with random values sampled from</span>
+<span class="sd">    :math:`\mathcal{N}(0, \text{std}^2)` where</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \text{std} = \text{gain} \times \sqrt{\frac{2}{\text{fan_in} + \text{fan_out}}}</span>
+
+<span class="sd">    Also known as Glorot initialization. Detailed information can be retrieved from</span>
+<span class="sd">    `Understanding the difficulty of training deep feedforward neural networks` -</span>
+<span class="sd">    Glorot, X. &amp; Bengio, Y. (2010).</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    :param gain: scaling factor for :math:`std`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fan_in</span><span class="p">,</span> <span class="n">fan_out</span> <span class="o">=</span> <span class="n">calculate_fan_in_and_fan_out</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">gain</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">fan_in</span> <span class="o">+</span> <span class="n">fan_out</span><span class="p">))</span>
+    <span class="n">normal_</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="msra_uniform_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.msra_uniform_.html#megengine.module.init.msra_uniform_">[文档]</a><span class="k">def</span> <span class="nf">msra_uniform_</span><span class="p">(</span>
+    <span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fan_in&quot;</span><span class="p">,</span> <span class="n">nonlinearity</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;leaky_relu&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills tensor wilth random values sampled from</span>
+<span class="sd">    :math:`\mathcal{U}(-\text{bound}, \text{bound})` where</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \text{bound} = \sqrt{\frac{6}{(1 + a^2) \times \text{fan_in}}}</span>
+
+<span class="sd">    Detailed information can be retrieved from</span>
+<span class="sd">    `Delving deep into rectifiers: Surpassing human-level performance on ImageNet</span>
+<span class="sd">    classification`</span>
+
+<span class="sd">    :param tensor: tensor to be initialized.</span>
+<span class="sd">    :param a: optional parameter for calculating gain for leaky_relu. See</span>
+<span class="sd">        :func:`calculate_gain` for details.</span>
+<span class="sd">    :param mode: &quot;fan_in&quot; or &quot;fan_out&quot;, used to calculate :math:`gain`, the</span>
+<span class="sd">        scaling factor for :math:`bound`. See :func:`calculate_fan_in_and_fan_out` for</span>
+<span class="sd">        details.</span>
+<span class="sd">    :param nonlinearity: name of the non-linear function used to calculate :math:`gain`.</span>
+<span class="sd">        See :func:`calculate_gain` for details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fan</span> <span class="o">=</span> <span class="n">calculate_correct_fan</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+    <span class="n">gain</span> <span class="o">=</span> <span class="n">calculate_gain</span><span class="p">(</span><span class="n">nonlinearity</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">gain</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fan</span><span class="p">)</span>
+    <span class="n">bound</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span>
+    <span class="n">uniform_</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="o">-</span><span class="n">bound</span><span class="p">,</span> <span class="n">bound</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="msra_normal_"><a class="viewcode-back" href="../../../reference/api/megengine.module.init.msra_normal_.html#megengine.module.init.msra_normal_">[文档]</a><span class="k">def</span> <span class="nf">msra_normal_</span><span class="p">(</span>
+    <span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fan_in&quot;</span><span class="p">,</span> <span class="n">nonlinearity</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;leaky_relu&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fills tensor wilth random values sampled from</span>
+<span class="sd">    :math:`\mathcal{N}(0, \text{std}^2)` where</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        \text{std} = \sqrt{\frac{2}{(1 + a^2) \times \text{fan_in}}}</span>
+
+<span class="sd">    Detailed information can be retrieved from</span>
+<span class="sd">    `Delving deep into rectifiers: Surpassing human-level performance on ImageNet</span>
+<span class="sd">    classification`</span>
+
+<span class="sd">    :param tensor: tensor to be initialized</span>
+<span class="sd">    :param a: optional parameter for calculating gain for leaky_relu. See</span>
+<span class="sd">        :func:`calculate_gain` for details.</span>
+<span class="sd">    :param mode: &quot;fan_in&quot; or &quot;fan_out&quot;, used to calculate :math:`gain`, the</span>
+<span class="sd">        scaling factor for :math:`gain`. See :func:`calculate_fan_in_and_fan_out` for</span>
+<span class="sd">        details.</span>
+<span class="sd">    :param nonlinearity: name of the non-linear function used to calculate :math:`gain`.</span>
+<span class="sd">        See :func:`calculate_gain` for details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fan</span> <span class="o">=</span> <span class="n">calculate_correct_fan</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+    <span class="n">gain</span> <span class="o">=</span> <span class="n">calculate_gain</span><span class="p">(</span><span class="n">nonlinearity</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">gain</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fan</span><span class="p">)</span>
+    <span class="n">normal_</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

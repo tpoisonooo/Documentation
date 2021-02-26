@@ -1,0 +1,6 @@
+megengine.Tensor.size
+=====================
+
+.. currentmodule:: megengine
+
+.. autoproperty:: Tensor.size

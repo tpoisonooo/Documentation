@@ -1,0 +1,6 @@
+megengine.Tensor.flatten
+========================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.flatten

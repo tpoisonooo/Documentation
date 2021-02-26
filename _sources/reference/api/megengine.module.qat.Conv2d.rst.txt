@@ -1,0 +1,59 @@
+megengine.module.qat.Conv2d
+===========================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: Conv2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Conv2d.__init__
+      ~Conv2d.apply
+      ~Conv2d.apply_quant_activation
+      ~Conv2d.apply_quant_weight
+      ~Conv2d.buffers
+      ~Conv2d.calc_conv
+      ~Conv2d.calc_conv_qat
+      ~Conv2d.children
+      ~Conv2d.disable_quantize
+      ~Conv2d.eval
+      ~Conv2d.forward
+      ~Conv2d.from_float_module
+      ~Conv2d.get_activation_dtype
+      ~Conv2d.get_activation_qparams
+      ~Conv2d.get_weight_dtype
+      ~Conv2d.get_weight_qparams
+      ~Conv2d.load_state_dict
+      ~Conv2d.modules
+      ~Conv2d.named_buffers
+      ~Conv2d.named_children
+      ~Conv2d.named_modules
+      ~Conv2d.named_parameters
+      ~Conv2d.parameters
+      ~Conv2d.register_forward_hook
+      ~Conv2d.register_forward_pre_hook
+      ~Conv2d.replace_param
+      ~Conv2d.reset_parameters
+      ~Conv2d.set_fake_quant
+      ~Conv2d.set_observer
+      ~Conv2d.set_qconfig
+      ~Conv2d.state_dict
+      ~Conv2d.train
+      ~Conv2d.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Conv2d.with_act
+      ~Conv2d.with_weight
+   
+   

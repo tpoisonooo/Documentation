@@ -1,0 +1,6 @@
+megengine.functional.where
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: where

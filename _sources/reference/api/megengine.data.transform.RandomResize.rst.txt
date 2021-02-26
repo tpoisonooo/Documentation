@@ -1,0 +1,22 @@
+megengine.data.transform.RandomResize
+=====================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: RandomResize
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RandomResize.__init__
+      ~RandomResize.apply
+      ~RandomResize.apply_batch
+   
+   
+
+   
+   
+   

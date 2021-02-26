@@ -1,0 +1,22 @@
+megengine.data.transform.BrightnessTransform
+============================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: BrightnessTransform
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BrightnessTransform.__init__
+      ~BrightnessTransform.apply
+      ~BrightnessTransform.apply_batch
+   
+   
+
+   
+   
+   

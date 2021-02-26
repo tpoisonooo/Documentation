@@ -1,0 +1,6 @@
+megengine.functional.log1p
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: log1p

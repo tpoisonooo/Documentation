@@ -1,0 +1,6 @@
+megengine.module.init.msra\_normal\_
+====================================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: msra_normal_

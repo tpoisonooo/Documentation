@@ -1,0 +1,6 @@
+megengine.functional.logical\_not
+=================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: logical_not

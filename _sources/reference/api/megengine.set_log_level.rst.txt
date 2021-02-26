@@ -1,0 +1,6 @@
+megengine.set\_log\_level
+=========================
+
+.. currentmodule:: megengine
+
+.. autofunction:: set_log_level

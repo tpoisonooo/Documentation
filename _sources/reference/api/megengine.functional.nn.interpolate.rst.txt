@@ -1,0 +1,6 @@
+megengine.functional.nn.interpolate
+===================================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: interpolate

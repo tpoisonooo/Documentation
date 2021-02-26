@@ -1,0 +1,6 @@
+megengine.functional.nn.logsoftmax
+==================================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: logsoftmax

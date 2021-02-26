@@ -1,0 +1,6 @@
+megengine.distributed.get\_client
+=================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: get_client

@@ -1,0 +1,44 @@
+megengine.quantization.observer.SyncExponentialMovingAverageObserver
+====================================================================
+
+.. currentmodule:: megengine.quantization.observer
+
+.. autoclass:: SyncExponentialMovingAverageObserver
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SyncExponentialMovingAverageObserver.__init__
+      ~SyncExponentialMovingAverageObserver.apply
+      ~SyncExponentialMovingAverageObserver.buffers
+      ~SyncExponentialMovingAverageObserver.children
+      ~SyncExponentialMovingAverageObserver.disable
+      ~SyncExponentialMovingAverageObserver.disable_quantize
+      ~SyncExponentialMovingAverageObserver.enable
+      ~SyncExponentialMovingAverageObserver.eval
+      ~SyncExponentialMovingAverageObserver.forward
+      ~SyncExponentialMovingAverageObserver.get_dtype
+      ~SyncExponentialMovingAverageObserver.get_qparams
+      ~SyncExponentialMovingAverageObserver.load_state_dict
+      ~SyncExponentialMovingAverageObserver.modules
+      ~SyncExponentialMovingAverageObserver.named_buffers
+      ~SyncExponentialMovingAverageObserver.named_children
+      ~SyncExponentialMovingAverageObserver.named_modules
+      ~SyncExponentialMovingAverageObserver.named_parameters
+      ~SyncExponentialMovingAverageObserver.parameters
+      ~SyncExponentialMovingAverageObserver.register_forward_hook
+      ~SyncExponentialMovingAverageObserver.register_forward_pre_hook
+      ~SyncExponentialMovingAverageObserver.replace_param
+      ~SyncExponentialMovingAverageObserver.set_momentum
+      ~SyncExponentialMovingAverageObserver.state_dict
+      ~SyncExponentialMovingAverageObserver.train
+      ~SyncExponentialMovingAverageObserver.zero_grad
+   
+   
+
+   
+   
+   

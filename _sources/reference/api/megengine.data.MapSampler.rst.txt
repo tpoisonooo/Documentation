@@ -1,0 +1,23 @@
+megengine.data.MapSampler
+=========================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: MapSampler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MapSampler.__init__
+      ~MapSampler.batch
+      ~MapSampler.sample
+      ~MapSampler.scatter
+   
+   
+
+   
+   
+   

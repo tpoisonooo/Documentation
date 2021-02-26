@@ -1,0 +1,6 @@
+megengine.module.init.normal\_
+==============================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: normal_

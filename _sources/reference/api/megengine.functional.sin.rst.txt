@@ -1,0 +1,6 @@
+megengine.functional.sin
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sin

@@ -1,0 +1,6 @@
+megengine.functional.full\_like
+===============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: full_like

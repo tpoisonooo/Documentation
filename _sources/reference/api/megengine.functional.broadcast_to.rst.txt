@@ -1,0 +1,6 @@
+megengine.functional.broadcast\_to
+==================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: broadcast_to

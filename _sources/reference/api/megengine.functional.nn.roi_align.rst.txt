@@ -1,0 +1,6 @@
+megengine.functional.nn.roi\_align
+==================================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: roi_align

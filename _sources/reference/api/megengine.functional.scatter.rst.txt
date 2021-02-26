@@ -1,0 +1,6 @@
+megengine.functional.scatter
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: scatter

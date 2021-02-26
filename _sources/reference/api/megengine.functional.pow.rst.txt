@@ -1,0 +1,6 @@
+megengine.functional.pow
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: pow

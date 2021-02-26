@@ -1,0 +1,6 @@
+megengine.Tensor.ndim
+=====================
+
+.. currentmodule:: megengine
+
+.. autoproperty:: Tensor.ndim

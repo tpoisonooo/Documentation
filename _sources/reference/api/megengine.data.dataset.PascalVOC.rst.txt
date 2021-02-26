@@ -1,0 +1,29 @@
+megengine.data.dataset.PascalVOC
+================================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: PascalVOC
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PascalVOC.__init__
+      ~PascalVOC.get_img_info
+      ~PascalVOC.parse_voc_xml
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PascalVOC.class_names
+      ~PascalVOC.supported_order
+   
+   

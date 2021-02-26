@@ -1,0 +1,6 @@
+megengine.functional.linspace
+=============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: linspace

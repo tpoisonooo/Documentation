@@ -1,0 +1,34 @@
+megengine.data.dataset.ImageNet
+===============================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: ImageNet
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImageNet.__init__
+      ~ImageNet.check_raw_file
+      ~ImageNet.collect_class
+      ~ImageNet.collect_samples
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ImageNet.default_devkit_dir
+      ~ImageNet.default_train_dir
+      ~ImageNet.default_val_dir
+      ~ImageNet.meta
+      ~ImageNet.raw_file_meta
+      ~ImageNet.valid_ground_truth
+   
+   

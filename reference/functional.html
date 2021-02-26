@@ -1,0 +1,1895 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>函数式（Functional） &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"], "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="megengine.functional.zeros" href="api/megengine.functional.zeros.html" />
+    <link rel="prev" title="megengine.Tensor.to" href="api/megengine.Tensor.to.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../index.html">
+        <img src="../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      <li class="toctree-l2">
+ <a class="reference internal" href="data.html">
+  数据（Data）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="tensor.html">
+  张量（Tensor）
+ </a>
+</li>
+
+<li class="toctree-l2 current active">
+ <a class="current reference internal" href="#">
+  函数式（Functional）
+ </a>
+ <ul>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.zeros.html">
+    megengine.functional.zeros
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.zeros_like.html">
+    megengine.functional.zeros_like
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.ones.html">
+    megengine.functional.ones
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.ones_like.html">
+    megengine.functional.ones_like
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.full.html">
+    megengine.functional.full
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.full_like.html">
+    megengine.functional.full_like
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.arange.html">
+    megengine.functional.arange
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.linspace.html">
+    megengine.functional.linspace
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.eye.html">
+    megengine.functional.eye
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.broadcast_to.html">
+    megengine.functional.broadcast_to
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.concat.html">
+    megengine.functional.concat
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.stack.html">
+    megengine.functional.stack
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.split.html">
+    megengine.functional.split
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.gather.html">
+    megengine.functional.gather
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.scatter.html">
+    megengine.functional.scatter
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.where.html">
+    megengine.functional.where
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.cond_take.html">
+    megengine.functional.cond_take
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.transpose.html">
+    megengine.functional.transpose
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.reshape.html">
+    megengine.functional.reshape
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.flatten.html">
+    megengine.functional.flatten
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.expand_dims.html">
+    megengine.functional.expand_dims
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.squeeze.html">
+    megengine.functional.squeeze
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.add.html">
+    megengine.functional.add
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sub.html">
+    megengine.functional.sub
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.mul.html">
+    megengine.functional.mul
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.div.html">
+    megengine.functional.div
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.floor_div.html">
+    megengine.functional.floor_div
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.neg.html">
+    megengine.functional.neg
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.pow.html">
+    megengine.functional.pow
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.mod.html">
+    megengine.functional.mod
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.abs.html">
+    megengine.functional.abs
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.exp.html">
+    megengine.functional.exp
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.expm1.html">
+    megengine.functional.expm1
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.log.html">
+    megengine.functional.log
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.log1p.html">
+    megengine.functional.log1p
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sqrt.html">
+    megengine.functional.sqrt
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.square.html">
+    megengine.functional.square
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.round.html">
+    megengine.functional.round
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.ceil.html">
+    megengine.functional.ceil
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.floor.html">
+    megengine.functional.floor
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.maximum.html">
+    megengine.functional.maximum
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.minimum.html">
+    megengine.functional.minimum
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.clip.html">
+    megengine.functional.clip
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.cos.html">
+    megengine.functional.cos
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sin.html">
+    megengine.functional.sin
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.tan.html">
+    megengine.functional.tan
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.acos.html">
+    megengine.functional.acos
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.asin.html">
+    megengine.functional.asin
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.atan.html">
+    megengine.functional.atan
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.atan2.html">
+    megengine.functional.atan2
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.cosh.html">
+    megengine.functional.cosh
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sinh.html">
+    megengine.functional.sinh
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.tanh.html">
+    megengine.functional.tanh
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.acosh.html">
+    megengine.functional.acosh
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.asinh.html">
+    megengine.functional.asinh
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.atanh.html">
+    megengine.functional.atanh
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.left_shift.html">
+    megengine.functional.left_shift
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.right_shift.html">
+    megengine.functional.right_shift
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.logical_and.html">
+    megengine.functional.logical_and
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.logical_not.html">
+    megengine.functional.logical_not
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.logical_or.html">
+    megengine.functional.logical_or
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.logical_xor.html">
+    megengine.functional.logical_xor
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.equal.html">
+    megengine.functional.equal
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.not_equal.html">
+    megengine.functional.not_equal
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.less.html">
+    megengine.functional.less
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.less_equal.html">
+    megengine.functional.less_equal
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.greater.html">
+    megengine.functional.greater
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.greater_equal.html">
+    megengine.functional.greater_equal
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sigmoid.html">
+    megengine.functional.sigmoid
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.hsigmoid.html">
+    megengine.functional.hsigmoid
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.relu.html">
+    megengine.functional.relu
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.relu6.html">
+    megengine.functional.relu6
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.hswish.html">
+    megengine.functional.hswish
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sum.html">
+    megengine.functional.sum
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.prod.html">
+    megengine.functional.prod
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.mean.html">
+    megengine.functional.mean
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.min.html">
+    megengine.functional.min
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.max.html">
+    megengine.functional.max
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.argmin.html">
+    megengine.functional.argmin
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.argmax.html">
+    megengine.functional.argmax
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.dot.html">
+    megengine.functional.dot
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.matmul.html">
+    megengine.functional.matmul
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.svd.html">
+    megengine.functional.svd
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.var.html">
+    megengine.functional.var
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.std.html">
+    megengine.functional.std
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.norm.html">
+    megengine.functional.norm
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.normalize.html">
+    megengine.functional.normalize
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.isnan.html">
+    megengine.functional.isnan
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.isinf.html">
+    megengine.functional.isinf
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sign.html">
+    megengine.functional.sign
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.sort.html">
+    megengine.functional.sort
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.argsort.html">
+    megengine.functional.argsort
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.topk.html">
+    megengine.functional.topk
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.conv1d.html">
+    megengine.functional.nn.conv1d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.conv2d.html">
+    megengine.functional.nn.conv2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.local_conv2d.html">
+    megengine.functional.nn.local_conv2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.conv_transpose2d.html">
+    megengine.functional.nn.conv_transpose2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.avg_pool2d.html">
+    megengine.functional.nn.avg_pool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.max_pool2d.html">
+    megengine.functional.nn.max_pool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.adaptive_avg_pool2d.html">
+    megengine.functional.nn.adaptive_avg_pool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.adaptive_max_pool2d.html">
+    megengine.functional.nn.adaptive_max_pool2d
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.prelu.html">
+    megengine.functional.nn.prelu
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.leaky_relu.html">
+    megengine.functional.nn.leaky_relu
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.softplus.html">
+    megengine.functional.nn.softplus
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.softmax.html">
+    megengine.functional.nn.softmax
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.logsoftmax.html">
+    megengine.functional.nn.logsoftmax
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.logsigmoid.html">
+    megengine.functional.nn.logsigmoid
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.logsumexp.html">
+    megengine.functional.nn.logsumexp
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.batch_norm.html">
+    megengine.functional.nn.batch_norm
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.sync_batch_norm.html">
+    megengine.functional.nn.sync_batch_norm
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.linear.html">
+    megengine.functional.nn.linear
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.dropout.html">
+    megengine.functional.nn.dropout
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.one_hot.html">
+    megengine.functional.nn.one_hot
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.indexing_one_hot.html">
+    megengine.functional.nn.indexing_one_hot
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.embedding.html">
+    megengine.functional.nn.embedding
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.interpolate.html">
+    megengine.functional.nn.interpolate
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.remap.html">
+    megengine.functional.nn.remap
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.warp_perspective.html">
+    megengine.functional.nn.warp_perspective
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.roi_pooling.html">
+    megengine.functional.nn.roi_pooling
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.roi_align.html">
+    megengine.functional.nn.roi_align
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.nn.nms.html">
+    megengine.functional.nn.nms
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.loss.l1_loss.html">
+    megengine.functional.loss.l1_loss
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.loss.square_loss.html">
+    megengine.functional.loss.square_loss
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.loss.hinge_loss.html">
+    megengine.functional.loss.hinge_loss
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.loss.binary_cross_entropy.html">
+    megengine.functional.loss.binary_cross_entropy
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.loss.cross_entropy.html">
+    megengine.functional.loss.cross_entropy
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.all_reduce_max.html">
+    megengine.functional.distributed.all_reduce_max
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.all_reduce_min.html">
+    megengine.functional.distributed.all_reduce_min
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.all_reduce_sum.html">
+    megengine.functional.distributed.all_reduce_sum
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.broadcast.html">
+    megengine.functional.distributed.broadcast
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.remote_send.html">
+    megengine.functional.distributed.remote_send
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.remote_recv.html">
+    megengine.functional.distributed.remote_recv
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.all_gather.html">
+    megengine.functional.distributed.all_gather
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.all_to_all.html">
+    megengine.functional.distributed.all_to_all
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.reduce_sum.html">
+    megengine.functional.distributed.reduce_sum
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.gather.html">
+    megengine.functional.distributed.gather
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.scatter.html">
+    megengine.functional.distributed.scatter
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.distributed.reduce_scatter_sum.html">
+    megengine.functional.distributed.reduce_scatter_sum
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.copy.html">
+    megengine.functional.copy
+   </a>
+  </li>
+  <li class="toctree-l3">
+   <a class="reference internal" href="api/megengine.functional.topk_accuracy.html">
+    megengine.functional.topk_accuracy
+   </a>
+  </li>
+ </ul>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="module.html">
+  模块式（Module）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="autodiff.html">
+  自动微分（Auto-diff）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="optimizer.html">
+  优化器（Optimizer）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="jit.html">
+  即时编译（JIT）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="distributed.html">
+  分布式训练（Distributed）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="quantization.html">
+  量化（Quantization）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="serialization.html">
+  序列化（Serialization）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="random.html">
+  随机（Random）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="hub.html">
+  模型中心（Hub）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="logger.html">
+  日志（Logger）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="device.html">
+  设备（Device）
+ </a>
+</li>
+
+<li class="toctree-l2">
+ <a class="reference internal" href="version.html">
+  查询版本信息
+ </a>
+</li>
+
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tensor">
+   tensor 子模块
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     创建张量
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     处理张量
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#elemwise">
+   elemwise 子模块
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     基本运算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     三角运算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     位运算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     逻辑运算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     比较运算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     其它运算
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#math">
+   math 子模块
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     归约计算
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     线性代数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     概率统计
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     条件计算
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nn">
+   nn 子模块
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     卷积函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     池化函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     非线性激活函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     归一化函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     线性函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     随机失活函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     稀疏函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vision">
+     Vision 模块
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#loss">
+   loss 子模块
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#distributed">
+   distributed 子模块
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#utils">
+   utils 子模块
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <span class="target" id="module-megengine.functional"></span><div class="section" id="module-megengine.functional.tensor">
+<span id="functional"></span><h1>函数式（Functional）<a class="headerlink" href="#module-megengine.functional.tensor" title="永久链接至标题">¶</a></h1>
+<div class="section" id="tensor">
+<h2>tensor 子模块<a class="headerlink" href="#tensor" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id1">
+<h3>创建张量<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.zeros.html#megengine.functional.zeros" title="megengine.functional.zeros"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zeros</span></code></a></p></td>
+<td><p>Returns a zero tensor with given shape.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.zeros_like.html#megengine.functional.zeros_like" title="megengine.functional.zeros_like"><code class="xref py py-obj docutils literal notranslate"><span class="pre">zeros_like</span></code></a></p></td>
+<td><p>Returns a zero tensor with the same shape as input tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.ones.html#megengine.functional.ones" title="megengine.functional.ones"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ones</span></code></a></p></td>
+<td><p>Returns a ones tensor with given shape.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.ones_like.html#megengine.functional.ones_like" title="megengine.functional.ones_like"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ones_like</span></code></a></p></td>
+<td><p>Returns a ones tensor with the same shape as input tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.full.html#megengine.functional.full" title="megengine.functional.full"><code class="xref py py-obj docutils literal notranslate"><span class="pre">full</span></code></a></p></td>
+<td><p>Returns a tensor with given shape and value.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.full_like.html#megengine.functional.full_like" title="megengine.functional.full_like"><code class="xref py py-obj docutils literal notranslate"><span class="pre">full_like</span></code></a></p></td>
+<td><p>Returns a tensor filled with given value with the same shape as input tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.arange.html#megengine.functional.arange" title="megengine.functional.arange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arange</span></code></a></p></td>
+<td><p>Returns a tensor with values from start to stop with adjacent interval step.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.linspace.html#megengine.functional.linspace" title="megengine.functional.linspace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linspace</span></code></a></p></td>
+<td><p>Returns equally spaced numbers over a specified interval.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.eye.html#megengine.functional.eye" title="megengine.functional.eye"><code class="xref py py-obj docutils literal notranslate"><span class="pre">eye</span></code></a></p></td>
+<td><p>Returns a 2D tensor with ones on the diagonal and zeros elsewhere.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id2">
+<h3>处理张量<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.broadcast_to.html#megengine.functional.broadcast_to" title="megengine.functional.broadcast_to"><code class="xref py py-obj docutils literal notranslate"><span class="pre">broadcast_to</span></code></a></p></td>
+<td><p>Broadcasts a tensor to given shape.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.concat.html#megengine.functional.concat" title="megengine.functional.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a></p></td>
+<td><p>Concat some tensors</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.stack.html#megengine.functional.stack" title="megengine.functional.stack"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stack</span></code></a></p></td>
+<td><p>Concats a sequence of tensors along a new axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.split.html#megengine.functional.split" title="megengine.functional.split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split</span></code></a></p></td>
+<td><p>Splits the input tensor into several smaller tensors.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.gather.html#megengine.functional.gather" title="megengine.functional.gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gather</span></code></a></p></td>
+<td><p>Gathers data from input tensor on axis using index.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.scatter.html#megengine.functional.scatter" title="megengine.functional.scatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter</span></code></a></p></td>
+<td><p>Writes all values from the tensor source into input tensor at the indices specified in the index tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.where.html#megengine.functional.where" title="megengine.functional.where"><code class="xref py py-obj docutils literal notranslate"><span class="pre">where</span></code></a></p></td>
+<td><p>Selects elements either from Tensor x or Tensor y, according to mask.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.cond_take.html#megengine.functional.cond_take" title="megengine.functional.cond_take"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cond_take</span></code></a></p></td>
+<td><p>Takes elements from data if specific condition is satisfied on mask.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.transpose.html#megengine.functional.transpose" title="megengine.functional.transpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transpose</span></code></a></p></td>
+<td><p>Swaps shapes and strides according to given pattern.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.reshape.html#megengine.functional.reshape" title="megengine.functional.reshape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reshape</span></code></a></p></td>
+<td><p>Reshapes a tensor to given target shape; total number of logical elements must remain unchanged</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.flatten.html#megengine.functional.flatten" title="megengine.functional.flatten"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flatten</span></code></a></p></td>
+<td><p>Reshapes the tensor by flattening the sub-tensor from dimension <code class="docutils literal notranslate"><span class="pre">start_axis</span></code> to dimension <code class="docutils literal notranslate"><span class="pre">end_axis</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.expand_dims.html#megengine.functional.expand_dims" title="megengine.functional.expand_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expand_dims</span></code></a></p></td>
+<td><p>Adds dimension before given axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.squeeze.html#megengine.functional.squeeze" title="megengine.functional.squeeze"><code class="xref py py-obj docutils literal notranslate"><span class="pre">squeeze</span></code></a></p></td>
+<td><p>Removes dimension of shape 1.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.functional.elemwise"></span></div>
+</div>
+<div class="section" id="elemwise">
+<h2>elemwise 子模块<a class="headerlink" href="#elemwise" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>基本运算<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.add.html#megengine.functional.add" title="megengine.functional.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add</span></code></a></p></td>
+<td><p>Element-wise <cite>addition</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.sub.html#megengine.functional.sub" title="megengine.functional.sub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub</span></code></a></p></td>
+<td><p>Element-wise <cite>subtraction</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.mul.html#megengine.functional.mul" title="megengine.functional.mul"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mul</span></code></a></p></td>
+<td><p>Element-wise <cite>multiplication</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.div.html#megengine.functional.div" title="megengine.functional.div"><code class="xref py py-obj docutils literal notranslate"><span class="pre">div</span></code></a></p></td>
+<td><p>Element-wise <cite>(x / y)</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.floor_div.html#megengine.functional.floor_div" title="megengine.functional.floor_div"><code class="xref py py-obj docutils literal notranslate"><span class="pre">floor_div</span></code></a></p></td>
+<td><p>Element-wise <cite>floor(x / y)</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.neg.html#megengine.functional.neg" title="megengine.functional.neg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neg</span></code></a></p></td>
+<td><p>Element-wise <cite>negation</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.pow.html#megengine.functional.pow" title="megengine.functional.pow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pow</span></code></a></p></td>
+<td><p>Element-wise <cite>power</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.mod.html#megengine.functional.mod" title="megengine.functional.mod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mod</span></code></a></p></td>
+<td><p>Element-wise <cite>remainder of division</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.abs.html#megengine.functional.abs" title="megengine.functional.abs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abs</span></code></a></p></td>
+<td><p>Element-wise <cite>absolute value</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.exp.html#megengine.functional.exp" title="megengine.functional.exp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exp</span></code></a></p></td>
+<td><p>Element-wise <cite>exponential</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.expm1.html#megengine.functional.expm1" title="megengine.functional.expm1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">expm1</span></code></a></p></td>
+<td><p>Element-wise <cite>exp(x)-1</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.log.html#megengine.functional.log" title="megengine.functional.log"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log</span></code></a></p></td>
+<td><p>Element-wise <cite>logarithm (base e)</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.log1p.html#megengine.functional.log1p" title="megengine.functional.log1p"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log1p</span></code></a></p></td>
+<td><p>Element-wise <cite>log(x+1) (base e)</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.sqrt.html#megengine.functional.sqrt" title="megengine.functional.sqrt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sqrt</span></code></a></p></td>
+<td><p>Element-wise <cite>sqrt</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.square.html#megengine.functional.square" title="megengine.functional.square"><code class="xref py py-obj docutils literal notranslate"><span class="pre">square</span></code></a></p></td>
+<td><p>Returns a new tensor with the square of the elements of input tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.round.html#megengine.functional.round" title="megengine.functional.round"><code class="xref py py-obj docutils literal notranslate"><span class="pre">round</span></code></a></p></td>
+<td><p>Element-wise <cite>rounding to int</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.ceil.html#megengine.functional.ceil" title="megengine.functional.ceil"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ceil</span></code></a></p></td>
+<td><p>Element-wise <cite>ceiling</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.floor.html#megengine.functional.floor" title="megengine.functional.floor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">floor</span></code></a></p></td>
+<td><p>Element-wise <cite>floor</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.maximum.html#megengine.functional.maximum" title="megengine.functional.maximum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">maximum</span></code></a></p></td>
+<td><p>Element-wise <cite>maximum of array elements</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.minimum.html#megengine.functional.minimum" title="megengine.functional.minimum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">minimum</span></code></a></p></td>
+<td><p>Element-wise <cite>minimum of array elements</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.clip.html#megengine.functional.clip" title="megengine.functional.clip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clip</span></code></a></p></td>
+<td><p>Clamps all elements in input tensor into the range <cite>[</cite> <code class="xref py py-attr docutils literal notranslate"><span class="pre">lower</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">upper</span></code> <cite>]</cite> and returns a resulting tensor:</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id4">
+<h3>三角运算<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.cos.html#megengine.functional.cos" title="megengine.functional.cos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cos</span></code></a></p></td>
+<td><p>Element-wise <cite>cosine</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.sin.html#megengine.functional.sin" title="megengine.functional.sin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sin</span></code></a></p></td>
+<td><p>Element-wise <cite>sine</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.tan.html#megengine.functional.tan" title="megengine.functional.tan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tan</span></code></a></p></td>
+<td><p>Element-wise <cite>tangent</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.acos.html#megengine.functional.acos" title="megengine.functional.acos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">acos</span></code></a></p></td>
+<td><p>Element-wise <cite>inverse cosine</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.asin.html#megengine.functional.asin" title="megengine.functional.asin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asin</span></code></a></p></td>
+<td><p>Element-wise <cite>inverse sine</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.atan.html#megengine.functional.atan" title="megengine.functional.atan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">atan</span></code></a></p></td>
+<td><p>Element-wise <cite>inverse tangent</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.atan2.html#megengine.functional.atan2" title="megengine.functional.atan2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">atan2</span></code></a></p></td>
+<td><p>Element-wise <cite>2-argument arctangent</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.cosh.html#megengine.functional.cosh" title="megengine.functional.cosh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cosh</span></code></a></p></td>
+<td><p>Element-wise <cite>hyperbolic cosine</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.sinh.html#megengine.functional.sinh" title="megengine.functional.sinh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sinh</span></code></a></p></td>
+<td><p>Element-wise <cite>hyperbolic sine</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.tanh.html#megengine.functional.tanh" title="megengine.functional.tanh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tanh</span></code></a></p></td>
+<td><p>Element-wise <cite>hyperbolic tangent</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.acosh.html#megengine.functional.acosh" title="megengine.functional.acosh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">acosh</span></code></a></p></td>
+<td><p>Element-wise <cite>inverse hyperbolic cosine</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.asinh.html#megengine.functional.asinh" title="megengine.functional.asinh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asinh</span></code></a></p></td>
+<td><p>Element-wise <cite>inverse hyperbolic sine</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.atanh.html#megengine.functional.atanh" title="megengine.functional.atanh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">atanh</span></code></a></p></td>
+<td><p>Element-wise <cite>inverse hyperbolic tangent</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id5">
+<h3>位运算<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.left_shift.html#megengine.functional.left_shift" title="megengine.functional.left_shift"><code class="xref py py-obj docutils literal notranslate"><span class="pre">left_shift</span></code></a></p></td>
+<td><p>Element-wise <cite>bitwise binary: x &lt;&lt; y</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.right_shift.html#megengine.functional.right_shift" title="megengine.functional.right_shift"><code class="xref py py-obj docutils literal notranslate"><span class="pre">right_shift</span></code></a></p></td>
+<td><p>Element-wise <cite>bitwise binary: x &gt;&gt; y</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id6">
+<h3>逻辑运算<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.logical_and.html#megengine.functional.logical_and" title="megengine.functional.logical_and"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logical_and</span></code></a></p></td>
+<td><p>Element-wise <cite>logical and: x &amp;&amp; y</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.logical_not.html#megengine.functional.logical_not" title="megengine.functional.logical_not"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logical_not</span></code></a></p></td>
+<td><p>Element-wise <cite>logical not: ~x</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.logical_or.html#megengine.functional.logical_or" title="megengine.functional.logical_or"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logical_or</span></code></a></p></td>
+<td><p>Element-wise <cite>logical or: x || y</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.logical_xor.html#megengine.functional.logical_xor" title="megengine.functional.logical_xor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logical_xor</span></code></a></p></td>
+<td><p>Element-wise <cite>logical xor: x ^ y</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id7">
+<h3>比较运算<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.equal.html#megengine.functional.equal" title="megengine.functional.equal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">equal</span></code></a></p></td>
+<td><p>Element-wise <cite>(x == y)</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.not_equal.html#megengine.functional.not_equal" title="megengine.functional.not_equal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">not_equal</span></code></a></p></td>
+<td><p>Element-wise <cite>(x != y)</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.less.html#megengine.functional.less" title="megengine.functional.less"><code class="xref py py-obj docutils literal notranslate"><span class="pre">less</span></code></a></p></td>
+<td><p>Element-wise <cite>(x &lt; y)</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.less_equal.html#megengine.functional.less_equal" title="megengine.functional.less_equal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">less_equal</span></code></a></p></td>
+<td><p>Element-wise <cite>(x &lt;= y)</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.greater.html#megengine.functional.greater" title="megengine.functional.greater"><code class="xref py py-obj docutils literal notranslate"><span class="pre">greater</span></code></a></p></td>
+<td><p>Element-wise <cite>(x &gt; y)</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.greater_equal.html#megengine.functional.greater_equal" title="megengine.functional.greater_equal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">greater_equal</span></code></a></p></td>
+<td><p>Element-wise <cite>(x &gt;= y)</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id8">
+<h3>其它运算<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.sigmoid.html#megengine.functional.sigmoid" title="megengine.functional.sigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sigmoid</span></code></a></p></td>
+<td><p>Element-wise <cite>1 / ( 1 + exp( -x ) )</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.hsigmoid.html#megengine.functional.hsigmoid" title="megengine.functional.hsigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hsigmoid</span></code></a></p></td>
+<td><p>Element-wise <cite>relu6(x + 3) / 6</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.relu.html#megengine.functional.relu" title="megengine.functional.relu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">relu</span></code></a></p></td>
+<td><p>Element-wise <cite>max(x, 0)</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.relu6.html#megengine.functional.relu6" title="megengine.functional.relu6"><code class="xref py py-obj docutils literal notranslate"><span class="pre">relu6</span></code></a></p></td>
+<td><p>Element-wise <cite>min(max(x, 0), 6)</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.hswish.html#megengine.functional.hswish" title="megengine.functional.hswish"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hswish</span></code></a></p></td>
+<td><p>Element-wise <cite>x * relu6(x + 3) / 6</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.functional.math"></span></div>
+</div>
+<div class="section" id="math">
+<h2>math 子模块<a class="headerlink" href="#math" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h3>归约计算<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.sum.html#megengine.functional.sum" title="megengine.functional.sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sum</span></code></a></p></td>
+<td><p>Returns the sum of input tensor along given axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.prod.html#megengine.functional.prod" title="megengine.functional.prod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prod</span></code></a></p></td>
+<td><p>Returns the product of input tensor along given axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.mean.html#megengine.functional.mean" title="megengine.functional.mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean</span></code></a></p></td>
+<td><p>Returns the mean value of input tensor along given axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.min.html#megengine.functional.min" title="megengine.functional.min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">min</span></code></a></p></td>
+<td><p>Returns the min value of input tensor along given axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.max.html#megengine.functional.max" title="megengine.functional.max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max</span></code></a></p></td>
+<td><p>Returns the max value of the input tensor along given axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.argmin.html#megengine.functional.argmin" title="megengine.functional.argmin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argmin</span></code></a></p></td>
+<td><p>Returns the indices of the minimum values along given axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.argmax.html#megengine.functional.argmax" title="megengine.functional.argmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argmax</span></code></a></p></td>
+<td><p>Returns the indices of the maximum values along given axis.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id10">
+<h3>线性代数<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.dot.html#megengine.functional.dot" title="megengine.functional.dot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dot</span></code></a></p></td>
+<td><p>Computes dot-product of two vectors <code class="docutils literal notranslate"><span class="pre">inp1</span></code> and <code class="docutils literal notranslate"><span class="pre">inp2</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.matmul.html#megengine.functional.matmul" title="megengine.functional.matmul"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matmul</span></code></a></p></td>
+<td><p>Performs a matrix multiplication of the matrices <code class="docutils literal notranslate"><span class="pre">inp1</span></code> and <code class="docutils literal notranslate"><span class="pre">inp2</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id11">
+<h3>概率统计<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.svd.html#megengine.functional.svd" title="megengine.functional.svd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">svd</span></code></a></p></td>
+<td><p>Computes the singular value decompositions of input matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.var.html#megengine.functional.var" title="megengine.functional.var"><code class="xref py py-obj docutils literal notranslate"><span class="pre">var</span></code></a></p></td>
+<td><p>Returns the variance value of input tensor along given axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.std.html#megengine.functional.std" title="megengine.functional.std"><code class="xref py py-obj docutils literal notranslate"><span class="pre">std</span></code></a></p></td>
+<td><p>Returns the standard deviation of input tensor along given axis.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.norm.html#megengine.functional.norm" title="megengine.functional.norm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">norm</span></code></a></p></td>
+<td><p>Calculates <code class="docutils literal notranslate"><span class="pre">p</span></code>-norm of input tensor along given axis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.normalize.html#megengine.functional.normalize" title="megengine.functional.normalize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize</span></code></a></p></td>
+<td><p>Performs <span class="math notranslate nohighlight">\(L_p\)</span> normalization of input tensor along given axis.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id12">
+<h3>条件计算<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.isnan.html#megengine.functional.isnan" title="megengine.functional.isnan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isnan</span></code></a></p></td>
+<td><p>Returns a new tensor representing if each element is <code class="docutils literal notranslate"><span class="pre">NaN</span></code> or not.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.isinf.html#megengine.functional.isinf" title="megengine.functional.isinf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isinf</span></code></a></p></td>
+<td><p>Returns a new tensor representing if each element is <code class="docutils literal notranslate"><span class="pre">Inf</span></code> or not.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.sign.html#megengine.functional.sign" title="megengine.functional.sign"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sign</span></code></a></p></td>
+<td><p>Returns a new tensor representing the sign of each element in input tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.sort.html#megengine.functional.sort" title="megengine.functional.sort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort</span></code></a></p></td>
+<td><p>Returns sorted tensor and the indices would sort the input tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.argsort.html#megengine.functional.argsort" title="megengine.functional.argsort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">argsort</span></code></a></p></td>
+<td><p>Returns the indices that would sort the input tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.topk.html#megengine.functional.topk" title="megengine.functional.topk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topk</span></code></a></p></td>
+<td><p>Selects the <a href="#id13"><span class="problematic" id="id14">``</span></a>Top-K``(by default) smallest elements of 2d matrix by row.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.functional.nn"></span></div>
+</div>
+<div class="section" id="nn">
+<h2>nn 子模块<a class="headerlink" href="#nn" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id15">
+<h3>卷积函数<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.conv1d.html#megengine.functional.nn.conv1d" title="megengine.functional.nn.conv1d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conv1d</span></code></a></p></td>
+<td><p>1D convolution operation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.conv2d.html#megengine.functional.nn.conv2d" title="megengine.functional.nn.conv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conv2d</span></code></a></p></td>
+<td><p>2D convolution operation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.local_conv2d.html#megengine.functional.nn.local_conv2d" title="megengine.functional.nn.local_conv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">local_conv2d</span></code></a></p></td>
+<td><p>Applies spatial 2D convolution over an groupped channeled image with untied kernels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.conv_transpose2d.html#megengine.functional.nn.conv_transpose2d" title="megengine.functional.nn.conv_transpose2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conv_transpose2d</span></code></a></p></td>
+<td><p>2D transposed convolution operation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id16">
+<h3>池化函数<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.avg_pool2d.html#megengine.functional.nn.avg_pool2d" title="megengine.functional.nn.avg_pool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">avg_pool2d</span></code></a></p></td>
+<td><p>Applies 2D average pooling over an input tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.max_pool2d.html#megengine.functional.nn.max_pool2d" title="megengine.functional.nn.max_pool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_pool2d</span></code></a></p></td>
+<td><p>Applies a 2D max pooling over an input tensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.adaptive_avg_pool2d.html#megengine.functional.nn.adaptive_avg_pool2d" title="megengine.functional.nn.adaptive_avg_pool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adaptive_avg_pool2d</span></code></a></p></td>
+<td><p>Applies a 2D average adaptive pooling over an input.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.adaptive_max_pool2d.html#megengine.functional.nn.adaptive_max_pool2d" title="megengine.functional.nn.adaptive_max_pool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adaptive_max_pool2d</span></code></a></p></td>
+<td><p>Applies a 2D max adaptive pooling over an input.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id17">
+<h3>非线性激活函数<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>部分激活函数如 <a class="reference internal" href="api/megengine.functional.relu.html#megengine.functional.relu" title="megengine.functional.relu"><code class="xref py py-func docutils literal notranslate"><span class="pre">relu</span></code></a>
+实现在 <a class="reference internal" href="#module-megengine.functional.elemwise" title="megengine.functional.elemwise"><code class="xref py py-mod docutils literal notranslate"><span class="pre">megengine.functional.elemwise</span></code></a> 模块中。</p>
+</div>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.prelu.html#megengine.functional.nn.prelu" title="megengine.functional.nn.prelu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prelu</span></code></a></p></td>
+<td><p>Applies the element-wise PReLU function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.leaky_relu.html#megengine.functional.nn.leaky_relu" title="megengine.functional.nn.leaky_relu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">leaky_relu</span></code></a></p></td>
+<td><p>Applies the element-wise leaky_relu function</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.softplus.html#megengine.functional.nn.softplus" title="megengine.functional.nn.softplus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">softplus</span></code></a></p></td>
+<td><p>Applies the element-wise function:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.softmax.html#megengine.functional.nn.softmax" title="megengine.functional.nn.softmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">softmax</span></code></a></p></td>
+<td><p>Applies a <span class="math notranslate nohighlight">\(\text{softmax}(x)\)</span> function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.logsoftmax.html#megengine.functional.nn.logsoftmax" title="megengine.functional.nn.logsoftmax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logsoftmax</span></code></a></p></td>
+<td><p>Applies the <span class="math notranslate nohighlight">\(\log(\text{softmax}(x))\)</span> function to an n-dimensional input tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.logsigmoid.html#megengine.functional.nn.logsigmoid" title="megengine.functional.nn.logsigmoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logsigmoid</span></code></a></p></td>
+<td><p>Applies the element-wise function:</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.logsumexp.html#megengine.functional.nn.logsumexp" title="megengine.functional.nn.logsumexp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logsumexp</span></code></a></p></td>
+<td><p>Calculates the logarithm of the inputs’ exponential sum along the given <code class="xref py py-attr docutils literal notranslate"><span class="pre">axis</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id18">
+<h3>归一化函数<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.batch_norm.html#megengine.functional.nn.batch_norm" title="megengine.functional.nn.batch_norm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">batch_norm</span></code></a></p></td>
+<td><p>Applies batch normalization to the input.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.sync_batch_norm.html#megengine.functional.nn.sync_batch_norm" title="megengine.functional.nn.sync_batch_norm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sync_batch_norm</span></code></a></p></td>
+<td><p>Applies synchronized batch normalization to the input.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id19">
+<h3>线性函数<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.linear.html#megengine.functional.nn.linear" title="megengine.functional.nn.linear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">linear</span></code></a></p></td>
+<td><p>Applies a linear transformation to the input tensor.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id20">
+<h3>随机失活函数<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.dropout.html#megengine.functional.nn.dropout" title="megengine.functional.nn.dropout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dropout</span></code></a></p></td>
+<td><p>Returns a new tensor where each of the elements are randomly set to zero with probability P = <code class="docutils literal notranslate"><span class="pre">drop_prob</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id21">
+<h3>稀疏函数<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.one_hot.html#megengine.functional.nn.one_hot" title="megengine.functional.nn.one_hot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">one_hot</span></code></a></p></td>
+<td><p>Performs one-hot encoding for the input tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.indexing_one_hot.html#megengine.functional.nn.indexing_one_hot" title="megengine.functional.nn.indexing_one_hot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">indexing_one_hot</span></code></a></p></td>
+<td><p>One-hot indexing for some axes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.embedding.html#megengine.functional.nn.embedding" title="megengine.functional.nn.embedding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">embedding</span></code></a></p></td>
+<td><p>Applies lookup table for embedding.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="vision">
+<h3>Vision 模块<a class="headerlink" href="#vision" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.interpolate.html#megengine.functional.nn.interpolate" title="megengine.functional.nn.interpolate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interpolate</span></code></a></p></td>
+<td><p>Down/up samples the input tensor to either the given size or with the given scale_factor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.remap.html#megengine.functional.nn.remap" title="megengine.functional.nn.remap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remap</span></code></a></p></td>
+<td><p>Applies remap transformation to batched 2D images.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.warp_perspective.html#megengine.functional.nn.warp_perspective" title="megengine.functional.nn.warp_perspective"><code class="xref py py-obj docutils literal notranslate"><span class="pre">warp_perspective</span></code></a></p></td>
+<td><p>Applies perspective transformation to batched 2D images.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.roi_pooling.html#megengine.functional.nn.roi_pooling" title="megengine.functional.nn.roi_pooling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roi_pooling</span></code></a></p></td>
+<td><p>Applies roi pooling on input feature.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.nn.roi_align.html#megengine.functional.nn.roi_align" title="megengine.functional.nn.roi_align"><code class="xref py py-obj docutils literal notranslate"><span class="pre">roi_align</span></code></a></p></td>
+<td><p>Applies roi align on input feature.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.nn.nms.html#megengine.functional.nn.nms" title="megengine.functional.nn.nms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nms</span></code></a></p></td>
+<td><p>Performs non-maximum suppression (NMS) on the boxes according to their intersection-over-union(IoU).</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.functional.loss"></span></div>
+</div>
+<div class="section" id="loss">
+<h2>loss 子模块<a class="headerlink" href="#loss" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.loss.l1_loss.html#megengine.functional.loss.l1_loss" title="megengine.functional.loss.l1_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">l1_loss</span></code></a></p></td>
+<td><p>Calculates the mean absolute error (MAE) between each element in the pred <span class="math notranslate nohighlight">\(x\)</span> and label <span class="math notranslate nohighlight">\(y\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.loss.square_loss.html#megengine.functional.loss.square_loss" title="megengine.functional.loss.square_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">square_loss</span></code></a></p></td>
+<td><p>Calculates the mean squared error (squared L2 norm) between each element in the pred <span class="math notranslate nohighlight">\(x\)</span> and label <span class="math notranslate nohighlight">\(y\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.loss.hinge_loss.html#megengine.functional.loss.hinge_loss" title="megengine.functional.loss.hinge_loss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hinge_loss</span></code></a></p></td>
+<td><p>Caculates the hinge loss which is often used in SVM.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.loss.binary_cross_entropy.html#megengine.functional.loss.binary_cross_entropy" title="megengine.functional.loss.binary_cross_entropy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_cross_entropy</span></code></a></p></td>
+<td><p>Computes the binary cross entropy loss (using logits by default).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.loss.cross_entropy.html#megengine.functional.loss.cross_entropy" title="megengine.functional.loss.cross_entropy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cross_entropy</span></code></a></p></td>
+<td><p>Computes the multi-class cross entropy loss (using logits by default).</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.functional.distributed"></span></div>
+<div class="section" id="distributed">
+<h2>distributed 子模块<a class="headerlink" href="#distributed" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.distributed.all_reduce_max.html#megengine.functional.distributed.all_reduce_max" title="megengine.functional.distributed.all_reduce_max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">all_reduce_max</span></code></a></p></td>
+<td><p>Create all_reduce_max operator for collective communication.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.distributed.all_reduce_min.html#megengine.functional.distributed.all_reduce_min" title="megengine.functional.distributed.all_reduce_min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">all_reduce_min</span></code></a></p></td>
+<td><p>Create all_reduce_min operator for collective communication.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.distributed.all_reduce_sum.html#megengine.functional.distributed.all_reduce_sum" title="megengine.functional.distributed.all_reduce_sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">all_reduce_sum</span></code></a></p></td>
+<td><p>Create all_reduce_sum operator for collective communication.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.distributed.broadcast.html#megengine.functional.distributed.broadcast" title="megengine.functional.distributed.broadcast"><code class="xref py py-obj docutils literal notranslate"><span class="pre">broadcast</span></code></a></p></td>
+<td><p>Create broadcast operator for collective communication.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.distributed.remote_send.html#megengine.functional.distributed.remote_send" title="megengine.functional.distributed.remote_send"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remote_send</span></code></a></p></td>
+<td><p>Send a Tensor to a remote process.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.distributed.remote_recv.html#megengine.functional.distributed.remote_recv" title="megengine.functional.distributed.remote_recv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remote_recv</span></code></a></p></td>
+<td><p>Receive a Tensor from a remote process.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.distributed.all_gather.html#megengine.functional.distributed.all_gather" title="megengine.functional.distributed.all_gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">all_gather</span></code></a></p></td>
+<td><p>Create all_gather operator for collective communication.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.distributed.all_to_all.html#megengine.functional.distributed.all_to_all" title="megengine.functional.distributed.all_to_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">all_to_all</span></code></a></p></td>
+<td><p>Create all_to_all operator for collective communication.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.distributed.reduce_sum.html#megengine.functional.distributed.reduce_sum" title="megengine.functional.distributed.reduce_sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reduce_sum</span></code></a></p></td>
+<td><p>Create reduce_sum operator for collective communication.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.distributed.gather.html#megengine.functional.distributed.gather" title="megengine.functional.distributed.gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gather</span></code></a></p></td>
+<td><p>Create gather operator for collective communication.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.distributed.scatter.html#megengine.functional.distributed.scatter" title="megengine.functional.distributed.scatter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter</span></code></a></p></td>
+<td><p>Create scatter operator for collective communication.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.distributed.reduce_scatter_sum.html#megengine.functional.distributed.reduce_scatter_sum" title="megengine.functional.distributed.reduce_scatter_sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reduce_scatter_sum</span></code></a></p></td>
+<td><p>Create reduce_scatter_sum operator for collective communication.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.functional.utils"></span></div>
+<div class="section" id="utils">
+<h2>utils 子模块<a class="headerlink" href="#utils" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.functional.copy.html#megengine.functional.copy" title="megengine.functional.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a></p></td>
+<td><p>Copies tensor to another device.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.functional.topk_accuracy.html#megengine.functional.topk_accuracy" title="megengine.functional.topk_accuracy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">topk_accuracy</span></code></a></p></td>
+<td><p>Calculates the classification accuracy given predicted logits and ground-truth labels.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

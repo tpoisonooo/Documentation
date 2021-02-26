@@ -1,0 +1,759 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.data.dataset.vision.objects365 &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../../_static/copybutton.js"></script>
+    <script src="../../../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../../../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../../../index.html">
+        <img src="../../../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.data.dataset.vision.objects365 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># ---------------------------------------------------------------------</span>
+<span class="c1"># Part of the following code in this file refs to maskrcnn-benchmark</span>
+<span class="c1"># MIT License</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 Facebook</span>
+<span class="c1"># ---------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.meta_vision</span> <span class="kn">import</span> <span class="n">VisionDataset</span>
+
+
+<div class="viewcode-block" id="Objects365"><a class="viewcode-back" href="../../../../../reference/api/megengine.data.dataset.Objects365.html#megengine.data.dataset.Objects365">[文档]</a><span class="k">class</span> <span class="nc">Objects365</span><span class="p">(</span><span class="n">VisionDataset</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    `Objects365 &lt;https://www.objects365.org/overview.html&gt;`_ Dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">supported_order</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;image&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;boxes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;boxes_category&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;info&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">ann_file</span><span class="p">,</span> <span class="n">remove_images_without_annotations</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">supported_order</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">supported_order</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ann_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">img</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">img</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_to_anns</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]:</span>
+            <span class="c1"># for saving memory</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="s2">&quot;boxes&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span>
+                <span class="ow">and</span> <span class="s2">&quot;boxes_category&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span>
+                <span class="ow">and</span> <span class="s2">&quot;bbox&quot;</span> <span class="ow">in</span> <span class="n">ann</span>
+            <span class="p">):</span>
+                <span class="k">del</span> <span class="n">ann</span><span class="p">[</span><span class="s2">&quot;bbox&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">img_to_anns</span><span class="p">[</span><span class="n">ann</span><span class="p">[</span><span class="s2">&quot;image_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ann</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cats</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cats</span><span class="p">[</span><span class="n">cat</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">cat</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+        <span class="c1"># filter images without detection annotations</span>
+        <span class="k">if</span> <span class="n">remove_images_without_annotations</span><span class="p">:</span>
+            <span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">img_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">:</span>
+                <span class="n">anno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_to_anns</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span>
+                <span class="c1"># filter crowd annotations</span>
+                <span class="n">anno</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">anno</span> <span class="k">if</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;iscrowd&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="n">anno</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">obj</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">anno</span> <span class="k">if</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;bbox&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;bbox&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">anno</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_id</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">img_to_anns</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">anno</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_to_anns</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_category_id_to_contiguous_id</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">v</span><span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cats</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">contiguous_category_id_to_json_id</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_category_id_to_contiguous_id</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">img_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">anno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_to_anns</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span>
+
+        <span class="n">target</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">img_id</span><span class="p">][</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">IMREAD_COLOR</span><span class="p">)</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;boxes&quot;</span><span class="p">:</span>
+                <span class="n">boxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;bbox&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">anno</span><span class="p">]</span>
+                <span class="n">boxes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+                <span class="c1"># transfer boxes from xywh to xyxy</span>
+                <span class="n">boxes</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span> <span class="o">+=</span> <span class="n">boxes</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">boxes</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;boxes_category&quot;</span><span class="p">:</span>
+                <span class="n">boxes_category</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">anno</span><span class="p">]</span>
+                <span class="n">boxes_category</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">json_category_id_to_contiguous_id</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">boxes_category</span>
+                <span class="p">]</span>
+                <span class="n">boxes_category</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">boxes_category</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">boxes_category</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;info&quot;</span><span class="p">:</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]]</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_img_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">img_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">img_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span><span class="p">[</span><span class="n">img_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">img_info</span>
+
+    <span class="n">class_names</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;person&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sneakers&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;chair&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lamp&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bottle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cabinet/shelf&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cup&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;car&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;glasses&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;picture/frame&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;desk&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;handbag&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;street lights&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;book&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;plate&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;helmet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;leather shoes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pillow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;glove&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;potted plant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bracelet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flower&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;storage box&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;vase&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bench&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;wine glass&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;boots&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bowl&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dining table&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;umbrella&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;boat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flag&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;speaker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;trash bin/can&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;stool&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;backpack&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;couch&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;belt&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;carpet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;basket&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;towel/napkin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;slippers&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;barrel/bucket&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coffee table&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;suv&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tie&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bed&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;traffic light&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pen/pencil&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;microphone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sandals&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;canned&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;necklace&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mirror&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;faucet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bicycle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bread&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;high heels&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ring&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;van&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;watch&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sink&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;horse&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fish&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;apple&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;camera&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;candle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;teddy bear&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cake&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;motorcycle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;wild bird&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;laptop&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;knife&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;traffic sign&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cell phone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;paddle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;truck&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;power outlet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;clock&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;drum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fork&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bus&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hanger&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nightstand&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pot/pan&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sheep&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;guitar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;traffic cone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tea pot&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;keyboard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tripod&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hockey&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fan&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dog&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;spoon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;blackboard/whiteboard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;balloon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;air conditioner&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cymbal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mouse&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;telephone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pickup truck&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;orange&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;banana&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;airplane&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;luggage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;skis&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;soccer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;trolley&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;oven&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;remote&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;baseball glove&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;paper towel&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;refrigerator&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;train&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tomato&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;machinery vehicle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tent&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shampoo/shower gel&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;head phone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lantern&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;donut&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cleaning products&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sailboat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tangerine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pizza&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kite&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;computer box&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;elephant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toiletries&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gas stove&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;broccoli&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toilet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;stroller&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shovel&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;baseball bat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;microwave&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;skateboard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;surfboard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;surveillance camera&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gun&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;life saver&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cat&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lemon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;liquid soap&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;zebra&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;duck&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sports car&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;giraffe&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pumpkin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;piano&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;stop sign&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;radiator&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;converter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tissue &quot;</span><span class="p">,</span>
+        <span class="s2">&quot;carrot&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;washing machine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;vent&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cookies&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cutting/chopping board&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tennis racket&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;candy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;skating and skiing shoes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scissors&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;folder&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;baseball&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;strawberry&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bow tie&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pigeon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pepper&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coffee machine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bathtub&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;snowboard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;suitcase&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;grapes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ladder&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pear&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;american football&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;basketball&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;potato&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;paint brush&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;printer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;billiards&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fire hydrant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;goose&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;projector&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sausage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fire extinguisher&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;extension cord&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;facial mask&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tennis ball&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;chopsticks&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;electronic stove and gas stove&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pie&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;frisbee&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kettle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hamburger&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;golf club&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cucumber&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;clutch&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;blender&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tong&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;slide&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hot dog&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toothbrush&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;facial cleanser&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mango&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;deer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;egg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;violin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;marker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ship&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;chicken&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;onion&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ice cream&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tape&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;wheelchair&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;plum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bar soap&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scale&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;watermelon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cabbage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;router/modem&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;golf ball&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pine apple&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;crane&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fire truck&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;peach&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cello&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;notepaper&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tricycle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toaster&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;helicopter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;green beans&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;brush&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;carriage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cigar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;earphone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;penguin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hurdle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;swing&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;radio&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CD&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parking meter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;swan&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;garlic&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;french fries&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;horn&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;avocado&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;saxophone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;trumpet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sandwich&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cue&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;kiwi fruit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bear&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;fishing rod&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cherry&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tablet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;green vegetables&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nuts&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;corn&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;key&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;screwdriver&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;globe&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;broom&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pliers&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;volleyball&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hammer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eggplant&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;trophy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dates&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;board eraser&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rice&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tape measure/ruler&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dumbbell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hamimelon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;stapler&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;camel&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lettuce&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;goldfish&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meat balls&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;medal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;toothpaste&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;antelope&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shrimp&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rickshaw&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;trombone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pomegranate&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;coconut&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;jellyfish&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mushroom&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;calculator&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;treadmill&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;butterfly&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;egg tart&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cheese&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pig&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pomelo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;race car&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rice cooker&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tuba&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;crosswalk sign&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;papaya&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hair drier&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;green onion&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;chips&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dolphin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sushi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;urinal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;donkey&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;electric drill&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;spring rolls&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tortoise/turtle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parrot&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flute&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;measuring cup&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shark&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;steak&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;poker card&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;binoculars&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;llama&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;radish&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;noodles&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;yak&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mop&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;crab&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;microscope&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;barbell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bread/bun&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;baozi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lion&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;red cabbage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;polar bear&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lighter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;seal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mangosteen&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;comb&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eraser&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pitaya&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;scallop&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pencil case&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;saw&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;table tennis paddle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;okra&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;starfish&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eagle&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;monkey&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;durian&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;game board&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;rabbit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;french horn&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ambulance&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;asparagus&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hoverboard&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;pasta&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hotair balloon&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;chainsaw&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lobster&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iron&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flashlight&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

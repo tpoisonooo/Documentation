@@ -1,0 +1,6 @@
+megengine.Tensor.min
+====================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.min

@@ -1,0 +1,6 @@
+megengine.functional.distributed.reduce\_sum
+============================================
+
+.. currentmodule:: megengine.functional.distributed
+
+.. autofunction:: reduce_sum

@@ -1,0 +1,6 @@
+megengine.Tensor.shape
+======================
+
+.. currentmodule:: megengine
+
+.. autoproperty:: Tensor.shape

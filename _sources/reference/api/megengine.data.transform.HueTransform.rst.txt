@@ -1,0 +1,22 @@
+megengine.data.transform.HueTransform
+=====================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: HueTransform
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HueTransform.__init__
+      ~HueTransform.apply
+      ~HueTransform.apply_batch
+   
+   
+
+   
+   
+   

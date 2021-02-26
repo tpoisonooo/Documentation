@@ -1,0 +1,20 @@
+megengine.data.StreamSampler
+============================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: StreamSampler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~StreamSampler.__init__
+   
+   
+
+   
+   
+   

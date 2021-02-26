@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.distributed.helper &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.distributed.helper 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">WeakSet</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">megengine.autodiff.grad_manager</span> <span class="kn">import</span> <span class="n">GradManager</span><span class="p">,</span> <span class="n">get_backwarding_grad_manager</span>
+<span class="kn">from</span> <span class="nn">megengine.device</span> <span class="kn">import</span> <span class="n">get_default_device</span><span class="p">,</span> <span class="n">get_device_count</span>
+
+<span class="kn">from</span> <span class="nn">..core._imperative_rt.core2</span> <span class="kn">import</span> <span class="n">apply</span>
+<span class="kn">from</span> <span class="nn">..core.ops.builtin</span> <span class="kn">import</span> <span class="n">ParamPackConcat</span><span class="p">,</span> <span class="n">ParamPackSplit</span>
+<span class="kn">from</span> <span class="nn">..functional.utils</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">..utils.future</span> <span class="kn">import</span> <span class="n">Future</span>
+<span class="kn">from</span> <span class="nn">.functional</span> <span class="kn">import</span> <span class="n">all_reduce_sum</span><span class="p">,</span> <span class="n">broadcast</span>
+<span class="kn">from</span> <span class="nn">.group</span> <span class="kn">import</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">Group</span><span class="p">,</span> <span class="n">group_barrier</span><span class="p">,</span> <span class="n">is_distributed</span>
+
+
+<span class="k">def</span> <span class="nf">param_pack_split</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">offsets</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">shapes</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns split tensor to tensor list as offsets and shapes described,</span>
+<span class="sd">            only used for ``parampack``.</span>
+
+<span class="sd">    :param inp: input tensor.</span>
+<span class="sd">    :param offsets: offsets of outputs, length of `2 * n`,</span>
+<span class="sd">            while n is tensor nums you want to split,</span>
+<span class="sd">            format `[begin0, end0, begin1, end1]`.</span>
+<span class="sd">    :param shapes: tensor shapes of outputs.</span>
+<span class="sd">    :return: splitted tensors.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        from megengine.distributed.helper import param_pack_split</span>
+
+<span class="sd">        a = tensor(np.ones((10,), np.int32))</span>
+<span class="sd">        b, c = param_pack_split(a, [0, 1, 1, 10], [(1,), (3, 3)])</span>
+<span class="sd">        print(b.numpy())</span>
+<span class="sd">        print(c.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [1]</span>
+<span class="sd">        [[1 1 1]</span>
+<span class="sd">         [1 1 1]</span>
+<span class="sd">         [1 1 1]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">ParamPackSplit</span><span class="p">()</span>
+    <span class="n">op</span><span class="o">.</span><span class="n">offsets</span> <span class="o">=</span> <span class="n">offsets</span>
+    <span class="n">op</span><span class="o">.</span><span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">]</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">shapes</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">setscalar</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">outputs</span>
+
+
+<span class="k">def</span> <span class="nf">param_pack_concat</span><span class="p">(</span><span class="n">inps</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">offsets</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">offsets_val</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns concated tensor, only used for ``parampack``.</span>
+
+<span class="sd">    :param inps: input tensors.</span>
+<span class="sd">    :param offsets: device value of offsets.</span>
+<span class="sd">    :param offsets_val: offsets of inputs, length of `2 * n`,</span>
+<span class="sd">            format `[begin0, end0, begin1, end1]`.</span>
+<span class="sd">    :return: concated tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        from megengine.distributed.helper import param_pack_concat</span>
+
+<span class="sd">        a = tensor(np.ones((1,), np.int32))</span>
+<span class="sd">        b = tensor(np.ones((3, 3), np.int32))</span>
+<span class="sd">        offsets_val = [0, 1, 1, 10]</span>
+<span class="sd">        offsets = tensor(offsets_val, np.int32)</span>
+<span class="sd">        c = param_pack_concat([a, b], offsets, offsets_val)</span>
+<span class="sd">        print(c.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [1 1 1 1 1 1 1 1 1 1]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">ParamPackConcat</span><span class="p">()</span>
+    <span class="n">op</span><span class="o">.</span><span class="n">offsets</span> <span class="o">=</span> <span class="n">offsets_val</span>
+    <span class="k">return</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">inps</span><span class="p">,</span> <span class="n">offsets</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">get_offsets</span><span class="p">(</span><span class="n">shapes</span><span class="p">):</span>
+    <span class="n">offsets</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">shapes</span><span class="p">:</span>
+        <span class="n">offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
+        <span class="n">offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">offsets</span>
+
+
+<span class="k">def</span> <span class="nf">pack_allreduce_split</span><span class="p">(</span><span class="n">pack_list</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">reduce_method</span><span class="p">):</span>
+    <span class="n">offsets_val</span> <span class="o">=</span> <span class="n">get_offsets</span><span class="p">(</span><span class="n">shapes</span><span class="p">)</span>
+    <span class="n">offsets</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">offsets_val</span><span class="p">)</span>
+    <span class="n">packed_grads</span> <span class="o">=</span> <span class="n">param_pack_concat</span><span class="p">(</span><span class="n">pack_list</span><span class="p">,</span> <span class="n">offsets</span><span class="p">,</span> <span class="n">offsets_val</span><span class="p">)</span>
+    <span class="n">packed_grads</span> <span class="o">=</span> <span class="n">all_reduce_sum</span><span class="p">(</span><span class="n">packed_grads</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">comp_node</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">reduce_method</span> <span class="o">==</span> <span class="s2">&quot;mean&quot;</span><span class="p">:</span>
+        <span class="n">packed_grads</span> <span class="o">/=</span> <span class="n">group</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">param_pack_split</span><span class="p">(</span><span class="n">packed_grads</span><span class="p">,</span> <span class="n">offsets_val</span><span class="p">,</span> <span class="n">shapes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grads</span>
+
+
+<span class="k">class</span> <span class="nc">TensorFuture</span><span class="p">(</span><span class="n">Future</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="s2">&quot;Sorry, this tensor is not ready&quot;</span>
+
+    <span class="k">def</span> <span class="nf">numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="s2">&quot;Sorry, this tensor is not ready&quot;</span>
+
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="s2">&quot;Sorry, this tensor is not ready&quot;</span>
+
+    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="s2">&quot;Sorry, this tensor is not ready&quot;</span>
+
+
+<div class="viewcode-block" id="synchronized"><a class="viewcode-back" href="../../../reference/api/megengine.distributed.synchronized.html#megengine.distributed.synchronized">[文档]</a><span class="k">def</span> <span class="nf">synchronized</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator. Decorated function will synchronize when finished.</span>
+<span class="sd">    Specifically, we use this to prevent data race during hub.load&quot;&quot;&quot;</span>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_distributed</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">group_barrier</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_device_count_worker</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="n">device_type</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">get_device_count</span><span class="p">(</span><span class="n">device_type</span><span class="p">)</span>
+    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_device_count_by_fork</span><span class="p">(</span><span class="n">device_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get device count in fork thread.</span>
+<span class="sd">    See https://stackoverflow.com/questions/22950047/cuda-initialization-error-after-fork</span>
+<span class="sd">    for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_get_device_count_worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">device_type</span><span class="p">))</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="bcast_list_"><a class="viewcode-back" href="../../../reference/api/megengine.distributed.bcast_list_.html#megengine.distributed.bcast_list_">[文档]</a><span class="k">def</span> <span class="nf">bcast_list_</span><span class="p">(</span><span class="n">inps</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Broadcast tensors between given group.</span>
+
+<span class="sd">    :param inps: input tensors.</span>
+<span class="sd">    :param group: communication group.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inps</span><span class="p">:</span>
+        <span class="n">inp</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">broadcast</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">group</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="AllreduceCallback"><a class="viewcode-back" href="../../../reference/api/megengine.distributed.helper.AllreduceCallback.html#megengine.distributed.AllreduceCallback">[文档]</a><span class="k">class</span> <span class="nc">AllreduceCallback</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Allreduce Callback with tensor fusion optimization.</span>
+
+<span class="sd">    :param reduce_method: the method to reduce gradiants.</span>
+<span class="sd">    :param group: communication group.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reduce_method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Group</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">):</span>
+        <span class="n">reduce_method</span> <span class="o">=</span> <span class="n">reduce_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">reduce_method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">],</span> <span class="s2">&quot;reduce_method should be sum or mean&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reduce_method</span> <span class="o">=</span> <span class="n">reduce_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group</span> <span class="o">=</span> <span class="n">group</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_marked_gm</span> <span class="o">=</span> <span class="n">WeakSet</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param_pack_thd</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gradients_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_futures_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_packing_size</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grad_origin_device</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_pack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span><span class="p">[</span><span class="n">dtype</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">grad_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_gradients_dict</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span><span class="p">[</span><span class="n">dtype</span><span class="p">]]</span>
+        <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">_tuple_shape</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span><span class="p">[</span><span class="n">dtype</span><span class="p">]]</span>
+        <span class="n">reduced_grads</span> <span class="o">=</span> <span class="n">pack_allreduce_split</span><span class="p">(</span>
+            <span class="n">grad_list</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reduce_method</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">grad</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span><span class="p">[</span><span class="n">dtype</span><span class="p">],</span> <span class="n">reduced_grads</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gradients_dict</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_packing_size</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">grad</span><span class="p">):</span>
+        <span class="n">gm</span> <span class="o">=</span> <span class="n">get_backwarding_grad_manager</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">gm</span><span class="p">,</span> <span class="n">GradManager</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">gm</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_marked_gm</span><span class="p">:</span>
+            <span class="n">gm</span><span class="o">.</span><span class="n">_register_after_backward_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_flush</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_marked_gm</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">gm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_futures_dict</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorFuture</span><span class="p">(</span><span class="n">ack</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gradients_dict</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grad_origin_device</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="n">dtype_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+        <span class="n">dtype_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">itemsize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span><span class="p">[</span><span class="n">dtype_str</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_packing_size</span><span class="p">[</span><span class="n">dtype_str</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">_tuple_shape</span><span class="p">))</span> <span class="o">*</span> <span class="n">dtype_size</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_packing_size</span><span class="p">[</span><span class="n">dtype_str</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param_pack_thd</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pack</span><span class="p">(</span><span class="n">dtype_str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_futures_dict</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_packing_list</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pack</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="p">:</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gradients_dict</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grad_origin_device</span><span class="p">[</span><span class="n">param</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_futures_dict</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset</span><span class="p">()</span></div>
+
+
+<span class="n">make_allreduce_cb</span> <span class="o">=</span> <span class="n">AllreduceCallback</span>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+megengine.functional.topk
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: topk

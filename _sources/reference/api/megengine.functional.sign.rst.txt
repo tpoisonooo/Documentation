@@ -1,0 +1,6 @@
+megengine.functional.sign
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sign

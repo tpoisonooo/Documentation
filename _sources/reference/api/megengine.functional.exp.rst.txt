@@ -1,0 +1,6 @@
+megengine.functional.exp
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: exp

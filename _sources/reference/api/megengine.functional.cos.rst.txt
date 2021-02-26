@@ -1,0 +1,6 @@
+megengine.functional.cos
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: cos

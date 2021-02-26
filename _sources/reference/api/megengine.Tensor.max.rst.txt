@@ -1,0 +1,6 @@
+megengine.Tensor.max
+====================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.max

@@ -1,0 +1,6 @@
+megengine.functional.distributed.remote\_send
+=============================================
+
+.. currentmodule:: megengine.functional.distributed
+
+.. autofunction:: remote_send

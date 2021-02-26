@@ -1,0 +1,43 @@
+megengine.quantization.observer.MinMaxObserver
+==============================================
+
+.. currentmodule:: megengine.quantization.observer
+
+.. autoclass:: MinMaxObserver
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MinMaxObserver.__init__
+      ~MinMaxObserver.apply
+      ~MinMaxObserver.buffers
+      ~MinMaxObserver.children
+      ~MinMaxObserver.disable
+      ~MinMaxObserver.disable_quantize
+      ~MinMaxObserver.enable
+      ~MinMaxObserver.eval
+      ~MinMaxObserver.forward
+      ~MinMaxObserver.get_dtype
+      ~MinMaxObserver.get_qparams
+      ~MinMaxObserver.load_state_dict
+      ~MinMaxObserver.modules
+      ~MinMaxObserver.named_buffers
+      ~MinMaxObserver.named_children
+      ~MinMaxObserver.named_modules
+      ~MinMaxObserver.named_parameters
+      ~MinMaxObserver.parameters
+      ~MinMaxObserver.register_forward_hook
+      ~MinMaxObserver.register_forward_pre_hook
+      ~MinMaxObserver.replace_param
+      ~MinMaxObserver.state_dict
+      ~MinMaxObserver.train
+      ~MinMaxObserver.zero_grad
+   
+   
+
+   
+   
+   

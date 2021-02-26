@@ -1,0 +1,20 @@
+megengine.data.dataset.Dataset
+==============================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: Dataset
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Dataset.__init__
+   
+   
+
+   
+   
+   

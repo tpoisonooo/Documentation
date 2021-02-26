@@ -1,0 +1,6 @@
+megengine.functional.stack
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: stack

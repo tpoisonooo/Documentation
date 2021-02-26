@@ -1,0 +1,6 @@
+megengine.functional.distributed.all\_gather
+============================================
+
+.. currentmodule:: megengine.functional.distributed
+
+.. autofunction:: all_gather

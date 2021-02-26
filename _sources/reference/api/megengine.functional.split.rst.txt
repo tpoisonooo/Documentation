@@ -1,0 +1,6 @@
+megengine.functional.split
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: split

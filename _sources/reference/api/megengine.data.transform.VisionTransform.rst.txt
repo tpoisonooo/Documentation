@@ -1,0 +1,22 @@
+megengine.data.transform.VisionTransform
+========================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: VisionTransform
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VisionTransform.__init__
+      ~VisionTransform.apply
+      ~VisionTransform.apply_batch
+   
+   
+
+   
+   
+   

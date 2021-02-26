@@ -1,0 +1,6 @@
+megengine.hub.load\_serialized\_obj\_from\_url
+==============================================
+
+.. currentmodule:: megengine.hub
+
+.. autofunction:: load_serialized_obj_from_url

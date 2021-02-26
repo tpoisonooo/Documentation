@@ -1,0 +1,6 @@
+megengine.functional.floor\_div
+===============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: floor_div

@@ -1,0 +1,39 @@
+megengine.module.Concat
+=======================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Concat
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Concat.__init__
+      ~Concat.apply
+      ~Concat.buffers
+      ~Concat.children
+      ~Concat.disable_quantize
+      ~Concat.eval
+      ~Concat.forward
+      ~Concat.load_state_dict
+      ~Concat.modules
+      ~Concat.named_buffers
+      ~Concat.named_children
+      ~Concat.named_modules
+      ~Concat.named_parameters
+      ~Concat.parameters
+      ~Concat.register_forward_hook
+      ~Concat.register_forward_pre_hook
+      ~Concat.replace_param
+      ~Concat.state_dict
+      ~Concat.train
+      ~Concat.zero_grad
+   
+   
+
+   
+   
+   

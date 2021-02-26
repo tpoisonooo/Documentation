@@ -1,0 +1,39 @@
+megengine.module.QuantStub
+==========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: QuantStub
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QuantStub.__init__
+      ~QuantStub.apply
+      ~QuantStub.buffers
+      ~QuantStub.children
+      ~QuantStub.disable_quantize
+      ~QuantStub.eval
+      ~QuantStub.forward
+      ~QuantStub.load_state_dict
+      ~QuantStub.modules
+      ~QuantStub.named_buffers
+      ~QuantStub.named_children
+      ~QuantStub.named_modules
+      ~QuantStub.named_parameters
+      ~QuantStub.parameters
+      ~QuantStub.register_forward_hook
+      ~QuantStub.register_forward_pre_hook
+      ~QuantStub.replace_param
+      ~QuantStub.state_dict
+      ~QuantStub.train
+      ~QuantStub.zero_grad
+   
+   
+
+   
+   
+   

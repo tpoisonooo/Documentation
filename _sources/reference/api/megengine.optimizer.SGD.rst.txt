@@ -1,0 +1,28 @@
+megengine.optimizer.SGD
+=======================
+
+.. currentmodule:: megengine.optimizer
+
+.. autoclass:: SGD
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SGD.__init__
+      ~SGD.add_param_group
+      ~SGD.backward
+      ~SGD.bcast_param
+      ~SGD.clear_grad
+      ~SGD.load_state_dict
+      ~SGD.state_dict
+      ~SGD.step
+      ~SGD.zero_grad
+   
+   
+
+   
+   
+   

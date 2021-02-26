@@ -1,0 +1,6 @@
+megengine.random.seed
+=====================
+
+.. currentmodule:: megengine.random
+
+.. autofunction:: seed

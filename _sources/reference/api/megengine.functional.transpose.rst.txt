@@ -1,0 +1,6 @@
+megengine.functional.transpose
+==============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: transpose

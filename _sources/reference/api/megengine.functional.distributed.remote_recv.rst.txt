@@ -1,0 +1,6 @@
+megengine.functional.distributed.remote\_recv
+=============================================
+
+.. currentmodule:: megengine.functional.distributed
+
+.. autofunction:: remote_recv

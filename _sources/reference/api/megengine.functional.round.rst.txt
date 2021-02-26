@@ -1,0 +1,6 @@
+megengine.functional.round
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: round

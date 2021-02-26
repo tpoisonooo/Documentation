@@ -1,0 +1,6 @@
+megengine.functional.squeeze
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: squeeze

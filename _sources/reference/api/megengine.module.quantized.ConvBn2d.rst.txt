@@ -1,0 +1,43 @@
+megengine.module.quantized.ConvBn2d
+===================================
+
+.. currentmodule:: megengine.module.quantized
+
+.. autoclass:: ConvBn2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConvBn2d.__init__
+      ~ConvBn2d.apply
+      ~ConvBn2d.buffers
+      ~ConvBn2d.calc_conv
+      ~ConvBn2d.calc_conv_quantized
+      ~ConvBn2d.children
+      ~ConvBn2d.disable_quantize
+      ~ConvBn2d.eval
+      ~ConvBn2d.forward
+      ~ConvBn2d.from_qat_module
+      ~ConvBn2d.load_state_dict
+      ~ConvBn2d.modules
+      ~ConvBn2d.named_buffers
+      ~ConvBn2d.named_children
+      ~ConvBn2d.named_modules
+      ~ConvBn2d.named_parameters
+      ~ConvBn2d.parameters
+      ~ConvBn2d.register_forward_hook
+      ~ConvBn2d.register_forward_pre_hook
+      ~ConvBn2d.replace_param
+      ~ConvBn2d.reset_parameters
+      ~ConvBn2d.state_dict
+      ~ConvBn2d.train
+      ~ConvBn2d.zero_grad
+   
+   
+
+   
+   
+   

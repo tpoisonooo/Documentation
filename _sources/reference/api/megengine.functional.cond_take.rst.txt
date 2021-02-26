@@ -1,0 +1,6 @@
+megengine.functional.cond\_take
+===============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: cond_take

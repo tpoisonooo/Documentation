@@ -1,0 +1,6 @@
+megengine.quantization.passive\_qconfig
+=======================================
+
+.. currentmodule:: megengine.quantization
+
+.. autodata:: passive_qconfig

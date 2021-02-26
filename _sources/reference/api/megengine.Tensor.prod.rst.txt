@@ -1,0 +1,6 @@
+megengine.Tensor.prod
+=====================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.prod

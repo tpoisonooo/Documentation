@@ -1,0 +1,6 @@
+megengine.Tensor.T
+==================
+
+.. currentmodule:: megengine
+
+.. autoproperty:: Tensor.T

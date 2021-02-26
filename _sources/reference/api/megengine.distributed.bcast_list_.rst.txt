@@ -1,0 +1,6 @@
+megengine.distributed.bcast\_list\_
+===================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: bcast_list_

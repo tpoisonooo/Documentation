@@ -1,0 +1,6 @@
+megengine.functional.cosh
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: cosh

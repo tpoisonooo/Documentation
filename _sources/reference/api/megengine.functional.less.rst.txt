@@ -1,0 +1,6 @@
+megengine.functional.less
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: less

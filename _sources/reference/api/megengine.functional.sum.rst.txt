@@ -1,0 +1,6 @@
+megengine.functional.sum
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sum

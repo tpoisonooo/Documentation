@@ -1,0 +1,866 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.functional.elemwise &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.functional.elemwise 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># pylint: disable=unused-argument,invalid-name,redefined-builtin,arguments-out-of-order</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="kn">from</span> <span class="nn">..core._imperative_rt.core2</span> <span class="kn">import</span> <span class="n">apply</span>
+<span class="kn">from</span> <span class="nn">..core.ops</span> <span class="kn">import</span> <span class="n">builtin</span>
+<span class="kn">from</span> <span class="nn">..core.ops.builtin</span> <span class="kn">import</span> <span class="n">Elemwise</span>
+<span class="kn">from</span> <span class="nn">..core.tensor</span> <span class="kn">import</span> <span class="n">megbrain_graph</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">..core.tensor.utils</span> <span class="kn">import</span> <span class="n">isscalar</span><span class="p">,</span> <span class="n">setscalar</span>
+<span class="kn">from</span> <span class="nn">..device</span> <span class="kn">import</span> <span class="n">get_default_device</span>
+<span class="kn">from</span> <span class="nn">..jit.tracing</span> <span class="kn">import</span> <span class="n">is_tracing</span>
+<span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;abs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;add&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;acos&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;asin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;atan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;atan2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;asinh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;acosh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;atanh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ceil&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;clip&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cos&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cosh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;div&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;equal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;exp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;expm1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;floor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;floor_div&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;greater&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;greater_equal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hswish&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hsigmoid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;left_shift&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;less&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;less_equal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;log1p&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;logical_and&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;logical_not&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;logical_or&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;logical_xor&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;maximum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;minimum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mod&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mul&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;neg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;not_equal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;relu&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;relu6&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;right_shift&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sigmoid&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sinh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sqrt&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;square&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sub&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tanh&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_elwise</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Elemwise</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+    <span class="n">tensor_args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">megbrain_graph</span><span class="o">.</span><span class="n">VarNode</span><span class="p">)),</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensor_args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">dtype_promotion</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">first_arg</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">get_default_device</span><span class="p">())</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="n">first_arg</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;true_div&quot;</span><span class="p">,</span> <span class="s2">&quot;exp&quot;</span><span class="p">,</span> <span class="s2">&quot;pow&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;expm1&quot;</span><span class="p">,</span> <span class="s2">&quot;log1p&quot;</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">),</span> <span class="n">args</span><span class="p">))</span>
+    <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">isscalar</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">break</span>
+    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_isscalar</span><span class="p">:</span>
+        <span class="n">setscalar</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">_elemwise_multi_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ElemwiseMultiType</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="c1"># math operations</span>
+
+
+<div class="viewcode-block" id="add"><a class="viewcode-back" href="../../../reference/api/megengine.functional.add.html#megengine.functional.add">[文档]</a><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element-wise `addition`.</span>
+<span class="sd">    At least one operand should be tensor.</span>
+
+<span class="sd">    Same for sub/mul/div/floor_div/pow/mod/atan2/equal/not_equal/less/less_equal/greater/greater_equal/maximum/minmium.</span>
+
+<span class="sd">    :param x: input tensor.</span>
+<span class="sd">    :return: computed tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor(np.arange(0, 6, dtype=np.float32).reshape(2, 3))</span>
+<span class="sd">        y = tensor(np.arange(0, 6, dtype=np.float32).reshape(2, 3))</span>
+<span class="sd">        out = F.add(x, y)</span>
+<span class="sd">        print(out.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[ 0.  2.  4.]</span>
+<span class="sd">         [ 6.  8. 10.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ADD</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `subtraction`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="mul"><a class="viewcode-back" href="../../../reference/api/megengine.functional.mul.html#megengine.functional.mul">[文档]</a><span class="k">def</span> <span class="nf">mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `multiplication`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">MUL</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">div</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `(x / y)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">TRUE_DIV</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">floor_div</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `floor(x / y)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">FLOOR_DIV</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="neg"><a class="viewcode-back" href="../../../reference/api/megengine.functional.neg.html#megengine.functional.neg">[文档]</a><span class="k">def</span> <span class="nf">neg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `negation`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">NEGATE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="pow"><a class="viewcode-back" href="../../../reference/api/megengine.functional.pow.html#megengine.functional.pow">[文档]</a><span class="k">def</span> <span class="nf">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `power`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">POW</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mod"><a class="viewcode-back" href="../../../reference/api/megengine.functional.mod.html#megengine.functional.mod">[文档]</a><span class="k">def</span> <span class="nf">mod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `remainder of division`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">MOD</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="abs"><a class="viewcode-back" href="../../../reference/api/megengine.functional.abs.html#megengine.functional.abs">[文档]</a><span class="k">def</span> <span class="nf">abs</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `absolute value`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ABS</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `exponential`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">EXP</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">expm1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `exp(x)-1`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">EXPM1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `logarithm (base e)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">log1p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `log(x+1) (base e)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG1P</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element-wise `sqrt`.</span>
+<span class="sd">    Returns ``NaN`` for negative input value.</span>
+
+<span class="sd">    :param x: input tensor.</span>
+<span class="sd">    :return: computed tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor(np.arange(0, 6, dtype=np.float32).reshape(2, 3))</span>
+<span class="sd">        out = F.sqrt(x)</span>
+<span class="sd">        print(out.numpy().round(decimals=4))</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[0.     1.     1.4142]</span>
+<span class="sd">         [1.7321 2.     2.2361]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+
+<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a new tensor with the square of the elements of input tensor.</span>
+
+<span class="sd">    :param inp: input tensor.</span>
+<span class="sd">    :return: computed tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        import megengine as mge</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        data = mge.tensor(np.arange(0, 6, dtype=np.float32).reshape(2, 3))</span>
+<span class="sd">        out = F.square(data)</span>
+<span class="sd">        print(out.numpy().round(decimals=4))</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[ 0.  1.  4.]</span>
+<span class="sd">         [ 9. 16. 25.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+
+
+<div class="viewcode-block" id="round"><a class="viewcode-back" href="../../../reference/api/megengine.functional.round.html#megengine.functional.round">[文档]</a><span class="k">def</span> <span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `rounding to int`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ROUND</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ceil"><a class="viewcode-back" href="../../../reference/api/megengine.functional.ceil.html#megengine.functional.ceil">[文档]</a><span class="k">def</span> <span class="nf">ceil</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `ceiling`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">CEIL</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">floor</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `floor`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">FLOOR</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">maximum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `maximum of array elements`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">MAX</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="minimum"><a class="viewcode-back" href="../../../reference/api/megengine.functional.minimum.html#megengine.functional.minimum">[文档]</a><span class="k">def</span> <span class="nf">minimum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `minimum of array elements`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">MIN</span><span class="p">)</span></div>
+
+
+<span class="c1"># trigonometric functions</span>
+
+
+<div class="viewcode-block" id="cos"><a class="viewcode-back" href="../../../reference/api/megengine.functional.cos.html#megengine.functional.cos">[文档]</a><span class="k">def</span> <span class="nf">cos</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element-wise `cosine`.</span>
+
+<span class="sd">    :param x: input tensor.</span>
+<span class="sd">    :return: computed tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor(np.arange(0, 6, dtype=np.float32).reshape(2, 3))</span>
+<span class="sd">        out = F.cos(x)</span>
+<span class="sd">        print(out.numpy().round(decimals=4))</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[ 1.      0.5403 -0.4161]</span>
+<span class="sd">         [-0.99   -0.6536  0.2837]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">COS</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `sine`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SIN</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `tangent`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="acos"><a class="viewcode-back" href="../../../reference/api/megengine.functional.acos.html#megengine.functional.acos">[文档]</a><span class="k">def</span> <span class="nf">acos</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `inverse cosine`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ACOS</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="asin"><a class="viewcode-back" href="../../../reference/api/megengine.functional.asin.html#megengine.functional.asin">[文档]</a><span class="k">def</span> <span class="nf">asin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `inverse sine`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ASIN</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="atan"><a class="viewcode-back" href="../../../reference/api/megengine.functional.atan.html#megengine.functional.atan">[文档]</a><span class="k">def</span> <span class="nf">atan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `inverse tangent`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ATAN2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="atan2"><a class="viewcode-back" href="../../../reference/api/megengine.functional.atan2.html#megengine.functional.atan2">[文档]</a><span class="k">def</span> <span class="nf">atan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `2-argument arctangent`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ATAN2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cosh"><a class="viewcode-back" href="../../../reference/api/megengine.functional.cosh.html#megengine.functional.cosh">[文档]</a><span class="k">def</span> <span class="nf">cosh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `hyperbolic cosine`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">sinh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `hyperbolic sine`.&quot;&quot;&quot;</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">u</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `hyperbolic tangent`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">TANH</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="asinh"><a class="viewcode-back" href="../../../reference/api/megengine.functional.asinh.html#megengine.functional.asinh">[文档]</a><span class="k">def</span> <span class="nf">asinh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `inverse hyperbolic sine`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">log</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="acosh"><a class="viewcode-back" href="../../../reference/api/megengine.functional.acosh.html#megengine.functional.acosh">[文档]</a><span class="k">def</span> <span class="nf">acosh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `inverse hyperbolic cosine`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">log</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="atanh"><a class="viewcode-back" href="../../../reference/api/megengine.functional.atanh.html#megengine.functional.atanh">[文档]</a><span class="k">def</span> <span class="nf">atanh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `inverse hyperbolic tangent`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">log1p</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span></div>
+
+
+<span class="c1"># bit-twiddling functions</span>
+
+
+<span class="k">def</span> <span class="nf">left_shift</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element-wise `bitwise binary: x &lt;&lt; y`.</span>
+
+<span class="sd">    :param x: input tensor, should be int.</span>
+<span class="sd">    :param y: how many bits to be left-shifted.</span>
+<span class="sd">    :return: computed tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor(np.arange(0, 6, dtype=np.int32).reshape(2, 3))</span>
+<span class="sd">        out = F.left_shift(x, 2)</span>
+<span class="sd">        print(out.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[ 0  4  8]</span>
+<span class="sd">         [12 16 20]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SHL</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="right_shift"><a class="viewcode-back" href="../../../reference/api/megengine.functional.right_shift.html#megengine.functional.right_shift">[文档]</a><span class="k">def</span> <span class="nf">right_shift</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `bitwise binary: x &gt;&gt; y`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SHR</span><span class="p">)</span></div>
+
+
+<span class="c1"># logical functions</span>
+
+
+<span class="k">def</span> <span class="nf">logical_and</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `logical and: x &amp;&amp; y`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">AND</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">logical_not</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `logical not: ~x`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">NOT</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">logical_or</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `logical or: x || y`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">OR</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">logical_xor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `logical xor: x ^ y`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">XOR</span><span class="p">)</span>
+
+
+<span class="c1"># comparison functions</span>
+
+
+<span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element-wise `(x == y)`.</span>
+
+<span class="sd">    :param x: input tensor 1.</span>
+<span class="sd">    :param y: input tensor 2.</span>
+<span class="sd">    :return: computed tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor(np.arange(0, 6, dtype=np.float32).reshape(2, 3))</span>
+<span class="sd">        y = tensor(np.arange(0, 6, dtype=np.float32).reshape(2, 3))</span>
+<span class="sd">        out = F.equal(x, y)</span>
+<span class="sd">        print(out.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[1. 1. 1.]</span>
+<span class="sd">         [1. 1. 1.]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">EQ</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="not_equal"><a class="viewcode-back" href="../../../reference/api/megengine.functional.not_equal.html#megengine.functional.not_equal">[文档]</a><span class="k">def</span> <span class="nf">not_equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `(x != y)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">y</span></div>
+
+
+<span class="k">def</span> <span class="nf">less</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `(x &lt; y)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LT</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">less_equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `(x &lt;= y)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LEQ</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">greater</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `(x &gt; y)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LT</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">greater_equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `(x &gt;= y)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LEQ</span><span class="p">)</span>
+
+
+<span class="c1"># other functions</span>
+
+
+<span class="k">def</span> <span class="nf">hswish</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element-wise `x * relu6(x + 3) / 6`.</span>
+
+<span class="sd">    :param x: input tensor.</span>
+<span class="sd">    :return: computed tensor.</span>
+
+<span class="sd">    Example:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor(np.arange(5).astype(np.float32))</span>
+<span class="sd">        out = F.hswish(x)</span>
+<span class="sd">        print(out.numpy().round(decimals=4))</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [0.     0.6667 1.6667 3.     4.    ]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">H_SWISH</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">hsigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `relu6(x + 3) / 6`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">relu6</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">6</span>
+
+
+<div class="viewcode-block" id="relu"><a class="viewcode-back" href="../../../reference/api/megengine.functional.relu.html#megengine.functional.relu">[文档]</a><span class="k">def</span> <span class="nf">relu</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `max(x, 0)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">RELU</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="relu6"><a class="viewcode-back" href="../../../reference/api/megengine.functional.relu6.html#megengine.functional.relu6">[文档]</a><span class="k">def</span> <span class="nf">relu6</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `min(max(x, 0), 6)`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">minimum</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Element-wise `1 / ( 1 + exp( -x ) )`.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SIGMOID</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="clip"><a class="viewcode-back" href="../../../reference/api/megengine.functional.clip.html#megengine.functional.clip">[文档]</a><span class="k">def</span> <span class="nf">clip</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clamps all elements in input tensor into the range `[` :attr:`lower`, :attr:`upper` `]` and returns</span>
+<span class="sd">    a resulting tensor:</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        y_i = \begin{cases}</span>
+<span class="sd">            \text{lower} &amp; \text{if } x_i &lt; \text{lower} \\</span>
+<span class="sd">            x_i &amp; \text{if } \text{lower} \leq x_i \leq \text{upper} \\</span>
+<span class="sd">            \text{upper} &amp; \text{if } x_i &gt; \text{upper}</span>
+<span class="sd">        \end{cases}</span>
+
+<span class="sd">    :param x: input tensor.</span>
+<span class="sd">    :param lower: lower-bound of the range to be clamped to.</span>
+<span class="sd">    :param upper: upper-bound of the range to be clamped to.</span>
+<span class="sd">    :return: output clamped tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        a = tensor(np.arange(5).astype(np.int32))</span>
+<span class="sd">        print(F.clip(a, 2, 4).numpy())</span>
+<span class="sd">        print(F.clip(a, lower=3).numpy())</span>
+<span class="sd">        print(F.clip(a, upper=3).numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [2 2 2 3 4]</span>
+<span class="sd">        [3 3 3 3 4]</span>
+<span class="sd">        [0 1 2 3 3]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">lower</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">upper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="p">),</span> <span class="s2">&quot;At least one of &#39;lower&#39; or &#39;upper&#39; must not be None&quot;</span>
+    <span class="k">if</span> <span class="n">lower</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">upper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_tracing</span><span class="p">():</span>
+                <span class="k">assert</span> <span class="n">lower</span> <span class="o">&lt;=</span> <span class="n">upper</span><span class="p">,</span> <span class="s2">&quot;clip lower bound is bigger that upper bound&quot;</span>
+            <span class="k">return</span> <span class="n">minimum</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">lower</span><span class="p">),</span> <span class="n">upper</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">maximum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">lower</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">minimum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">upper</span><span class="p">)</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

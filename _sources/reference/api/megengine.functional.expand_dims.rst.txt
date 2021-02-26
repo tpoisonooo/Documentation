@@ -1,0 +1,6 @@
+megengine.functional.expand\_dims
+=================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: expand_dims

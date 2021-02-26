@@ -1,0 +1,6 @@
+megengine.functional.tan
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: tan

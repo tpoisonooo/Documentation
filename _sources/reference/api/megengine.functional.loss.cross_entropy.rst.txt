@@ -1,0 +1,6 @@
+megengine.functional.loss.cross\_entropy
+========================================
+
+.. currentmodule:: megengine.functional.loss
+
+.. autofunction:: cross_entropy

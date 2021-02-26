@@ -1,0 +1,6 @@
+megengine.functional.tanh
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: tanh

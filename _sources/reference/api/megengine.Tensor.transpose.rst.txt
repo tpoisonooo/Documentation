@@ -1,0 +1,6 @@
+megengine.Tensor.transpose
+==========================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.transpose

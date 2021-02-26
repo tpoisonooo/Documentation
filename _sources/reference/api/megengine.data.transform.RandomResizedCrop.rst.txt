@@ -1,0 +1,22 @@
+megengine.data.transform.RandomResizedCrop
+==========================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: RandomResizedCrop
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RandomResizedCrop.__init__
+      ~RandomResizedCrop.apply
+      ~RandomResizedCrop.apply_batch
+   
+   
+
+   
+   
+   

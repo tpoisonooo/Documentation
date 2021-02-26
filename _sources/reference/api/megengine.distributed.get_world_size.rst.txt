@@ -1,0 +1,6 @@
+megengine.distributed.get\_world\_size
+======================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: get_world_size

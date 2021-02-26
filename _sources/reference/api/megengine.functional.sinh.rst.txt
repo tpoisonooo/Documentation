@@ -1,0 +1,6 @@
+megengine.functional.sinh
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sinh

@@ -1,0 +1,6 @@
+megengine.functional.isnan
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: isnan

@@ -1,0 +1,22 @@
+megengine.data.transform.RandomHorizontalFlip
+=============================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: RandomHorizontalFlip
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RandomHorizontalFlip.__init__
+      ~RandomHorizontalFlip.apply
+      ~RandomHorizontalFlip.apply_batch
+   
+   
+
+   
+   
+   

@@ -1,0 +1,23 @@
+megengine.jit.trace
+===================
+
+.. currentmodule:: megengine.jit
+
+.. autoclass:: trace
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~trace.__init__
+      ~trace.dump
+      ~trace.get_profile
+      ~trace.trace
+   
+   
+
+   
+   
+   

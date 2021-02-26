@@ -1,0 +1,57 @@
+megengine.module.qat.Linear
+===========================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: Linear
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Linear.__init__
+      ~Linear.apply
+      ~Linear.apply_quant_activation
+      ~Linear.apply_quant_weight
+      ~Linear.buffers
+      ~Linear.children
+      ~Linear.disable_quantize
+      ~Linear.eval
+      ~Linear.forward
+      ~Linear.from_float_module
+      ~Linear.get_activation_dtype
+      ~Linear.get_activation_qparams
+      ~Linear.get_weight_dtype
+      ~Linear.get_weight_qparams
+      ~Linear.load_state_dict
+      ~Linear.modules
+      ~Linear.named_buffers
+      ~Linear.named_children
+      ~Linear.named_modules
+      ~Linear.named_parameters
+      ~Linear.parameters
+      ~Linear.register_forward_hook
+      ~Linear.register_forward_pre_hook
+      ~Linear.replace_param
+      ~Linear.reset_parameters
+      ~Linear.set_fake_quant
+      ~Linear.set_observer
+      ~Linear.set_qconfig
+      ~Linear.state_dict
+      ~Linear.train
+      ~Linear.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Linear.with_act
+      ~Linear.with_weight
+   
+   

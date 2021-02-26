@@ -1,0 +1,28 @@
+megengine.optimizer.Optimizer
+=============================
+
+.. currentmodule:: megengine.optimizer
+
+.. autoclass:: Optimizer
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Optimizer.__init__
+      ~Optimizer.add_param_group
+      ~Optimizer.backward
+      ~Optimizer.bcast_param
+      ~Optimizer.clear_grad
+      ~Optimizer.load_state_dict
+      ~Optimizer.state_dict
+      ~Optimizer.step
+      ~Optimizer.zero_grad
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+megengine.functional.var
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: var

@@ -1,0 +1,39 @@
+megengine.module.PReLU
+======================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: PReLU
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PReLU.__init__
+      ~PReLU.apply
+      ~PReLU.buffers
+      ~PReLU.children
+      ~PReLU.disable_quantize
+      ~PReLU.eval
+      ~PReLU.forward
+      ~PReLU.load_state_dict
+      ~PReLU.modules
+      ~PReLU.named_buffers
+      ~PReLU.named_children
+      ~PReLU.named_modules
+      ~PReLU.named_parameters
+      ~PReLU.parameters
+      ~PReLU.register_forward_hook
+      ~PReLU.register_forward_pre_hook
+      ~PReLU.replace_param
+      ~PReLU.state_dict
+      ~PReLU.train
+      ~PReLU.zero_grad
+   
+   
+
+   
+   
+   

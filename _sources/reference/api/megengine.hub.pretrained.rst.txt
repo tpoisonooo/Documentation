@@ -1,0 +1,20 @@
+megengine.hub.pretrained
+========================
+
+.. currentmodule:: megengine.hub
+
+.. autoclass:: pretrained
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~pretrained.__init__
+   
+   
+
+   
+   
+   

@@ -1,0 +1,40 @@
+megengine.module.LayerNorm
+==========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: LayerNorm
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LayerNorm.__init__
+      ~LayerNorm.apply
+      ~LayerNorm.buffers
+      ~LayerNorm.children
+      ~LayerNorm.disable_quantize
+      ~LayerNorm.eval
+      ~LayerNorm.forward
+      ~LayerNorm.load_state_dict
+      ~LayerNorm.modules
+      ~LayerNorm.named_buffers
+      ~LayerNorm.named_children
+      ~LayerNorm.named_modules
+      ~LayerNorm.named_parameters
+      ~LayerNorm.parameters
+      ~LayerNorm.register_forward_hook
+      ~LayerNorm.register_forward_pre_hook
+      ~LayerNorm.replace_param
+      ~LayerNorm.reset_parameters
+      ~LayerNorm.state_dict
+      ~LayerNorm.train
+      ~LayerNorm.zero_grad
+   
+   
+
+   
+   
+   

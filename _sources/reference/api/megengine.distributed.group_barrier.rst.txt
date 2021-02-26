@@ -1,0 +1,6 @@
+megengine.distributed.group\_barrier
+====================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: group_barrier

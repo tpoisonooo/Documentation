@@ -1,0 +1,6 @@
+megengine.distributed.get\_mm\_server\_addr
+===========================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: get_mm_server_addr

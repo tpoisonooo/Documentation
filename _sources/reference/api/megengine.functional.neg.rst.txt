@@ -1,0 +1,6 @@
+megengine.functional.neg
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: neg

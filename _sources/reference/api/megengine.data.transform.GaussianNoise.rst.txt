@@ -1,0 +1,22 @@
+megengine.data.transform.GaussianNoise
+======================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: GaussianNoise
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GaussianNoise.__init__
+      ~GaussianNoise.apply
+      ~GaussianNoise.apply_batch
+   
+   
+
+   
+   
+   

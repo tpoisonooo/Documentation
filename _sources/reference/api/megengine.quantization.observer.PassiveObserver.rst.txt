@@ -1,0 +1,49 @@
+megengine.quantization.observer.PassiveObserver
+===============================================
+
+.. currentmodule:: megengine.quantization.observer
+
+.. autoclass:: PassiveObserver
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~PassiveObserver.__init__
+      ~PassiveObserver.apply
+      ~PassiveObserver.buffers
+      ~PassiveObserver.children
+      ~PassiveObserver.disable
+      ~PassiveObserver.disable_quantize
+      ~PassiveObserver.enable
+      ~PassiveObserver.eval
+      ~PassiveObserver.forward
+      ~PassiveObserver.get_dtype
+      ~PassiveObserver.get_qparams
+      ~PassiveObserver.load_state_dict
+      ~PassiveObserver.modules
+      ~PassiveObserver.named_buffers
+      ~PassiveObserver.named_children
+      ~PassiveObserver.named_modules
+      ~PassiveObserver.named_parameters
+      ~PassiveObserver.parameters
+      ~PassiveObserver.register_forward_hook
+      ~PassiveObserver.register_forward_pre_hook
+      ~PassiveObserver.replace_param
+      ~PassiveObserver.state_dict
+      ~PassiveObserver.train
+      ~PassiveObserver.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~PassiveObserver.scale
+   
+   

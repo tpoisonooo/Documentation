@@ -1,0 +1,6 @@
+megengine.functional.sqrt
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sqrt

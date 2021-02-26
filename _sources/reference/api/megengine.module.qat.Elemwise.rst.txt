@@ -1,0 +1,56 @@
+megengine.module.qat.Elemwise
+=============================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: Elemwise
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Elemwise.__init__
+      ~Elemwise.apply
+      ~Elemwise.apply_quant_activation
+      ~Elemwise.apply_quant_weight
+      ~Elemwise.buffers
+      ~Elemwise.children
+      ~Elemwise.disable_quantize
+      ~Elemwise.eval
+      ~Elemwise.forward
+      ~Elemwise.from_float_module
+      ~Elemwise.get_activation_dtype
+      ~Elemwise.get_activation_qparams
+      ~Elemwise.get_weight_dtype
+      ~Elemwise.get_weight_qparams
+      ~Elemwise.load_state_dict
+      ~Elemwise.modules
+      ~Elemwise.named_buffers
+      ~Elemwise.named_children
+      ~Elemwise.named_modules
+      ~Elemwise.named_parameters
+      ~Elemwise.parameters
+      ~Elemwise.register_forward_hook
+      ~Elemwise.register_forward_pre_hook
+      ~Elemwise.replace_param
+      ~Elemwise.set_fake_quant
+      ~Elemwise.set_observer
+      ~Elemwise.set_qconfig
+      ~Elemwise.state_dict
+      ~Elemwise.train
+      ~Elemwise.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Elemwise.with_act
+      ~Elemwise.with_weight
+   
+   

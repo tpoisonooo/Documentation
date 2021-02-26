@@ -1,0 +1,6 @@
+megengine.functional.expm1
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: expm1

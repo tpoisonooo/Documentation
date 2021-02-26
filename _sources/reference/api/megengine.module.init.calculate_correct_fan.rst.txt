@@ -1,0 +1,6 @@
+megengine.module.init.calculate\_correct\_fan
+=============================================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: calculate_correct_fan

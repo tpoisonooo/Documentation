@@ -1,0 +1,6 @@
+megengine.functional.loss.l1\_loss
+==================================
+
+.. currentmodule:: megengine.functional.loss
+
+.. autofunction:: l1_loss

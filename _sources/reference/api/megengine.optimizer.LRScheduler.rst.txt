@@ -1,0 +1,24 @@
+megengine.optimizer.LRScheduler
+===============================
+
+.. currentmodule:: megengine.optimizer
+
+.. autoclass:: LRScheduler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LRScheduler.__init__
+      ~LRScheduler.get_lr
+      ~LRScheduler.load_state_dict
+      ~LRScheduler.state_dict
+      ~LRScheduler.step
+   
+   
+
+   
+   
+   

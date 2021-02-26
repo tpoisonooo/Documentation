@@ -1,0 +1,23 @@
+megengine.data.Infinite
+=======================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: Infinite
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Infinite.__init__
+      ~Infinite.batch
+      ~Infinite.sample
+      ~Infinite.scatter
+   
+   
+
+   
+   
+   

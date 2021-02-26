@@ -1,0 +1,6 @@
+megengine.functional.nn.nms
+===========================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: nms

@@ -1,0 +1,22 @@
+megengine.data.transform.Pad
+============================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: Pad
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Pad.__init__
+      ~Pad.apply
+      ~Pad.apply_batch
+   
+   
+
+   
+   
+   

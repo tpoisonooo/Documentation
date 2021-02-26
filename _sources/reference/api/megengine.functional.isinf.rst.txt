@@ -1,0 +1,6 @@
+megengine.functional.isinf
+==========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: isinf

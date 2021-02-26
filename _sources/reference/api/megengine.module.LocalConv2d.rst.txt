@@ -1,0 +1,41 @@
+megengine.module.LocalConv2d
+============================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: LocalConv2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~LocalConv2d.__init__
+      ~LocalConv2d.apply
+      ~LocalConv2d.buffers
+      ~LocalConv2d.calc_conv
+      ~LocalConv2d.children
+      ~LocalConv2d.disable_quantize
+      ~LocalConv2d.eval
+      ~LocalConv2d.forward
+      ~LocalConv2d.load_state_dict
+      ~LocalConv2d.modules
+      ~LocalConv2d.named_buffers
+      ~LocalConv2d.named_children
+      ~LocalConv2d.named_modules
+      ~LocalConv2d.named_parameters
+      ~LocalConv2d.parameters
+      ~LocalConv2d.register_forward_hook
+      ~LocalConv2d.register_forward_pre_hook
+      ~LocalConv2d.replace_param
+      ~LocalConv2d.reset_parameters
+      ~LocalConv2d.state_dict
+      ~LocalConv2d.train
+      ~LocalConv2d.zero_grad
+   
+   
+
+   
+   
+   

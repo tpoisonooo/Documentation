@@ -1,0 +1,45 @@
+megengine.module.Sequential
+===========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Sequential
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Sequential.__init__
+      ~Sequential.apply
+      ~Sequential.buffers
+      ~Sequential.children
+      ~Sequential.disable_quantize
+      ~Sequential.eval
+      ~Sequential.forward
+      ~Sequential.load_state_dict
+      ~Sequential.modules
+      ~Sequential.named_buffers
+      ~Sequential.named_children
+      ~Sequential.named_modules
+      ~Sequential.named_parameters
+      ~Sequential.parameters
+      ~Sequential.register_forward_hook
+      ~Sequential.register_forward_pre_hook
+      ~Sequential.replace_param
+      ~Sequential.state_dict
+      ~Sequential.train
+      ~Sequential.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Sequential.layer_values
+   
+   

@@ -1,0 +1,6 @@
+megengine.functional.nn.adaptive\_max\_pool2d
+=============================================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: adaptive_max_pool2d

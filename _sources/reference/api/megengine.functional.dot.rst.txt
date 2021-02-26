@@ -1,0 +1,6 @@
+megengine.functional.dot
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: dot

@@ -1,0 +1,6 @@
+megengine.functional.ones
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: ones

@@ -1,0 +1,21 @@
+megengine.data.Collator
+=======================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: Collator
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Collator.__init__
+      ~Collator.apply
+   
+   
+
+   
+   
+   

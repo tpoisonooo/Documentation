@@ -1,0 +1,6 @@
+megengine.functional.logical\_and
+=================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: logical_and

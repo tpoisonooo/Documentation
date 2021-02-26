@@ -1,0 +1,6 @@
+megengine.hub.import\_module
+============================
+
+.. currentmodule:: megengine.hub
+
+.. autofunction:: import_module

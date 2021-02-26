@@ -1,0 +1,6 @@
+megengine.distributed.get\_backend
+==================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: get_backend

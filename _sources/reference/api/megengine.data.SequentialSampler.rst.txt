@@ -1,0 +1,23 @@
+megengine.data.SequentialSampler
+================================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: SequentialSampler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SequentialSampler.__init__
+      ~SequentialSampler.batch
+      ~SequentialSampler.sample
+      ~SequentialSampler.scatter
+   
+   
+
+   
+   
+   

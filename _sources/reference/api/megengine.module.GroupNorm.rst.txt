@@ -1,0 +1,40 @@
+megengine.module.GroupNorm
+==========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: GroupNorm
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GroupNorm.__init__
+      ~GroupNorm.apply
+      ~GroupNorm.buffers
+      ~GroupNorm.children
+      ~GroupNorm.disable_quantize
+      ~GroupNorm.eval
+      ~GroupNorm.forward
+      ~GroupNorm.load_state_dict
+      ~GroupNorm.modules
+      ~GroupNorm.named_buffers
+      ~GroupNorm.named_children
+      ~GroupNorm.named_modules
+      ~GroupNorm.named_parameters
+      ~GroupNorm.parameters
+      ~GroupNorm.register_forward_hook
+      ~GroupNorm.register_forward_pre_hook
+      ~GroupNorm.replace_param
+      ~GroupNorm.reset_parameters
+      ~GroupNorm.state_dict
+      ~GroupNorm.train
+      ~GroupNorm.zero_grad
+   
+   
+
+   
+   
+   

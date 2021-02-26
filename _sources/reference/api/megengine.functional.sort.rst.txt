@@ -1,0 +1,6 @@
+megengine.functional.sort
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sort

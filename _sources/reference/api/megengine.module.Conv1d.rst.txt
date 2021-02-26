@@ -1,0 +1,41 @@
+megengine.module.Conv1d
+=======================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Conv1d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Conv1d.__init__
+      ~Conv1d.apply
+      ~Conv1d.buffers
+      ~Conv1d.calc_conv
+      ~Conv1d.children
+      ~Conv1d.disable_quantize
+      ~Conv1d.eval
+      ~Conv1d.forward
+      ~Conv1d.load_state_dict
+      ~Conv1d.modules
+      ~Conv1d.named_buffers
+      ~Conv1d.named_children
+      ~Conv1d.named_modules
+      ~Conv1d.named_parameters
+      ~Conv1d.parameters
+      ~Conv1d.register_forward_hook
+      ~Conv1d.register_forward_pre_hook
+      ~Conv1d.replace_param
+      ~Conv1d.reset_parameters
+      ~Conv1d.state_dict
+      ~Conv1d.train
+      ~Conv1d.zero_grad
+   
+   
+
+   
+   
+   

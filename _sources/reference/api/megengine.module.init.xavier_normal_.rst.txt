@@ -1,0 +1,6 @@
+megengine.module.init.xavier\_normal\_
+======================================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: xavier_normal_

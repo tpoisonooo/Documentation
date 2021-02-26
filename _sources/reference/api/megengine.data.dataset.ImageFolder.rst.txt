@@ -1,0 +1,22 @@
+megengine.data.dataset.ImageFolder
+==================================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: ImageFolder
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ImageFolder.__init__
+      ~ImageFolder.collect_class
+      ~ImageFolder.collect_samples
+   
+   
+
+   
+   
+   

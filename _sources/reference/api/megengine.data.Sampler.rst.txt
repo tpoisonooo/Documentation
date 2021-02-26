@@ -1,0 +1,20 @@
+megengine.data.Sampler
+======================
+
+.. currentmodule:: megengine.data
+
+.. autoclass:: Sampler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Sampler.__init__
+   
+   
+
+   
+   
+   

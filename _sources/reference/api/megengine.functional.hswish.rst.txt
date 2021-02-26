@@ -1,0 +1,6 @@
+megengine.functional.hswish
+===========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: hswish

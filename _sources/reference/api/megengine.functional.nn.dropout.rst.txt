@@ -1,0 +1,6 @@
+megengine.functional.nn.dropout
+===============================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: dropout

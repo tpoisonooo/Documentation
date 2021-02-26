@@ -1,0 +1,39 @@
+megengine.module.ReLU
+=====================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: ReLU
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ReLU.__init__
+      ~ReLU.apply
+      ~ReLU.buffers
+      ~ReLU.children
+      ~ReLU.disable_quantize
+      ~ReLU.eval
+      ~ReLU.forward
+      ~ReLU.load_state_dict
+      ~ReLU.modules
+      ~ReLU.named_buffers
+      ~ReLU.named_children
+      ~ReLU.named_modules
+      ~ReLU.named_parameters
+      ~ReLU.parameters
+      ~ReLU.register_forward_hook
+      ~ReLU.register_forward_pre_hook
+      ~ReLU.replace_param
+      ~ReLU.state_dict
+      ~ReLU.train
+      ~ReLU.zero_grad
+   
+   
+
+   
+   
+   

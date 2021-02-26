@@ -1,0 +1,6 @@
+megengine.Tensor.tolist
+=======================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.tolist

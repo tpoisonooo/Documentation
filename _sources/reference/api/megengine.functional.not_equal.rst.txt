@@ -1,0 +1,6 @@
+megengine.functional.not\_equal
+===============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: not_equal

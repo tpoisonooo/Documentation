@@ -1,0 +1,6 @@
+megengine.functional.nn.linear
+==============================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: linear

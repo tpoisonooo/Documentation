@@ -1,0 +1,39 @@
+megengine.module.ConvBnRelu2d
+=============================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: ConvBnRelu2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConvBnRelu2d.__init__
+      ~ConvBnRelu2d.apply
+      ~ConvBnRelu2d.buffers
+      ~ConvBnRelu2d.children
+      ~ConvBnRelu2d.disable_quantize
+      ~ConvBnRelu2d.eval
+      ~ConvBnRelu2d.forward
+      ~ConvBnRelu2d.load_state_dict
+      ~ConvBnRelu2d.modules
+      ~ConvBnRelu2d.named_buffers
+      ~ConvBnRelu2d.named_children
+      ~ConvBnRelu2d.named_modules
+      ~ConvBnRelu2d.named_parameters
+      ~ConvBnRelu2d.parameters
+      ~ConvBnRelu2d.register_forward_hook
+      ~ConvBnRelu2d.register_forward_pre_hook
+      ~ConvBnRelu2d.replace_param
+      ~ConvBnRelu2d.state_dict
+      ~ConvBnRelu2d.train
+      ~ConvBnRelu2d.zero_grad
+   
+   
+
+   
+   
+   

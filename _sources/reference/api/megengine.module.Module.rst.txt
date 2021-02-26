@@ -1,0 +1,39 @@
+megengine.module.Module
+=======================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Module
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Module.__init__
+      ~Module.apply
+      ~Module.buffers
+      ~Module.children
+      ~Module.disable_quantize
+      ~Module.eval
+      ~Module.forward
+      ~Module.load_state_dict
+      ~Module.modules
+      ~Module.named_buffers
+      ~Module.named_children
+      ~Module.named_modules
+      ~Module.named_parameters
+      ~Module.parameters
+      ~Module.register_forward_hook
+      ~Module.register_forward_pre_hook
+      ~Module.replace_param
+      ~Module.state_dict
+      ~Module.train
+      ~Module.zero_grad
+   
+   
+
+   
+   
+   

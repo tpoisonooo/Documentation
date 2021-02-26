@@ -1,0 +1,44 @@
+megengine.quantization.observer.ExponentialMovingAverageObserver
+================================================================
+
+.. currentmodule:: megengine.quantization.observer
+
+.. autoclass:: ExponentialMovingAverageObserver
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ExponentialMovingAverageObserver.__init__
+      ~ExponentialMovingAverageObserver.apply
+      ~ExponentialMovingAverageObserver.buffers
+      ~ExponentialMovingAverageObserver.children
+      ~ExponentialMovingAverageObserver.disable
+      ~ExponentialMovingAverageObserver.disable_quantize
+      ~ExponentialMovingAverageObserver.enable
+      ~ExponentialMovingAverageObserver.eval
+      ~ExponentialMovingAverageObserver.forward
+      ~ExponentialMovingAverageObserver.get_dtype
+      ~ExponentialMovingAverageObserver.get_qparams
+      ~ExponentialMovingAverageObserver.load_state_dict
+      ~ExponentialMovingAverageObserver.modules
+      ~ExponentialMovingAverageObserver.named_buffers
+      ~ExponentialMovingAverageObserver.named_children
+      ~ExponentialMovingAverageObserver.named_modules
+      ~ExponentialMovingAverageObserver.named_parameters
+      ~ExponentialMovingAverageObserver.parameters
+      ~ExponentialMovingAverageObserver.register_forward_hook
+      ~ExponentialMovingAverageObserver.register_forward_pre_hook
+      ~ExponentialMovingAverageObserver.replace_param
+      ~ExponentialMovingAverageObserver.set_momentum
+      ~ExponentialMovingAverageObserver.state_dict
+      ~ExponentialMovingAverageObserver.train
+      ~ExponentialMovingAverageObserver.zero_grad
+   
+   
+
+   
+   
+   

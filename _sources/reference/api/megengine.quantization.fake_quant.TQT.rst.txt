@@ -1,0 +1,45 @@
+megengine.quantization.fake\_quant.TQT
+======================================
+
+.. currentmodule:: megengine.quantization.fake_quant
+
+.. autoclass:: TQT
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~TQT.__init__
+      ~TQT.apply
+      ~TQT.buffers
+      ~TQT.children
+      ~TQT.disable
+      ~TQT.disable_quantize
+      ~TQT.enable
+      ~TQT.eval
+      ~TQT.fake_quant_forward
+      ~TQT.forward
+      ~TQT.get_dtype
+      ~TQT.get_qparams
+      ~TQT.load_state_dict
+      ~TQT.modules
+      ~TQT.named_buffers
+      ~TQT.named_children
+      ~TQT.named_modules
+      ~TQT.named_parameters
+      ~TQT.normal_foward
+      ~TQT.parameters
+      ~TQT.register_forward_hook
+      ~TQT.register_forward_pre_hook
+      ~TQT.replace_param
+      ~TQT.state_dict
+      ~TQT.train
+      ~TQT.zero_grad
+   
+   
+
+   
+   
+   

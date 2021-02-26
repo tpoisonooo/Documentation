@@ -1,0 +1,41 @@
+megengine.module.Embedding
+==========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Embedding
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Embedding.__init__
+      ~Embedding.apply
+      ~Embedding.buffers
+      ~Embedding.children
+      ~Embedding.disable_quantize
+      ~Embedding.eval
+      ~Embedding.forward
+      ~Embedding.from_pretrained
+      ~Embedding.load_state_dict
+      ~Embedding.modules
+      ~Embedding.named_buffers
+      ~Embedding.named_children
+      ~Embedding.named_modules
+      ~Embedding.named_parameters
+      ~Embedding.parameters
+      ~Embedding.register_forward_hook
+      ~Embedding.register_forward_pre_hook
+      ~Embedding.replace_param
+      ~Embedding.reset_parameters
+      ~Embedding.state_dict
+      ~Embedding.train
+      ~Embedding.zero_grad
+   
+   
+
+   
+   
+   

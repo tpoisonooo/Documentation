@@ -1,0 +1,56 @@
+megengine.module.qat.QATModule
+==============================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: QATModule
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QATModule.__init__
+      ~QATModule.apply
+      ~QATModule.apply_quant_activation
+      ~QATModule.apply_quant_weight
+      ~QATModule.buffers
+      ~QATModule.children
+      ~QATModule.disable_quantize
+      ~QATModule.eval
+      ~QATModule.forward
+      ~QATModule.from_float_module
+      ~QATModule.get_activation_dtype
+      ~QATModule.get_activation_qparams
+      ~QATModule.get_weight_dtype
+      ~QATModule.get_weight_qparams
+      ~QATModule.load_state_dict
+      ~QATModule.modules
+      ~QATModule.named_buffers
+      ~QATModule.named_children
+      ~QATModule.named_modules
+      ~QATModule.named_parameters
+      ~QATModule.parameters
+      ~QATModule.register_forward_hook
+      ~QATModule.register_forward_pre_hook
+      ~QATModule.replace_param
+      ~QATModule.set_fake_quant
+      ~QATModule.set_observer
+      ~QATModule.set_qconfig
+      ~QATModule.state_dict
+      ~QATModule.train
+      ~QATModule.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~QATModule.with_act
+      ~QATModule.with_weight
+   
+   

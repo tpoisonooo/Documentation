@@ -1,0 +1,39 @@
+megengine.module.Sigmoid
+========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Sigmoid
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Sigmoid.__init__
+      ~Sigmoid.apply
+      ~Sigmoid.buffers
+      ~Sigmoid.children
+      ~Sigmoid.disable_quantize
+      ~Sigmoid.eval
+      ~Sigmoid.forward
+      ~Sigmoid.load_state_dict
+      ~Sigmoid.modules
+      ~Sigmoid.named_buffers
+      ~Sigmoid.named_children
+      ~Sigmoid.named_modules
+      ~Sigmoid.named_parameters
+      ~Sigmoid.parameters
+      ~Sigmoid.register_forward_hook
+      ~Sigmoid.register_forward_pre_hook
+      ~Sigmoid.replace_param
+      ~Sigmoid.state_dict
+      ~Sigmoid.train
+      ~Sigmoid.zero_grad
+   
+   
+
+   
+   
+   

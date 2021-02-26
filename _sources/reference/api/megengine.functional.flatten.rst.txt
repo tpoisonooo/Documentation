@@ -1,0 +1,6 @@
+megengine.functional.flatten
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: flatten

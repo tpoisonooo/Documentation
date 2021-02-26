@@ -1,0 +1,6 @@
+megengine.functional.svd
+========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: svd

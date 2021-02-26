@@ -1,0 +1,6 @@
+megengine.functional.loss.hinge\_loss
+=====================================
+
+.. currentmodule:: megengine.functional.loss
+
+.. autofunction:: hinge_loss

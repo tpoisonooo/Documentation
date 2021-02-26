@@ -1,0 +1,6 @@
+megengine.module.init.uniform\_
+===============================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: uniform_

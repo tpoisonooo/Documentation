@@ -1,0 +1,24 @@
+megengine.optimizer.MultiStepLR
+===============================
+
+.. currentmodule:: megengine.optimizer
+
+.. autoclass:: MultiStepLR
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~MultiStepLR.__init__
+      ~MultiStepLR.get_lr
+      ~MultiStepLR.load_state_dict
+      ~MultiStepLR.state_dict
+      ~MultiStepLR.step
+   
+   
+
+   
+   
+   

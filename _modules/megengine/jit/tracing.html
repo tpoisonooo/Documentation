@@ -1,0 +1,1387 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.jit.tracing &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.361b90cc13c3b373e3e2df043d87d1bd.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.4bc14ce28f4cf826ca84.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <link rel="shortcut icon" href="../../../_static/megengine-48.png"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../developmet/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      
+
+      <ul class="navbar-nav">
+        
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/MegEngine/MegEngine" target="_blank" rel="noopener">
+              <span><i class="fab fa-github-square"></i></span>
+            </a>
+          </li>
+        
+        
+        
+        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
+    (function () {
+
+        // TODO: Handle with api.json file to get the meta-data.
+
+        // Select versions that could be switched by user
+        var all_versions = {
+            'latest': 'v1.2.0',
+            'v1.1': 'v1.1.0',
+            'v1.0': 'v1.0.0',
+        };
+
+        function change_version(url, new_version) {
+            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
+            return url.replace(version_regex, '/' + new_version + '/');
+        }
+
+        function on_switch() {
+            var selected = $(this).children('option:selected').attr('value');
+
+            // original url
+            var url = window.location.href;
+            // changed url
+            var new_url = change_version(url, selected);
+
+            if (new_url != url) {
+                // check beforehand if url exists, otherwise redirect to the version's start page
+                $.ajax({
+                    url: new_url,
+                    success: function () {
+                        window.location.href = new_url;
+                    },
+                    error: function () {
+                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            // var version = DOCUMENTATION_OPTIONS.VERSION;
+            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
+            // version = version.split('.').slice(0, 2).join('.');
+
+            // fill the current version in the dropdown
+            document.getElementById("version-dropdown").innerText = 'latest';
+
+            const getVersionLink = () => {
+                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
+            }
+            // fill the version menu
+            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
+
+            // bind the changes to this menu to trigger the switching function
+            // TODO: Change this to use the dropdown button's on_select() callback function
+            $('.version-dropdown select').bind('change', on_switch);
+        });
+    })();
+
+</script>
+
+<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <!-- placeholder for javascript filling above -->
+</button>
+<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+    <!-- placeholder for javascript filling above -->
+</div> 
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+      
+    </ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.jit.tracing 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">typing</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..core._imperative_rt</span> <span class="kn">import</span> <span class="n">GraphProfiler</span><span class="p">,</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">..core._imperative_rt.core2</span> <span class="kn">import</span> <span class="n">Tensor</span> <span class="k">as</span> <span class="n">RawTensor</span>
+<span class="kn">from</span> <span class="nn">..core._imperative_rt.core2</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TensorWeakRef</span><span class="p">,</span>
+    <span class="n">apply</span><span class="p">,</span>
+    <span class="n">set_compiled</span><span class="p">,</span>
+    <span class="n">set_tracing</span><span class="p">,</span>
+    <span class="n">skip_tracing</span><span class="p">,</span>
+    <span class="n">unset_compiled</span><span class="p">,</span>
+    <span class="n">unset_tracing</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..core._imperative_rt.ops</span> <span class="kn">import</span> <span class="n">CollectiveComm</span><span class="p">,</span> <span class="n">RemoteRecv</span><span class="p">,</span> <span class="n">RemoteSend</span>
+<span class="kn">from</span> <span class="nn">..core._trace_option</span> <span class="kn">import</span> <span class="n">set_symbolic_shape</span>
+<span class="kn">from</span> <span class="nn">..core._wrap</span> <span class="kn">import</span> <span class="n">device</span> <span class="k">as</span> <span class="n">as_device</span>
+<span class="kn">from</span> <span class="nn">..core.ops.builtin</span> <span class="kn">import</span> <span class="n">BackwardGraph</span><span class="p">,</span> <span class="n">OpDef</span>
+<span class="kn">from</span> <span class="nn">..core.ops.special</span> <span class="kn">import</span> <span class="n">Const</span>
+<span class="kn">from</span> <span class="nn">..core.tensor</span> <span class="kn">import</span> <span class="n">megbrain_graph</span> <span class="k">as</span> <span class="n">G</span>
+<span class="kn">from</span> <span class="nn">..core.tensor.utils</span> <span class="kn">import</span> <span class="n">setscalar</span>
+<span class="kn">from</span> <span class="nn">.sublinear_memory_config</span> <span class="kn">import</span> <span class="n">SublinearMemoryConfig</span>
+
+
+<span class="k">def</span> <span class="nf">_input_node_use_static_shape</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MEGENGINE_INPUT_NODE_USE_STATIC_SHAPE&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+
+<span class="k">class</span> <span class="nc">TraceMismatchError</span><span class="p">(</span><span class="ne">RuntimeError</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="n">active_trace</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">is_tracing</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">active_trace</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">skip_tracing</span>
+
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">exclude_from_trace</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">skip_tracing</span>
+    <span class="k">if</span> <span class="n">skip_tracing</span><span class="p">:</span>
+        <span class="k">yield</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">skip_tracing</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">unset_tracing</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">active_trace</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">active_trace</span><span class="o">.</span><span class="n">_begin_excluded_region</span><span class="p">()</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">skip_tracing</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">set_tracing</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">TensorInfo</span><span class="p">:</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="c1"># collected attributes</span>
+        <span class="s2">&quot;external&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_read&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shape_read&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value_read&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;exported&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;device&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dtype&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shape&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;is_const&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bound_data&quot;</span><span class="p">,</span>
+        <span class="c1"># resources for execution</span>
+        <span class="s2">&quot;varnode&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_setter&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shape_reader&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value_reader&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_reader&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exported</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_read</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape_read</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_read</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bound_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_setter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape_reader</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_reader</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_reader</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="n">_io_op_types</span> <span class="o">=</span> <span class="p">{</span><span class="n">CollectiveComm</span><span class="p">,</span> <span class="n">RemoteSend</span><span class="p">,</span> <span class="n">RemoteRecv</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="trace"><a class="viewcode-back" href="../../../reference/api/megengine.jit.trace.html#megengine.jit.trace">[文档]</a><span class="k">class</span> <span class="nc">trace</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wraps a callable and provide:</span>
+
+<span class="sd">    * tracing via :meth:`.trace` and :meth:`.dump`</span>
+<span class="sd">    * accelerated evalutaion via :meth:`.__call__`</span>
+
+<span class="sd">    :param function: the function will be traced.</span>
+<span class="sd">    :param symbolic: whether to apply symbolic execution for tracing. Default: False</span>
+<span class="sd">    :param capture_as_const: capture global vars or closures as const value. Default: False</span>
+<span class="sd">    :param sublinear_memory_config: configuration for sublinear memory optimization.</span>
+<span class="sd">        If not None, it enables sublinear memory optimization with given setting.</span>
+<span class="sd">    :param profiling: whether to profile compiled trace. Default: False</span>
+<span class="sd">    :param opt_level: optimization level for compiling trace.</span>
+<span class="sd">    :param symbolic_shape: whether to use symbolic shape for tracing. Default: True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">function</span><span class="p">,</span>
+        <span class="n">symbolic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">capture_as_const</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">sublinear_memory_config</span><span class="p">:</span> <span class="n">SublinearMemoryConfig</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">profiling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">opt_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">symbolic_shape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__wrapped__</span> <span class="o">=</span> <span class="n">function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span> <span class="o">=</span> <span class="n">symbolic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span> <span class="o">=</span> <span class="n">capture_as_const</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sublinear_memory_config</span> <span class="o">=</span> <span class="n">sublinear_memory_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_profiling</span> <span class="o">=</span> <span class="n">profiling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graph_opt_level</span> <span class="o">=</span> <span class="n">opt_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic_shape</span> <span class="o">=</span> <span class="n">symbolic_shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_handles</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># handle -&gt; TensorInfo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_need_reset_nodes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_graph</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_links</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_remaps</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_to_restore</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_new_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="n">TensorInfo</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">handle</span><span class="p">,</span> <span class="n">info</span>
+
+    <span class="k">def</span> <span class="nf">_apply_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span>
+        <span class="c1"># check against trace</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span><span class="s2">&quot;trace should end here, but more op observed&quot;</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pc</span><span class="p">]</span>
+        <span class="n">op_</span><span class="p">,</span> <span class="n">ihandles</span><span class="p">,</span> <span class="n">ohandles</span> <span class="o">=</span> <span class="n">record</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">op_</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">op_</span> <span class="o">==</span> <span class="s2">&quot;Const&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">op</span> <span class="o">!=</span> <span class="n">op_</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span><span class="s2">&quot;op different from last time&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ihandles</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span><span class="s2">&quot;op input size different from last time&quot;</span><span class="p">)</span>
+
+        <span class="c1"># check all inputs of crrent op</span>
+        <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ihandles</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">external</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">x</span><span class="o">.</span><span class="n">_compiled_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span><span class="p">]</span><span class="o">.</span><span class="n">exported</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                        <span class="s2">&quot;failed to capture: input was an external tensor &quot;</span>
+                        <span class="s2">&quot;last time, got an internal tensor this time&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_compiled_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                            <span class="s2">&quot;const capture violated: was an external tensor &quot;</span>
+                            <span class="s2">&quot;last time, got an internal tensor this time&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_handle</span> <span class="o">!=</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">_handle</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">()):</span>
+                            <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                                <span class="s2">&quot;const capture violated: got &quot;</span>
+                                <span class="s2">&quot;a different tensor this time&quot;</span>
+                            <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                            <span class="s2">&quot;failed to capture: different dtype from last time&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">device</span> <span class="o">!=</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                            <span class="s2">&quot;failed to capture: different device from last time&quot;</span>
+                        <span class="p">)</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">data_setter</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_handle</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_remaps</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                            <span class="s2">&quot;unexpected capture: trying to use an external tensor as &quot;</span>
+                            <span class="s2">&quot;input, but that input was an internal tensor last time&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_remaps</span><span class="p">[</span>
+                            <span class="n">x</span><span class="o">.</span><span class="n">_handle</span>
+                        <span class="p">]</span><span class="o">.</span><span class="n">_CompiledTensorProxy__handle</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">!=</span> <span class="n">h</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                        <span class="s2">&quot;mis-wiring: input edge to an data flow &quot;</span>
+                        <span class="s2">&quot;graph node is different from last time&quot;</span>
+                    <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">ohandles</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="c1"># generate output tensor and create compied info</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">varnode</span><span class="p">)</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">_compiled_info</span> <span class="o">=</span> <span class="n">CompiledTensorProxy</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="n">h</span>
+            <span class="n">outputs</span> <span class="o">+=</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_handles</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ohandles</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span>
+
+    <span class="k">def</span> <span class="nf">_apply_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span>
+        <span class="c1"># check against trace</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span><span class="s2">&quot;trace should end here, but more op observed&quot;</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pc</span><span class="p">]</span>
+        <span class="n">op_</span><span class="p">,</span> <span class="n">ihandles</span><span class="p">,</span> <span class="n">ohandles</span> <span class="o">=</span> <span class="n">record</span>
+        <span class="c1"># Const op is represented by a str</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op_</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">op_</span> <span class="o">==</span> <span class="s2">&quot;Const&quot;</span>
+
+        <span class="n">eq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">ohandles</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">eq</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                <span class="s2">&quot;const tensor violated: got a different tensor this time&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="p">(</span><span class="n">h</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ohandles</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">bound_data</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">outputs</span>
+
+    <span class="c1"># run in first step, record information for trace</span>
+    <span class="k">def</span> <span class="nf">_record_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">skip_tracing</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;_mixin_handle&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span>
+
+        <span class="n">ihandles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;_mixin_handle&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">exported</span><span class="p">):</span>
+                <span class="n">h</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_handle</span><span class="p">()</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">external</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">ihandles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+        <span class="n">ohandles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+            <span class="n">h</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_handle</span><span class="p">()</span>
+            <span class="n">ohandles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">info</span><span class="o">.</span><span class="n">external</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="n">h</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">_trace_mixin_info</span> <span class="o">=</span> <span class="n">info</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">op</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ihandles</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ohandles</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_record_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">skip_tracing</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">x</span><span class="p">,)</span> <span class="o">=</span> <span class="n">outputs</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;_mixin_handle&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">h</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">data_read</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span>
+
+        <span class="p">(</span><span class="n">x</span><span class="p">,)</span> <span class="o">=</span> <span class="n">outputs</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_handle</span><span class="p">()</span>
+        <span class="n">ohandles</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">]</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">external</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">info</span><span class="o">.</span><span class="n">is_const</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="n">h</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">_trace_mixin_info</span> <span class="o">=</span> <span class="n">info</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Const&quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ohandles</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_set_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">active</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">active_trace</span>
+        <span class="k">if</span> <span class="n">active</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">active_trace</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;sorry, not implemented: nested trace&quot;</span><span class="p">)</span>
+            <span class="n">active_trace</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">active_trace</span> <span class="ow">is</span> <span class="bp">self</span>
+            <span class="n">active_trace</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_init_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbolic</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">symbolic</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_graph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_apply_graph_options</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_graph</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_links</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_take_escaped_tensors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">escaped_tensors</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">escaped_tensors</span>
+
+    <span class="k">def</span> <span class="nf">_lazy_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lazy_eval_graph</span><span class="p">,</span> <span class="n">lazy_eval_tensors</span><span class="p">,</span> <span class="n">lazy_eval_links</span><span class="p">):</span>
+        <span class="n">lazy_eval_tensors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">lazy_eval_tensors</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="n">readers</span> <span class="o">=</span> <span class="p">[</span><span class="n">G</span><span class="o">.</span><span class="n">OutputNode</span><span class="p">(</span><span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_varnode</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lazy_eval_tensors</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_graph_options</span><span class="p">(</span><span class="n">lazy_eval_graph</span><span class="p">)</span>
+        <span class="c1"># FIXME</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_opt_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lazy_eval_graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">graph_opt_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_opt_level</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lazy_eval_graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">graph_opt_level</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">lazy_eval_graph</span><span class="o">.</span><span class="n">_set_priority_to_id</span><span class="p">([</span><span class="o">*</span><span class="n">lazy_eval_links</span><span class="p">,</span> <span class="o">*</span><span class="n">readers</span><span class="p">])</span>
+        <span class="n">lazy_eval_graph</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="o">*</span><span class="n">lazy_eval_links</span><span class="p">,</span> <span class="o">*</span><span class="n">readers</span><span class="p">)</span>
+        <span class="n">lazy_eval_graph</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">readers</span><span class="p">,</span> <span class="n">lazy_eval_tensors</span><span class="p">):</span>
+            <span class="c1"># get values from lazy_eval_graph and assign to lazy_eval tensor</span>
+            <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_handle</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span><span class="o">.</span><span class="n">_handle</span>
+            <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_reset_varnode</span><span class="p">()</span>
+
+    <span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+    <span class="k">def</span> <span class="nf">_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">interrupted</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">def</span> <span class="nf">do_enter</span><span class="p">():</span>
+            <span class="n">set_tracing</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_save_symbolic_shape</span> <span class="o">=</span> <span class="n">set_symbolic_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_symbolic_shape</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_init_trace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">set_compiled</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_compile</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">do_finalize</span><span class="p">():</span>
+            <span class="n">escaped_tensors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_take_escaped_tensors</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">escaped_tensors</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">x</span><span class="p">():</span>
+                        <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_mixin_handle</span><span class="p">]</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">data_read</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                        <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_to_restore</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_to_restore</span><span class="p">:</span>
+                        <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                        <span class="n">x</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span> <span class="ow">and</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_links</span>
+                <span class="p">):</span>
+                    <span class="c1"># eval lazy eval tensors</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_graph</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_links</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_graph</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_links</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># compiled_tensor leaks</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">escaped_tensors</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">assign_raw_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">(),</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">()))</span>
+                        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+                            <span class="c1"># TraceMismatchError thrown in do_exit</span>
+                            <span class="k">pass</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_reset_exec_env</span><span class="p">()</span>
+
+            <span class="c1"># reset status</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_remaps</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_active</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">set_symbolic_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_save_symbolic_shape</span><span class="p">)</span>
+            <span class="n">unset_compiled</span><span class="p">()</span>
+            <span class="n">unset_tracing</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">do_exit</span><span class="p">():</span>
+            <span class="n">unset_tracing</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pc</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span><span class="s2">&quot;premature end&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+                <span class="c1"># reset output tensors</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">x</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">()</span>
+                        <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_reset_varnode</span><span class="p">()</span>
+                        <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                        <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_trace_mixin_info</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">do_enter</span><span class="p">()</span>
+            <span class="k">yield</span>
+            <span class="n">do_exit</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">interrupted</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">raise</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">do_finalize</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">interrupted</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_begin_excluded_region</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;exclude_from_trace cannot be used with capture_as_const&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+            <span class="c1"># conditionally reading a compiled tensor in excluded region</span>
+            <span class="c1"># is permitted, so we have to assume every tensor might be read</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">x</span><span class="p">():</span>
+                    <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_mixin_handle</span><span class="p">]</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">exported</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">data_read</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">x</span><span class="p">():</span>
+                    <span class="n">x</span><span class="p">()</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_apply_graph_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+
+        <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">no_force_inplace</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">seq_opt</span><span class="o">.</span><span class="n">enable_seq_comp_node_opt</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># graph opt level</span>
+        <span class="c1"># if self._graph_opt_level is not None:</span>
+        <span class="c1">#     graph.options.graph_opt_level = self._graph_opt_level</span>
+        <span class="c1"># FIXME</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">graph_opt_level</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># sublinear</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sublinear_memory_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">enable_sublinear_memory_opt</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">sublinear_config</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">sublinear_mem_config</span>
+            <span class="n">sublinear_config</span><span class="o">.</span><span class="n">lb_memory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sublinear_memory_config</span><span class="o">.</span><span class="n">lb_memory</span>
+            <span class="n">sublinear_config</span><span class="o">.</span><span class="n">genetic_nr_iter</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sublinear_memory_config</span><span class="o">.</span><span class="n">genetic_nr_iter</span>
+            <span class="p">)</span>
+            <span class="n">sublinear_config</span><span class="o">.</span><span class="n">genetic_pool_size</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sublinear_memory_config</span><span class="o">.</span><span class="n">genetic_pool_size</span>
+            <span class="p">)</span>
+            <span class="n">sublinear_config</span><span class="o">.</span><span class="n">thresh_nr_try</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sublinear_memory_config</span><span class="o">.</span><span class="n">thresh_nr_try</span>
+            <span class="n">sublinear_config</span><span class="o">.</span><span class="n">num_worker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sublinear_memory_config</span><span class="o">.</span><span class="n">num_worker</span>
+        <span class="c1"># profile</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span> <span class="o">=</span> <span class="n">GraphProfiler</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MEGENGINE_INPLACE_UPDATE&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)):</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">var_sanity_check_first_run</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_compile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">async_exec_level</span> <span class="o">=</span> <span class="mb">0b100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_graph_options</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+        <span class="c1"># graph.options.graph_opt_level = 0</span>
+        <span class="n">need_reset_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_need_reset_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># links enforce ordering of I/O nodes</span>
+        <span class="n">in_out_links</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="n">io_links</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="n">readers</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="n">opnode</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data_setter</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">InputNode</span><span class="p">(</span>
+                    <span class="n">device</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
+                    <span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">,</span>
+                    <span class="n">use_static_shape</span><span class="o">=</span><span class="n">_input_node_use_static_shape</span><span class="p">(),</span>
+                <span class="p">)</span>
+                <span class="n">need_reset_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opnode</span><span class="p">)</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">varnode</span> <span class="o">=</span> <span class="n">opnode</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">in_out_links</span> <span class="o">+=</span> <span class="n">opnode</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="k">for</span> <span class="n">op</span><span class="p">,</span> <span class="n">ihandles</span><span class="p">,</span> <span class="n">ohandles</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;Const&quot;</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ihandles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="p">(</span><span class="n">h</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ohandles</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="s2">&quot;varnode&quot;</span><span class="p">):</span>
+                    <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">external</span>
+                    <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">varnode</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">require_links</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_io_op_types</span>
+            <span class="n">ivars</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ihandles</span><span class="p">):</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="s2">&quot;varnode&quot;</span><span class="p">):</span>
+                    <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">external</span>
+                    <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="s2">&quot;is_const&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">info</span><span class="o">.</span><span class="n">is_const</span><span class="p">:</span>
+                            <span class="n">info</span><span class="o">.</span><span class="n">varnode</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span>
+                                <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                                <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                                <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                            <span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">info</span><span class="o">.</span><span class="n">varnode</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span>
+                                <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">()</span>
+                                <span class="c1"># info.bound_data.numpy()</span>
+                            <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">opnode</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data_setter</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">InputNode</span><span class="p">(</span>
+                            <span class="o">*</span><span class="n">in_out_links</span><span class="p">,</span>
+                            <span class="n">device</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                            <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                            <span class="n">shape</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
+                            <span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">,</span>
+                            <span class="n">use_static_shape</span><span class="o">=</span><span class="n">_input_node_use_static_shape</span><span class="p">(),</span>
+                        <span class="p">)</span>
+                        <span class="n">need_reset_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opnode</span><span class="p">)</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">varnode</span><span class="p">,</span> <span class="o">*</span><span class="n">in_out_links</span> <span class="o">=</span> <span class="n">opnode</span><span class="o">.</span><span class="n">outputs</span>
+                <span class="k">if</span> <span class="n">require_links</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">io_links</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">opnode</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">VirtualDepNode</span><span class="p">(</span>
+                        <span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">varnode</span><span class="p">,</span> <span class="o">*</span><span class="n">io_links</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">io_links</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">varnode</span> <span class="o">=</span> <span class="n">opnode</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">io_links</span> <span class="o">=</span> <span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">varnode</span><span class="p">,)</span>
+
+                <span class="n">ivars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">varnode</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">BackwardGraph</span><span class="p">):</span>
+                <span class="n">ovars</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">apply_backward_varnode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">ivars</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ovars</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">apply_normal_varnode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">ivars</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">require_links</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ovars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">io_links</span> <span class="o">=</span> <span class="p">(</span><span class="n">ovars</span><span class="p">[</span><span class="mi">0</span><span class="p">],)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ovars</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ohandles</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ohandles</span><span class="p">,</span> <span class="n">ovars</span><span class="p">):</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">varnode</span> <span class="o">=</span> <span class="n">v</span>
+
+                <span class="k">def</span> <span class="nf">add_reader</span><span class="p">(</span><span class="n">opnode</span><span class="p">):</span>
+                    <span class="k">nonlocal</span> <span class="n">in_out_links</span>
+                    <span class="n">need_reset_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opnode</span><span class="p">)</span>
+                    <span class="n">readers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opnode</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">in_out_links</span> <span class="o">=</span> <span class="n">opnode</span><span class="o">.</span><span class="n">outputs</span>
+
+                <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">data_read</span><span class="p">:</span>
+                    <span class="c1"># Shape can be obtained from data so doesn&#39;t need its own</span>
+                    <span class="c1"># output node. On the other hand, value is read separately</span>
+                    <span class="c1"># to leverage eager h2d copy</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">shape_read</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">opnode</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data_reader</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">OutputNode</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">in_out_links</span><span class="p">)</span>
+                    <span class="n">add_reader</span><span class="p">(</span><span class="n">opnode</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">value_read</span><span class="p">:</span>
+                    <span class="n">opnode</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">value_reader</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">ValueOutputNode</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">in_out_links</span><span class="p">)</span>
+                    <span class="n">add_reader</span><span class="p">(</span><span class="n">opnode</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">shape_read</span><span class="p">:</span>
+                    <span class="n">opnode</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">shape_reader</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">AttrOutputNode</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">*</span><span class="n">in_out_links</span><span class="p">)</span>
+                    <span class="n">add_reader</span><span class="p">(</span><span class="n">opnode</span><span class="p">)</span>
+
+        <span class="c1"># FIXME</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_opt_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">graph_opt_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_opt_level</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">graph_opt_level</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">_set_priority_to_id</span><span class="p">([</span><span class="o">*</span><span class="n">readers</span><span class="p">,</span> <span class="o">*</span><span class="n">in_out_links</span><span class="p">,</span> <span class="o">*</span><span class="n">io_links</span><span class="p">])</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="o">*</span><span class="n">readers</span><span class="p">,</span> <span class="o">*</span><span class="n">in_out_links</span><span class="p">,</span> <span class="o">*</span><span class="n">io_links</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_reset_exec_env</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">opnode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_need_reset_nodes</span><span class="p">:</span>
+            <span class="n">opnode</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_tracing</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setup</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_process_inputs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># outputs can be None</span>
+            <span class="k">if</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+                    <span class="n">transform</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">outputs</span><span class="p">,)</span>
+                <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+                    <span class="c1"># if outputs are copied, then use the newest info in trace data structure</span>
+                    <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">_copied</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">_mixin_handle</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span><span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">_mixin_handle</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_process_outputs</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">transform</span><span class="p">:</span>
+                <span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">outputs</span>
+
+<div class="viewcode-block" id="trace.dump"><a class="viewcode-back" href="../../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump">[文档]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">arg_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">output_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">append</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">optimize_for_inference</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Serializes trace to file system.</span>
+
+<span class="sd">        :param file: output file, could be file object or filename.</span>
+<span class="sd">        :param arg_names: names of the input tensors in the traced function.</span>
+<span class="sd">        :param output_names: names of the output tensors in the traced function,</span>
+<span class="sd">            use the default name if not specified.</span>
+<span class="sd">        :param append: whether output is appended to ``file``.</span>
+<span class="sd">            Only works when ``file`` is str.</span>
+<span class="sd">        :param optimize_for_inference: enbale optmizations,</span>
+<span class="sd">            will skip all optimize options if this is False. Default: True</span>
+
+<span class="sd">        :Keyword Arguments:</span>
+
+<span class="sd">            * enable_io16xc32 --</span>
+<span class="sd">                whether to use float16 for I/O between oprs and use</span>
+<span class="sd">                float32 as internal computation precision. Note the output var would be</span>
+<span class="sd">                changed to float16.</span>
+<span class="sd">            * enable_ioc16 --</span>
+<span class="sd">                whether to use float16 for both I/O and computation</span>
+<span class="sd">                precision.</span>
+
+<span class="sd">            * enable_hwcd4 --</span>
+<span class="sd">                whether to use NHWCD4 data layout. This is faster on some</span>
+<span class="sd">                OpenCL backend.</span>
+<span class="sd">            * enable_nchw88 --</span>
+<span class="sd">                whether to use NCHW88 data layout, currently</span>
+<span class="sd">                used in X86 AVX backend.</span>
+<span class="sd">            * enable_nchw44 --</span>
+<span class="sd">                whether to use NCHW44 data layout, currently</span>
+<span class="sd">                used in arm backend.</span>
+<span class="sd">            * enable_nchw44_dot --</span>
+<span class="sd">                whether to use NCHW44_dot data layout, currently</span>
+<span class="sd">                used in armv8.2+dotprod backend.</span>
+<span class="sd">            * enable_nchw4 --</span>
+<span class="sd">                whether to use NCHW4 data layout, currently</span>
+<span class="sd">                used in nvidia backend(based on cudnn).</span>
+<span class="sd">            * enable_nchw32 --</span>
+<span class="sd">                whether to use NCHW32 data layout, currently</span>
+<span class="sd">                used in nvidia backend with tensorcore(based on cudnn).</span>
+<span class="sd">            * enable_chwn4 --</span>
+<span class="sd">                whether to use CHWN4 data layout, currently</span>
+<span class="sd">                used in nvidia backend with tensorcore.</span>
+
+<span class="sd">            * enable_fuse_conv_bias_nonlinearity: whether to fuse conv+bias+nonlinearty</span>
+<span class="sd">                into one opr.</span>
+<span class="sd">            * enable_fuse_conv_bias_with_z: whether to fuse conv_bias with z</span>
+<span class="sd">                input for inference on nvidia backend(this optimization pass will</span>
+<span class="sd">                result in mismatch of the precision of output of training and</span>
+<span class="sd">                inference)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;you must specify capture_as_const=True at __init__ to use dump&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;should run at least once before calling dump&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span> <span class="ow">and</span> <span class="n">output_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;cannot specify output_names when output is already in dict format&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">output_names</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_names</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">output_names</span> <span class="o">=</span> <span class="p">(</span><span class="n">output_names</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="n">output_names</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;wrong number of output_names, should be </span><span class="si">{}</span><span class="s2"> values&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">arg_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">arg_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;arg_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">))]</span>
+        <span class="k">if</span> <span class="n">arg_names</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg_names</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">arg_names</span> <span class="o">=</span> <span class="p">(</span><span class="n">arg_names</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="n">arg_names</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;wrong number of arg_names, should be </span><span class="si">{}</span><span class="s2"> values&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">output_names</span> <span class="o">=</span> <span class="n">output_names</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span>
+
+        <span class="n">dumped_device</span> <span class="o">=</span> <span class="n">as_device</span><span class="p">(</span><span class="s2">&quot;xpux&quot;</span><span class="p">)</span>
+
+        <span class="n">h2v</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+        <span class="c1"># only graph_opt_level takes effect in dump</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_graph_options</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">):</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_h2d</span><span class="p">(</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span><span class="p">,</span>
+                <span class="n">shape</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">arg_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">arg_names</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_h2d</span><span class="p">(</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="n">k</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">op</span><span class="p">,</span> <span class="n">ihandles</span><span class="p">,</span> <span class="n">ohandles</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;Const&quot;</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ihandles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="p">(</span><span class="n">h</span><span class="p">,)</span> <span class="o">=</span> <span class="n">ohandles</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">h2v</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">external</span>
+                    <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span>
+                    <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">ivars</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">ihandles</span><span class="p">:</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">h2v</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">external</span>
+                    <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span>
+                    <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span>
+                    <span class="p">)</span>
+                <span class="n">ivars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">])</span>
+            <span class="n">ovars</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">apply_normal_varnode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">ivars</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ovars</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ohandles</span><span class="p">)</span>
+            <span class="n">h2v</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ohandles</span><span class="p">,</span> <span class="n">ovars</span><span class="p">))</span>
+
+        <span class="n">dest_vars</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">output_names</span><span class="p">:</span>
+                <span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">output_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">dest_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">optimize_for_inference</span><span class="p">:</span>
+            <span class="n">dest_vars</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">optimize_for_inference</span><span class="p">(</span><span class="n">dest_vars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">permission</span> <span class="o">=</span> <span class="s2">&quot;wb&quot;</span> <span class="k">if</span> <span class="n">append</span> <span class="o">==</span> <span class="kc">False</span> <span class="k">else</span> <span class="s2">&quot;ab&quot;</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">permission</span><span class="p">)</span>
+        <span class="n">dump_content</span><span class="p">,</span> <span class="n">dump_info</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">dump_graph</span><span class="p">(</span><span class="n">dest_vars</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dump_content</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dump_info</span></div>
+
+    <span class="k">def</span> <span class="nf">_process_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_to_restore</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">def</span> <span class="nf">record_input</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span>
+                <span class="n">h</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_handle</span><span class="p">()</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">external</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span> <span class="o">=</span> <span class="n">h</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">_recording</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">_trace_mixin_info</span> <span class="o">=</span> <span class="n">info</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_to_restore</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">h</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">RawTensor</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                        <span class="s2">&quot;positional arguments should all be tensor &quot;</span>
+                        <span class="s2">&quot;but args[</span><span class="si">%d</span><span class="s2">] cannot be recognized as one&quot;</span> <span class="o">%</span> <span class="n">i</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record_input</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">RawTensor</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">record_input</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span><span class="s2">&quot;positional argument length mismatch&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_remaps</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">,</span> <span class="n">args</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">RawTensor</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                        <span class="s2">&quot;positional arguments should all be tensor &quot;</span>
+                        <span class="s2">&quot;but args[</span><span class="si">%d</span><span class="s2">] cannot be recognized as one&quot;</span> <span class="o">%</span> <span class="n">i</span>
+                    <span class="p">)</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;args[</span><span class="si">%d</span><span class="s2">].dtype different from last time&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span> <span class="o">!=</span> <span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;args[</span><span class="si">%d</span><span class="s2">].device different from last time&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">data_setter</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_remaps</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">_handle</span><span class="p">]</span> <span class="o">=</span> <span class="n">CompiledTensorProxy</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+            <span class="n">kwargs_tensors</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">RawTensor</span><span class="p">):</span>
+                    <span class="n">kwargs_tensors</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs_tensors</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="p">):</span>
+                <span class="n">too_many</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs_tensors</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="p">)</span>
+                <span class="n">too_few</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs_tensors</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">too_many</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                        <span class="s2">&quot;keyword arguments found to be tensor this time &quot;</span>
+                        <span class="s2">&quot;but were non-tensor previously: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">too_many</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">too_few</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                        <span class="s2">&quot;keyword arguments found to be non-tensor this time &quot;</span>
+                        <span class="s2">&quot;but were tensor previously: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">too_few</span><span class="p">)</span>
+                    <span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">kwargs_tensors</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;kwargs[</span><span class="si">%s</span><span class="s2">].dtype different from last time&quot;</span> <span class="o">%</span> <span class="n">k</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span> <span class="o">!=</span> <span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;kwargs[</span><span class="si">%s</span><span class="s2">].device different from last time&quot;</span> <span class="o">%</span> <span class="n">k</span><span class="p">)</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">data_setter</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_tensor_remaps</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">_handle</span><span class="p">]</span> <span class="o">=</span> <span class="n">CompiledTensorProxy</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">output_names</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
+            <span class="n">output_names</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="nb">sorted</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">outputs</span><span class="p">,)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">output_names</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span><span class="p">:</span>
+                <span class="n">too_many</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">output_names</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span><span class="p">)</span>
+                <span class="n">too_few</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">output_names</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">too_many</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                        <span class="s2">&quot;output has more keys than last time: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">too_many</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">too_few</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                        <span class="s2">&quot;output has less keys than last time: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">too_few</span><span class="p">)</span>
+                    <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span><span class="s2">&quot;output size differs from last time&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span> <span class="o">=</span> <span class="n">output_names</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">outputs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">RawTensor</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;every item of return value should be tensor&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span><span class="p">:</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;output is not computed from inputs&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_mixin_handle</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_handles</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;output is not computed from inputs&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="n">TraceMismatchError</span><span class="p">(</span>
+                        <span class="s2">&quot;retval[</span><span class="si">%s</span><span class="s2">] is a different tensor than last time&quot;</span>
+                        <span class="o">%</span> <span class="p">(</span><span class="n">output_names</span> <span class="ow">and</span> <span class="n">output_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">or</span> <span class="n">i</span><span class="p">)</span>
+                    <span class="p">)</span>
+
+<div class="viewcode-block" id="trace.get_profile"><a class="viewcode-back" href="../../../reference/api/megengine.jit.trace.get_profile.html#megengine.jit.trace.get_profile">[文档]</a>    <span class="k">def</span> <span class="nf">get_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get profiling result for compiled trace.</span>
+
+<span class="sd">        :return: a json compatible object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;trace is not set with profiling=True&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span><span class="o">.</span><span class="n">get</span><span class="p">())</span></div>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;bound_data&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">bound_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;trace is deemed unbeneficial with the new &quot;</span>
+            <span class="s2">&quot;tracing mechanism. You should alwasy use __call__.&quot;</span>
+        <span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">CompiledTensorProxy</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Duck-typed RawTensor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__handle</span> <span class="o">=</span> <span class="n">handle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__info</span> <span class="o">=</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">handle</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__shape</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">varnode</span><span class="o">.</span><span class="n">dtype</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">varnode</span><span class="o">.</span><span class="n">device</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isscalar</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">shape_read</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">shape_reader</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">data_read</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># c++ will throw TraceReadError</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shape</span>
+
+    <span class="k">def</span> <span class="nf">numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">value_read</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">value_reader</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">data_read</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># c++ will throw TraceReadError</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="c1"># c++ side will handle scalar case</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
+
+    <span class="k">def</span> <span class="nf">_dev_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">data_read</span><span class="p">:</span>
+                <span class="c1"># c++ will throw TraceReadError</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">data_reader</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">shape_read</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__shape</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">shape_reader</span><span class="o">.</span><span class="n">drop_value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">value_read</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">value_reader</span><span class="o">.</span><span class="n">drop_value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">data_read</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__info</span><span class="o">.</span><span class="n">data_reader</span><span class="o">.</span><span class="n">drop_value</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">assign_raw_tensor</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">):</span>
+    <span class="n">lhs</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">apply_symbolic_mode</span><span class="p">(</span><span class="n">op</span><span class="p">:</span> <span class="n">OpDef</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">RawTensor</span><span class="p">):</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_graph</span>
+    <span class="n">ivars</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;_varnode&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">var</span><span class="p">:</span>
+            <span class="n">ivars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_setter</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">InputNode</span><span class="p">(</span>
+                <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
+                <span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">,</span>
+                <span class="n">use_static_shape</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">var</span> <span class="o">=</span> <span class="n">data_setter</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">ivars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+            <span class="n">data_setter</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span>
+
+    <span class="n">require_links</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">op</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_io_op_types</span>
+
+    <span class="k">if</span> <span class="n">require_links</span> <span class="ow">and</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_links</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ivars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;op should has at least one input&quot;</span>
+        <span class="n">opnode</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">VirtualDepNode</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">ivars</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_links</span><span class="p">],</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_links</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">ivars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">opnode</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_links</span> <span class="o">=</span> <span class="p">(</span><span class="n">ivars</span><span class="p">[</span><span class="mi">0</span><span class="p">],)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">BackwardGraph</span><span class="p">):</span>
+        <span class="n">ovars</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">apply_backward_varnode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">ivars</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ovars</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">apply_normal_varnode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">ivars</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">RawTensor</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">ovars</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">require_links</span><span class="p">:</span>
+        <span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_links</span> <span class="o">=</span> <span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">VarNode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_varnode</span><span class="p">),)</span>
+
+    <span class="k">return</span> <span class="n">outputs</span>
+
+
+<span class="k">def</span> <span class="nf">apply_const_symbolic_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_graph</span>
+    <span class="c1"># don&#39;t need to unset tracing</span>
+    <span class="c1"># because varnode construction will ignore tracing flag</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">setscalar</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ret</span><span class="p">,)</span>
+
+
+<span class="k">def</span> <span class="nf">apply_compiled_mode</span><span class="p">(</span><span class="n">op</span><span class="p">:</span> <span class="n">OpDef</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">RawTensor</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">skip_tracing</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">RawTensor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">CompiledTensorProxy</span> <span class="k">else</span> <span class="n">x</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span>
+        <span class="p">]</span>
+        <span class="n">unset_tracing</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">set_tracing</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_apply_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">apply_const_compiled_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">is_const</span><span class="p">,</span> <span class="n">no_cache</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">skip_tracing</span><span class="p">:</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">RawTensor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">CompiledTensorProxy</span> <span class="k">else</span> <span class="n">x</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span>
+        <span class="p">]</span>
+        <span class="n">unset_tracing</span><span class="p">()</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">set_tracing</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_apply_const</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">apply_with_tracing</span><span class="p">(</span><span class="n">op</span><span class="p">:</span> <span class="n">OpDef</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">RawTensor</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">apply_symbolic_mode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">unset_tracing</span><span class="p">()</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">set_tracing</span><span class="p">()</span>
+
+    <span class="n">active_trace</span><span class="o">.</span><span class="n">_record_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">apply_const_with_tracing</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">is_const</span><span class="p">,</span> <span class="n">no_cache</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">apply_const_symbolic_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">unset_tracing</span><span class="p">()</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">RawTensor</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">),)</span>
+        <span class="n">set_tracing</span><span class="p">()</span>
+    <span class="n">active_trace</span><span class="o">.</span><span class="n">_record_const</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.4bc14ce28f4cf826ca84.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.1 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+megengine.module.ConvRelu2d
+===========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: ConvRelu2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ConvRelu2d.__init__
+      ~ConvRelu2d.apply
+      ~ConvRelu2d.buffers
+      ~ConvRelu2d.calc_conv
+      ~ConvRelu2d.children
+      ~ConvRelu2d.disable_quantize
+      ~ConvRelu2d.eval
+      ~ConvRelu2d.forward
+      ~ConvRelu2d.load_state_dict
+      ~ConvRelu2d.modules
+      ~ConvRelu2d.named_buffers
+      ~ConvRelu2d.named_children
+      ~ConvRelu2d.named_modules
+      ~ConvRelu2d.named_parameters
+      ~ConvRelu2d.parameters
+      ~ConvRelu2d.register_forward_hook
+      ~ConvRelu2d.register_forward_pre_hook
+      ~ConvRelu2d.replace_param
+      ~ConvRelu2d.reset_parameters
+      ~ConvRelu2d.state_dict
+      ~ConvRelu2d.train
+      ~ConvRelu2d.zero_grad
+   
+   
+
+   
+   
+   

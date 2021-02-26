@@ -1,0 +1,22 @@
+megengine.data.transform.ShortestEdgeResize
+===========================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: ShortestEdgeResize
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ShortestEdgeResize.__init__
+      ~ShortestEdgeResize.apply
+      ~ShortestEdgeResize.apply_batch
+   
+   
+
+   
+   
+   

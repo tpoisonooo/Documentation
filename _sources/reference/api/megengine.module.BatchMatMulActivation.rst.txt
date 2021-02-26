@@ -1,0 +1,40 @@
+megengine.module.BatchMatMulActivation
+======================================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: BatchMatMulActivation
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~BatchMatMulActivation.__init__
+      ~BatchMatMulActivation.apply
+      ~BatchMatMulActivation.buffers
+      ~BatchMatMulActivation.children
+      ~BatchMatMulActivation.disable_quantize
+      ~BatchMatMulActivation.eval
+      ~BatchMatMulActivation.forward
+      ~BatchMatMulActivation.load_state_dict
+      ~BatchMatMulActivation.modules
+      ~BatchMatMulActivation.named_buffers
+      ~BatchMatMulActivation.named_children
+      ~BatchMatMulActivation.named_modules
+      ~BatchMatMulActivation.named_parameters
+      ~BatchMatMulActivation.parameters
+      ~BatchMatMulActivation.register_forward_hook
+      ~BatchMatMulActivation.register_forward_pre_hook
+      ~BatchMatMulActivation.replace_param
+      ~BatchMatMulActivation.reset_parameters
+      ~BatchMatMulActivation.state_dict
+      ~BatchMatMulActivation.train
+      ~BatchMatMulActivation.zero_grad
+   
+   
+
+   
+   
+   

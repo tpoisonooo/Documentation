@@ -1,0 +1,6 @@
+megengine.functional.loss.square\_loss
+======================================
+
+.. currentmodule:: megengine.functional.loss
+
+.. autofunction:: square_loss

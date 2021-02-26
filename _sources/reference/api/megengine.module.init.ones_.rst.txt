@@ -1,0 +1,6 @@
+megengine.module.init.ones\_
+============================
+
+.. currentmodule:: megengine.module.init
+
+.. autofunction:: ones_

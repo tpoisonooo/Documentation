@@ -1,0 +1,6 @@
+megengine.quantization.min\_max\_fakequant\_qconfig
+===================================================
+
+.. currentmodule:: megengine.quantization
+
+.. autodata:: min_max_fakequant_qconfig

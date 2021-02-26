@@ -1,0 +1,6 @@
+megengine.functional.sigmoid
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: sigmoid

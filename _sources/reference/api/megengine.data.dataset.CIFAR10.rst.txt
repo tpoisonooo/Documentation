@@ -1,0 +1,37 @@
+megengine.data.dataset.CIFAR10
+==============================
+
+.. currentmodule:: megengine.data.dataset
+
+.. autoclass:: CIFAR10
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CIFAR10.__init__
+      ~CIFAR10.bytes2array
+      ~CIFAR10.download
+      ~CIFAR10.process
+      ~CIFAR10.untar
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CIFAR10.meta
+      ~CIFAR10.meta_info
+      ~CIFAR10.raw_file_dir
+      ~CIFAR10.raw_file_md5
+      ~CIFAR10.raw_file_name
+      ~CIFAR10.test_batch
+      ~CIFAR10.train_batch
+      ~CIFAR10.url_path
+   
+   

@@ -1,0 +1,22 @@
+megengine.data.transform.Resize
+===============================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: Resize
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Resize.__init__
+      ~Resize.apply
+      ~Resize.apply_batch
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+megengine.Tensor.numpy
+======================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.numpy

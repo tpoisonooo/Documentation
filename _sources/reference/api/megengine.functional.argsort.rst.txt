@@ -1,0 +1,6 @@
+megengine.functional.argsort
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: argsort

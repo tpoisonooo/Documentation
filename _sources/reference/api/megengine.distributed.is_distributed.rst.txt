@@ -1,0 +1,6 @@
+megengine.distributed.is\_distributed
+=====================================
+
+.. currentmodule:: megengine.distributed
+
+.. autofunction:: is_distributed

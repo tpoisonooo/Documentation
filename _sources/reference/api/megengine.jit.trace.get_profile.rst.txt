@@ -1,0 +1,6 @@
+megengine.jit.trace.get\_profile
+================================
+
+.. currentmodule:: megengine.jit
+
+.. automethod:: trace.get_profile

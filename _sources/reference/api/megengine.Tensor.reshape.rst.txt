@@ -1,0 +1,6 @@
+megengine.Tensor.reshape
+========================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.reshape

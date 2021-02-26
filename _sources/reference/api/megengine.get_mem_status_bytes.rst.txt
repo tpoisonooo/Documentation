@@ -1,0 +1,6 @@
+megengine.get\_mem\_status\_bytes
+=================================
+
+.. currentmodule:: megengine
+
+.. autofunction:: get_mem_status_bytes

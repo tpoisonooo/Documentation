@@ -1,0 +1,6 @@
+megengine.Tensor.sum
+====================
+
+.. currentmodule:: megengine
+
+.. automethod:: Tensor.sum

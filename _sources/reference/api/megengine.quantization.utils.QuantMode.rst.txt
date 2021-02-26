@@ -1,0 +1,21 @@
+megengine.quantization.utils.QuantMode
+======================================
+
+.. currentmodule:: megengine.quantization.utils
+
+.. autoclass:: QuantMode
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~QuantMode.ASYMMERTIC
+      ~QuantMode.SYMMERTIC
+   
+   

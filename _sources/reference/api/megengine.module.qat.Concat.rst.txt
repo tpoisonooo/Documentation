@@ -1,0 +1,56 @@
+megengine.module.qat.Concat
+===========================
+
+.. currentmodule:: megengine.module.qat
+
+.. autoclass:: Concat
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Concat.__init__
+      ~Concat.apply
+      ~Concat.apply_quant_activation
+      ~Concat.apply_quant_weight
+      ~Concat.buffers
+      ~Concat.children
+      ~Concat.disable_quantize
+      ~Concat.eval
+      ~Concat.forward
+      ~Concat.from_float_module
+      ~Concat.get_activation_dtype
+      ~Concat.get_activation_qparams
+      ~Concat.get_weight_dtype
+      ~Concat.get_weight_qparams
+      ~Concat.load_state_dict
+      ~Concat.modules
+      ~Concat.named_buffers
+      ~Concat.named_children
+      ~Concat.named_modules
+      ~Concat.named_parameters
+      ~Concat.parameters
+      ~Concat.register_forward_hook
+      ~Concat.register_forward_pre_hook
+      ~Concat.replace_param
+      ~Concat.set_fake_quant
+      ~Concat.set_observer
+      ~Concat.set_qconfig
+      ~Concat.state_dict
+      ~Concat.train
+      ~Concat.zero_grad
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Concat.with_act
+      ~Concat.with_weight
+   
+   

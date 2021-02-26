@@ -1,0 +1,22 @@
+megengine.data.transform.ColorJitter
+====================================
+
+.. currentmodule:: megengine.data.transform
+
+.. autoclass:: ColorJitter
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ColorJitter.__init__
+      ~ColorJitter.apply
+      ~ColorJitter.apply_batch
+   
+   
+
+   
+   
+   

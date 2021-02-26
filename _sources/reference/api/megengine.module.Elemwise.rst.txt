@@ -1,0 +1,39 @@
+megengine.module.Elemwise
+=========================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: Elemwise
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Elemwise.__init__
+      ~Elemwise.apply
+      ~Elemwise.buffers
+      ~Elemwise.children
+      ~Elemwise.disable_quantize
+      ~Elemwise.eval
+      ~Elemwise.forward
+      ~Elemwise.load_state_dict
+      ~Elemwise.modules
+      ~Elemwise.named_buffers
+      ~Elemwise.named_children
+      ~Elemwise.named_modules
+      ~Elemwise.named_parameters
+      ~Elemwise.parameters
+      ~Elemwise.register_forward_hook
+      ~Elemwise.register_forward_pre_hook
+      ~Elemwise.replace_param
+      ~Elemwise.state_dict
+      ~Elemwise.train
+      ~Elemwise.zero_grad
+   
+   
+
+   
+   
+   
