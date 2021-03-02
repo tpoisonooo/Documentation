@@ -376,9 +376,9 @@
     <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ADD</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="sub"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sub.html#megengine.functional.sub">[文档]</a><span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Element-wise `subtraction`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SUB</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="mul"><a class="viewcode-back" href="../../../reference/api/megengine.functional.mul.html#megengine.functional.mul">[文档]</a><span class="k">def</span> <span class="nf">mul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -436,7 +436,7 @@
     <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">LOG1P</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="sqrt"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sqrt.html#megengine.functional.sqrt">[文档]</a><span class="k">def</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Element-wise `sqrt`.</span>
 <span class="sd">    Returns ``NaN`` for negative input value.</span>
@@ -464,10 +464,10 @@
 <span class="sd">         [1.7321 2.     2.2361]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mf">0.5</span></div>
 
 
-<span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="square"><a class="viewcode-back" href="../../../reference/api/megengine.functional.square.html#megengine.functional.square">[文档]</a><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a new tensor with the square of the elements of input tensor.</span>
 
@@ -494,7 +494,7 @@
 <span class="sd">         [ 9. 16. 25.]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span></div>
 
 
 <div class="viewcode-block" id="round"><a class="viewcode-back" href="../../../reference/api/megengine.functional.round.html#megengine.functional.round">[文档]</a><span class="k">def</span> <span class="nf">round</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -555,14 +555,14 @@
     <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">COS</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="sin"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sin.html#megengine.functional.sin">[文档]</a><span class="k">def</span> <span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Element-wise `sine`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SIN</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SIN</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">tan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="tan"><a class="viewcode-back" href="../../../reference/api/megengine.functional.tan.html#megengine.functional.tan">[文档]</a><span class="k">def</span> <span class="nf">tan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Element-wise `tangent`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="acos"><a class="viewcode-back" href="../../../reference/api/megengine.functional.acos.html#megengine.functional.acos">[文档]</a><span class="k">def</span> <span class="nf">acos</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -590,15 +590,15 @@
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span></div>
 
 
-<span class="k">def</span> <span class="nf">sinh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="sinh"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sinh.html#megengine.functional.sinh">[文档]</a><span class="k">def</span> <span class="nf">sinh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `hyperbolic sine`.&quot;&quot;&quot;</span>
     <span class="n">u</span> <span class="o">=</span> <span class="n">expm1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">u</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">u</span> <span class="o">/</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="tanh"><a class="viewcode-back" href="../../../reference/api/megengine.functional.tanh.html#megengine.functional.tanh">[文档]</a><span class="k">def</span> <span class="nf">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Element-wise `hyperbolic tangent`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">TANH</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">TANH</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="asinh"><a class="viewcode-back" href="../../../reference/api/megengine.functional.asinh.html#megengine.functional.asinh">[文档]</a><span class="k">def</span> <span class="nf">asinh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -783,9 +783,9 @@
     <span class="k">return</span> <span class="n">minimum</span><span class="p">(</span><span class="n">maximum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="sigmoid"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sigmoid.html#megengine.functional.sigmoid">[文档]</a><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Element-wise `1 / ( 1 + exp( -x ) )`.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SIGMOID</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_elwise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">SIGMOID</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="clip"><a class="viewcode-back" href="../../../reference/api/megengine.functional.clip.html#megengine.functional.clip">[文档]</a><span class="k">def</span> <span class="nf">clip</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>

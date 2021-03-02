@@ -246,7 +246,7 @@
 <span class="kn">from</span> <span class="nn">.module</span> <span class="kn">import</span> <span class="n">QATModule</span>
 
 
-<div class="viewcode-block" id="Conv2d"><a class="viewcode-back" href="../../../../reference/api/megengine.module.qat.Conv2d.html#megengine.module.qat.Conv2d">[文档]</a><span class="k">class</span> <span class="nc">Conv2d</span><span class="p">(</span><span class="n">Float</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span> <span class="n">QATModule</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Conv2d</span><span class="p">(</span><span class="n">Float</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span> <span class="n">QATModule</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A :class:`~.QATModule` Conv2d with QAT support.</span>
 <span class="sd">    Could be applied with :class:`~.Observer` and :class:`~.FakeQuantize`.</span>
@@ -284,17 +284,17 @@
         <span class="k">return</span> <span class="n">qat_module</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_quant_activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc_conv_qat</span><span class="p">(</span><span class="n">inp</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_quant_activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc_conv_qat</span><span class="p">(</span><span class="n">inp</span><span class="p">))</span>
 
 
-<span class="k">class</span> <span class="nc">ConvRelu2d</span><span class="p">(</span><span class="n">Conv2d</span><span class="p">):</span>
+<div class="viewcode-block" id="ConvRelu2d"><a class="viewcode-back" href="../../../../reference/api/megengine.module.qat.ConvRelu2d.html#megengine.module.qat.ConvRelu2d">[文档]</a><span class="k">class</span> <span class="nc">ConvRelu2d</span><span class="p">(</span><span class="n">Conv2d</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A :class:`~.QATModule` include Conv2d and Relu with QAT support.</span>
 <span class="sd">    Could be applied with :class:`~.Observer` and :class:`~.FakeQuantize`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_quant_activation</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc_conv_qat</span><span class="p">(</span><span class="n">inp</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_quant_activation</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc_conv_qat</span><span class="p">(</span><span class="n">inp</span><span class="p">)))</span></div>
 </pre></div>
 
               </div>

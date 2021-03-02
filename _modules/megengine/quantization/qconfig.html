@@ -254,7 +254,7 @@
 <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">QConfig</span><span class="p">:</span>
+<div class="viewcode-block" id="QConfig"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.QConfig.html#megengine.quantization.QConfig">[文档]</a><span class="k">class</span> <span class="nc">QConfig</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A config class indicating how to do quantize toward :class:`~.QATModule`&#39;s</span>
 <span class="sd">    ``activation`` and ``weight``. See :meth:`~.QATModule.set_qconfig` for detail usage.</span>
@@ -316,7 +316,7 @@
             <span class="ow">and</span> <span class="n">eq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">act_observer</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">act_observer</span><span class="p">)</span>
             <span class="ow">and</span> <span class="n">eq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_fake_quant</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">weight_fake_quant</span><span class="p">)</span>
             <span class="ow">and</span> <span class="n">eq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">act_fake_quant</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">act_fake_quant</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
 <span class="n">min_max_fakequant_qconfig</span> <span class="o">=</span> <span class="n">QConfig</span><span class="p">(</span>

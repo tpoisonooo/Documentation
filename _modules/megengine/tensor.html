@@ -258,7 +258,7 @@
 <span class="kn">from</span> <span class="nn">.utils.deprecation</span> <span class="kn">import</span> <span class="n">deprecated</span>
 
 
-<span class="k">class</span> <span class="nc">Tensor</span><span class="p">(</span><span class="n">_Tensor</span><span class="p">,</span> <span class="n">ArrayMethodMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="Tensor"><a class="viewcode-back" href="../../reference/api/megengine.Tensor.html#megengine.Tensor">[文档]</a><span class="k">class</span> <span class="nc">Tensor</span><span class="p">(</span><span class="n">_Tensor</span><span class="p">,</span> <span class="n">ArrayMethodMixin</span><span class="p">):</span>
     <span class="n">grad</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">dmap_callback</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">q_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;zero_point&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
@@ -317,7 +317,7 @@
     <span class="k">def</span> <span class="nf">reset_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span> <span class="o">*=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<div class="viewcode-block" id="Tensor.to"><a class="viewcode-back" href="../../reference/api/megengine.Tensor.to.html#megengine.Tensor.to">[文档]</a>    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">_valid_device</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;invalid device name </span><span class="si">{}</span><span class="s2">. For the correct format of the device name, please refer to the instruction of megengine.device.set_default_device()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -325,7 +325,7 @@
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="n">cn</span> <span class="o">=</span> <span class="n">as_device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">to_c</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">apply</span><span class="p">(</span><span class="n">Copy</span><span class="p">(</span><span class="n">comp_node</span><span class="o">=</span><span class="n">cn</span><span class="p">),</span> <span class="bp">self</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">apply</span><span class="p">(</span><span class="n">Copy</span><span class="p">(</span><span class="n">comp_node</span><span class="o">=</span><span class="n">cn</span><span class="p">),</span> <span class="bp">self</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">requires_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -357,16 +357,16 @@
         <span class="k">return</span> <span class="n">state</span>
 
     <span class="k">def</span> <span class="nf">__setstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">q_dict</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;qdict&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_dict</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;qdict&quot;</span><span class="p">)</span></div>
 
 
 <span class="n">tensor</span> <span class="o">=</span> <span class="n">Tensor</span>
 
 
-<span class="k">class</span> <span class="nc">Parameter</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
+<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../reference/api/megengine.Parameter.html#megengine.Parameter">[文档]</a><span class="k">class</span> <span class="nc">Parameter</span><span class="p">(</span><span class="n">Tensor</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A kind of Tensor that is to be considered a module parameter.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
 </pre></div>
 
               </div>

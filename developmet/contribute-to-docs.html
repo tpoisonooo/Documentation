@@ -315,26 +315,43 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#sphinx">
-     安装 Sphinx 与依赖项
+    <a class="reference internal nav-link" href="#sphinx-pydata">
+     安装 Sphinx 与 Pydata 主题
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#pandoc">
-     安装 Pandoc
+     安装 Pandoc 转换工具
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
+    <a class="reference internal nav-link" href="#id6">
      使用 Sphinx 进行文档构建
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#web">
+     启动本地 Web 服务器（可选）
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id8">
+  <a class="reference internal nav-link" href="#id7">
    维护人员须知
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#git">
+     Git 协作注意事项
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     当前维护人员列表
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -355,9 +372,9 @@
                 
   <div class="section" id="contribute-to-docs">
 <span id="id1"></span><h1>如何为文档做贡献<a class="headerlink" href="#contribute-to-docs" title="永久链接至标题">¶</a></h1>
-<p>目前文档所用存储库地址为：<a class="reference external" href="https://github.com/MegEngine/Tutorials">https://github.com/MegEngine/Tutorials</a> （将来会进行改动）</p>
 <div class="toctree-wrapper compound">
 </div>
+<p>GitHub 地址：<a class="reference external" href="https://github.com/MegEngine/Documentation">https://github.com/MegEngine/Documentation</a> （欢迎 Star～）</p>
 <div class="section" id="id2">
 <h2>文档的组织逻辑<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>内容正在建设中…</p>
@@ -366,13 +383,13 @@
 <h2>在本地构建文档<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id4">
 <h3>克隆文档源码到本地<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
-<p>将存储库克隆到本地（默认为 <code class="docutils literal notranslate"><span class="pre">main</span></code> 分支），确保目录下有 <cite>Makefile</cite> 文件。</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone --depth<span class="o">=</span><span class="m">1</span> https://github.com/MegEngine/Tutorials
+<p>将存储库克隆到本地（默认为 <code class="docutils literal notranslate"><span class="pre">main</span></code> 分支），确保目录下有 <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> 文件。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/MegEngine/Documentation
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p>为确保正常克隆，请确保本地已经安装 Git <a class="reference external" href="https://git-lfs.github.com/">LFS</a> (Large File Storage) 插件。</p>
+<p>为确保正常克隆，请确保本地 Git 已经安装 <a class="reference external" href="https://git-lfs.github.com/">LFS</a> (Large File Storage) 插件。</p>
 </div>
 </div>
 <div class="section" id="megengine">
@@ -380,27 +397,27 @@
 <p>根据不同的需求，有两种方式将用于构建文档的 MegEngine 导入当前 Python 环境（任选其一即可）：</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>如果你不需要改动 MegEngine 源码，只需在本地预览，或对文档内容进行增删查改，
-建议安装最新发布的 MegEngine 稳定版Wheel 包构建文档。
-可以直接使用 <cite>python3 -m pip intall megengine</cite> 命令
-将已经打包好的 MegEngine 安装到当前的 Python 环境中。</p></li>
-<li><p>如果你需要在指定的 MegEngine 分支上生成对应文档，则需要克隆对应的 MegEngine 分支进行编译构建。
-这种方式适合开发者需要同时对文档进行维护的情况。<a class="reference internal" href="../getting-started/install.html#install"><span class="std std-ref">了解如何进行从源码构建。</span></a></p></li>
+<li><p>（推荐用户使用）如果你不需要改动 MegEngine 源码，只需在本地构建和预览，或对文档内容进行增删查改，
+建议安装最新发布的 MegEngine 稳定版 Wheel 包构建文档。
+可以直接使用对应的 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">intall</span></code> 命令 将已经打包好的 MegEngine 安装到当前的 Python 环境中。</p></li>
+<li><p>如果你需要在指定的 MegEngine 分支源代码上生成对应文档，则需要克隆对应分支进行编译构建。
+通过 <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH</span></code> 的形式来临时指定特定的 MegEngine 源代码路径，
+这种方式适合开发者需要同时对源码和文档进行维护的情况。<a class="reference internal" href="../getting-started/install.html#install"><span class="std std-ref">了解如何进行从源码构建。</span></a></p></li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="sphinx">
-<h3>安装 Sphinx 与依赖项<a class="headerlink" href="#sphinx" title="永久链接至标题">¶</a></h3>
-<p>MegEngine 文档使用 <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a> 进行整个网站的构建，请运行下面的指令，确保安装了 Sphinx 和相关依赖：</p>
+<div class="section" id="sphinx-pydata">
+<h3>安装 Sphinx 与 Pydata 主题<a class="headerlink" href="#sphinx-pydata" title="永久链接至标题">¶</a></h3>
+<p>MegEngine 文档使用 <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a> 进行整个网站的构建，请运行下面的指令，安装 Sphinx 和相关依赖：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m pip install -r requirements.txt
 </pre></div>
 </div>
-<p>MegEngine 文档的对应 Sphinx 配置文件位于 <code class="docutils literal notranslate"><span class="pre">source/conf.py</span></code> ，如需修改请参考官方的 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/configuration.html">Configuration</a> 页面。</p>
+<p>MegEngine 文档对应的 Sphinx 配置文件位于 <code class="docutils literal notranslate"><span class="pre">source/conf.py</span></code> ，如需修改请参考官方的 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/configuration.html">Configuration</a> 页面。</p>
 <p>通常情况下，你无需对已有配置文件进行任何改动，即可继续进行后面的流程。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
 <p>Sphinx 在应用配置时将通过执行上面脚本中的 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">megengine</span></code> 来尝试寻找 MegEngine 包路径。
-使用 <cite>make info</cite> 指令，可以看到当前的 <code class="docutils literal notranslate"><span class="pre">MegEngine</span></code> 路径和构建参数等信息。</p>
+使用 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">info</span></code> 指令，可以看到当前的 <code class="docutils literal notranslate"><span class="pre">MegEngine</span></code> 路径和构建参数等信息。</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>从 <code class="docutils literal notranslate"><span class="pre">pip</span></code> 安装的路径应该类似于：<code class="docutils literal notranslate"><span class="pre">/.../lib/.../site-packages/megengine</span></code></p></li>
@@ -408,18 +425,18 @@
 </ul>
 </div></blockquote>
 </div>
-<p>接下来我们需要从 MegEngine/pydata-sphinx-theme （一个 Fork 版本）安装 <a class="reference external" href="https://github.com/pydata/pydata-sphinx-theme">PyData</a> 主题：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone -b dev --depth<span class="o">=</span><span class="m">1</span> git@github.com:MegEngine/pydata-sphinx-theme.git
+<p>接下来我们需要从 MegEngine/pydata-sphinx-theme 安装 Fork 版 <a class="reference external" href="https://github.com/pydata/pydata-sphinx-theme">PyData</a> 主题：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone -b dev git@github.com:MegEngine/pydata-sphinx-theme.git
 </pre></div>
 </div>
-<p>接着进入该目录，安装修改过的主题包：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m pip install --editable .
+<p>接着安装修改过的主题包：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m pip install --editable pydata-sphinx-theme
 </pre></div>
 </div>
 </div>
 <div class="section" id="pandoc">
-<h3>安装 Pandoc<a class="headerlink" href="#pandoc" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="https://nbsphinx.readthedocs.io/">nbsphinx</a> 是 Sphinx 的一个插件，可以帮助我们对 <code class="docutils literal notranslate"><span class="pre">*.ipynb</span></code> 格式文件进行解析并生成对应页面。</p>
+<h3>安装 Pandoc 转换工具<a class="headerlink" href="#pandoc" title="永久链接至标题">¶</a></h3>
+<p><a class="reference external" href="https://nbsphinx.readthedocs.io/">nbsphinx</a> 是 Sphinx 的一个插件，可以帮助我们对 <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> 格式的 Jupyter <a class="reference external" href="https://jupyter.org/">Notebook</a> 文件进行解析。</p>
 <p>我们在上一小节已经安装好了 nbsphinx, 但 nbsphinx 还需要通过依赖项目 <a class="reference external" href="https://pandoc.org/">Pandoc</a> 来支持转换 Markdown 格式。</p>
 <p>如果你使用的是是 Ubuntu（Debian）操作系统，可以直接使用 <code class="docutils literal notranslate"><span class="pre">apt</span></code> 命令进行安装 Pandoc：</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo apt install -y pandoc
@@ -427,20 +444,50 @@
 </div>
 <p>如果你使用的是其它操作系统，想要安装 Pandoc，请参考 Pandoc 官方的 <a class="reference external" href="https://pandoc.org/installing.html">Installing</a> 页面。</p>
 </div>
-<div class="section" id="id7">
-<h3>使用 Sphinx 进行文档构建<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
-<p>在文档目录下使用 <cite>make html</cite> 指令，可根据 <code class="docutils literal notranslate"><span class="pre">BUILDDIR</span></code> 路径（默认为 <code class="docutils literal notranslate"><span class="pre">build</span></code> ）生成 html 目录。</p>
-<p>在文档目录下使用 <cite>make help</cite> 指令，可看到对应的帮助信息。</p>
+<div class="section" id="id6">
+<h3>使用 Sphinx 进行文档构建<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>在文档目录下使用 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> 指令，可根据 <code class="docutils literal notranslate"><span class="pre">BUILDDIR</span></code> 路径（默认为 <code class="docutils literal notranslate"><span class="pre">build</span></code> ）生成 HTML 文件夹。</p>
+<p>在文档目录下使用 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span></code> 指令，可看到对应的帮助信息。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
 <p>Sphinx 支持增量构建，当你对源文件进行了更改并保存，只需再次执行 <cite>make html</cite> 即可。</p>
 <p>如果发现一些页面的元素仍被缓存而没有被更新，请尝试先执行 <cite>make clean</cite> 指令。</p>
 </div>
+<p>文档生成成功后，打开 <code class="docutils literal notranslate"><span class="pre">build/html/index.html</span></code> 文件便可访问主页。</p>
 </div>
+<div class="section" id="web">
+<h3>启动本地 Web 服务器（可选）<a class="headerlink" href="#web" title="永久链接至标题">¶</a></h3>
+<p>如果你有在本地启动 Web 服务器的需求，一种比较简单的方法是使用 Python 自带的 <code class="docutils literal notranslate"><span class="pre">http</span></code> 模块：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m http.server <span class="m">1124</span> --directory build/html
+</pre></div>
+</div>
+<p>运行上面的代码，可将本地的 build/html 下的 Web 服务映射到 1124 端口，你也可以选择使用其它 Web 服务器。</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>维护人员须知<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>作为文档的维护人员，需要熟练掌握 <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html">reStructuredText</a> 的基本语法。</p>
+<div class="section" id="git">
+<h3>Git 协作注意事项<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h3>
+<p>我们为 <code class="docutils literal notranslate"><span class="pre">main</span></code> 分支启用了保护规则，满足以下条件的 Pull Request 才能被成功 Merge:</p>
+<ul class="simple">
+<li><p>必须至少有一位负责人审核（Review）完成并批准（Approve）了你的所有代码</p></li>
+<li><p>必须通过 Actions 中触发的状态检查（Status check），如 Sphinx Build and Test.</p></li>
+<li><p>必须将你的 Commits 历史记录整理为线性，内容符合 <a class="reference external" href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines">Git Commit Guidelines</a>.</p></li>
+</ul>
+<p>我们提倡在 Pull Request 中不同的 Commits 应当尽可能 Squash 为一个, 减少无意义的 Commits 记录。</p>
+<p>当 Pull Request 被成功合入 <code class="docutils literal notranslate"><span class="pre">main</span></code> 分支，将自动触发 <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> 分支上静态网站的部署和更新。</p>
 </div>
 <div class="section" id="id8">
-<h2>维护人员须知<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
-<p>作为文档的维护人员，需要熟练掌握 <a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html">reStructuredText</a> 的基本语法。</p>
+<h3>当前维护人员列表<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>当代码需要找人审核时，可以从下面的人员名单中进行选择：</p>
+<ul class="simple">
+<li><p>架构相关：<a class="reference external" href="https://github.com/MegChai">Chai</a></p></li>
+<li><p>主题相关：<a class="reference external" href="https://github.com/MegChai">Chai</a> （上游主题 Pydata 的研发请直接向上游负责人员反馈）</p></li>
+<li><p>教程相关：<a class="reference external" href="https://github.com/MegChai">Chai</a></p></li>
+<li><p>文档相关：<a class="reference external" href="https://github.com/MegChai">Chai</a></p></li>
+</ul>
+</div>
 </div>
 </div>
 

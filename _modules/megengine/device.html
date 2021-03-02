@@ -276,7 +276,7 @@
         <span class="k">return</span> <span class="n">DeviceType</span><span class="o">.</span><span class="n">UNSPEC</span>
 
 
-<span class="k">def</span> <span class="nf">get_device_count</span><span class="p">(</span><span class="n">device_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="get_device_count"><a class="viewcode-back" href="../../reference/api/megengine.get_device_count.html#megengine.get_device_count">[文档]</a><span class="k">def</span> <span class="nf">get_device_count</span><span class="p">(</span><span class="n">device_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets number of devices installed on this system.</span>
 
@@ -288,16 +288,16 @@
         <span class="n">device_type_set</span>
     <span class="p">)</span>
     <span class="n">device_type</span> <span class="o">=</span> <span class="n">_str2device_type</span><span class="p">(</span><span class="n">device_type</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">CompNode</span><span class="o">.</span><span class="n">_get_device_count</span><span class="p">(</span><span class="n">device_type</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">CompNode</span><span class="o">.</span><span class="n">_get_device_count</span><span class="p">(</span><span class="n">device_type</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">is_cuda_available</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="is_cuda_available"><a class="viewcode-back" href="../../reference/api/megengine.is_cuda_available.html#megengine.is_cuda_available">[文档]</a><span class="k">def</span> <span class="nf">is_cuda_available</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns whether cuda device is available on this system.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">_str2device_type</span><span class="p">(</span><span class="s2">&quot;gpu&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">CompNode</span><span class="o">.</span><span class="n">_get_device_count</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">CompNode</span><span class="o">.</span><span class="n">_get_device_count</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
 
 
 <div class="viewcode-block" id="set_default_device"><a class="viewcode-back" href="../../reference/api/megengine.set_default_device.html#megengine.set_default_device">[文档]</a><span class="k">def</span> <span class="nf">set_default_device</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;xpux&quot;</span><span class="p">):</span>
@@ -320,23 +320,23 @@
     <span class="n">CompNode</span><span class="o">.</span><span class="n">_set_default_device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">get_default_device</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="get_default_device"><a class="viewcode-back" href="../../reference/api/megengine.get_default_device.html#megengine.get_default_device">[文档]</a><span class="k">def</span> <span class="nf">get_default_device</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Gets default computing node.</span>
 
 <span class="sd">    It returns the value set by :func:`~.set_default_device`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">CompNode</span><span class="o">.</span><span class="n">_get_default_device</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">CompNode</span><span class="o">.</span><span class="n">_get_default_device</span><span class="p">()</span></div>
 
 
-<span class="k">def</span> <span class="nf">get_mem_status_bytes</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_mem_status_bytes"><a class="viewcode-back" href="../../reference/api/megengine.get_mem_status_bytes.html#megengine.get_mem_status_bytes">[文档]</a><span class="k">def</span> <span class="nf">get_mem_status_bytes</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get total and free memory on the computing device in bytes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">device</span> <span class="o">=</span> <span class="n">get_default_device</span><span class="p">()</span>
     <span class="n">tot</span><span class="p">,</span> <span class="n">free</span> <span class="o">=</span> <span class="n">CompNode</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">get_mem_status_bytes</span>
-    <span class="k">return</span> <span class="n">tot</span><span class="p">,</span> <span class="n">free</span>
+    <span class="k">return</span> <span class="n">tot</span><span class="p">,</span> <span class="n">free</span></div>
 
 
 <span class="n">set_default_device</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MGE_DEFAULT_DEVICE&quot;</span><span class="p">,</span> <span class="s2">&quot;xpux&quot;</span><span class="p">))</span>
