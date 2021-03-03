@@ -42,7 +42,8 @@
     <script src="../../../_static/copybutton.js"></script>
     <script src="../../../_static/translations.js"></script>
     <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
-    <link rel="shortcut icon" href="../../../_static/megengine-48.png"/>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../../../genindex.html" />
     <link rel="search" title="搜索" href="../../../search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -330,7 +331,7 @@
     <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="sign"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sign.html#megengine.functional.sign">[文档]</a><span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a new tensor representing the sign of each element in input tensor.</span>
 
@@ -354,10 +355,10 @@
 <span class="sd">        [ 1 -1  0]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">inp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">inp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">inp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">inp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="sum"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sum.html#megengine.functional.sum">[文档]</a><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">sum</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -392,7 +393,7 @@
 <span class="sd">        21</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="prod"><a class="viewcode-back" href="../../../reference/api/megengine.functional.prod.html#megengine.functional.prod">[文档]</a><span class="k">def</span> <span class="nf">prod</span><span class="p">(</span>
@@ -466,7 +467,7 @@
     <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="var"><a class="viewcode-back" href="../../../reference/api/megengine.functional.var.html#megengine.functional.var">[文档]</a><span class="k">def</span> <span class="nf">var</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">var</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -504,10 +505,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">inp</span> <span class="o">-</span> <span class="n">m</span>
-    <span class="k">return</span> <span class="n">mean</span><span class="p">(</span><span class="n">v</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">mean</span><span class="p">(</span><span class="n">v</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="std"><a class="viewcode-back" href="../../../reference/api/megengine.functional.std.html#megengine.functional.std">[文档]</a><span class="k">def</span> <span class="nf">std</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">std</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
     <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -540,7 +541,7 @@
 
 <span class="sd">        [0.8165 0.8165]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">var</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span></div>
+    <span class="k">return</span> <span class="n">var</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
 
 
 <span class="k">def</span> <span class="nf">min</span><span class="p">(</span>
@@ -848,7 +849,7 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="sort"><a class="viewcode-back" href="../../../reference/api/megengine.functional.sort.html#megengine.functional.sort">[文档]</a><span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">descending</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">descending</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">]:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns sorted tensor and the indices would sort the input tensor.</span>
 
@@ -887,10 +888,10 @@
         <span class="n">tns</span><span class="p">,</span> <span class="n">ind</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">tns</span><span class="p">,</span> <span class="n">ind</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">tns</span><span class="p">,</span> <span class="n">ind</span></div>
+    <span class="k">return</span> <span class="n">tns</span><span class="p">,</span> <span class="n">ind</span>
 
 
-<div class="viewcode-block" id="topk"><a class="viewcode-back" href="../../../reference/api/megengine.functional.topk.html#megengine.functional.topk">[文档]</a><span class="k">def</span> <span class="nf">topk</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">topk</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
     <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">descending</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -956,7 +957,7 @@
 
     <span class="k">if</span> <span class="n">descending</span><span class="p">:</span>
         <span class="n">tns</span> <span class="o">=</span> <span class="o">-</span><span class="n">tns</span>
-    <span class="k">return</span> <span class="n">tns</span><span class="p">,</span> <span class="n">ind</span></div>
+    <span class="k">return</span> <span class="n">tns</span><span class="p">,</span> <span class="n">ind</span>
 </pre></div>
 
               </div>
