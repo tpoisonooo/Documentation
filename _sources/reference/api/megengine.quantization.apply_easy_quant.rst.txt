@@ -1,0 +1,6 @@
+megengine.quantization.apply\_easy\_quant
+=========================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: apply_easy_quant

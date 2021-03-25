@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.module.sequential &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.module.sequential &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -196,7 +196,7 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
@@ -213,9 +213,9 @@
 <span class="sd">    Alternatively, an ordered dict of modules can also be passed in.</span>
 
 <span class="sd">    To make it easier to understand, here is a small example:</span>
-<span class="sd">    </span>
+
 <span class="sd">    Examples:</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. testcode::</span>
 
 <span class="sd">        import numpy as np</span>
@@ -241,8 +241,8 @@
 <span class="sd">        pred1 = net1(data)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">layer_keys</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">OrderedDict</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -309,7 +309,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

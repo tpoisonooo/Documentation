@@ -1,0 +1,39 @@
+megengine.module.DeformablePSROIPooling
+=======================================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: DeformablePSROIPooling
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DeformablePSROIPooling.__init__
+      ~DeformablePSROIPooling.apply
+      ~DeformablePSROIPooling.buffers
+      ~DeformablePSROIPooling.children
+      ~DeformablePSROIPooling.disable_quantize
+      ~DeformablePSROIPooling.eval
+      ~DeformablePSROIPooling.forward
+      ~DeformablePSROIPooling.load_state_dict
+      ~DeformablePSROIPooling.modules
+      ~DeformablePSROIPooling.named_buffers
+      ~DeformablePSROIPooling.named_children
+      ~DeformablePSROIPooling.named_modules
+      ~DeformablePSROIPooling.named_parameters
+      ~DeformablePSROIPooling.parameters
+      ~DeformablePSROIPooling.register_forward_hook
+      ~DeformablePSROIPooling.register_forward_pre_hook
+      ~DeformablePSROIPooling.replace_param
+      ~DeformablePSROIPooling.state_dict
+      ~DeformablePSROIPooling.train
+      ~DeformablePSROIPooling.zero_grad
+   
+   
+
+   
+   
+   

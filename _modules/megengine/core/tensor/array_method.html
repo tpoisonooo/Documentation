@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.core.tensor.array_method &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.core.tensor.array_method &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -196,7 +196,7 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
@@ -211,7 +211,6 @@
 <span class="kn">from</span> <span class="nn">.._imperative_rt.core2</span> <span class="kn">import</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">apply</span>
 <span class="kn">from</span> <span class="nn">..ops</span> <span class="kn">import</span> <span class="n">builtin</span>
 <span class="kn">from</span> <span class="nn">..ops.builtin</span> <span class="kn">import</span> <span class="n">Elemwise</span><span class="p">,</span> <span class="n">GetVarShape</span>
-<span class="kn">from</span> <span class="nn">..ops.special</span> <span class="kn">import</span> <span class="n">Const</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="kn">from</span> <span class="nn">.indexing</span> <span class="kn">import</span> <span class="n">getitem</span> <span class="k">as</span> <span class="n">_getitem</span>
 <span class="kn">from</span> <span class="nn">.indexing</span> <span class="kn">import</span> <span class="n">setitem</span> <span class="k">as</span> <span class="n">_setitem</span>
@@ -222,9 +221,31 @@
 <span class="n">_ElwMod</span> <span class="o">=</span> <span class="n">Elemwise</span><span class="o">.</span><span class="n">Mode</span>
 
 
-<span class="k">def</span> <span class="nf">_elwise</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_elwise_apply</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
     <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Elemwise</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_ElwMod</span><span class="o">.</span><span class="n">TRUE_DIV</span><span class="p">,</span> <span class="n">_ElwMod</span><span class="o">.</span><span class="n">POW</span><span class="p">):</span>
+    <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">isscalar</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">break</span>
+    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_isscalar</span><span class="p">:</span>
+        <span class="n">setscalar</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">_elwise</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">_ElwMod</span><span class="o">.</span><span class="n">TRUE_DIV</span><span class="p">,</span>
+        <span class="n">_ElwMod</span><span class="o">.</span><span class="n">POW</span><span class="p">,</span>
+        <span class="n">_ElwMod</span><span class="o">.</span><span class="n">CEIL</span><span class="p">,</span>
+        <span class="n">_ElwMod</span><span class="o">.</span><span class="n">FLOOR</span><span class="p">,</span>
+        <span class="n">_ElwMod</span><span class="o">.</span><span class="n">ROUND</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_ElwMod</span><span class="o">.</span><span class="n">CEIL</span><span class="p">,</span> <span class="n">_ElwMod</span><span class="o">.</span><span class="n">FLOOR</span><span class="p">,</span> <span class="n">_ElwMod</span><span class="o">.</span><span class="n">ROUND</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span>
+        <span class="p">):</span>
+            <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
             <span class="nb">map</span><span class="p">(</span>
                 <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
@@ -234,16 +255,7 @@
             <span class="p">)</span>
         <span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-
-    <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">isscalar</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">break</span>
-    <span class="k">if</span> <span class="n">_isscalar</span><span class="p">:</span>
-        <span class="n">setscalar</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">_elwise_apply</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_matmul</span><span class="p">(</span><span class="n">inp1</span><span class="p">,</span> <span class="n">inp2</span><span class="p">):</span>
@@ -544,6 +556,9 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of dimensions of self :class:`~.Tensor`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tuple_shape</span>
         <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unkown ndim&quot;</span><span class="p">)</span>
@@ -551,6 +566,10 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the size of the self :class:`~.Tensor`.</span>
+<span class="sd">        The returned value is a subclass of :class:`tuple`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
         <span class="k">if</span> <span class="n">shape</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="nb">tuple</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
@@ -558,9 +577,16 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">T</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        alias of :attr:`~.Tensor.transpose`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the value of this :class:`~.Tensor` as a standard Python :class:`numbers.Number`.</span>
+<span class="sd">        This only works for tensors with one element. For other cases, see :meth:`~.tolist`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
                 <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span>
@@ -568,12 +594,26 @@
         <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">args</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">tolist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the tensor as a (nested) list.</span>
+<span class="sd">        For scalars, a standard Python number is returned, just like with :meth:`~.item`.</span>
+<span class="sd">        Tensors are automatically moved to the CPU first if necessary.</span>
+
+<span class="sd">        This operation is not differentiable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">astype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a :class:`Tensor` with the same data and number of elements</span>
+<span class="sd">        with the specified :attr:`~.Tensor.dtype`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :func:`~.reshape`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_reshape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_expand_args</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 
     <span class="c1"># FIXME: remove this method</span>
@@ -581,6 +621,9 @@
         <span class="k">return</span> <span class="n">_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_expand_args</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :func:`~.transpose`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">assert</span> <span class="p">(</span>
                 <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
@@ -593,19 +636,22 @@
         <span class="k">return</span> <span class="n">_transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_expand_args</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        See :func:`~.flatten`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the sum of each row of the input tensor in the given dimension ``axis``.</span>
+
 <span class="sd">        If ``axis`` is a list of axises, reduce over all of them.</span>
-
-<span class="sd">        If ``keepdims`` is ``True``, the shape of output tensor is the same as the input tensor, except in the dimension(s) ``axis`` where it is of size 1. Otherwise, ``axis`` is squeezed(see :meth:`~.functional.tensor.squeeze`).</span>
-
-<span class="sd">        Same for prod/mean/max/min.</span>
+<span class="sd">        If ``keepdims`` is ``True``, the shape of output tensor is the same as the input tensor,</span>
+<span class="sd">        except in the dimension(s) ``axis`` where it is of size 1.</span>
+<span class="sd">        Otherwise, ``axis`` is squeezed (see :func:`~.squeeze`).</span>
 
 <span class="sd">        :param axis: the dimension or dimensions to reduce.</span>
-<span class="sd">        :param keepdim: whether the output tensor has ndim retained or not.</span>
+<span class="sd">        :param keepdims: whether the output tensor has ndim retained or not.</span>
 <span class="sd">        :return: output tensor.</span>
 
 <span class="sd">        Examples:</span>
@@ -623,15 +669,142 @@
 <span class="sd">        .. testoutput::</span>
 
 <span class="sd">            2</span>
-<span class="sd">            10.</span>
+<span class="sd">            10.0</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;SUM&quot;</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">)</span>
 
-    <span class="n">prod</span> <span class="o">=</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;PRODUCT&quot;</span><span class="p">)</span>
-    <span class="nb">min</span> <span class="o">=</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;MIN&quot;</span><span class="p">)</span>
-    <span class="nb">max</span> <span class="o">=</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;MAX&quot;</span><span class="p">)</span>
-    <span class="n">mean</span> <span class="o">=</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;MEAN&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the product of each row of the input tensor in the given dimension ``axis``.</span>
+
+<span class="sd">        If ``axis`` is a list of axises, reduce over all of them.</span>
+<span class="sd">        If ``keepdims`` is ``True``, the shape of output tensor is the same as the input tensor,</span>
+<span class="sd">        except in the dimension(s) ``axis`` where it is of size 1.</span>
+<span class="sd">        Otherwise, ``axis`` is squeezed (see :func:`~.squeeze`).</span>
+
+<span class="sd">        :param axis: the dimension or dimensions to reduce.</span>
+<span class="sd">        :param keepdims: whether the output tensor has ndim retained or not.</span>
+<span class="sd">        :return: output tensor.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from megengine import tensor</span>
+<span class="sd">            a = tensor([False, True, True, False])</span>
+<span class="sd">            b = tensor([1.0, 2.0, 3.0, 4.0])</span>
+<span class="sd">            print(a.prod().numpy())</span>
+<span class="sd">            print(b.prod().numpy())</span>
+
+<span class="sd">        Outputs:</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            0</span>
+<span class="sd">            24.0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;PRODUCT&quot;</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">min</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the min value of each row of the input tensor in the given dimension ``axis``.</span>
+
+<span class="sd">        If ``axis`` is a list of axises, reduce over all of them.</span>
+<span class="sd">        If ``keepdims`` is ``True``, the shape of output tensor is the same as the input tensor,</span>
+<span class="sd">        except in the dimension(s) ``axis`` where it is of size 1.</span>
+<span class="sd">        Otherwise, ``axis`` is squeezed (see :func:`~.squeeze`).</span>
+
+<span class="sd">        :param axis: the dimension or dimensions to reduce.</span>
+<span class="sd">        :param keepdims: whether the output tensor has ndim retained or not.</span>
+<span class="sd">        :return: output tensor.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from megengine import tensor</span>
+<span class="sd">            a = tensor([False, True, True, False])</span>
+<span class="sd">            b = tensor([1.0, 2.0, 3.0, 4.0])</span>
+<span class="sd">            print(a.min().numpy())</span>
+<span class="sd">            print(b.min().numpy())</span>
+
+<span class="sd">        Outputs:</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            False</span>
+<span class="sd">            1.0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;MIN&quot;</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the max value of each row of the input tensor in the given dimension ``axis``.</span>
+
+<span class="sd">        If ``axis`` is a list of axises, reduce over all of them.</span>
+<span class="sd">        If ``keepdims`` is ``True``, the shape of output tensor is the same as the input tensor,</span>
+<span class="sd">        except in the dimension(s) ``axis`` where it is of size 1.</span>
+<span class="sd">        Otherwise, ``axis`` is squeezed (see :func:`~.squeeze`).</span>
+
+<span class="sd">        :param axis: the dimension or dimensions to reduce.</span>
+<span class="sd">        :param keepdims: whether the output tensor has ndim retained or not.</span>
+<span class="sd">        :return: output tensor.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from megengine import tensor</span>
+<span class="sd">            a = tensor([False, True, True, False])</span>
+<span class="sd">            b = tensor([1.0, 2.0, 3.0, 4.0])</span>
+<span class="sd">            print(a.max().numpy())</span>
+<span class="sd">            print(b.max().numpy())</span>
+
+<span class="sd">        Outputs:</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            True</span>
+<span class="sd">            4.0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;MAX&quot;</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the mean value of each row of the input tensor in the given dimension ``axis``.</span>
+
+<span class="sd">        If ``axis`` is a list of axises, reduce over all of them.</span>
+<span class="sd">        If ``keepdims`` is ``True``, the shape of output tensor is the same as the input tensor,</span>
+<span class="sd">        except in the dimension(s) ``axis`` where it is of size 1.</span>
+<span class="sd">        Otherwise, ``axis`` is squeezed (see :func:`~.squeeze`).</span>
+
+<span class="sd">        :param axis: the dimension or dimensions to reduce.</span>
+<span class="sd">        :param keepdims: whether the output tensor has ndim retained or not.</span>
+<span class="sd">        :return: output tensor.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">        .. testcode::</span>
+
+<span class="sd">            from megengine import tensor</span>
+<span class="sd">            a = tensor([False, True, True, False])</span>
+<span class="sd">            b = tensor([1.0, 2.0, 3.0, 4.0])</span>
+<span class="sd">            print(a.mean().numpy())</span>
+<span class="sd">            print(b.mean().numpy())</span>
+
+<span class="sd">        Outputs:</span>
+
+<span class="sd">        .. testoutput::</span>
+
+<span class="sd">            0.5</span>
+<span class="sd">            2.5</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_reduce</span><span class="p">(</span><span class="s2">&quot;MEAN&quot;</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepdims</span><span class="p">)</span>
 </pre></div>
 
               </div>
@@ -651,7 +824,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

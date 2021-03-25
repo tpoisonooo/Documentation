@@ -14,6 +14,7 @@ megengine.module.qat.QATModule
       ~QATModule.__init__
       ~QATModule.apply
       ~QATModule.apply_quant_activation
+      ~QATModule.apply_quant_bias
       ~QATModule.apply_quant_weight
       ~QATModule.buffers
       ~QATModule.children

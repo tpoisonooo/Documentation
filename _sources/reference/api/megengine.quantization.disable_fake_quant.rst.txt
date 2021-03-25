@@ -1,0 +1,6 @@
+megengine.quantization.disable\_fake\_quant
+===========================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: disable_fake_quant

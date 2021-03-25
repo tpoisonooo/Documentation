@@ -1,0 +1,6 @@
+megengine.quantization.propagate\_qconfig
+=========================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: propagate_qconfig

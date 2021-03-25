@@ -14,6 +14,7 @@ megengine.module.qat.ConvBnRelu2d
       ~ConvBnRelu2d.__init__
       ~ConvBnRelu2d.apply
       ~ConvBnRelu2d.apply_quant_activation
+      ~ConvBnRelu2d.apply_quant_bias
       ~ConvBnRelu2d.apply_quant_weight
       ~ConvBnRelu2d.buffers
       ~ConvBnRelu2d.calc_conv_bn_qat

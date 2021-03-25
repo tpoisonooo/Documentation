@@ -1,0 +1,6 @@
+megengine.functional.vision.nms
+===============================
+
+.. currentmodule:: megengine.functional.vision
+
+.. autofunction:: nms

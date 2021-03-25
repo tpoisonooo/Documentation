@@ -1,0 +1,6 @@
+megengine.quantization.fake\_quant\_bias
+========================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: fake_quant_bias

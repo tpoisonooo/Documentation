@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>数据（Data） &#8212; MegEngine 1.2.0 文档</title>
+    <title>数据（Data） &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -530,10 +530,10 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.dataset.Dataset.html#megengine.data.dataset.Dataset" title="megengine.data.dataset.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dataset</span></code></a></p></td>
-<td><p>An abstract class for all datasets.</p></td>
+<td><p>An abstract base class for all datasets.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.data.dataset.ArrayDataset.html#megengine.data.dataset.ArrayDataset" title="megengine.data.dataset.ArrayDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayDataset</span></code></a></p></td>
-<td><p></p></td>
+<td><p>ArrayDataset is a dataset for numpy array data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.dataset.StreamDataset.html#megengine.data.dataset.StreamDataset" title="megengine.data.dataset.StreamDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamDataset</span></code></a></p></td>
 <td><p>An abstract class for stream data.</p></td>
@@ -549,16 +549,16 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.dataset.ImageFolder.html#megengine.data.dataset.ImageFolder" title="megengine.data.dataset.ImageFolder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageFolder</span></code></a></p></td>
-<td><p></p></td>
+<td><p>ImageFolder is a class for loading image data and labels from a organized folder.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.data.dataset.MNIST.html#megengine.data.dataset.MNIST" title="megengine.data.dataset.MNIST"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MNIST</span></code></a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Dataset</span></code> for MNIST meta data.</p></td>
+<td><p><a class="reference internal" href="api/megengine.data.dataset.Dataset.html#megengine.data.dataset.Dataset" title="megengine.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> for MNIST meta data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.dataset.CIFAR10.html#megengine.data.dataset.CIFAR10" title="megengine.data.dataset.CIFAR10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CIFAR10</span></code></a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Dataset</span></code> for CIFAR10 meta data.</p></td>
+<td><p><a class="reference internal" href="api/megengine.data.dataset.Dataset.html#megengine.data.dataset.Dataset" title="megengine.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> for CIFAR10 meta data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.data.dataset.CIFAR100.html#megengine.data.dataset.CIFAR100" title="megengine.data.dataset.CIFAR100"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CIFAR100</span></code></a></p></td>
-<td><p></p></td>
+<td><p><a class="reference internal" href="api/megengine.data.dataset.Dataset.html#megengine.data.dataset.Dataset" title="megengine.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> for CIFAR100 meta data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.dataset.PascalVOC.html#megengine.data.dataset.PascalVOC" title="megengine.data.dataset.PascalVOC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PascalVOC</span></code></a></p></td>
 <td><p><a class="reference external" href="http://host.robots.ox.ac.uk/pascal/VOC/">Pascal VOC</a> Dataset.</p></td>
@@ -588,22 +588,22 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.Sampler.html#megengine.data.Sampler" title="megengine.data.Sampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sampler</span></code></a></p></td>
-<td><p>An abstract class for all Sampler</p></td>
+<td><p>An abstract base class for all Sampler</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.data.MapSampler.html#megengine.data.MapSampler" title="megengine.data.MapSampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MapSampler</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Sampler for map dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.StreamSampler.html#megengine.data.StreamSampler" title="megengine.data.StreamSampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamSampler</span></code></a></p></td>
 <td><p>Sampler for stream dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.data.SequentialSampler.html#megengine.data.SequentialSampler" title="megengine.data.SequentialSampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SequentialSampler</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Sample elements sequentially.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.RandomSampler.html#megengine.data.RandomSampler" title="megengine.data.RandomSampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomSampler</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Sample elements randomly without replacement.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.data.ReplacementSampler.html#megengine.data.ReplacementSampler" title="megengine.data.ReplacementSampler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReplacementSampler</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Sample elements randomly with replacement.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.Infinite.html#megengine.data.Infinite" title="megengine.data.Infinite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Infinite</span></code></a></p></td>
 <td><p>Infinite Sampler warper for basic sampler.</p></td>
@@ -638,7 +638,7 @@
 <td><p>Resize the input data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.transform.ShortestEdgeResize.html#megengine.data.transform.ShortestEdgeResize" title="megengine.data.transform.ShortestEdgeResize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShortestEdgeResize</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Resize the input data with specified shortset edge.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.data.transform.RandomResize.html#megengine.data.transform.RandomResize" title="megengine.data.transform.RandomResize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomResize</span></code></a></p></td>
 <td><p>Resize the input data randomly.</p></td>
@@ -680,7 +680,7 @@
 <td><p>Randomly change the brightness, contrast, saturation and hue of an image.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.transform.Lighting.html#megengine.data.transform.Lighting" title="megengine.data.transform.Lighting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lighting</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Apply AlexNet-Style “lighting” augmentation to input data.</p></td>
 </tr>
 </tbody>
 </table>
@@ -708,7 +708,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.data.DataLoader.html#megengine.data.DataLoader" title="megengine.data.DataLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataLoader</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Provides a convenient way to iterate on a given dataset.</p></td>
 </tr>
 </tbody>
 </table>
@@ -733,7 +733,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

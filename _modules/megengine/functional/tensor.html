@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.functional.tensor &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.functional.tensor &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -196,15 +196,13 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
 <span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">accumulate</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -212,6 +210,7 @@
 <span class="kn">from</span> <span class="nn">..core._imperative_rt.core2</span> <span class="kn">import</span> <span class="n">apply</span>
 <span class="kn">from</span> <span class="nn">..core._wrap</span> <span class="kn">import</span> <span class="n">device</span> <span class="k">as</span> <span class="n">as_device</span>
 <span class="kn">from</span> <span class="nn">..core.ops</span> <span class="kn">import</span> <span class="n">builtin</span>
+<span class="kn">from</span> <span class="nn">..core.ops.builtin</span> <span class="kn">import</span> <span class="n">Copy</span><span class="p">,</span> <span class="n">Identity</span>
 <span class="kn">from</span> <span class="nn">..core.ops.special</span> <span class="kn">import</span> <span class="n">Const</span>
 <span class="kn">from</span> <span class="nn">..core.tensor.array_method</span> <span class="kn">import</span> <span class="n">_broadcast</span><span class="p">,</span> <span class="n">_remove_axis</span>
 <span class="kn">from</span> <span class="nn">..core.tensor.utils</span> <span class="kn">import</span> <span class="p">(</span>
@@ -239,11 +238,14 @@
     <span class="s2">&quot;linspace&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ones&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ones_like&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;repeat&quot;</span><span class="p">,</span>
     <span class="s2">&quot;reshape&quot;</span><span class="p">,</span>
     <span class="s2">&quot;split&quot;</span><span class="p">,</span>
     <span class="s2">&quot;squeeze&quot;</span><span class="p">,</span>
     <span class="s2">&quot;stack&quot;</span><span class="p">,</span>
     <span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tile&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;copy&quot;</span><span class="p">,</span>
     <span class="s2">&quot;transpose&quot;</span><span class="p">,</span>
     <span class="s2">&quot;where&quot;</span><span class="p">,</span>
     <span class="s2">&quot;zeros&quot;</span><span class="p">,</span>
@@ -303,7 +305,7 @@
     <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">device</span> <span class="o">=</span> <span class="n">get_default_device</span><span class="p">()</span>
     <span class="p">(</span><span class="n">x</span><span class="p">,)</span> <span class="o">=</span> <span class="n">Const</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)()</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># scalar</span>
+    <span class="k">if</span> <span class="n">shape</span> <span class="ow">is</span> <span class="p">():</span>  <span class="c1"># scalar.shape</span>
         <span class="k">return</span> <span class="n">x</span>
     <span class="k">return</span> <span class="n">broadcast_to</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
 
@@ -335,14 +337,14 @@
     <span class="k">return</span> <span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="zeros"><a class="viewcode-back" href="../../../reference/api/megengine.functional.zeros.html#megengine.functional.zeros">[文档]</a><span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a zero tensor with given shape.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">zeros_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="zeros_like"><a class="viewcode-back" href="../../../reference/api/megengine.functional.zeros_like.html#megengine.functional.zeros_like">[文档]</a><span class="k">def</span> <span class="nf">zeros_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a zero tensor with the same shape as input tensor.</span>
 
@@ -369,7 +371,7 @@
 <span class="sd">         [0 0 0]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">zeros</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">zeros</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ones_like"><a class="viewcode-back" href="../../../reference/api/megengine.functional.ones_like.html#megengine.functional.ones_like">[文档]</a><span class="k">def</span> <span class="nf">ones_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -465,7 +467,7 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<span class="k">def</span> <span class="nf">stack</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="stack"><a class="viewcode-back" href="../../../reference/api/megengine.functional.stack.html#megengine.functional.stack">[文档]</a><span class="k">def</span> <span class="nf">stack</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Concats a sequence of tensors along a new axis.</span>
 <span class="sd">    The input tensors must have the same shape.</span>
@@ -502,10 +504,10 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All input tensors must have the same shape&quot;</span><span class="p">)</span>
 
     <span class="n">inps</span> <span class="o">=</span> <span class="p">[</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span> <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inps</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">concat</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">concat</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">nsplits_or_sections</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="split"><a class="viewcode-back" href="../../../reference/api/megengine.functional.split.html#megengine.functional.split">[文档]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">nsplits_or_sections</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits the input tensor into several smaller tensors.</span>
 <span class="sd">    When nsplits_or_sections is int, the last tensor may be smaller than others.</span>
@@ -586,7 +588,7 @@
             <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="n">axis</span> <span class="o">+</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ndim</span> <span class="o">-</span> <span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">sub_tensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="n">slices</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">sub_tensors</span>
+    <span class="k">return</span> <span class="n">sub_tensors</span></div>
 
 
 <span class="k">def</span> <span class="nf">_get_idx</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
@@ -790,7 +792,7 @@
     <span class="k">return</span> <span class="n">inp</span></div>
 
 
-<span class="k">def</span> <span class="nf">where</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="where"><a class="viewcode-back" href="../../../reference/api/megengine.functional.where.html#megengine.functional.where">[文档]</a><span class="k">def</span> <span class="nf">where</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Selects elements either from Tensor x or Tensor y, according to mask.</span>
 
@@ -839,17 +841,12 @@
     <span class="n">v0</span><span class="p">,</span> <span class="n">index0</span> <span class="o">=</span> <span class="n">cond_take</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
     <span class="n">v1</span><span class="p">,</span> <span class="n">index1</span> <span class="o">=</span> <span class="n">cond_take</span><span class="p">(</span><span class="o">~</span><span class="n">mask</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">v0</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,):</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">v1</span>
-    <span class="k">elif</span> <span class="n">v1</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,):</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">v0</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">])</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">])</span>
 
     <span class="n">out</span><span class="p">[</span><span class="n">index0</span><span class="p">]</span> <span class="o">=</span> <span class="n">v0</span>
     <span class="n">out</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 
 
 <div class="viewcode-block" id="cond_take"><a class="viewcode-back" href="../../../reference/api/megengine.functional.cond_take.html#megengine.functional.cond_take">[文档]</a><span class="k">def</span> <span class="nf">cond_take</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -896,13 +893,13 @@
     <span class="k">return</span> <span class="n">v</span><span class="p">,</span> <span class="n">index</span></div>
 
 
-<span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="transpose"><a class="viewcode-back" href="../../../reference/api/megengine.functional.transpose.html#megengine.functional.transpose">[文档]</a><span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Swaps shapes and strides according to given pattern.</span>
 
 <span class="sd">    :param inp: input tensor.</span>
 <span class="sd">    :param pattern: a list of integers including 0, 1, ... , ``ndim``-1,</span>
-<span class="sd">    and any number of ``&#39;x&#39;`` char in dimensions where this tensor should be broadcasted. For examples:</span>
+<span class="sd">        and any number of ``&#39;x&#39;`` char in dimensions where this tensor should be broadcasted. For examples:</span>
 
 <span class="sd">        * (``&#39;x&#39;``) -&gt; make a 0d (scalar) into a 1d vector</span>
 <span class="sd">        * (0, 1) -&gt; identity for 2d vectors</span>
@@ -935,7 +932,7 @@
 <span class="sd">         [1 0]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">_</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span> <span class="k">else</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">_</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span> <span class="k">else</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="reshape"><a class="viewcode-back" href="../../../reference/api/megengine.functional.reshape.html#megengine.functional.reshape">[文档]</a><span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">target_shape</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -1052,7 +1049,7 @@
     <span class="k">return</span> <span class="n">result</span>
 
 
-<span class="k">def</span> <span class="nf">squeeze</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="squeeze"><a class="viewcode-back" href="../../../reference/api/megengine.functional.squeeze.html#megengine.functional.squeeze">[文档]</a><span class="k">def</span> <span class="nf">squeeze</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Removes dimension of shape 1.</span>
 
@@ -1079,7 +1076,7 @@
 <span class="sd">        (1, 1, 2)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_remove_axis</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_remove_axis</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">linspace</span><span class="p">(</span>
@@ -1105,7 +1102,7 @@
 <span class="sd">        import numpy as np</span>
 <span class="sd">        import megengine.functional as F</span>
 
-<span class="sd">        a = F.linspace(3,10,5)</span>
+<span class="sd">        a = F.linspace(3, 10, 5)</span>
 <span class="sd">        print(a.numpy())</span>
 
 <span class="sd">    Outputs:</span>
@@ -1115,9 +1112,20 @@
 <span class="sd">        [ 3.    4.75  6.5   8.25 10.  ]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
-    <span class="n">stop</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
-    <span class="n">num</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+        <span class="n">cur_device</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;device&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">cur_device</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">cur_device</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">device</span> <span class="o">==</span> <span class="n">cur_device</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="p">(</span><span class="s2">&quot;ambiguous device for linspace opr&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">stop</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">):</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
 
     <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Linspace</span><span class="p">(</span><span class="n">comp_node</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
     <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span>
@@ -1176,6 +1184,177 @@
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="repeat"><a class="viewcode-back" href="../../../reference/api/megengine.functional.repeat.html#megengine.functional.repeat">[文档]</a><span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">repeats</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Repeat elements of an array.</span>
+
+<span class="sd">    :param inp: input tensor.</span>
+<span class="sd">    :param repeats: the number of repetitions for each element.</span>
+<span class="sd">    :param axis: the axis along which to repeat values. By default, use the</span>
+<span class="sd">                 flattened input array, and return a flat output array.</span>
+<span class="sd">    :return: output tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        import megengine.functional as F</span>
+<span class="sd">        from megengine import tensor</span>
+
+<span class="sd">        x = tensor([[1, 2], [3, 4]], np.int32)</span>
+<span class="sd">        y = F.repeat(x, 2, axis=0)</span>
+<span class="sd">        print(y.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[1 2]</span>
+<span class="sd">         [1 2]</span>
+<span class="sd">         [3 4]</span>
+<span class="sd">         [3 4]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inp</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># flatten</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">_isscalar</span><span class="p">():</span>
+        <span class="n">inp</span><span class="o">.</span><span class="n">_unsetscalar</span><span class="p">()</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">astensor1d</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="c1"># assume inp.ndim is not changed during trace</span>
+    <span class="n">max_axis</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">axis</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">axis</span> <span class="o">&lt;=</span> <span class="n">max_axis</span>
+    <span class="k">assert</span> <span class="n">repeats</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+
+    <span class="n">base_shape</span><span class="p">,</span> <span class="n">bcast_shape</span><span class="p">,</span> <span class="n">target_shape</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">target_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">])</span>
+    <span class="n">base_shape</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">shape</span><span class="p">[:</span> <span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,]])</span>
+    <span class="n">bcast_shape</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">shape</span><span class="p">[:</span> <span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">repeats</span><span class="p">,]])</span>
+    <span class="n">target_shape</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">*</span> <span class="n">repeats</span><span class="p">,]</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">max_axis</span><span class="p">:</span>
+        <span class="n">base_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:])</span>
+        <span class="n">bcast_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:])</span>
+        <span class="n">target_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:])</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">broadcast_to</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="n">base_shape</span><span class="p">)),</span> <span class="n">concat</span><span class="p">(</span><span class="n">bcast_shape</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">concat</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<span class="k">def</span> <span class="nf">_tile_one_dim</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">rep</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">astensor1d</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="c1"># assume inp.ndim is not changed during trace</span>
+    <span class="n">max_axis</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="n">base_shape</span><span class="p">,</span> <span class="n">bcast_shape</span><span class="p">,</span> <span class="n">target_shape</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">base_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">])</span>
+        <span class="n">bcast_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">])</span>
+        <span class="n">target_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[:</span><span class="n">axis</span><span class="p">])</span>
+    <span class="n">base_shape</span><span class="o">.</span><span class="n">extend</span><span class="p">([[</span><span class="mi">1</span><span class="p">,],</span> <span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">:]])</span>
+    <span class="n">bcast_shape</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">rep</span><span class="p">,</span> <span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">:]])</span>
+    <span class="n">target_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">*</span> <span class="n">rep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">max_axis</span><span class="p">:</span>
+        <span class="n">target_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">axis</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:])</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">broadcast_to</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="n">base_shape</span><span class="p">)),</span> <span class="n">concat</span><span class="p">(</span><span class="n">bcast_shape</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">concat</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="tile"><a class="viewcode-back" href="../../../reference/api/megengine.functional.tile.html#megengine.functional.tile">[文档]</a><span class="k">def</span> <span class="nf">tile</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">reps</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct an array by repeating ``inp`` the number of times given by ``reps``. If reps has length d,</span>
+<span class="sd">    the result will have dimension of ``max(d, inp.ndim)``. It is required that ``d &gt;= inp.dim``. If ``inp.ndim &lt; d``,</span>
+<span class="sd">    ``inp`` is promoted to be ``d``-dimensional by prepending new axis.</span>
+
+<span class="sd">    :param inp: input tensor.</span>
+<span class="sd">    :param reps: The number of repetitions of inp along each axis.</span>
+<span class="sd">    :return: output tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        import megengine.functional as F</span>
+<span class="sd">        from megengine import tensor</span>
+
+<span class="sd">        x = tensor([[1, 2], [3, 4]], np.int32)</span>
+<span class="sd">        y = F.tile(x, (2,1))</span>
+<span class="sd">        print(y.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[1 2]</span>
+<span class="sd">        [3 4]</span>
+<span class="sd">        [1 2]</span>
+<span class="sd">        [3 4]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">astensor1d</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">reps</span> <span class="o">=</span> <span class="n">astensor1d</span><span class="p">(</span><span class="n">reps</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">l_shape</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">l_reps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reps</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">l_reps</span> <span class="o">&gt;=</span> <span class="n">l_shape</span>
+    <span class="p">),</span> <span class="s2">&quot;Number of dimensions of tiled dims can not be smaller than number of dimensions of tensor&quot;</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_shape</span><span class="p">):</span>
+        <span class="n">rep</span> <span class="o">=</span> <span class="n">reps</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="n">l_reps</span> <span class="o">-</span> <span class="n">l_shape</span><span class="p">)]</span>
+        <span class="n">inp</span> <span class="o">=</span> <span class="n">_tile_one_dim</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">rep</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">l_reps</span> <span class="o">&gt;</span> <span class="n">l_shape</span><span class="p">:</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="n">reps</span><span class="p">[:</span><span class="o">-</span><span class="n">l_shape</span><span class="p">]</span>
+        <span class="n">extra_ones</span> <span class="o">=</span> <span class="n">ones_like</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+        <span class="n">base_shape</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="n">extra_ones</span><span class="p">,</span> <span class="n">shape</span><span class="p">])</span>
+        <span class="n">bcast_shape</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="n">extra</span><span class="p">,</span> <span class="n">shape</span><span class="p">])</span>
+        <span class="n">target_shape</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="n">extra</span><span class="p">,</span> <span class="n">shape</span><span class="p">])</span>
+        <span class="n">inp</span> <span class="o">=</span> <span class="n">broadcast_to</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">base_shape</span><span class="p">),</span> <span class="n">bcast_shape</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inp</span></div>
+
+
+<div class="viewcode-block" id="copy"><a class="viewcode-back" href="../../../reference/api/megengine.functional.copy.html#megengine.functional.copy">[文档]</a><span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Copies tensor to another device.</span>
+
+<span class="sd">    :param inp: input tensor.</span>
+<span class="sd">    :param device: destination device.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor([1, 2, 3], np.int32)</span>
+<span class="sd">        y = F.copy(x, &quot;xpu1&quot;)</span>
+<span class="sd">        print(y.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [1 2 3]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">apply</span><span class="p">(</span><span class="n">Identity</span><span class="p">(),</span> <span class="n">inp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">apply</span><span class="p">(</span><span class="n">Copy</span><span class="p">(</span><span class="n">comp_node</span><span class="o">=</span><span class="n">as_device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">to_c</span><span class="p">()),</span> <span class="n">inp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 </pre></div>
 
               </div>
@@ -1195,7 +1374,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

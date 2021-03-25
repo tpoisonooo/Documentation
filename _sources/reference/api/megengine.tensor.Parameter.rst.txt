@@ -15,7 +15,6 @@ megengine.tensor.Parameter
       ~Parameter.astype
       ~Parameter.detach
       ~Parameter.flatten
-      ~Parameter.isscalar
       ~Parameter.item
       ~Parameter.max
       ~Parameter.mean
@@ -25,7 +24,6 @@ megengine.tensor.Parameter
       ~Parameter.reset_zero
       ~Parameter.reshape
       ~Parameter.set_value
-      ~Parameter.setscalar
       ~Parameter.sum
       ~Parameter.to
       ~Parameter.tolist
@@ -40,12 +38,14 @@ megengine.tensor.Parameter
    .. autosummary::
    
       ~Parameter.T
+      ~Parameter.c_name
       ~Parameter.device
       ~Parameter.dmap_callback
       ~Parameter.dtype
       ~Parameter.grad
+      ~Parameter.name
       ~Parameter.ndim
-      ~Parameter.q_dict
+      ~Parameter.qparams
       ~Parameter.requires_grad
       ~Parameter.shape
       ~Parameter.size

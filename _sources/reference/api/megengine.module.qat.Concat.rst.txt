@@ -14,6 +14,7 @@ megengine.module.qat.Concat
       ~Concat.__init__
       ~Concat.apply
       ~Concat.apply_quant_activation
+      ~Concat.apply_quant_bias
       ~Concat.apply_quant_weight
       ~Concat.buffers
       ~Concat.children

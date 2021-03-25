@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.module.Softmax &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.module.Softmax &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -295,6 +295,11 @@
     </a>
    </li>
    <li class="toctree-l3">
+    <a class="reference internal" href="megengine.module.DeformableConv2d.html">
+     megengine.module.DeformableConv2d
+    </a>
+   </li>
+   <li class="toctree-l3">
     <a class="reference internal" href="megengine.module.AvgPool2d.html">
      megengine.module.AvgPool2d
     </a>
@@ -312,6 +317,11 @@
    <li class="toctree-l3">
     <a class="reference internal" href="megengine.module.AdaptiveMaxPool2d.html">
      megengine.module.AdaptiveMaxPool2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.module.DeformablePSROIPooling.html">
+     megengine.module.DeformablePSROIPooling
     </a>
    </li>
    <li class="toctree-l3">
@@ -613,7 +623,7 @@
 <h1>megengine.module.Softmax<a class="headerlink" href="#megengine-module-softmax" title="永久链接至标题">¶</a></h1>
 <dl class="py class">
 <dt id="megengine.module.Softmax">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Softmax</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/megengine/module/activation.html#Softmax"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#megengine.module.Softmax" title="永久链接至目标">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Softmax</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/megengine/module/activation.html#Softmax"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#megengine.module.Softmax" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">megengine.module.module.Module</span></code></p>
 <p>Applies a softmax function. Softmax is defined as:</p>
 <div class="math notranslate nohighlight">
@@ -650,7 +660,12 @@ softmax will apply along the highest ranked axis.</p>
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code>([axis])</p></td>
-<td><p>Initialize self.</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param name</dt>
+<dd class="field-odd"><p>module’s name, can be initialized by the <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> parameter</p>
+</dd>
+</dl>
+</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code>(fn)</p></td>
 <td><p>Applies function <code class="docutils literal notranslate"><span class="pre">fn</span></code> to all the modules within this module, including itself.</p></td>
@@ -733,7 +748,7 @@ softmax will apply along the highest ranked axis.</p>
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

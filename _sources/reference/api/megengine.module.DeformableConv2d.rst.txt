@@ -1,0 +1,41 @@
+megengine.module.DeformableConv2d
+=================================
+
+.. currentmodule:: megengine.module
+
+.. autoclass:: DeformableConv2d
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~DeformableConv2d.__init__
+      ~DeformableConv2d.apply
+      ~DeformableConv2d.buffers
+      ~DeformableConv2d.calc_conv
+      ~DeformableConv2d.children
+      ~DeformableConv2d.disable_quantize
+      ~DeformableConv2d.eval
+      ~DeformableConv2d.forward
+      ~DeformableConv2d.load_state_dict
+      ~DeformableConv2d.modules
+      ~DeformableConv2d.named_buffers
+      ~DeformableConv2d.named_children
+      ~DeformableConv2d.named_modules
+      ~DeformableConv2d.named_parameters
+      ~DeformableConv2d.parameters
+      ~DeformableConv2d.register_forward_hook
+      ~DeformableConv2d.register_forward_pre_hook
+      ~DeformableConv2d.replace_param
+      ~DeformableConv2d.reset_parameters
+      ~DeformableConv2d.state_dict
+      ~DeformableConv2d.train
+      ~DeformableConv2d.zero_grad
+   
+   
+
+   
+   
+   

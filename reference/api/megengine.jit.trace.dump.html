@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.jit.trace.dump &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.jit.trace.dump &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -296,7 +296,7 @@
 <h1>megengine.jit.trace.dump<a class="headerlink" href="#megengine-jit-trace-dump" title="永久链接至标题">¶</a></h1>
 <dl class="py method">
 <dt id="megengine.jit.trace.dump">
-<code class="sig-prename descclassname"><span class="pre">trace.</span></code><code class="sig-name descname"><span class="pre">dump</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize_for_inference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/megengine/jit/tracing.html#trace.dump"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#megengine.jit.trace.dump" title="永久链接至目标">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">trace.</span></code><code class="sig-name descname"><span class="pre">dump</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_var_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_opr_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_param_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_opr_priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strip_info_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimize_for_inference</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/megengine/jit/tracing.html#trace.dump"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#megengine.jit.trace.dump" title="永久链接至目标">¶</a></dt>
 <dd><p>Serializes trace to file system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
@@ -307,6 +307,22 @@
 use the default name if not specified.</p></li>
 <li><p><strong>append</strong> – whether output is appended to <code class="docutils literal notranslate"><span class="pre">file</span></code>.
 Only works when <code class="docutils literal notranslate"><span class="pre">file</span></code> is str.</p></li>
+<li><p><strong>keep_var_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – <p>level for keeping variable names:</p>
+<ul>
+<li><p>0: none of the names are kept</p></li>
+<li><p>1: (default)keep names of output vars</p></li>
+<li><p>2: keep names of all (output and internal) vars</p></li>
+</ul>
+</p></li>
+<li><p><strong>keep_opr_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether to keep operator names.</p></li>
+<li><p><strong>keep_param_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether to keep param names, so param values can be
+easily manipulated after loading model</p></li>
+<li><p><strong>keep_opr_priority</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether to keep priority setting for operators</p></li>
+<li><p><strong>strip_info_file</strong> – a string for path or a file handler. if is not None,
+then the dump information for code strip would be written to <code class="docutils literal notranslate"><span class="pre">strip_info_file</span></code></p></li>
+<li><p><strong>append_json</strong> – will be check when <cite>strip_info_file</cite> is not None. if set
+true, the information for code strip will be append to strip_info_file.
+if set false, will rewrite strip_info_file</p></li>
 <li><p><strong>optimize_for_inference</strong> – enbale optmizations,
 will skip all optimize options if this is False. Default: True</p></li>
 </ul>
@@ -405,7 +421,7 @@ inference)</p>
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

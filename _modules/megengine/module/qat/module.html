@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.module.qat.module &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.module.qat.module &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -195,23 +195,27 @@
   <h1>megengine.module.qat.module 源代码</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
 <span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
 
-<span class="kn">from</span> <span class="nn">...quantization</span> <span class="kn">import</span> <span class="n">FakeQuantize</span><span class="p">,</span> <span class="n">Observer</span><span class="p">,</span> <span class="n">QConfig</span>
+<span class="c1"># avoid circular reference</span>
+<span class="kn">from</span> <span class="nn">...quantization.fake_quant</span> <span class="kn">import</span> <span class="n">FakeQuantize</span>
+<span class="kn">from</span> <span class="nn">...quantization.observer</span> <span class="kn">import</span> <span class="n">Observer</span>
+<span class="kn">from</span> <span class="nn">...quantization.qconfig</span> <span class="kn">import</span> <span class="n">QConfig</span>
+<span class="kn">from</span> <span class="nn">...quantization.utils</span> <span class="kn">import</span> <span class="n">fake_quant_bias</span>
 <span class="kn">from</span> <span class="nn">...tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">..module</span> <span class="kn">import</span> <span class="n">Module</span>
 
 
 <div class="viewcode-block" id="QATModule"><a class="viewcode-back" href="../../../../reference/api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule">[文档]</a><span class="k">class</span> <span class="nc">QATModule</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Base class of quantized-float related Module, basically for QAT and Calibration.</span>
+<span class="sd">    Base class of quantized-float related :class:`~.Module`, basically for QAT and Calibration.</span>
 
-<span class="sd">    Use :meth:`~.QATModule.from_float_module` to generate a instance from float :class:`~.Module`.</span>
+<span class="sd">    Use :meth:`from_float_module` to generate a instance from float :class:`~.Module`.</span>
 <span class="sd">    Or use :func:`~.quantize.quantize_qat` to do it recursively and automatically.</span>
 
 <span class="sd">    Can also be converted to :class:`~.QuantizedModule` for deployment using</span>
@@ -221,8 +225,8 @@
     <span class="n">with_weight</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">with_act</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">weight_observer</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: Observer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">act_observer</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># type: Observer</span>
@@ -268,19 +272,19 @@
         <span class="c1"># do observer</span>
         <span class="k">if</span> <span class="n">observer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">oup</span> <span class="o">=</span> <span class="n">target</span>
-            <span class="n">q_dict</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">qparams</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">oup</span> <span class="o">=</span> <span class="n">observer</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-            <span class="n">q_dict</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">get_qparams</span><span class="p">()</span>
+            <span class="n">qparams</span> <span class="o">=</span> <span class="n">observer</span><span class="o">.</span><span class="n">get_qparams</span><span class="p">()</span>
         <span class="c1"># do fake quant</span>
         <span class="k">if</span> <span class="n">fake_quant</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">oup</span> <span class="o">=</span> <span class="n">fake_quant</span><span class="p">(</span><span class="n">oup</span><span class="p">,</span> <span class="n">q_dict</span><span class="p">)</span>
+            <span class="n">oup</span> <span class="o">=</span> <span class="n">fake_quant</span><span class="p">(</span><span class="n">oup</span><span class="p">,</span> <span class="n">qparams</span><span class="p">)</span>
             <span class="c1"># use qparams of fake_quant if have.</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">fake_quant</span><span class="p">,</span> <span class="s2">&quot;get_qparams&quot;</span><span class="p">):</span>
-                <span class="n">q_dict</span> <span class="o">=</span> <span class="n">fake_quant</span><span class="o">.</span><span class="n">get_qparams</span><span class="p">()</span>
+                <span class="n">qparams</span> <span class="o">=</span> <span class="n">fake_quant</span><span class="o">.</span><span class="n">get_qparams</span><span class="p">()</span>
         <span class="c1"># set to tensor qparams.</span>
-        <span class="k">if</span> <span class="n">q_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">oup</span><span class="o">.</span><span class="n">q_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">q_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">qparams</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">oup</span><span class="o">.</span><span class="n">qparams</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">qparams</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">oup</span>
 
     <span class="k">def</span> <span class="nf">apply_quant_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">):</span>
@@ -299,6 +303,24 @@
             <span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fake_quant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_observer</span>
         <span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">apply_quant_bias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">w_qat</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use :func:`~.fake_quant_bias` to process ``target``. Only valid when</span>
+<span class="sd">        ``act_fake_quant`` and ``weight_fake_quant`` are both enabled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># bias should have the same dtype as activation, so act_fake_quant can also</span>
+        <span class="c1"># decide whether to do bias fakequant</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">act_fake_quant</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fake_quant</span><span class="o">.</span><span class="n">enabled</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_fake_quant</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_fake_quant</span><span class="o">.</span><span class="n">enabled</span>
+        <span class="p">):</span>
+            <span class="n">b_qat</span> <span class="o">=</span> <span class="n">fake_quant_bias</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">w_qat</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">b_qat</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="k">return</span> <span class="n">b_qat</span>
+
     <span class="k">def</span> <span class="nf">_get_method_result</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">fake_quant</span><span class="p">:</span> <span class="n">FakeQuantize</span><span class="p">,</span> <span class="n">observer</span><span class="p">:</span> <span class="n">Observer</span>
     <span class="p">):</span>
@@ -313,7 +335,7 @@
 <span class="sd">        Get weight&#39;s quantization dtype as the method from ``qconfig``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_method_result</span><span class="p">(</span>
-            <span class="s2">&quot;get_dtype&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_fake_quant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_observer</span>
+            <span class="s2">&quot;get_quantized_dtype&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_fake_quant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_observer</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_activation_dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -321,7 +343,7 @@
 <span class="sd">        Get activation&#39;s quantization dtype as the method from ``qconfig``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_method_result</span><span class="p">(</span>
-            <span class="s2">&quot;get_dtype&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fake_quant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_observer</span>
+            <span class="s2">&quot;get_quantized_dtype&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_fake_quant</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_observer</span>
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_weight_qparams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -366,7 +388,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

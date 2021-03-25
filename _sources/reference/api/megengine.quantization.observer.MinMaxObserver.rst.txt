@@ -20,8 +20,8 @@ megengine.quantization.observer.MinMaxObserver
       ~MinMaxObserver.enable
       ~MinMaxObserver.eval
       ~MinMaxObserver.forward
-      ~MinMaxObserver.get_dtype
       ~MinMaxObserver.get_qparams
+      ~MinMaxObserver.get_quantized_dtype
       ~MinMaxObserver.load_state_dict
       ~MinMaxObserver.modules
       ~MinMaxObserver.named_buffers

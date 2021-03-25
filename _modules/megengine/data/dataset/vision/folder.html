@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.data.dataset.vision.folder &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.data.dataset.vision.folder &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -201,14 +201,14 @@
 <span class="c1"># ---------------------------------------------------------------------</span>
 <span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
 <span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
 <span class="c1">#</span>
 <span class="c1"># This file has been modified by Megvii (&quot;Megvii Modifications&quot;).</span>
-<span class="c1"># All Megvii Modifications are Copyright (C) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># All Megvii Modifications are Copyright (C) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1"># ---------------------------------------------------------------------</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
@@ -221,24 +221,25 @@
 
 
 <div class="viewcode-block" id="ImageFolder"><a class="viewcode-back" href="../../../../../reference/api/megengine.data.dataset.ImageFolder.html#megengine.data.dataset.ImageFolder">[文档]</a><span class="k">class</span> <span class="nc">ImageFolder</span><span class="p">(</span><span class="n">VisionDataset</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ImageFolder is a class for loading image data and labels from a organized folder.</span>
+
+<span class="sd">    The folder is expected to be organized as followed: root/cls/xxx.img_ext</span>
+
+<span class="sd">    Labels are indices of sorted classes in the root directory.</span>
+
+<span class="sd">    :param root: root directory of an image folder.</span>
+<span class="sd">    :param loader: a function used to load image from path,</span>
+<span class="sd">                   if ``None``, default function that loads</span>
+<span class="sd">                   images with PIL will be called.</span>
+<span class="sd">    :param check_valid_func: a function used to check if files in folder are</span>
+<span class="sd">                             expected image files, if ``None``, default function</span>
+<span class="sd">                             that checks file extensions will be called.</span>
+<span class="sd">    :param class_name: if ``True``, return class name instead of class index.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">check_valid_func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        ImageFolder is a class for loading image data and labels from a organized folder.</span>
-
-<span class="sd">        The folder is expected to be organized as followed: root/cls/xxx.img_ext</span>
-
-<span class="sd">        Labels are indices of sorted classes in the root directory.</span>
-
-<span class="sd">        :param root: root directory of an image folder.</span>
-<span class="sd">        :param loader: a function used to load image from path,</span>
-<span class="sd">                       if ``None``, default function that loads</span>
-<span class="sd">                       images with PIL will be called.</span>
-<span class="sd">        :param check_valid_func: a function used to check if files in folder are</span>
-<span class="sd">                                 expected image files, if ``None``, default function</span>
-<span class="sd">                                 that checks file extensions will be called.</span>
-<span class="sd">        :param class_name: if ``True``, return class name instead of class index.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="s2">&quot;image_category&quot;</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
@@ -301,7 +302,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

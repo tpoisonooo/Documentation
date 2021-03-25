@@ -14,6 +14,7 @@ megengine.module.qat.Conv2d
       ~Conv2d.__init__
       ~Conv2d.apply
       ~Conv2d.apply_quant_activation
+      ~Conv2d.apply_quant_bias
       ~Conv2d.apply_quant_weight
       ~Conv2d.buffers
       ~Conv2d.calc_conv

@@ -14,6 +14,7 @@ megengine.module.qat.BatchMatMulActivation
       ~BatchMatMulActivation.__init__
       ~BatchMatMulActivation.apply
       ~BatchMatMulActivation.apply_quant_activation
+      ~BatchMatMulActivation.apply_quant_bias
       ~BatchMatMulActivation.apply_quant_weight
       ~BatchMatMulActivation.buffers
       ~BatchMatMulActivation.children

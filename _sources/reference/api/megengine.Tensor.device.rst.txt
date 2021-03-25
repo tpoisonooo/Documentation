@@ -3,4 +3,4 @@ megengine.Tensor.device
 
 .. currentmodule:: megengine
 
-.. autoattribute:: Tensor.device
+.. autoproperty:: Tensor.device

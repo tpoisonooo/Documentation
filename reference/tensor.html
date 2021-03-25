@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>张量（Tensor） &#8212; MegEngine 1.2.0 文档</title>
+    <title>张量（Tensor） &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -431,7 +431,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tensor.Tensor</span></code></a></p></td>
-<td><p></p></td>
+<td><p>A tensor object represents a multidimensional, homogeneous array of fixed-size items.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.tensor.tensor.html#megengine.tensor.tensor" title="megengine.tensor.tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tensor.tensor</span></code></a></p></td>
 <td><p>alias of <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">megengine.tensor.Tensor</span></code></a></p></td>
@@ -450,31 +450,31 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.dtype.html#megengine.Tensor.dtype" title="megengine.Tensor.dtype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.dtype</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(在 NumPy v1.20)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.dtype</span></code></a> object represents the data type of a <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.astype.html#megengine.Tensor.astype" title="megengine.Tensor.astype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.astype</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code> with the same data and number of elements with the specified <a class="reference internal" href="api/megengine.Tensor.dtype.html#megengine.Tensor.dtype" title="megengine.Tensor.dtype"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dtype</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.shape.html#megengine.Tensor.shape" title="megengine.Tensor.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.shape</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a> or a <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> represents tensor dimensions.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.reshape.html#megengine.Tensor.reshape" title="megengine.Tensor.reshape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.reshape</span></code></a></p></td>
-<td><p></p></td>
+<td><p>See <a class="reference internal" href="api/megengine.functional.reshape.html#megengine.functional.reshape" title="megengine.functional.reshape"><code class="xref py py-func docutils literal notranslate"><span class="pre">reshape</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.ndim.html#megengine.Tensor.ndim" title="megengine.Tensor.ndim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.ndim</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the number of dimensions of self <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.size.html#megengine.Tensor.size" title="megengine.Tensor.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.size</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the size of the self <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.flatten.html#megengine.Tensor.flatten" title="megengine.Tensor.flatten"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.flatten</span></code></a></p></td>
-<td><p></p></td>
+<td><p>See <a class="reference internal" href="api/megengine.functional.flatten.html#megengine.functional.flatten" title="megengine.functional.flatten"><code class="xref py py-func docutils literal notranslate"><span class="pre">flatten</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.transpose.html#megengine.Tensor.transpose" title="megengine.Tensor.transpose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.transpose</span></code></a></p></td>
-<td><p></p></td>
+<td><p>See <a class="reference internal" href="api/megengine.functional.transpose.html#megengine.functional.transpose" title="megengine.functional.transpose"><code class="xref py py-func docutils literal notranslate"><span class="pre">transpose</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.T.html#megengine.Tensor.T" title="megengine.Tensor.T"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.T</span></code></a></p></td>
-<td><p></p></td>
+<td><p>alias of <a class="reference internal" href="api/megengine.Tensor.transpose.html#megengine.Tensor.transpose" title="megengine.Tensor.transpose"><code class="xref py py-attr docutils literal notranslate"><span class="pre">transpose</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -488,13 +488,13 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.numpy.html#megengine.Tensor.numpy" title="megengine.Tensor.numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.numpy</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns self <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> as a <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(在 NumPy v1.20)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.tolist.html#megengine.Tensor.tolist" title="megengine.Tensor.tolist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.tolist</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the tensor as a (nested) list.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.item.html#megengine.Tensor.item" title="megengine.Tensor.item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.item</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the value of this <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> as a standard Python <a class="reference external" href="https://docs.python.org/3/library/numbers.html#numbers.Number" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numbers.Number</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -511,16 +511,16 @@
 <td><p>Returns the sum of each row of the input tensor in the given dimension <code class="docutils literal notranslate"><span class="pre">axis</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.mean.html#megengine.Tensor.mean" title="megengine.Tensor.mean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.mean</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the mean value of each row of the input tensor in the given dimension <code class="docutils literal notranslate"><span class="pre">axis</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.prod.html#megengine.Tensor.prod" title="megengine.Tensor.prod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.prod</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the product of each row of the input tensor in the given dimension <code class="docutils literal notranslate"><span class="pre">axis</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.min.html#megengine.Tensor.min" title="megengine.Tensor.min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.min</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the min value of each row of the input tensor in the given dimension <code class="docutils literal notranslate"><span class="pre">axis</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.max.html#megengine.Tensor.max" title="megengine.Tensor.max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.max</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns the max value of each row of the input tensor in the given dimension <code class="docutils literal notranslate"><span class="pre">axis</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -534,7 +534,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.detach.html#megengine.Tensor.detach" title="megengine.Tensor.detach"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.detach</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns a new <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>, detached from the current graph.</p></td>
 </tr>
 </tbody>
 </table>
@@ -548,10 +548,10 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.Tensor.device.html#megengine.Tensor.device" title="megengine.Tensor.device"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.device</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Returns a string represents the device a <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> storaged on.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.Tensor.to.html#megengine.Tensor.to" title="megengine.Tensor.to"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tensor.to</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Copy self <a class="reference internal" href="api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> to specified device.</p></td>
 </tr>
 </tbody>
 </table>
@@ -586,7 +586,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

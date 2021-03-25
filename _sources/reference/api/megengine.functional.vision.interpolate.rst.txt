@@ -1,0 +1,6 @@
+megengine.functional.vision.interpolate
+=======================================
+
+.. currentmodule:: megengine.functional.vision
+
+.. autofunction:: interpolate

@@ -15,7 +15,6 @@ megengine.tensor.Tensor
       ~Tensor.astype
       ~Tensor.detach
       ~Tensor.flatten
-      ~Tensor.isscalar
       ~Tensor.item
       ~Tensor.max
       ~Tensor.mean
@@ -25,7 +24,6 @@ megengine.tensor.Tensor
       ~Tensor.reset_zero
       ~Tensor.reshape
       ~Tensor.set_value
-      ~Tensor.setscalar
       ~Tensor.sum
       ~Tensor.to
       ~Tensor.tolist
@@ -40,12 +38,14 @@ megengine.tensor.Tensor
    .. autosummary::
    
       ~Tensor.T
+      ~Tensor.c_name
       ~Tensor.device
       ~Tensor.dmap_callback
       ~Tensor.dtype
       ~Tensor.grad
+      ~Tensor.name
       ~Tensor.ndim
-      ~Tensor.q_dict
+      ~Tensor.qparams
       ~Tensor.requires_grad
       ~Tensor.shape
       ~Tensor.size

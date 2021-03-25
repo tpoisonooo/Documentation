@@ -1,0 +1,6 @@
+megengine.quantization.reset\_qconfig
+=====================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: reset_qconfig

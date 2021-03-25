@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>索引 &#8212; MegEngine 1.2.0 文档</title>
+    <title>索引 &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -264,11 +264,13 @@
 </li>
       <li><a href="reference/api/megengine.functional.distributed.all_reduce_sum.html#megengine.functional.distributed.all_reduce_sum">all_reduce_sum() (在 megengine.functional.distributed 模块中)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.functional.distributed.all_to_all.html#megengine.functional.distributed.all_to_all">all_to_all() (在 megengine.functional.distributed 模块中)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.distributed.helper.AllreduceCallback.html#megengine.distributed.helper.AllreduceCallback">AllreduceCallback (megengine.distributed.helper 中的类)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.apply_easy_quant.html#megengine.quantization.apply_easy_quant">apply_easy_quant() (在 megengine.quantization 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.arange.html#megengine.functional.arange">arange() (在 megengine.functional 模块中)</a>
 </li>
@@ -304,8 +306,12 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/autodiff.html#megengine.autodiff.GradManager.backward">backward() (GradManager 方法)</a>
+      <li><a href="reference/autodiff.html#megengine.autodiff.Function.backward">backward() (Function 方法)</a>
+
+      <ul>
+        <li><a href="reference/autodiff.html#megengine.autodiff.GradManager.backward">(GradManager 方法)</a>
 </li>
+      </ul></li>
       <li><a href="reference/api/megengine.functional.batch_norm.html#megengine.functional.batch_norm">batch_norm() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.module.BatchMatMulActivation.html#megengine.module.BatchMatMulActivation">BatchMatMulActivation (megengine.module 中的类)</a>
@@ -316,10 +322,10 @@
         <li><a href="reference/api/megengine.module.quantized.BatchMatMulActivation.html#megengine.module.quantized.BatchMatMulActivation">(megengine.module.quantized 中的类)</a>
 </li>
       </ul></li>
-      <li><a href="reference/api/megengine.module.BatchNorm1d.html#megengine.module.BatchNorm1d">BatchNorm1d (megengine.module 中的类)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/megengine.module.BatchNorm1d.html#megengine.module.BatchNorm1d">BatchNorm1d (megengine.module 中的类)</a>
+</li>
       <li><a href="reference/api/megengine.module.BatchNorm2d.html#megengine.module.BatchNorm2d">BatchNorm2d (megengine.module 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.distributed.bcast_list_.html#megengine.distributed.bcast_list_">bcast_list_() (在 megengine.distributed 模块中)</a>
@@ -382,10 +388,10 @@
 </li>
       <li><a href="reference/api/megengine.data.transform.ContrastTransform.html#megengine.data.transform.ContrastTransform">ContrastTransform (megengine.data.transform 中的类)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.module.Conv1d.html#megengine.module.Conv1d">Conv1d (megengine.module 中的类)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.functional.conv1d.html#megengine.functional.conv1d">conv1d() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.module.Conv2d.html#megengine.module.Conv2d">Conv2d (megengine.module 中的类)</a>
@@ -397,6 +403,8 @@
 </li>
       </ul></li>
       <li><a href="reference/api/megengine.functional.conv2d.html#megengine.functional.conv2d">conv2d() (在 megengine.functional 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.functional.conv3d.html#megengine.functional.conv3d">conv3d() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.conv_transpose2d.html#megengine.functional.conv_transpose2d">conv_transpose2d() (在 megengine.functional 模块中)</a>
 </li>
@@ -432,6 +440,8 @@
 </li>
       <li><a href="reference/api/megengine.functional.cosh.html#megengine.functional.cosh">cosh() (在 megengine.functional 模块中)</a>
 </li>
+      <li><a href="reference/api/megengine.quantization.create_qparams.html#megengine.quantization.create_qparams">create_qparams() (在 megengine.quantization 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.functional.loss.cross_entropy.html#megengine.functional.loss.cross_entropy">cross_entropy() (在 megengine.functional.loss 模块中)</a>
 </li>
   </ul></td>
@@ -444,6 +454,14 @@
 </li>
       <li><a href="reference/api/megengine.data.dataset.Dataset.html#megengine.data.dataset.Dataset">Dataset (megengine.data.dataset 中的类)</a>
 </li>
+      <li><a href="reference/api/megengine.functional.deformable_conv2d.html#megengine.functional.deformable_conv2d">deformable_conv2d() (在 megengine.functional 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.functional.deformable_psroi_pooling.html#megengine.functional.deformable_psroi_pooling">deformable_psroi_pooling() (在 megengine.functional 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.module.DeformableConv2d.html#megengine.module.DeformableConv2d">DeformableConv2d (megengine.module 中的类)</a>
+</li>
+      <li><a href="reference/api/megengine.module.DeformablePSROIPooling.html#megengine.module.DeformablePSROIPooling">DeformablePSROIPooling (megengine.module 中的类)</a>
+</li>
       <li><a href="reference/api/megengine.module.DequantStub.html#megengine.module.DequantStub">DequantStub (megengine.module 中的类)</a>
 
       <ul>
@@ -452,11 +470,15 @@
         <li><a href="reference/api/megengine.module.quantized.DequantStub.html#megengine.module.quantized.DequantStub">(megengine.module.quantized 中的类)</a>
 </li>
       </ul></li>
-      <li><a href="reference/api/megengine.Tensor.detach.html#megengine.Tensor.detach">detach() (Tensor 方法)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/api/megengine.Tensor.device.html#megengine.Tensor.device">device (Tensor 属性)</a>
+      <li><a href="reference/api/megengine.Tensor.detach.html#megengine.Tensor.detach">detach() (Tensor 方法)</a>
+</li>
+      <li><a href="reference/api/megengine.Tensor.device.html#megengine.Tensor.device">device() (Tensor property)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.disable_fake_quant.html#megengine.quantization.disable_fake_quant">disable_fake_quant() (在 megengine.quantization 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.disable_observer.html#megengine.quantization.disable_observer">disable_observer() (在 megengine.quantization 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.div.html#megengine.functional.div">div() (在 megengine.functional 模块中)</a>
 </li>
@@ -466,7 +488,7 @@
 </li>
       <li><a href="reference/api/megengine.functional.dropout.html#megengine.functional.dropout">dropout() (在 megengine.functional 模块中)</a>
 </li>
-      <li><a href="reference/api/megengine.Tensor.dtype.html#megengine.Tensor.dtype">dtype (Tensor 属性)</a>
+      <li><a href="reference/api/megengine.Tensor.dtype.html#megengine.Tensor.dtype">dtype() (Tensor property)</a>
 </li>
       <li><a href="reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump">dump() (trace 方法)</a>
 </li>
@@ -492,9 +514,15 @@
 </li>
       <li><a href="reference/api/megengine.module.Embedding.html#megengine.module.Embedding">Embedding (megengine.module 中的类)</a>
 </li>
+      <li><a href="reference/api/megengine.functional.embedding.html#megengine.functional.embedding">embedding() (在 megengine.functional 模块中)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.enable_debug_log.html#megengine.enable_debug_log">enable_debug_log() (在 megengine 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.enable_fake_quant.html#megengine.quantization.enable_fake_quant">enable_fake_quant() (在 megengine.quantization 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.enable_observer.html#megengine.quantization.enable_observer">enable_observer() (在 megengine.quantization 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.equal.html#megengine.functional.equal">equal() (在 megengine.functional 模块中)</a>
 </li>
@@ -514,6 +542,10 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/megengine.quantization.fake_quant_bias.html#megengine.quantization.fake_quant_bias">fake_quant_bias() (在 megengine.quantization 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.fake_quant_tensor.html#megengine.quantization.fake_quant_tensor">fake_quant_tensor() (在 megengine.quantization 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.quantization.FakeQuantize.html#megengine.quantization.FakeQuantize">FakeQuantize (megengine.quantization 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.module.init.fill_.html#megengine.module.init.fill_">fill_() (在 megengine.module.init 模块中)</a>
@@ -530,9 +562,13 @@
 </li>
       <li><a href="reference/api/megengine.functional.floor_div.html#megengine.functional.floor_div">floor_div() (在 megengine.functional 模块中)</a>
 </li>
+      <li><a href="reference/autodiff.html#megengine.autodiff.Function.forward">forward() (Function 方法)</a>
+</li>
       <li><a href="reference/api/megengine.functional.full.html#megengine.functional.full">full() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.full_like.html#megengine.functional.full_like">full_like() (在 megengine.functional 模块中)</a>
+</li>
+      <li><a href="reference/autodiff.html#megengine.autodiff.Function">Function (megengine.autodiff 中的类)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -560,10 +596,10 @@
 </li>
       <li><a href="reference/api/megengine.get_mem_status_bytes.html#megengine.get_mem_status_bytes">get_mem_status_bytes() (在 megengine 模块中)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.distributed.get_mm_server_addr.html#megengine.distributed.get_mm_server_addr">get_mm_server_addr() (在 megengine.distributed 模块中)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.jit.trace.get_profile.html#megengine.jit.trace.get_profile">get_profile() (trace 方法)</a>
 </li>
       <li><a href="reference/api/megengine.distributed.get_py_server_addr.html#megengine.distributed.get_py_server_addr">get_py_server_addr() (在 megengine.distributed 模块中)</a>
@@ -577,6 +613,8 @@
       <li><a href="reference/api/megengine.functional.greater.html#megengine.functional.greater">greater() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.greater_equal.html#megengine.functional.greater_equal">greater_equal() (在 megengine.functional 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.distributed.Group.html#megengine.distributed.Group">Group (megengine.distributed 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.distributed.group_barrier.html#megengine.distributed.group_barrier">group_barrier() (在 megengine.distributed 模块中)</a>
 </li>
@@ -620,11 +658,13 @@
 </li>
       <li><a href="reference/api/megengine.data.Infinite.html#megengine.data.Infinite">Infinite (megengine.data 中的类)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.distributed.init_process_group.html#megengine.distributed.init_process_group">init_process_group() (在 megengine.distributed 模块中)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.module.InstanceNorm.html#megengine.module.InstanceNorm">InstanceNorm (megengine.module 中的类)</a>
+</li>
+      <li><a href="reference/api/megengine.functional.vision.interpolate.html#megengine.functional.vision.interpolate">interpolate() (在 megengine.functional.vision 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.is_cuda_available.html#megengine.is_cuda_available">is_cuda_available() (在 megengine 模块中)</a>
 </li>
@@ -668,6 +708,8 @@
         <li><a href="reference/api/megengine.module.quantized.Linear.html#megengine.module.quantized.Linear">(megengine.module.quantized 中的类)</a>
 </li>
       </ul></li>
+      <li><a href="reference/api/megengine.functional.linear.html#megengine.functional.linear">linear() (在 megengine.functional 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.functional.linspace.html#megengine.functional.linspace">linspace() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.hub.list.html#megengine.hub.list">list() (在 megengine.hub 模块中)</a>
@@ -715,6 +757,8 @@
       <li><a href="reference/api/megengine.distributed.make_allreduce_cb.html#megengine.distributed.make_allreduce_cb">make_allreduce_cb() (在 megengine.distributed 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.data.MapSampler.html#megengine.data.MapSampler">MapSampler (megengine.data 中的类)</a>
+</li>
+      <li><a href="reference/api/megengine.functional.matinv.html#megengine.functional.matinv">matinv() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.matmul.html#megengine.functional.matmul">matmul() (在 megengine.functional 模块中)</a>
 </li>
@@ -959,7 +1003,7 @@
     megengine.quantization.quantize
 
       <ul>
-        <li><a href="reference/api/megengine.quantization.quantize.html#module-megengine.quantization.quantize">模块</a>, <a href="reference/quantization.html#module-megengine.quantization.quantize">[1]</a>
+        <li><a href="reference/quantization.html#module-megengine.quantization.quantize">模块</a>
 </li>
       </ul></li>
       <li>
@@ -1035,12 +1079,14 @@
 </li>
       <li><a href="reference/api/megengine.distributed.new_group.html#megengine.distributed.new_group">new_group() (在 megengine.distributed 模块中)</a>
 </li>
-      <li><a href="reference/api/megengine.functional.norm.html#megengine.functional.norm">norm() (在 megengine.functional 模块中)</a>
+      <li><a href="reference/api/megengine.functional.vision.nms.html#megengine.functional.vision.nms">nms() (在 megengine.functional.vision 模块中)</a>
 </li>
-      <li><a href="reference/api/megengine.random.normal.html#megengine.random.normal">normal() (在 megengine.random 模块中)</a>
+      <li><a href="reference/api/megengine.functional.norm.html#megengine.functional.norm">norm() (在 megengine.functional 模块中)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/megengine.random.normal.html#megengine.random.normal">normal() (在 megengine.random 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.module.init.normal_.html#megengine.module.init.normal_">normal_() (在 megengine.module.init 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.data.transform.Normalize.html#megengine.data.transform.Normalize">Normalize (megengine.data.transform 中的类)</a>
@@ -1089,10 +1135,10 @@
 </li>
       <li><a href="reference/api/megengine.quantization.observer.PassiveObserver.html#megengine.quantization.observer.PassiveObserver">PassiveObserver (megengine.quantization.observer 中的类)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.functional.pow.html#megengine.functional.pow">pow() (在 megengine.functional 模块中)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.module.PReLU.html#megengine.module.PReLU">PReLU (megengine.module 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.functional.prelu.html#megengine.functional.prelu">prelu() (在 megengine.functional 模块中)</a>
@@ -1105,6 +1151,8 @@
         <li><a href="reference/api/megengine.functional.prod.html#megengine.functional.prod">(在 megengine.functional 模块中)</a>
 </li>
       </ul></li>
+      <li><a href="reference/api/megengine.quantization.propagate_qconfig.html#megengine.quantization.propagate_qconfig">propagate_qconfig() (在 megengine.quantization 模块中)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -1115,10 +1163,16 @@
 </li>
       <li><a href="reference/api/megengine.quantization.QConfig.html#megengine.quantization.QConfig">QConfig (megengine.quantization 中的类)</a>
 </li>
-      <li><a href="reference/api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule">QuantizedModule (megengine.module.quantized 中的类)</a>
+      <li><a href="reference/api/megengine.quantization.QParams.html#megengine.quantization.QParams">QParams (megengine.quantization 中的类)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.quantize.html#megengine.quantization.quantize">quantize() (在 megengine.quantization 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.quantize_qat.html#megengine.quantization.quantize_qat">quantize_qat() (在 megengine.quantization 模块中)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule">QuantizedModule (megengine.module.quantized 中的类)</a>
+</li>
       <li><a href="reference/api/megengine.quantization.QuantMode.html#megengine.quantization.QuantMode">QuantMode (megengine.quantization 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.module.QuantStub.html#megengine.module.QuantStub">QuantStub (megengine.module 中的类)</a>
@@ -1155,19 +1209,25 @@
 </li>
       <li><a href="reference/autodiff.html#megengine.autodiff.GradManager.release">release() (GradManager 方法)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.module.ReLU.html#megengine.module.ReLU">ReLU (megengine.module 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.functional.relu.html#megengine.functional.relu">relu() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.relu6.html#megengine.functional.relu6">relu6() (在 megengine.functional 模块中)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/megengine.functional.vision.remap.html#megengine.functional.vision.remap">remap() (在 megengine.functional.vision 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.functional.distributed.remote_recv.html#megengine.functional.distributed.remote_recv">remote_recv() (在 megengine.functional.distributed 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.distributed.remote_send.html#megengine.functional.distributed.remote_send">remote_send() (在 megengine.functional.distributed 模块中)</a>
 </li>
+      <li><a href="reference/api/megengine.functional.repeat.html#megengine.functional.repeat">repeat() (在 megengine.functional 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.data.ReplacementSampler.html#megengine.data.ReplacementSampler">ReplacementSampler (megengine.data 中的类)</a>
+</li>
+      <li><a href="reference/api/megengine.quantization.reset_qconfig.html#megengine.quantization.reset_qconfig">reset_qconfig() (在 megengine.quantization 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.Tensor.reshape.html#megengine.Tensor.reshape">reshape() (Tensor 方法)</a>
 
@@ -1178,6 +1238,10 @@
       <li><a href="reference/api/megengine.data.transform.Resize.html#megengine.data.transform.Resize">Resize (megengine.data.transform 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.functional.right_shift.html#megengine.functional.right_shift">right_shift() (在 megengine.functional 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.functional.vision.roi_align.html#megengine.functional.vision.roi_align">roi_align() (在 megengine.functional.vision 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.functional.vision.roi_pooling.html#megengine.functional.vision.roi_pooling">roi_pooling() (在 megengine.functional.vision 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.round.html#megengine.functional.round">round() (在 megengine.functional 模块中)</a>
 </li>
@@ -1233,10 +1297,10 @@
 </li>
       <li><a href="reference/api/megengine.Tensor.size.html#megengine.Tensor.size">size() (Tensor property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.module.Softmax.html#megengine.module.Softmax">Softmax (megengine.module 中的类)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/api/megengine.functional.softmax.html#megengine.functional.softmax">softmax() (在 megengine.functional 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.functional.softplus.html#megengine.functional.softplus">softplus() (在 megengine.functional 模块中)</a>
@@ -1273,6 +1337,8 @@
       </ul></li>
       <li><a href="reference/api/megengine.functional.svd.html#megengine.functional.svd">svd() (在 megengine.functional 模块中)</a>
 </li>
+      <li><a href="reference/api/megengine.functional.sync_batch_norm.html#megengine.functional.sync_batch_norm">sync_batch_norm() (在 megengine.functional 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.quantization.sync_ema_fakequant_qconfig.html#megengine.quantization.sync_ema_fakequant_qconfig">sync_ema_fakequant_qconfig() (在 megengine.quantization 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.module.SyncBatchNorm.html#megengine.module.SyncBatchNorm">SyncBatchNorm (megengine.module 中的类)</a>
@@ -1299,6 +1365,8 @@
 </li>
       <li><a href="reference/api/megengine.tensor.tensor.html#megengine.tensor.tensor">tensor() (在 megengine.tensor 模块中)</a>
 </li>
+      <li><a href="reference/api/megengine.functional.tile.html#megengine.functional.tile">tile() (在 megengine.functional 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.Tensor.to.html#megengine.Tensor.to">to() (Tensor 方法)</a>
 </li>
       <li><a href="reference/api/megengine.Tensor.tolist.html#megengine.Tensor.tolist">tolist() (Tensor 方法)</a>
@@ -1308,6 +1376,8 @@
       <li><a href="reference/api/megengine.data.transform.ToMode.html#megengine.data.transform.ToMode">ToMode (megengine.data.transform 中的类)</a>
 </li>
       <li><a href="reference/api/megengine.functional.topk.html#megengine.functional.topk">topk() (在 megengine.functional 模块中)</a>
+</li>
+      <li><a href="reference/api/megengine.functional.metric.topk_accuracy.html#megengine.functional.metric.topk_accuracy">topk_accuracy() (在 megengine.functional.metric 模块中)</a>
 </li>
       <li><a href="reference/api/megengine.data.transform.TorchTransformCompose.html#megengine.data.transform.TorchTransformCompose">TorchTransformCompose (megengine.data.transform 中的类)</a>
 </li>
@@ -1353,6 +1423,12 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/megengine.functional.vision.warp_affine.html#megengine.functional.vision.warp_affine">warp_affine() (在 megengine.functional.vision 模块中)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/megengine.functional.vision.warp_perspective.html#megengine.functional.vision.warp_perspective">warp_perspective() (在 megengine.functional.vision 模块中)</a>
+</li>
       <li><a href="reference/api/megengine.functional.where.html#megengine.functional.where">where() (在 megengine.functional 模块中)</a>
 </li>
   </ul></td>
@@ -1453,7 +1529,7 @@
 </li>
         <li><a href="reference/quantization.html#module-megengine.quantization.qconfig">megengine.quantization.qconfig</a>
 </li>
-        <li><a href="reference/api/megengine.quantization.quantize.html#module-megengine.quantization.quantize">megengine.quantization.quantize</a>, <a href="reference/quantization.html#module-megengine.quantization.quantize">[1]</a>
+        <li><a href="reference/quantization.html#module-megengine.quantization.quantize">megengine.quantization.quantize</a>
 </li>
         <li><a href="reference/quantization.html#module-megengine.quantization.utils">megengine.quantization.utils</a>
 </li>
@@ -1488,7 +1564,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

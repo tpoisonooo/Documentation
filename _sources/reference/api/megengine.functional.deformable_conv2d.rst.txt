@@ -1,0 +1,6 @@
+megengine.functional.deformable\_conv2d
+=======================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: deformable_conv2d

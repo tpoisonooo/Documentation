@@ -12,9 +12,20 @@ megengine.quantization.QConfig
    .. autosummary::
    
       ~QConfig.__init__
+      ~QConfig.count
+      ~QConfig.index
    
    
 
    
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~QConfig.act_fake_quant
+      ~QConfig.act_observer
+      ~QConfig.weight_fake_quant
+      ~QConfig.weight_observer
    
    

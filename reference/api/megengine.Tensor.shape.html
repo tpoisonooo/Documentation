@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.Tensor.shape &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.Tensor.shape &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -392,7 +392,23 @@
 <dl class="py method">
 <dt id="megengine.Tensor.shape">
 <em class="property"><span class="pre">property</span> </em><code class="sig-prename descclassname"><span class="pre">Tensor.</span></code><code class="sig-name descname"><span class="pre">shape</span></code><a class="headerlink" href="#megengine.Tensor.shape" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Returns a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a> or a <a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> represents tensor dimensions.</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>The shape of a tensor was usually represented by a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>.
+But if a tensor was treated as symbolic placeholder with tracing,
+it’s shape could also be a <a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>. See <a class="reference internal" href="megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> for more details.</p>
+</div>
+<p>The shape property is usually used to get the current shape of a tensor,
+but may also be used to reshape the tensor in-place by assigning a tuple of tensor dimensions to it.
+As with <a class="reference internal" href="megengine.functional.reshape.html#megengine.functional.reshape" title="megengine.functional.reshape"><code class="xref py py-func docutils literal notranslate"><span class="pre">reshape</span></code></a>, one of the new shape dimensions can be -1,
+in which case its value is inferred from the size of the tensor and the remaining dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>, <a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
 
 </div>
 
@@ -414,7 +430,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

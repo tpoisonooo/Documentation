@@ -1,0 +1,6 @@
+megengine.functional.matinv
+===========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: matinv

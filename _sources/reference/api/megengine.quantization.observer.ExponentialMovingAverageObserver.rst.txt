@@ -20,8 +20,8 @@ megengine.quantization.observer.ExponentialMovingAverageObserver
       ~ExponentialMovingAverageObserver.enable
       ~ExponentialMovingAverageObserver.eval
       ~ExponentialMovingAverageObserver.forward
-      ~ExponentialMovingAverageObserver.get_dtype
       ~ExponentialMovingAverageObserver.get_qparams
+      ~ExponentialMovingAverageObserver.get_quantized_dtype
       ~ExponentialMovingAverageObserver.load_state_dict
       ~ExponentialMovingAverageObserver.modules
       ~ExponentialMovingAverageObserver.named_buffers

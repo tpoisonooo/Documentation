@@ -14,6 +14,7 @@ megengine.module.qat.Linear
       ~Linear.__init__
       ~Linear.apply
       ~Linear.apply_quant_activation
+      ~Linear.apply_quant_bias
       ~Linear.apply_quant_weight
       ~Linear.buffers
       ~Linear.children

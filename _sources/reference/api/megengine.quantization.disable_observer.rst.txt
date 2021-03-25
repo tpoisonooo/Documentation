@@ -1,0 +1,6 @@
+megengine.quantization.disable\_observer
+========================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: disable_observer

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>模块式（Module） &#8212; MegEngine 1.2.0 文档</title>
+    <title>模块式（Module） &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
   <link href="../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -45,7 +45,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="megengine.module.Module" href="api/megengine.module.Module.html" />
-    <link rel="prev" title="megengine.functional.distributed.reduce_scatter_sum" href="api/megengine.functional.distributed.reduce_scatter_sum.html" />
+    <link rel="prev" title="megengine.functional.vision.nms" href="api/megengine.functional.vision.nms.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
   </head>
@@ -295,6 +295,11 @@
     </a>
    </li>
    <li class="toctree-l3">
+    <a class="reference internal" href="api/megengine.module.DeformableConv2d.html">
+     megengine.module.DeformableConv2d
+    </a>
+   </li>
+   <li class="toctree-l3">
     <a class="reference internal" href="api/megengine.module.AvgPool2d.html">
      megengine.module.AvgPool2d
     </a>
@@ -312,6 +317,11 @@
    <li class="toctree-l3">
     <a class="reference internal" href="api/megengine.module.AdaptiveMaxPool2d.html">
      megengine.module.AdaptiveMaxPool2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="api/megengine.module.DeformablePSROIPooling.html">
+     megengine.module.DeformablePSROIPooling
     </a>
    </li>
    <li class="toctree-l3">
@@ -768,10 +778,10 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.Elemwise.html#megengine.module.Elemwise" title="megengine.module.Elemwise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Elemwise</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> to do elemwise operator.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> to do <a class="reference internal" href="functional.html#module-megengine.functional.elemwise" title="megengine.functional.elemwise"><code class="xref py py-mod docutils literal notranslate"><span class="pre">elemwise</span></code></a> operator.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.Concat.html#megengine.module.Concat" title="megengine.module.Concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Concat</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> to do functional concat.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> to do functional <a class="reference internal" href="api/megengine.functional.concat.html#megengine.functional.concat" title="megengine.functional.concat"><code class="xref py py-func docutils literal notranslate"><span class="pre">concat</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -791,13 +801,16 @@
 <td><p>Applies a 2D convolution over an input tensor.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.ConvRelu2d.html#megengine.module.ConvRelu2d" title="megengine.module.ConvRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvRelu2d</span></code></a></p></td>
-<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including Conv2d and relu.</p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including <a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a> and <a class="reference internal" href="api/megengine.functional.relu.html#megengine.functional.relu" title="megengine.functional.relu"><code class="xref py py-func docutils literal notranslate"><span class="pre">relu</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.ConvTranspose2d.html#megengine.module.ConvTranspose2d" title="megengine.module.ConvTranspose2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvTranspose2d</span></code></a></p></td>
 <td><p>Applies a 2D transposed convolution over an input tensor.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.LocalConv2d.html#megengine.module.LocalConv2d" title="megengine.module.LocalConv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocalConv2d</span></code></a></p></td>
 <td><p>Applies a spatial convolution with untied kernels over an groupped channeled input 4D tensor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.DeformableConv2d.html#megengine.module.DeformableConv2d" title="megengine.module.DeformableConv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeformableConv2d</span></code></a></p></td>
+<td><p>Deformable Convolution.</p></td>
 </tr>
 </tbody>
 </table>
@@ -821,6 +834,9 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.AdaptiveMaxPool2d.html#megengine.module.AdaptiveMaxPool2d" title="megengine.module.AdaptiveMaxPool2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdaptiveMaxPool2d</span></code></a></p></td>
 <td><p>Applies a 2D max adaptive pooling over an input.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.DeformablePSROIPooling.html#megengine.module.DeformablePSROIPooling" title="megengine.module.DeformablePSROIPooling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeformablePSROIPooling</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -866,7 +882,7 @@
 <td><p>Applies Batch Normalization over a 4D tensor.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.SyncBatchNorm.html#megengine.module.SyncBatchNorm" title="megengine.module.SyncBatchNorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SyncBatchNorm</span></code></a></p></td>
-<td><p>Applies Synchronization Batch Normalization.</p></td>
+<td><p>Applies Synchronized Batch Normalization for distributed training.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.GroupNorm.html#megengine.module.GroupNorm" title="megengine.module.GroupNorm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GroupNorm</span></code></a></p></td>
 <td><p>Simple implementation of GroupNorm.</p></td>
@@ -934,13 +950,13 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.ConvBn2d.html#megengine.module.ConvBn2d" title="megengine.module.ConvBn2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBn2d</span></code></a></p></td>
-<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including Conv2d, BatchNorm2d.</p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including <a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a> and <a class="reference internal" href="api/megengine.module.BatchNorm2d.html#megengine.module.BatchNorm2d" title="megengine.module.BatchNorm2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2d</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.ConvBnRelu2d.html#megengine.module.ConvBnRelu2d" title="megengine.module.ConvBnRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code></a></p></td>
-<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including Conv2d, BatchNorm2d and relu.</p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> including <a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a>, <a class="reference internal" href="api/megengine.module.BatchNorm2d.html#megengine.module.BatchNorm2d" title="megengine.module.BatchNorm2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2d</span></code></a> and <a class="reference internal" href="api/megengine.functional.relu.html#megengine.functional.relu" title="megengine.functional.relu"><code class="xref py py-func docutils literal notranslate"><span class="pre">relu</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.BatchMatMulActivation.html#megengine.module.BatchMatMulActivation" title="megengine.module.BatchMatMulActivation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a></p></td>
-<td><p>Batched MatMul with activation(only relu supported), no transpose anywhere.</p></td>
+<td><p>Batched <a class="reference internal" href="api/megengine.functional.matmul.html#megengine.functional.matmul" title="megengine.functional.matmul"><code class="xref py py-func docutils literal notranslate"><span class="pre">matmul</span></code></a> with activation(only <a class="reference internal" href="api/megengine.functional.relu.html#megengine.functional.relu" title="megengine.functional.relu"><code class="xref py py-func docutils literal notranslate"><span class="pre">relu</span></code></a> supported), no transpose anywhere.</p></td>
 </tr>
 </tbody>
 </table>
@@ -972,37 +988,37 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QATModule</span></code></a></p></td>
-<td><p>Base class of quantized-float related Module, basically for QAT and Calibration.</p></td>
+<td><p>Base class of quantized-float related <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>, basically for QAT and Calibration.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.Linear.html#megengine.module.qat.Linear" title="megengine.module.qat.Linear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Linear</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Linear</span></code>.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> version of <a class="reference internal" href="api/megengine.module.Linear.html#megengine.module.Linear" title="megengine.module.Linear"><code class="xref py py-class docutils literal notranslate"><span class="pre">Linear</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.Elemwise.html#megengine.module.qat.Elemwise" title="megengine.module.qat.Elemwise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Elemwise</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to do elemwise operator with QAT support.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to do <a class="reference internal" href="functional.html#module-megengine.functional.elemwise" title="megengine.functional.elemwise"><code class="xref py py-mod docutils literal notranslate"><span class="pre">elemwise</span></code></a> operator with QAT support.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.Concat.html#megengine.module.qat.Concat" title="megengine.module.qat.Concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Concat</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to do functional concat with QAT support.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to do functional <a class="reference internal" href="api/megengine.functional.concat.html#megengine.functional.concat" title="megengine.functional.concat"><code class="xref py py-func docutils literal notranslate"><span class="pre">concat</span></code></a> with QAT support.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.Conv2d.html#megengine.module.qat.Conv2d" title="megengine.module.qat.Conv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Conv2d</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> Conv2d with QAT support.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> <a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a> with QAT support.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.ConvRelu2d.html#megengine.module.qat.ConvRelu2d" title="megengine.module.qat.ConvRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvRelu2d</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> include Conv2d and Relu with QAT support.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> include <a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a> and <a class="reference internal" href="api/megengine.functional.relu.html#megengine.functional.relu" title="megengine.functional.relu"><code class="xref py py-func docutils literal notranslate"><span class="pre">relu</span></code></a> with QAT support.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.ConvBn2d.html#megengine.module.qat.ConvBn2d" title="megengine.module.qat.ConvBn2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBn2d</span></code></a></p></td>
-<td><p>A fused <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> including Conv2d, BatchNorm2d with QAT support.</p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> including <a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a> and <a class="reference internal" href="api/megengine.module.BatchNorm2d.html#megengine.module.BatchNorm2d" title="megengine.module.BatchNorm2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2d</span></code></a> with QAT support.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.ConvBnRelu2d.html#megengine.module.qat.ConvBnRelu2d" title="megengine.module.qat.ConvBnRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code></a></p></td>
-<td><p>A fused <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> including Conv2d, BatchNorm2d and relu with QAT support.</p></td>
+<td><p>A fused <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> including <a class="reference internal" href="api/megengine.module.Conv2d.html#megengine.module.Conv2d" title="megengine.module.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a>, <a class="reference internal" href="api/megengine.module.BatchNorm2d.html#megengine.module.BatchNorm2d" title="megengine.module.BatchNorm2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2d</span></code></a> and <a class="reference internal" href="api/megengine.functional.relu.html#megengine.functional.relu" title="megengine.functional.relu"><code class="xref py py-func docutils literal notranslate"><span class="pre">relu</span></code></a> with QAT support.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.BatchMatMulActivation.html#megengine.module.qat.BatchMatMulActivation" title="megengine.module.qat.BatchMatMulActivation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a></p></td>
-<td><p></p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> <a class="reference internal" href="api/megengine.module.BatchMatMulActivation.html#megengine.module.BatchMatMulActivation" title="megengine.module.BatchMatMulActivation"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a> with QAT support.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.qat.QuantStub.html#megengine.module.qat.QuantStub" title="megengine.module.qat.QuantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantStub</span></code></a></p></td>
-<td><p>A helper QATModule simply return input, but will quantize input after converted to <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a>.</p></td>
+<td><p>A helper <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> simply return input, but will quantize input after converted to <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.qat.DequantStub.html#megengine.module.qat.DequantStub" title="megengine.module.qat.DequantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DequantStub</span></code></a></p></td>
-<td><p>A helper QATModule simply return input, but will de-quantize input after converted to <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a>.</p></td>
+<td><p>A helper <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> simply return input, but will de-quantize input after converted to <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1016,37 +1032,37 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a></p></td>
-<td><p>Base class of quantized Module, which should be converted from QATModule and not support traning.</p></td>
+<td><p>Base class of quantized <a class="reference internal" href="api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>, which should be converted from <a class="reference internal" href="api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> and not support traning.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.Linear.html#megengine.module.quantized.Linear" title="megengine.module.quantized.Linear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Linear</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Linear</span></code>.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.Linear.html#megengine.module.qat.Linear" title="megengine.module.qat.Linear"><code class="xref py py-class docutils literal notranslate"><span class="pre">Linear</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.Elemwise.html#megengine.module.quantized.Elemwise" title="megengine.module.quantized.Elemwise"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Elemwise</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Elemwise</span></code>.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.Elemwise.html#megengine.module.qat.Elemwise" title="megengine.module.qat.Elemwise"><code class="xref py py-class docutils literal notranslate"><span class="pre">Elemwise</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.Concat.html#megengine.module.quantized.Concat" title="megengine.module.quantized.Concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Concat</span></code></a></p></td>
-<td><p>A <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a> to do quantized concat, used for inference only.</p></td>
+<td><p>A <a class="reference internal" href="api/megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a> to do quantized <a class="reference internal" href="api/megengine.functional.concat.html#megengine.functional.concat" title="megengine.functional.concat"><code class="xref py py-func docutils literal notranslate"><span class="pre">concat</span></code></a>, used for inference only.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.Conv2d.html#megengine.module.quantized.Conv2d" title="megengine.module.quantized.Conv2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Conv2d</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code>.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.Conv2d.html#megengine.module.qat.Conv2d" title="megengine.module.qat.Conv2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2d</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.ConvRelu2d.html#megengine.module.quantized.ConvRelu2d" title="megengine.module.quantized.ConvRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvRelu2d</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvRelu2d</span></code>.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.ConvRelu2d.html#megengine.module.qat.ConvRelu2d" title="megengine.module.qat.ConvRelu2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConvRelu2d</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.ConvBn2d.html#megengine.module.quantized.ConvBn2d" title="megengine.module.quantized.ConvBn2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBn2d</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvBn2d</span></code>.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.ConvBn2d.html#megengine.module.qat.ConvBn2d" title="megengine.module.qat.ConvBn2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConvBn2d</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.ConvBnRelu2d.html#megengine.module.quantized.ConvBnRelu2d" title="megengine.module.quantized.ConvBnRelu2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code>.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.ConvBnRelu2d.html#megengine.module.qat.ConvBnRelu2d" title="megengine.module.qat.ConvBnRelu2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConvBnRelu2d</span></code></a>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.BatchMatMulActivation.html#megengine.module.quantized.BatchMatMulActivation" title="megengine.module.quantized.BatchMatMulActivation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a></p></td>
-<td><p></p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.BatchMatMulActivation.html#megengine.module.qat.BatchMatMulActivation" title="megengine.module.qat.BatchMatMulActivation"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchMatMulActivation</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/megengine.module.quantized.QuantStub.html#megengine.module.quantized.QuantStub" title="megengine.module.quantized.QuantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantStub</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">QuantStub</span></code>, will convert input to quantized dtype.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.QuantStub.html#megengine.module.qat.QuantStub" title="megengine.module.qat.QuantStub"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantStub</span></code></a>, will convert input to quantized dtype.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.module.quantized.DequantStub.html#megengine.module.quantized.DequantStub" title="megengine.module.quantized.DequantStub"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DequantStub</span></code></a></p></td>
-<td><p>Quantized version of <code class="xref py py-class docutils literal notranslate"><span class="pre">DequantStub</span></code>, will restore quantized input to float32 dtype.</p></td>
+<td><p>Quantized version of <a class="reference internal" href="api/megengine.module.qat.DequantStub.html#megengine.module.qat.DequantStub" title="megengine.module.qat.DequantStub"><code class="xref py py-class docutils literal notranslate"><span class="pre">DequantStub</span></code></a>, will restore quantized input to float32 dtype.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1071,7 +1087,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

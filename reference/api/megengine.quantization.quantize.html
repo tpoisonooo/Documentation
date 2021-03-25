@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.quantization.quantize &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.quantization.quantize &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -42,8 +42,8 @@
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="megengine.quantization.QuantMode" href="megengine.quantization.QuantMode.html" />
-    <link rel="prev" title="megengine.quantization.fake_quant.TQT" href="megengine.quantization.fake_quant.TQT.html" />
+    <link rel="next" title="megengine.quantization.apply_easy_quant" href="megengine.quantization.apply_easy_quant.html" />
+    <link rel="prev" title="megengine.quantization.quantize_qat" href="megengine.quantization.quantize_qat.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
   </head>
@@ -302,14 +302,74 @@
      megengine.quantization.fake_quant.TQT
     </a>
    </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.quantize_qat.html">
+     megengine.quantization.quantize_qat
+    </a>
+   </li>
    <li class="toctree-l3 current active">
     <a class="current reference internal" href="#">
      megengine.quantization.quantize
     </a>
    </li>
    <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.apply_easy_quant.html">
+     megengine.quantization.apply_easy_quant
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.enable_fake_quant.html">
+     megengine.quantization.enable_fake_quant
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.disable_fake_quant.html">
+     megengine.quantization.disable_fake_quant
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.enable_observer.html">
+     megengine.quantization.enable_observer
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.disable_observer.html">
+     megengine.quantization.disable_observer
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.propagate_qconfig.html">
+     megengine.quantization.propagate_qconfig
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.reset_qconfig.html">
+     megengine.quantization.reset_qconfig
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.QParams.html">
+     megengine.quantization.QParams
+    </a>
+   </li>
+   <li class="toctree-l3">
     <a class="reference internal" href="megengine.quantization.QuantMode.html">
      megengine.quantization.QuantMode
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.create_qparams.html">
+     megengine.quantization.create_qparams
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.fake_quant_bias.html">
+     megengine.quantization.fake_quant_bias
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.quantization.fake_quant_tensor.html">
+     megengine.quantization.fake_quant_tensor
     </a>
    </li>
   </ul>
@@ -372,50 +432,25 @@
               
               <div>
                 
-  <div class="section" id="module-megengine.quantization.quantize">
-<span id="megengine-quantization-quantize"></span><h1>megengine.quantization.quantize<a class="headerlink" href="#module-megengine.quantization.quantize" title="永久链接至标题">¶</a></h1>
-<p class="rubric">Functions</p>
-<table class="longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_easy_quant</span></code>(module, data[, start, …])</p></td>
-<td><p>Implementation of <code class="docutils literal notranslate"><span class="pre">EasyQuant</span></code>: <a class="reference external" href="https://arxiv.org/pdf/2006.16669">https://arxiv.org/pdf/2006.16669</a>.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_fake_quant</span></code>(module)</p></td>
-<td><p>Recursively disable <code class="docutils literal notranslate"><span class="pre">module</span></code> fake quantization in QATModule through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">disable_observer</span></code>(module)</p></td>
-<td><p>Recursively disable <code class="docutils literal notranslate"><span class="pre">module</span></code> observer in QATModule through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_fake_quant</span></code>(module)</p></td>
-<td><p>Recursively enable <code class="docutils literal notranslate"><span class="pre">module</span></code> fake quantization in QATModule through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_observer</span></code>(module)</p></td>
-<td><p>Recursively enable <code class="docutils literal notranslate"><span class="pre">module</span></code> observer in QATModule through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hook_qat_module</span></code>(module, func)</p></td>
-<td><p>Add hooks for all <a class="reference internal" href="megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> submodule</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_qat</span></code>(mod)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">propagate_qconfig</span></code>(module, qconfig)</p></td>
-<td><p>Recursively set <code class="docutils literal notranslate"><span class="pre">module</span></code>’s qconfig through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">quantize</span></code>(module[, inplace, mapping])</p></td>
-<td><p>Recursively convert <a class="reference internal" href="megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to <a class="reference internal" href="megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a> through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code>.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">quantize_qat</span></code>(module[, inplace, qconfig, mapping])</p></td>
-<td><p>Recursively convert float <a class="reference internal" href="megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> to <a class="reference internal" href="megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code> and set qconfig relatively.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_qconfig</span></code>(module, qconfig[, inplace])</p></td>
-<td><p>Reset <code class="xref py py-class docutils literal notranslate"><span class="pre">_FakeQuantize</span></code> and <a class="reference internal" href="megengine.quantization.Observer.html#megengine.quantization.Observer" title="megengine.quantization.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> according to <code class="docutils literal notranslate"><span class="pre">qconfig</span></code></p></td>
-</tr>
-</tbody>
-</table>
+  <div class="section" id="megengine-quantization-quantize">
+<h1>megengine.quantization.quantize<a class="headerlink" href="#megengine-quantization-quantize" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt id="megengine.quantization.quantize">
+<code class="sig-name descname"><span class="pre">quantize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/megengine/quantization/quantize.html#quantize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#megengine.quantization.quantize" title="永久链接至目标">¶</a></dt>
+<dd><p>Recursively convert <a class="reference internal" href="megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> to <a class="reference internal" href="megengine.module.quantized.QuantizedModule.html#megengine.module.quantized.QuantizedModule" title="megengine.module.quantized.QuantizedModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QuantizedModule</span></code></a>
+through <code class="xref py py-meth docutils literal notranslate"><span class="pre">apply</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code>) – root module to do convert recursively.</p></li>
+<li><p><strong>inplace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – whether to convert submodules in-place.</p></li>
+<li><p><strong>mapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]) – a dict indicating how to convert custom modules from QATModule to
+QuantizedModule. Will be combined with internal default convert mapping dict.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 
@@ -436,7 +471,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

@@ -1,0 +1,6 @@
+megengine.functional.deformable\_psroi\_pooling
+===============================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: deformable_psroi_pooling

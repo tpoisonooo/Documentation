@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>量化训练 &#8212; MegEngine 1.2.0 文档</title>
+    <title>量化训练 &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -330,7 +330,7 @@
 <p>对应到具体的 MegEngine 接口中，三阶段如下：</p>
 <ol class="arabic simple">
 <li><p>基于 <a class="reference internal" href="../../reference/api/megengine.module.Module.html#megengine.module.Module" title="megengine.module.Module"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a> 搭建网络模型，并按照正常的浮点模型方式进行训练；</p></li>
-<li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code> 将浮点模型转换为 QFloat 模型，
+<li><p>使用 <a class="reference internal" href="../../reference/api/megengine.quantization.quantize_qat.html#megengine.quantization.quantize_qat" title="megengine.quantization.quantize_qat"><code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code></a> 将浮点模型转换为 QFloat 模型，
 其中可被量化的关键 Module 会被转换为 <a class="reference internal" href="../../reference/api/megengine.module.qat.QATModule.html#megengine.module.qat.QATModule" title="megengine.module.qat.QATModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">QATModule</span></code></a> ，
 并基于量化配置 <a class="reference internal" href="../../reference/api/megengine.quantization.QConfig.html#megengine.quantization.QConfig" title="megengine.quantization.QConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">QConfig</span></code></a> 设置好假量化算子和数值统计方式；</p></li>
 <li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize</span></code> 将 QFloat 模型转换为 Q 模型，
@@ -343,7 +343,7 @@
 <div class="section" id="id3">
 <h2>接口介绍<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>在 MegEngine 中，最上层的接口是配置如何量化的 <a class="reference internal" href="../../reference/api/megengine.quantization.QConfig.html#megengine.quantization.QConfig" title="megengine.quantization.QConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">QConfig</span></code></a>
-和模型转换模块里的 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code> 与 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize</span></code> 。</p>
+和模型转换模块里的 <a class="reference internal" href="../../reference/api/megengine.quantization.quantize_qat.html#megengine.quantization.quantize_qat" title="megengine.quantization.quantize_qat"><code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code></a> 与 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize</span></code> 。</p>
 <div class="section" id="qconfig">
 <h3>QConfig<a class="headerlink" href="#qconfig" title="永久链接至标题">¶</a></h3>
 <p>QConfig 包括了 <a class="reference internal" href="../../reference/api/megengine.quantization.Observer.html#megengine.quantization.Observer" title="megengine.quantization.Observer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observer</span></code></a> 和 <a class="reference internal" href="../../reference/api/megengine.quantization.FakeQuantize.html#megengine.quantization.FakeQuantize" title="megengine.quantization.FakeQuantize"><code class="xref py py-class docutils literal notranslate"><span class="pre">FakeQuantize</span></code></a> 两部分。
@@ -457,7 +457,7 @@ Observer 和 FakeQuantize 都支持 <code class="xref py py-meth docutils litera
 <ol class="arabic simple">
 <li><p>修改网络结构，使用已经 Fuse 好的 ConvBn2d、ConvBnRelu2d、ElementWise 代替原先的 Module；</p></li>
 <li><p>在正常模式下预训练模型，并在每轮迭代保存网络检查点；</p></li>
-<li><p>调用 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code> 转换模型，并进行 finetune；</p></li>
+<li><p>调用 <a class="reference internal" href="../../reference/api/megengine.quantization.quantize_qat.html#megengine.quantization.quantize_qat" title="megengine.quantization.quantize_qat"><code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code></a> 转换模型，并进行 finetune；</p></li>
 <li><p>调用 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize</span></code> 转换为量化模型，并执行 dump 用于后续模型部署。</p></li>
 </ol>
 <p>网络结构见 <code class="docutils literal notranslate"><span class="pre">resnet.py</span></code> ，相比惯常写法，我们修改了其中一些子 Module，
@@ -503,7 +503,7 @@ Observer 和 FakeQuantize 都支持 <code class="xref py py-meth docutils litera
     <span class="n">optimizer</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>再调用 <code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code> 来将网络转换为 QATModule：</p>
+<p>再调用 <a class="reference internal" href="../../reference/api/megengine.quantization.quantize_qat.html#megengine.quantization.quantize_qat" title="megengine.quantization.quantize_qat"><code class="xref py py-func docutils literal notranslate"><span class="pre">quantize_qat</span></code></a> 来将网络转换为 QATModule：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="o">~.</span><span class="n">quantization</span> <span class="kn">import</span> <span class="nn">ema_fakequant_qconfig</span>
 <span class="kn">from</span> <span class="o">~.</span><span class="n">quantization</span><span class="o">.</span><span class="n">quantize</span> <span class="kn">import</span> <span class="nn">quantize_qat</span>
 
@@ -581,7 +581,7 @@ Observer 和 FakeQuantize 都支持 <code class="xref py py-meth docutils litera
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

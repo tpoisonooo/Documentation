@@ -1,0 +1,6 @@
+megengine.functional.repeat
+===========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: repeat

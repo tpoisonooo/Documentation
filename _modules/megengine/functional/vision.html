@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.functional.vision &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.c9faddf98927557166f1.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "_modules/megengine/functional/vision.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.functional.vision 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">..core._imperative_rt.core2</span> <span class="kn">import</span> <span class="n">apply</span>
+<span class="kn">from</span> <span class="nn">..core.ops</span> <span class="kn">import</span> <span class="n">builtin</span>
+<span class="kn">from</span> <span class="nn">..core.tensor</span> <span class="kn">import</span> <span class="n">megbrain_graph</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">..core.tensor.utils</span> <span class="kn">import</span> <span class="n">astensor1d</span>
+<span class="kn">from</span> <span class="nn">..jit.tracing</span> <span class="kn">import</span> <span class="n">is_tracing</span>
+<span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">.elemwise</span> <span class="kn">import</span> <span class="n">floor</span>
+<span class="kn">from</span> <span class="nn">.math</span> <span class="kn">import</span> <span class="n">argsort</span>
+<span class="kn">from</span> <span class="nn">.tensor</span> <span class="kn">import</span> <span class="n">broadcast_to</span><span class="p">,</span> <span class="n">concat</span><span class="p">,</span> <span class="n">expand_dims</span><span class="p">,</span> <span class="n">reshape</span>
+
+
+<span class="k">def</span> <span class="nf">cvt_color</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert images from one format to another</span>
+
+<span class="sd">    :param inp: input images.</span>
+<span class="sd">    :param mode: format mode.</span>
+<span class="sd">    :return: convert result.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        import megengine as mge</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = mge.tensor(np.array([[[[-0.58675045, 1.7526233, 0.10702174]]]]).astype(np.float32))</span>
+<span class="sd">        y = F.vision.cvt_color(x, mode=&quot;RGB2GRAY&quot;)</span>
+<span class="sd">        print(y.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[[[0.86555195]]]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">builtin</span><span class="o">.</span><span class="n">CvtColor</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="s2">&quot;unspport mode for cvt_color&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">builtin</span><span class="o">.</span><span class="n">CvtColor</span><span class="o">.</span><span class="n">Mode</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">builtin</span><span class="o">.</span><span class="n">CvtColor</span><span class="o">.</span><span class="n">Mode</span><span class="p">)</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">CvtColor</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<div class="viewcode-block" id="roi_pooling"><a class="viewcode-back" href="../../../reference/api/megengine.functional.vision.roi_pooling.html#megengine.functional.vision.roi_pooling">[文档]</a><span class="k">def</span> <span class="nf">roi_pooling</span><span class="p">(</span>
+    <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">rois</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">output_shape</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;max&quot;</span><span class="p">,</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies roi pooling on input feature.</span>
+
+<span class="sd">    :param inp: tensor that represents the input feature, `(N, C, H, W)` images.</span>
+<span class="sd">    :param rois: `(K, 5)` boxes. First column is the index into N. The other 4 columns are xyxy.</span>
+<span class="sd">    :param output_shape: `(height, width)` of output rois feature.</span>
+<span class="sd">    :param mode: &quot;max&quot; or &quot;average&quot;, use max/average align just like max/average pooling. Default: &quot;max&quot;</span>
+<span class="sd">    :param scale: scale the input boxes by this number. Default: 1.0</span>
+<span class="sd">    :return: `(K, C, output_shape[0], output_shape[1])` feature of rois.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">            import numpy as np</span>
+<span class="sd">            from megengine import tensor</span>
+<span class="sd">            import megengine.functional as F</span>
+
+<span class="sd">            np.random.seed(42)</span>
+<span class="sd">            inp = tensor(np.random.randn(1, 1, 128, 128))</span>
+<span class="sd">            rois = tensor(np.random.random((4, 5)))</span>
+<span class="sd">            y = F.vision.roi_pooling(inp, rois, (2, 2))</span>
+<span class="sd">            print(y.numpy()[0].round(decimals=4))</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">            [[[-0.1383 -0.1383]</span>
+<span class="sd">              [-0.5035 -0.5035]]]</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">],</span> <span class="s2">&quot;only max/average mode is supported&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">)</span>
+
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ROIPooling</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
+    <span class="n">inp</span><span class="p">,</span> <span class="n">rois</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">rois</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span>
+        <span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">rois</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="roi_align"><a class="viewcode-back" href="../../../reference/api/megengine.functional.vision.roi_align.html#megengine.functional.vision.roi_align">[文档]</a><span class="k">def</span> <span class="nf">roi_align</span><span class="p">(</span>
+    <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">rois</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">output_shape</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">],</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;average&quot;</span><span class="p">,</span>
+    <span class="n">spatial_scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">sample_points</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">aligned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies roi align on input feature.</span>
+
+<span class="sd">    :param inp: tensor that represents the input feature, shape is `(N, C, H, W)`.</span>
+<span class="sd">    :param rois: `(N, 5)` boxes. First column is the box index. The other 4 columns are ``xyxy``.</span>
+<span class="sd">    :param output_shape: `(height, width)` shape of output rois feature.</span>
+<span class="sd">    :param mode: &quot;max&quot; or &quot;average&quot;, use max/average align just like max/average pooling. Default: &quot;average&quot;</span>
+<span class="sd">    :param spatial_scale: scale the input boxes by this number. Default: 1.0</span>
+<span class="sd">    :param sample_points: number of inputs samples to take for each output sample.</span>
+<span class="sd">        0 to take samples densely. Default: 2</span>
+<span class="sd">    :param aligned: wheather to align the input feature, with `aligned=True`,</span>
+<span class="sd">        we first appropriately scale the ROI and then shift it by -0.5. Default: True</span>
+<span class="sd">    :return: output tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">            import numpy as np</span>
+<span class="sd">            from megengine import tensor</span>
+<span class="sd">            import megengine.functional as F</span>
+
+<span class="sd">            np.random.seed(42)</span>
+<span class="sd">            inp = tensor(np.random.randn(1, 1, 128, 128))</span>
+<span class="sd">            rois = tensor(np.random.random((4, 5)))</span>
+<span class="sd">            y = F.vision.roi_align(inp, rois, (2, 2))</span>
+<span class="sd">            print(y.numpy()[0].round(decimals=4))</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">            [[[0.175  0.175 ]</span>
+<span class="sd">              [0.1359 0.1359]]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;max&quot;</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">],</span> <span class="s2">&quot;only max/average mode is supported&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">)</span>
+    <span class="n">pooled_height</span><span class="p">,</span> <span class="n">pooled_width</span> <span class="o">=</span> <span class="n">output_shape</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sample_points</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">sample_points</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample_points</span><span class="p">,</span> <span class="n">sample_points</span><span class="p">)</span>
+    <span class="n">sample_height</span><span class="p">,</span> <span class="n">sample_width</span> <span class="o">=</span> <span class="n">sample_points</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="k">if</span> <span class="n">aligned</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ROIAlign</span><span class="p">(</span>
+        <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+        <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;NCHW&quot;</span><span class="p">,</span>
+        <span class="n">spatial_scale</span><span class="o">=</span><span class="n">spatial_scale</span><span class="p">,</span>
+        <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+        <span class="n">pooled_height</span><span class="o">=</span><span class="n">pooled_height</span><span class="p">,</span>
+        <span class="n">pooled_width</span><span class="o">=</span><span class="n">pooled_width</span><span class="p">,</span>
+        <span class="n">sample_height</span><span class="o">=</span><span class="n">sample_height</span><span class="p">,</span>
+        <span class="n">sample_width</span><span class="o">=</span><span class="n">sample_width</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">inp</span><span class="p">,</span> <span class="n">rois</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">rois</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">rois</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="nms"><a class="viewcode-back" href="../../../reference/api/megengine.functional.vision.nms.html#megengine.functional.vision.nms">[文档]</a><span class="k">def</span> <span class="nf">nms</span><span class="p">(</span>
+    <span class="n">boxes</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">iou_thresh</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">max_output</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs non-maximum suppression (NMS) on the boxes according to their intersection-over-union(IoU).</span>
+
+<span class="sd">    :param boxes: tensor of shape `(N, 4)`; the boxes to perform nms on; each box is expected to be in `(x1, y1, x2, y2)` format.</span>
+<span class="sd">    :param iou_thresh: IoU threshold for overlapping.</span>
+<span class="sd">    :param scores: tensor of shape `(N,)`, the score of boxes.</span>
+<span class="sd">    :param max_output: the maximum number of boxes to keep; it is optional if this operator is not traced</span>
+<span class="sd">        otherwise it required to be specified; if it is not specified, all boxes are kept.</span>
+<span class="sd">    :return: indices of the elements that have been kept by NMS.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = np.zeros((100,4))</span>
+<span class="sd">        np.random.seed(42)</span>
+<span class="sd">        x[:,:2] = np.random.rand(100,2)*20</span>
+<span class="sd">        x[:,2:] = np.random.rand(100,2)*20 + 100</span>
+<span class="sd">        scores = tensor(np.random.rand(100))</span>
+<span class="sd">        inp = tensor(x)</span>
+<span class="sd">        result = F.vision.nms(inp, scores, iou_thresh=0.7)</span>
+<span class="sd">        print(result.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [75 69]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">boxes</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">boxes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="p">),</span> <span class="s2">&quot;the expected shape of boxes is (N, 4)&quot;</span>
+    <span class="k">assert</span> <span class="n">scores</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;the expected shape of scores is (N,)&quot;</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">boxes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">scores</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">),</span> <span class="s2">&quot;number of boxes and scores are not matched&quot;</span>
+
+    <span class="n">boxes</span> <span class="o">=</span> <span class="n">boxes</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+    <span class="n">sorted_idx</span> <span class="o">=</span> <span class="n">argsort</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">boxes</span> <span class="o">=</span> <span class="n">boxes</span><span class="p">[</span><span class="n">sorted_idx</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">is_tracing</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">max_output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">max_output</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">),</span> <span class="s2">&quot;max_output should be specified under tracing&quot;</span>
+
+    <span class="k">if</span> <span class="n">max_output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">max_output</span> <span class="o">=</span> <span class="n">boxes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">NMSKeep</span><span class="p">(</span><span class="n">iou_thresh</span><span class="p">,</span> <span class="n">max_output</span><span class="p">)</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="n">boxes</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">indices</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">inp</span><span class="p">)</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span> <span class="n">count</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">keep_inds</span> <span class="o">=</span> <span class="n">sorted_idx</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">keep_inds</span></div>
+
+
+<div class="viewcode-block" id="remap"><a class="viewcode-back" href="../../../reference/api/megengine.functional.vision.remap.html#megengine.functional.vision.remap">[文档]</a><span class="k">def</span> <span class="nf">remap</span><span class="p">(</span>
+    <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">map_xy</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">border_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;REPLICATE&quot;</span><span class="p">,</span>
+    <span class="n">scalar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">interp_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies remap transformation to batched 2D images.</span>
+
+<span class="sd">    The input images are transformed to the output images by the tensor map_xy.</span>
+<span class="sd">    The output&#39;s H and W are same as map_xy&#39;s H and W.</span>
+
+<span class="sd">    :param inp: input image</span>
+<span class="sd">    :param map_xy: (batch, oh, ow, 2) transformation matrix</span>
+<span class="sd">    :param border_mode: pixel extrapolation method.</span>
+<span class="sd">        Default: &quot;REPLICATE&quot;. Currently also support &quot;CONSTANT&quot;, &quot;REFLECT&quot;,</span>
+<span class="sd">        &quot;REFLECT_101&quot;, &quot;WRAP&quot;.</span>
+<span class="sd">    :param scalar: value used in case of a constant border. Default: 0</span>
+<span class="sd">    :param interp_mode: interpolation methods.</span>
+<span class="sd">        Default: &quot;LINEAR&quot;. Currently only support &quot;LINEAR&quot; mode.</span>
+<span class="sd">    :return: output tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+<span class="sd">        inp_shape = (1, 1, 4, 4)</span>
+<span class="sd">        inp = tensor(np.arange(16, dtype=np.float32).reshape(inp_shape))</span>
+<span class="sd">        map_xy_shape = (1, 2, 2, 2)</span>
+<span class="sd">        map_xy = tensor(np.array([[[1., 0.],[0., 1.]],</span>
+<span class="sd">                            [[0., 1.],[0., 1.]]],</span>
+<span class="sd">                             dtype=np.float32).reshape(map_xy_shape))</span>
+<span class="sd">        out = F.vision.remap(inp, map_xy)</span>
+<span class="sd">        print(out.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[[[1. 4.]</span>
+<span class="sd">           [4. 4.]]]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Remap</span><span class="p">(</span>
+        <span class="n">imode</span><span class="o">=</span><span class="n">interp_mode</span><span class="p">,</span> <span class="n">border_type</span><span class="o">=</span><span class="n">border_mode</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;NCHW&quot;</span><span class="p">,</span> <span class="n">scalar</span><span class="o">=</span><span class="n">scalar</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="p">(</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">megbrain_graph</span><span class="o">.</span><span class="n">VarNode</span><span class="p">)),</span> <span class="s2">&quot;inp must be Tensor type&quot;</span>
+    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">map_xy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="warp_affine"><a class="viewcode-back" href="../../../reference/api/megengine.functional.vision.warp_affine.html#megengine.functional.vision.warp_affine">[文档]</a><span class="k">def</span> <span class="nf">warp_affine</span><span class="p">(</span>
+    <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">weight</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">out_shape</span><span class="p">,</span>
+    <span class="n">border_mode</span><span class="o">=</span><span class="s2">&quot;REPLICATE&quot;</span><span class="p">,</span>
+    <span class="n">border_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;NHWC&quot;</span><span class="p">,</span>
+    <span class="n">imode</span><span class="o">=</span><span class="s2">&quot;LINEAR&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Batched affine transform on 2D images.</span>
+
+<span class="sd">    :param inp: input image.</span>
+<span class="sd">    :param weight: weight tensor.</span>
+<span class="sd">    :param out_shape: output tensor shape.</span>
+<span class="sd">    :param border_mode: pixel extrapolation method.</span>
+<span class="sd">        Default: &quot;WRAP&quot;. Currently &quot;CONSTANT&quot;, &quot;REFLECT&quot;,</span>
+<span class="sd">        &quot;REFLECT_101&quot;, &quot;ISOLATED&quot;, &quot;WRAP&quot;, &quot;REPLICATE&quot;, &quot;TRANSPARENT&quot; are supported.</span>
+<span class="sd">    :param border_val: value used in case of a constant border. Default: 0</span>
+<span class="sd">    :param format: &quot;NHWC&quot; as default based on historical concerns,</span>
+<span class="sd">        &quot;NCHW&quot; is also supported. Default: &quot;NCHW&quot;.</span>
+<span class="sd">    :param imode: interpolation methods. Could be &quot;LINEAR&quot;, &quot;NEAREST&quot;, &quot;CUBIC&quot;, &quot;AREA&quot;.</span>
+<span class="sd">        Default: &quot;LINEAR&quot;.</span>
+<span class="sd">    :return: output tensor.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">    Here all available options for params are listed,</span>
+<span class="sd">    however it does not mean that you can use all the combinations.</span>
+<span class="sd">    On different platforms, different combinations are supported.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">WarpAffine</span><span class="p">(</span>
+        <span class="n">border_mode</span><span class="o">=</span><span class="n">border_mode</span><span class="p">,</span> <span class="n">border_val</span><span class="o">=</span><span class="n">border_val</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="n">imode</span><span class="o">=</span><span class="n">imode</span>
+    <span class="p">)</span>
+    <span class="n">out_shape</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">astensor1d</span><span class="p">(</span><span class="n">out_shape</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">out_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="warp_perspective"><a class="viewcode-back" href="../../../reference/api/megengine.functional.vision.warp_perspective.html#megengine.functional.vision.warp_perspective">[文档]</a><span class="k">def</span> <span class="nf">warp_perspective</span><span class="p">(</span>
+    <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">M</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">dsize</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">],</span>
+    <span class="n">border_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;REPLICATE&quot;</span><span class="p">,</span>
+    <span class="n">border_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">interp_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies perspective transformation to batched 2D images.</span>
+
+<span class="sd">    The input images are transformed to the output images by the transformation matrix:</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">            \text{output}(n, c, h, w) = \text{input} \left( n, c,</span>
+<span class="sd">                \frac{M_{00}h + M_{01}w + M_{02}}{M_{20}h + M_{21}w + M_{22}},</span>
+<span class="sd">                \frac{M_{10}h + M_{11}w + M_{12}}{M_{20}h + M_{21}w + M_{22}}</span>
+<span class="sd">                \right)</span>
+
+<span class="sd">    :param inp: input image.</span>
+<span class="sd">    :param M: `(batch, 3, 3)` transformation matrix.</span>
+<span class="sd">    :param dsize: `(h, w)` size of the output image.</span>
+<span class="sd">    :param border_mode: pixel extrapolation method.</span>
+<span class="sd">        Default: &quot;REPLICATE&quot;. Currently also support &quot;CONSTANT&quot;, &quot;REFLECT&quot;,</span>
+<span class="sd">        &quot;REFLECT_101&quot;, &quot;WRAP&quot;.</span>
+<span class="sd">    :param border_val: value used in case of a constant border. Default: 0</span>
+<span class="sd">    :param interp_mode: interpolation methods.</span>
+<span class="sd">        Default: &quot;LINEAR&quot;. Currently only support &quot;LINEAR&quot; mode.</span>
+<span class="sd">    :return: output tensor.</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">    The transformation matrix is the inverse of that used by `cv2.warpPerspective`.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        inp_shape = (1, 1, 4, 4)</span>
+<span class="sd">        x = tensor(np.arange(16, dtype=np.float32).reshape(inp_shape))</span>
+<span class="sd">        M_shape = (1, 3, 3)</span>
+<span class="sd">        # M defines a translation: dst(1, 1, h, w) = rst(1, 1, h+1, w+1)</span>
+<span class="sd">        M = tensor(np.array([[1., 0., 1.],</span>
+<span class="sd">                             [0., 1., 1.],</span>
+<span class="sd">                             [0., 0., 1.]], dtype=np.float32).reshape(M_shape))</span>
+<span class="sd">        out = F.vision.warp_perspective(x, M, (2, 2))</span>
+<span class="sd">        print(out.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[[[ 5.  6.]</span>
+<span class="sd">           [ 9. 10.]]]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">WarpPerspective</span><span class="p">(</span>
+        <span class="n">imode</span><span class="o">=</span><span class="n">interp_mode</span><span class="p">,</span> <span class="n">bmode</span><span class="o">=</span><span class="n">border_mode</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;NCHW&quot;</span><span class="p">,</span> <span class="n">border_val</span><span class="o">=</span><span class="n">border_val</span>
+    <span class="p">)</span>
+    <span class="n">inp</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">convert_inputs</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+    <span class="n">dsize</span> <span class="o">=</span> <span class="n">astensor1d</span><span class="p">(</span><span class="n">dsize</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">dsize</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="interpolate"><a class="viewcode-back" href="../../../reference/api/megengine.functional.vision.interpolate.html#megengine.functional.vision.interpolate">[文档]</a><span class="k">def</span> <span class="nf">interpolate</span><span class="p">(</span>
+    <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span>
+    <span class="n">size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">scale_factor</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;BILINEAR&quot;</span><span class="p">,</span>
+    <span class="n">align_corners</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Down/up samples the input tensor to either the given size or with the given scale_factor. ``size`` can not coexist with ``scale_factor``.</span>
+
+<span class="sd">    :param inp: input tensor.</span>
+<span class="sd">    :param size: size of the output tensor. Default: None</span>
+<span class="sd">    :param scale_factor: scaling factor of the output tensor. Default: None</span>
+<span class="sd">    :param mode: interpolation methods, acceptable values are:</span>
+<span class="sd">        &quot;BILINEAR&quot;, &quot;LINEAR&quot;. Default: &quot;BILINEAR&quot;</span>
+<span class="sd">    :param align_corners: This only has an effect when `mode`</span>
+<span class="sd">        is &quot;BILINEAR&quot; or &quot;LINEAR&quot;. Geometrically, we consider the pixels of the input</span>
+<span class="sd">        and output as squares rather than points. If set to ``True``, the input</span>
+<span class="sd">        and output tensors are aligned by the center points of their corner</span>
+<span class="sd">        pixels, preserving the values at the corner pixels. If set to ``False``,</span>
+<span class="sd">        the input and output tensors are aligned by the corner points of their</span>
+<span class="sd">        corner pixels, and the interpolation uses edge value padding for</span>
+<span class="sd">        out-of-boundary values, making this operation *independent* of input size</span>
+
+<span class="sd">    :return: output tensor.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    .. testcode::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from megengine import tensor</span>
+<span class="sd">        import megengine.functional as F</span>
+
+<span class="sd">        x = tensor(np.arange(1, 5, dtype=np.float32).reshape(1, 1, 2, 2))</span>
+<span class="sd">        out = F.vision.interpolate(x, [4, 4], align_corners=False)</span>
+<span class="sd">        print(out.numpy())</span>
+<span class="sd">        out2 = F.vision.interpolate(x, scale_factor=2.)</span>
+<span class="sd">        np.testing.assert_allclose(out.numpy(), out2.numpy())</span>
+
+<span class="sd">    Outputs:</span>
+
+<span class="sd">    .. testoutput::</span>
+
+<span class="sd">        [[[[1.   1.25 1.75 2.  ]</span>
+<span class="sd">           [1.5  1.75 2.25 2.5 ]</span>
+<span class="sd">           [2.5  2.75 3.25 3.5 ]</span>
+<span class="sd">           [3.   3.25 3.75 4.  ]]]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;BILINEAR&quot;</span><span class="p">,</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;interpolate only support linear or bilinear mode&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;BILINEAR&quot;</span><span class="p">,</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">align_corners</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;align_corners option can only be set in the bilinear/linear interpolating mode&quot;</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">align_corners</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">align_corners</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="ow">and</span> <span class="n">scale_factor</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="ow">and</span> <span class="ow">not</span> <span class="n">align_corners</span>
+        <span class="ow">and</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;BILINEAR&quot;</span>
+        <span class="ow">and</span> <span class="n">inp</span><span class="o">.</span><span class="n">ndim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="c1"># fastpath for interpolate</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="n">imode</span><span class="o">=</span><span class="s2">&quot;LINEAR&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;NCHW&quot;</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">astensor1d</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">:</span>
+        <span class="n">inp</span> <span class="o">=</span> <span class="n">expand_dims</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">inp</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;shape of input tensor must correspond to the operartion mode&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scale_factor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;scale_factor must not be None when size is None&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale_factor</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="n">scale_factor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">scale_factor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">:</span>
+                <span class="n">scale_factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">scale_factor</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">scale_factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">scale_factor</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;under LINEAR mode, scale_factor can only be single value&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale_factor</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;shape of scale_factor must be equal to (2, )&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale_factor</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">scale_factor</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">float</span>
+        <span class="p">),</span> <span class="s2">&quot;scale_factor must be float type&quot;</span>
+        <span class="n">dsize</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="n">floor</span><span class="p">(</span>
+                <span class="n">Tensor</span><span class="p">(</span>
+                    <span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_factor</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span>
+                    <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">dsize</span> <span class="o">=</span> <span class="n">concat</span><span class="p">([</span><span class="n">dsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scale_factor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;scale_factor must be None when size is provided&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;under LINEAR mode, size can only be single value&quot;</span><span class="p">)</span>
+        <span class="n">dsize</span> <span class="o">=</span> <span class="n">size</span>
+
+    <span class="n">oh</span><span class="p">,</span> <span class="n">ow</span> <span class="o">=</span> <span class="n">dsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ih</span><span class="p">,</span> <span class="n">iw</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">align_corners</span><span class="p">:</span>
+        <span class="n">hscale</span> <span class="o">=</span> <span class="p">(</span><span class="n">ih</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">oh</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">wscale</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">iw</span> <span class="o">/</span> <span class="n">ow</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">!=</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">:</span>
+            <span class="n">wscale</span> <span class="o">=</span> <span class="p">(</span><span class="n">iw</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ow</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">row0</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">wscale</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">row1</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">Tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+                <span class="n">hscale</span><span class="p">,</span>
+                <span class="n">Tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">row0</span><span class="p">,</span> <span class="n">row1</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)],</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">broadcast_to</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">hscale</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">ih</span> <span class="o">/</span> <span class="n">oh</span>
+        <span class="n">wscale</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">iw</span> <span class="o">/</span> <span class="n">ow</span>
+        <span class="n">row0</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">wscale</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">wscale</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">],</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">row1</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">),</span> <span class="n">hscale</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">hscale</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">],</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">concat</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">row0</span><span class="p">,</span> <span class="n">row1</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)],</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">broadcast_to</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">warp_perspective</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">dsize</span><span class="p">,</span> <span class="n">interp_mode</span><span class="o">=</span><span class="s2">&quot;LINEAR&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;LINEAR&quot;</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">reshape</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.c9faddf98927557166f1.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

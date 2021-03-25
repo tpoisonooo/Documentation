@@ -14,6 +14,7 @@ megengine.module.qat.Elemwise
       ~Elemwise.__init__
       ~Elemwise.apply
       ~Elemwise.apply_quant_activation
+      ~Elemwise.apply_quant_bias
       ~Elemwise.apply_quant_weight
       ~Elemwise.buffers
       ~Elemwise.children

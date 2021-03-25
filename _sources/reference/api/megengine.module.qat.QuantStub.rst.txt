@@ -14,6 +14,7 @@ megengine.module.qat.QuantStub
       ~QuantStub.__init__
       ~QuantStub.apply
       ~QuantStub.apply_quant_activation
+      ~QuantStub.apply_quant_bias
       ~QuantStub.apply_quant_weight
       ~QuantStub.buffers
       ~QuantStub.children

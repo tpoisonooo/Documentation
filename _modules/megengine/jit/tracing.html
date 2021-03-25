@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.jit.tracing &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.jit.tracing &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -196,7 +196,7 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
@@ -208,7 +208,6 @@
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">weakref</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -224,13 +223,19 @@
     <span class="n">unset_compiled</span><span class="p">,</span>
     <span class="n">unset_tracing</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">..core._imperative_rt.ops</span> <span class="kn">import</span> <span class="n">CollectiveComm</span><span class="p">,</span> <span class="n">RemoteRecv</span><span class="p">,</span> <span class="n">RemoteSend</span>
+<span class="kn">from</span> <span class="nn">..core._imperative_rt.ops</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AssertEqual</span><span class="p">,</span>
+    <span class="n">CollectiveComm</span><span class="p">,</span>
+    <span class="n">RemoteRecv</span><span class="p">,</span>
+    <span class="n">RemoteSend</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">..core._trace_option</span> <span class="kn">import</span> <span class="n">set_symbolic_shape</span>
 <span class="kn">from</span> <span class="nn">..core._wrap</span> <span class="kn">import</span> <span class="n">device</span> <span class="k">as</span> <span class="n">as_device</span>
 <span class="kn">from</span> <span class="nn">..core.ops.builtin</span> <span class="kn">import</span> <span class="n">BackwardGraph</span><span class="p">,</span> <span class="n">OpDef</span>
 <span class="kn">from</span> <span class="nn">..core.ops.special</span> <span class="kn">import</span> <span class="n">Const</span>
 <span class="kn">from</span> <span class="nn">..core.tensor</span> <span class="kn">import</span> <span class="n">megbrain_graph</span> <span class="k">as</span> <span class="n">G</span>
 <span class="kn">from</span> <span class="nn">..core.tensor.utils</span> <span class="kn">import</span> <span class="n">setscalar</span>
+<span class="kn">from</span> <span class="nn">..utils.naming</span> <span class="kn">import</span> <span class="n">auto_naming</span>
 <span class="kn">from</span> <span class="nn">.sublinear_memory_config</span> <span class="kn">import</span> <span class="n">SublinearMemoryConfig</span>
 
 
@@ -272,6 +277,7 @@
 <span class="k">class</span> <span class="nc">TensorInfo</span><span class="p">:</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
         <span class="c1"># collected attributes</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
         <span class="s2">&quot;external&quot;</span><span class="p">,</span>
         <span class="s2">&quot;data_read&quot;</span><span class="p">,</span>
         <span class="s2">&quot;shape_read&quot;</span><span class="p">,</span>
@@ -291,6 +297,7 @@
     <span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exported</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_read</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape_read</span> <span class="o">=</span> <span class="kc">None</span>
@@ -303,7 +310,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data_reader</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="n">_io_op_types</span> <span class="o">=</span> <span class="p">{</span><span class="n">CollectiveComm</span><span class="p">,</span> <span class="n">RemoteSend</span><span class="p">,</span> <span class="n">RemoteRecv</span><span class="p">}</span>
+<span class="n">_io_op_types</span> <span class="o">=</span> <span class="p">{</span><span class="n">AssertEqual</span><span class="p">,</span> <span class="n">CollectiveComm</span><span class="p">,</span> <span class="n">RemoteSend</span><span class="p">,</span> <span class="n">RemoteRecv</span><span class="p">}</span>
 
 
 <div class="viewcode-block" id="trace"><a class="viewcode-back" href="../../../reference/api/megengine.jit.trace.html#megengine.jit.trace">[文档]</a><span class="k">class</span> <span class="nc">trace</span><span class="p">:</span>
@@ -485,12 +492,18 @@
             <span class="n">h</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;_mixin_handle&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">exported</span><span class="p">):</span>
                 <span class="n">h</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_handle</span><span class="p">()</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">auto_naming</span><span class="o">.</span><span class="n">get_scope</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">c_name</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">c_name</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
                 <span class="n">info</span><span class="o">.</span><span class="n">external</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">info</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span>
                 <span class="n">info</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
                 <span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
-                    <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span>
+                        <span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">name</span>
+                    <span class="p">)</span>
 
             <span class="n">ihandles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
 
@@ -837,22 +850,24 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_process_inputs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">transform</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="c1"># outputs can be None</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_process_outputs</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+
+            <span class="c1"># outputs could be None</span>
             <span class="k">if</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
-                    <span class="n">transform</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">outputs</span><span class="p">,)</span>
-                <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+                <span class="n">list_outputs</span> <span class="o">=</span> <span class="n">outputs</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
+                    <span class="n">_</span><span class="p">,</span> <span class="n">list_outputs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="nb">sorted</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+                    <span class="n">list_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">outputs</span><span class="p">,)</span>
+
+                <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">list_outputs</span><span class="p">:</span>
                     <span class="c1"># if outputs are copied, then use the newest info in trace data structure</span>
                     <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">_copied</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_active_tensors</span><span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">_mixin_handle</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
                         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_untraced</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">_lazy_eval_tensors</span><span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">_mixin_handle</span><span class="p">]</span> <span class="o">=</span> <span class="n">TensorWeakRef</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capture_as_const</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_process_outputs</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">transform</span><span class="p">:</span>
-                <span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
             <span class="k">return</span> <span class="n">outputs</span>
 
 <div class="viewcode-block" id="trace.dump"><a class="viewcode-back" href="../../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump">[文档]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span>
@@ -862,6 +877,12 @@
         <span class="n">arg_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">output_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">append</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">keep_var_name</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">keep_opr_name</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">keep_param_name</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">keep_opr_priority</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">strip_info_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">append_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">optimize_for_inference</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -874,6 +895,20 @@
 <span class="sd">            use the default name if not specified.</span>
 <span class="sd">        :param append: whether output is appended to ``file``.</span>
 <span class="sd">            Only works when ``file`` is str.</span>
+<span class="sd">        :param keep_var_name: level for keeping variable names:</span>
+
+<span class="sd">            * 0: none of the names are kept</span>
+<span class="sd">            * 1: (default)keep names of output vars</span>
+<span class="sd">            * 2: keep names of all (output and internal) vars</span>
+<span class="sd">        :param keep_opr_name: whether to keep operator names.</span>
+<span class="sd">        :param keep_param_name: whether to keep param names, so param values can be</span>
+<span class="sd">            easily manipulated after loading model</span>
+<span class="sd">        :param keep_opr_priority: whether to keep priority setting for operators</span>
+<span class="sd">        :param strip_info_file: a string for path or a file handler. if is not None,</span>
+<span class="sd">            then the dump information for code strip would be written to ``strip_info_file``</span>
+<span class="sd">        :param append_json: will be check when `strip_info_file` is not None. if set</span>
+<span class="sd">            true, the information for code strip will be append to strip_info_file.</span>
+<span class="sd">            if set false, will rewrite strip_info_file</span>
 <span class="sd">        :param optimize_for_inference: enbale optmizations,</span>
 <span class="sd">            will skip all optimize options if this is False. Default: True</span>
 
@@ -946,25 +981,33 @@
             <span class="p">)</span>
         <span class="n">output_names</span> <span class="o">=</span> <span class="n">output_names</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_names</span>
 
-        <span class="n">dumped_device</span> <span class="o">=</span> <span class="n">as_device</span><span class="p">(</span><span class="s2">&quot;xpux&quot;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">dumped_device</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+            <span class="n">device_name</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">logical_name</span>
+            <span class="k">if</span> <span class="n">device_name</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="s2">&quot;gpu&quot;</span><span class="p">,</span> <span class="s2">&quot;xpu&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">as_device</span><span class="p">(</span><span class="s2">&quot;xpux&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">info</span><span class="o">.</span><span class="n">device</span>
 
         <span class="n">h2v</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">graph</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
-        <span class="c1"># only graph_opt_level takes effect in dump</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_apply_graph_options</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
 
+        <span class="c1"># apply graph_opt_level in dump</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_opt_level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">graph</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">graph_opt_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_opt_level</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arg_bindings</span><span class="p">):</span>
             <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
             <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_h2d</span><span class="p">(</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
-                <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span><span class="p">,</span>
+                <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span><span class="p">(</span><span class="n">info</span><span class="p">),</span>
                 <span class="n">shape</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">arg_names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">arg_names</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kwarg_bindings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tinfo</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
             <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_h2d</span><span class="p">(</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">name</span><span class="o">=</span><span class="n">k</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span><span class="p">(</span><span class="n">info</span><span class="p">),</span>
+                <span class="n">shape</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">op</span><span class="p">,</span> <span class="n">ihandles</span><span class="p">,</span> <span class="n">ohandles</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq</span><span class="p">:</span>
@@ -976,7 +1019,10 @@
                     <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">external</span>
                     <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span>
                     <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span>
-                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                        <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                        <span class="n">device</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="k">continue</span>
             <span class="n">ivars</span> <span class="o">=</span> <span class="p">[]</span>
@@ -986,12 +1032,25 @@
                     <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">external</span>
                     <span class="k">assert</span> <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span>
                     <span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span>
-                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span>
+                        <span class="n">info</span><span class="o">.</span><span class="n">bound_data</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+                        <span class="n">dtype</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                        <span class="n">device</span><span class="o">=</span><span class="n">dumped_device</span><span class="p">(</span><span class="n">info</span><span class="p">),</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="n">ivars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h2v</span><span class="p">[</span><span class="n">h</span><span class="p">])</span>
             <span class="n">ovars</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">apply_normal_varnode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">ivars</span><span class="p">)</span>
+
+            <span class="n">auto_naming</span><span class="o">.</span><span class="n">record_opnode</span><span class="p">(</span><span class="n">ovars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">op</span><span class="p">)</span>
+
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ovars</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">ohandles</span><span class="p">)</span>
             <span class="n">h2v</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ohandles</span><span class="p">,</span> <span class="n">ovars</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ohandles</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">auto_naming</span><span class="o">.</span><span class="n">get_var_name</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">h2v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="n">auto_naming</span><span class="o">.</span><span class="n">remove_duplicate_names</span><span class="p">()</span>
 
         <span class="n">dest_vars</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_bindings</span><span class="p">):</span>
@@ -1006,7 +1065,15 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">permission</span> <span class="o">=</span> <span class="s2">&quot;wb&quot;</span> <span class="k">if</span> <span class="n">append</span> <span class="o">==</span> <span class="kc">False</span> <span class="k">else</span> <span class="s2">&quot;ab&quot;</span>
             <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">permission</span><span class="p">)</span>
-        <span class="n">dump_content</span><span class="p">,</span> <span class="n">dump_info</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">dump_graph</span><span class="p">(</span><span class="n">dest_vars</span><span class="p">)</span>
+        <span class="n">dump_content</span><span class="p">,</span> <span class="n">dump_info</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">dump_graph</span><span class="p">(</span>
+            <span class="n">dest_vars</span><span class="p">,</span>
+            <span class="n">keep_var_name</span><span class="o">=</span><span class="n">keep_var_name</span><span class="p">,</span>
+            <span class="n">keep_opr_name</span><span class="o">=</span><span class="n">keep_opr_name</span><span class="p">,</span>
+            <span class="n">keep_param_name</span><span class="o">=</span><span class="n">keep_param_name</span><span class="p">,</span>
+            <span class="n">keep_opr_priority</span><span class="o">=</span><span class="n">keep_opr_priority</span><span class="p">,</span>
+            <span class="n">strip_info_file</span><span class="o">=</span><span class="n">strip_info_file</span><span class="p">,</span>
+            <span class="n">append_json</span><span class="o">=</span><span class="n">append_json</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dump_content</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">dump_info</span></div>
 
@@ -1263,11 +1330,11 @@
     <span class="k">return</span> <span class="n">outputs</span>
 
 
-<span class="k">def</span> <span class="nf">apply_const_symbolic_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">apply_const_symbolic_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="n">graph</span> <span class="o">=</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_lazy_eval_graph</span>
     <span class="c1"># don&#39;t need to unset tracing</span>
     <span class="c1"># because varnode construction will ignore tracing flag</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">))</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">setscalar</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">ret</span><span class="p">,)</span>
@@ -1286,20 +1353,22 @@
     <span class="k">return</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_apply_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">apply_const_compiled_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">is_const</span><span class="p">,</span> <span class="n">no_cache</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">apply_const_compiled_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">is_const</span><span class="p">,</span> <span class="n">no_cache</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">skip_tracing</span><span class="p">:</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">RawTensor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">CompiledTensorProxy</span> <span class="k">else</span> <span class="n">x</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span>
         <span class="p">]</span>
         <span class="n">unset_tracing</span><span class="p">()</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">RawTensor</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="n">set_tracing</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">ret</span>
     <span class="k">return</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_apply_const</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">apply_with_tracing</span><span class="p">(</span><span class="n">op</span><span class="p">:</span> <span class="n">OpDef</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">RawTensor</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="s2">&quot;scope&quot;</span><span class="p">):</span>
+        <span class="n">op</span><span class="o">.</span><span class="n">scope</span> <span class="o">=</span> <span class="n">auto_naming</span><span class="o">.</span><span class="n">get_scope</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
         <span class="n">outputs</span> <span class="o">=</span> <span class="n">apply_symbolic_mode</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1311,12 +1380,12 @@
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">apply_const_with_tracing</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">is_const</span><span class="p">,</span> <span class="n">no_cache</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">apply_const_with_tracing</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">is_const</span><span class="p">,</span> <span class="n">no_cache</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">active_trace</span><span class="o">.</span><span class="n">_symbolic</span><span class="p">:</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="n">apply_const_symbolic_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">apply_const_symbolic_mode</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">unset_tracing</span><span class="p">()</span>
-        <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">RawTensor</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">),)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="n">RawTensor</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="p">),)</span>
         <span class="n">set_tracing</span><span class="p">()</span>
     <span class="n">active_trace</span><span class="o">.</span><span class="n">_record_const</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
@@ -1339,7 +1408,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

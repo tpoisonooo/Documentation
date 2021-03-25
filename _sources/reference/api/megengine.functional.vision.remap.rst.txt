@@ -1,0 +1,6 @@
+megengine.functional.vision.remap
+=================================
+
+.. currentmodule:: megengine.functional.vision
+
+.. autofunction:: remap

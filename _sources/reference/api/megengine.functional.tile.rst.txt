@@ -1,0 +1,6 @@
+megengine.functional.tile
+=========================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: tile

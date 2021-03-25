@@ -20,8 +20,8 @@ megengine.quantization.observer.HistogramObserver
       ~HistogramObserver.enable
       ~HistogramObserver.eval
       ~HistogramObserver.forward
-      ~HistogramObserver.get_dtype
       ~HistogramObserver.get_qparams
+      ~HistogramObserver.get_quantized_dtype
       ~HistogramObserver.load_state_dict
       ~HistogramObserver.modules
       ~HistogramObserver.named_buffers

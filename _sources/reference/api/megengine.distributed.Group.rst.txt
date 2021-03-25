@@ -1,0 +1,31 @@
+megengine.distributed.Group
+===========================
+
+.. currentmodule:: megengine.distributed
+
+.. autoclass:: Group
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Group.__init__
+      ~Group.check
+      ~Group.reset
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Group.comp_node
+      ~Group.key
+      ~Group.rank
+      ~Group.size
+   
+   

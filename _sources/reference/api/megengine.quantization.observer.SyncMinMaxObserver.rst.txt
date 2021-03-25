@@ -20,8 +20,8 @@ megengine.quantization.observer.SyncMinMaxObserver
       ~SyncMinMaxObserver.enable
       ~SyncMinMaxObserver.eval
       ~SyncMinMaxObserver.forward
-      ~SyncMinMaxObserver.get_dtype
       ~SyncMinMaxObserver.get_qparams
+      ~SyncMinMaxObserver.get_quantized_dtype
       ~SyncMinMaxObserver.load_state_dict
       ~SyncMinMaxObserver.modules
       ~SyncMinMaxObserver.named_buffers

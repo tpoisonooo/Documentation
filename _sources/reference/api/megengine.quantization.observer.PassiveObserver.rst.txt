@@ -20,8 +20,8 @@ megengine.quantization.observer.PassiveObserver
       ~PassiveObserver.enable
       ~PassiveObserver.eval
       ~PassiveObserver.forward
-      ~PassiveObserver.get_dtype
       ~PassiveObserver.get_qparams
+      ~PassiveObserver.get_quantized_dtype
       ~PassiveObserver.load_state_dict
       ~PassiveObserver.modules
       ~PassiveObserver.named_buffers
@@ -32,6 +32,7 @@ megengine.quantization.observer.PassiveObserver
       ~PassiveObserver.register_forward_hook
       ~PassiveObserver.register_forward_pre_hook
       ~PassiveObserver.replace_param
+      ~PassiveObserver.set_qparams
       ~PassiveObserver.state_dict
       ~PassiveObserver.train
       ~PassiveObserver.zero_grad

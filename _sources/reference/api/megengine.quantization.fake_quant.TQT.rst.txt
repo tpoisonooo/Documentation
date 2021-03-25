@@ -21,8 +21,8 @@ megengine.quantization.fake\_quant.TQT
       ~TQT.eval
       ~TQT.fake_quant_forward
       ~TQT.forward
-      ~TQT.get_dtype
       ~TQT.get_qparams
+      ~TQT.get_quantized_dtype
       ~TQT.load_state_dict
       ~TQT.modules
       ~TQT.named_buffers
@@ -34,6 +34,7 @@ megengine.quantization.fake\_quant.TQT
       ~TQT.register_forward_hook
       ~TQT.register_forward_pre_hook
       ~TQT.replace_param
+      ~TQT.set_qparams
       ~TQT.state_dict
       ~TQT.train
       ~TQT.zero_grad

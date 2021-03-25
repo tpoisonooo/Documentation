@@ -20,8 +20,8 @@ megengine.quantization.Observer
       ~Observer.enable
       ~Observer.eval
       ~Observer.forward
-      ~Observer.get_dtype
       ~Observer.get_qparams
+      ~Observer.get_quantized_dtype
       ~Observer.load_state_dict
       ~Observer.modules
       ~Observer.named_buffers

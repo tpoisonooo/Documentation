@@ -3,4 +3,4 @@ megengine.Tensor.dtype
 
 .. currentmodule:: megengine
 
-.. autoattribute:: Tensor.dtype
+.. autoproperty:: Tensor.dtype

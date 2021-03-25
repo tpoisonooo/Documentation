@@ -1,0 +1,1076 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.functional.deformable_conv2d &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.c9faddf98927557166f1.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="megengine.functional.avg_pool2d" href="megengine.functional.avg_pool2d.html" />
+    <link rel="prev" title="megengine.functional.conv_transpose2d" href="megengine.functional.conv_transpose2d.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "reference/api/megengine.functional.deformable_conv2d.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2">
+  <a class="reference internal" href="../data.html">
+   数据（Data）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../tensor.html">
+   张量（Tensor）
+  </a>
+ </li>
+ <li class="toctree-l2 current active">
+  <a class="reference internal" href="../functional.html">
+   函数式（Functional）
+  </a>
+  <ul class="current">
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.zeros.html">
+     megengine.functional.zeros
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.zeros_like.html">
+     megengine.functional.zeros_like
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.ones.html">
+     megengine.functional.ones
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.ones_like.html">
+     megengine.functional.ones_like
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.full.html">
+     megengine.functional.full
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.full_like.html">
+     megengine.functional.full_like
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.arange.html">
+     megengine.functional.arange
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.linspace.html">
+     megengine.functional.linspace
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.eye.html">
+     megengine.functional.eye
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.copy.html">
+     megengine.functional.copy
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.broadcast_to.html">
+     megengine.functional.broadcast_to
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.concat.html">
+     megengine.functional.concat
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.stack.html">
+     megengine.functional.stack
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.split.html">
+     megengine.functional.split
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.gather.html">
+     megengine.functional.gather
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.scatter.html">
+     megengine.functional.scatter
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.where.html">
+     megengine.functional.where
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.cond_take.html">
+     megengine.functional.cond_take
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.transpose.html">
+     megengine.functional.transpose
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.reshape.html">
+     megengine.functional.reshape
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.flatten.html">
+     megengine.functional.flatten
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.repeat.html">
+     megengine.functional.repeat
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.tile.html">
+     megengine.functional.tile
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.expand_dims.html">
+     megengine.functional.expand_dims
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.squeeze.html">
+     megengine.functional.squeeze
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.add.html">
+     megengine.functional.add
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sub.html">
+     megengine.functional.sub
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.mul.html">
+     megengine.functional.mul
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.div.html">
+     megengine.functional.div
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.floor_div.html">
+     megengine.functional.floor_div
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.neg.html">
+     megengine.functional.neg
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.pow.html">
+     megengine.functional.pow
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.mod.html">
+     megengine.functional.mod
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.abs.html">
+     megengine.functional.abs
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.exp.html">
+     megengine.functional.exp
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.expm1.html">
+     megengine.functional.expm1
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.log.html">
+     megengine.functional.log
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.log1p.html">
+     megengine.functional.log1p
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sqrt.html">
+     megengine.functional.sqrt
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.square.html">
+     megengine.functional.square
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.round.html">
+     megengine.functional.round
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.ceil.html">
+     megengine.functional.ceil
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.floor.html">
+     megengine.functional.floor
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.maximum.html">
+     megengine.functional.maximum
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.minimum.html">
+     megengine.functional.minimum
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.clip.html">
+     megengine.functional.clip
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.cos.html">
+     megengine.functional.cos
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sin.html">
+     megengine.functional.sin
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.tan.html">
+     megengine.functional.tan
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.acos.html">
+     megengine.functional.acos
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.asin.html">
+     megengine.functional.asin
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.atan.html">
+     megengine.functional.atan
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.atan2.html">
+     megengine.functional.atan2
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.cosh.html">
+     megengine.functional.cosh
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sinh.html">
+     megengine.functional.sinh
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.tanh.html">
+     megengine.functional.tanh
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.acosh.html">
+     megengine.functional.acosh
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.asinh.html">
+     megengine.functional.asinh
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.atanh.html">
+     megengine.functional.atanh
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.left_shift.html">
+     megengine.functional.left_shift
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.right_shift.html">
+     megengine.functional.right_shift
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.logical_and.html">
+     megengine.functional.logical_and
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.logical_not.html">
+     megengine.functional.logical_not
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.logical_or.html">
+     megengine.functional.logical_or
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.logical_xor.html">
+     megengine.functional.logical_xor
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.equal.html">
+     megengine.functional.equal
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.not_equal.html">
+     megengine.functional.not_equal
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.less.html">
+     megengine.functional.less
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.less_equal.html">
+     megengine.functional.less_equal
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.greater.html">
+     megengine.functional.greater
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.greater_equal.html">
+     megengine.functional.greater_equal
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sum.html">
+     megengine.functional.sum
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.prod.html">
+     megengine.functional.prod
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.mean.html">
+     megengine.functional.mean
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.min.html">
+     megengine.functional.min
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.max.html">
+     megengine.functional.max
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.argmin.html">
+     megengine.functional.argmin
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.argmax.html">
+     megengine.functional.argmax
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.dot.html">
+     megengine.functional.dot
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.matinv.html">
+     megengine.functional.matinv
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.matmul.html">
+     megengine.functional.matmul
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.svd.html">
+     megengine.functional.svd
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.var.html">
+     megengine.functional.var
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.std.html">
+     megengine.functional.std
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.norm.html">
+     megengine.functional.norm
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.normalize.html">
+     megengine.functional.normalize
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.isnan.html">
+     megengine.functional.isnan
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.isinf.html">
+     megengine.functional.isinf
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sign.html">
+     megengine.functional.sign
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sort.html">
+     megengine.functional.sort
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.argsort.html">
+     megengine.functional.argsort
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.topk.html">
+     megengine.functional.topk
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.conv1d.html">
+     megengine.functional.conv1d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.conv2d.html">
+     megengine.functional.conv2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.conv3d.html">
+     megengine.functional.conv3d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.local_conv2d.html">
+     megengine.functional.local_conv2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.conv_transpose2d.html">
+     megengine.functional.conv_transpose2d
+    </a>
+   </li>
+   <li class="toctree-l3 current active">
+    <a class="current reference internal" href="#">
+     megengine.functional.deformable_conv2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.avg_pool2d.html">
+     megengine.functional.avg_pool2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.max_pool2d.html">
+     megengine.functional.max_pool2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.adaptive_avg_pool2d.html">
+     megengine.functional.adaptive_avg_pool2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.adaptive_max_pool2d.html">
+     megengine.functional.adaptive_max_pool2d
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.deformable_psroi_pooling.html">
+     megengine.functional.deformable_psroi_pooling
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sigmoid.html">
+     megengine.functional.sigmoid
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.hsigmoid.html">
+     megengine.functional.hsigmoid
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.hswish.html">
+     megengine.functional.hswish
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.relu.html">
+     megengine.functional.relu
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.relu6.html">
+     megengine.functional.relu6
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.prelu.html">
+     megengine.functional.prelu
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.leaky_relu.html">
+     megengine.functional.leaky_relu
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.softplus.html">
+     megengine.functional.softplus
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.softmax.html">
+     megengine.functional.softmax
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.logsoftmax.html">
+     megengine.functional.logsoftmax
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.logsigmoid.html">
+     megengine.functional.logsigmoid
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.logsumexp.html">
+     megengine.functional.logsumexp
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.batch_norm.html">
+     megengine.functional.batch_norm
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.sync_batch_norm.html">
+     megengine.functional.sync_batch_norm
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.linear.html">
+     megengine.functional.linear
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.dropout.html">
+     megengine.functional.dropout
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.one_hot.html">
+     megengine.functional.one_hot
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.indexing_one_hot.html">
+     megengine.functional.indexing_one_hot
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.embedding.html">
+     megengine.functional.embedding
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.loss.l1_loss.html">
+     megengine.functional.loss.l1_loss
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.loss.square_loss.html">
+     megengine.functional.loss.square_loss
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.loss.hinge_loss.html">
+     megengine.functional.loss.hinge_loss
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.loss.binary_cross_entropy.html">
+     megengine.functional.loss.binary_cross_entropy
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.loss.cross_entropy.html">
+     megengine.functional.loss.cross_entropy
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.metric.topk_accuracy.html">
+     megengine.functional.metric.topk_accuracy
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.all_reduce_max.html">
+     megengine.functional.distributed.all_reduce_max
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.all_reduce_min.html">
+     megengine.functional.distributed.all_reduce_min
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.all_reduce_sum.html">
+     megengine.functional.distributed.all_reduce_sum
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.broadcast.html">
+     megengine.functional.distributed.broadcast
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.remote_send.html">
+     megengine.functional.distributed.remote_send
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.remote_recv.html">
+     megengine.functional.distributed.remote_recv
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.all_gather.html">
+     megengine.functional.distributed.all_gather
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.all_to_all.html">
+     megengine.functional.distributed.all_to_all
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.reduce_sum.html">
+     megengine.functional.distributed.reduce_sum
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.gather.html">
+     megengine.functional.distributed.gather
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.scatter.html">
+     megengine.functional.distributed.scatter
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.distributed.reduce_scatter_sum.html">
+     megengine.functional.distributed.reduce_scatter_sum
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.vision.interpolate.html">
+     megengine.functional.vision.interpolate
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.vision.remap.html">
+     megengine.functional.vision.remap
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.vision.warp_affine.html">
+     megengine.functional.vision.warp_affine
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.vision.warp_perspective.html">
+     megengine.functional.vision.warp_perspective
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.vision.roi_pooling.html">
+     megengine.functional.vision.roi_pooling
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.vision.roi_align.html">
+     megengine.functional.vision.roi_align
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="megengine.functional.vision.nms.html">
+     megengine.functional.vision.nms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../module.html">
+   模块式（Module）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../autodiff.html">
+   自动微分（Auto-diff）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../optimizer.html">
+   优化器（Optimizer）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../jit.html">
+   即时编译（JIT）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../distributed.html">
+   分布式训练（Distributed）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../quantization.html">
+   量化（Quantization）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../serialization.html">
+   序列化（Serialization）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../random.html">
+   随机（Random）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../hub.html">
+   模型中心（Hub）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../logger.html">
+   日志（Logger）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../device.html">
+   设备（Device）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../version.html">
+   查询版本信息
+  </a>
+ </li>
+</ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="megengine-functional-deformable-conv2d">
+<h1>megengine.functional.deformable_conv2d<a class="headerlink" href="#megengine-functional-deformable-conv2d" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt id="megengine.functional.deformable_conv2d">
+<code class="sig-name descname"><span class="pre">deformable_conv2d</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stride</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conv_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CROSS_CORRELATION'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DEFAULT'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/megengine/functional/nn.html#deformable_conv2d"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#megengine.functional.deformable_conv2d" title="永久链接至目标">¶</a></dt>
+<dd><p>Deformable Convolution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inp</strong> (<a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – input feature map.</p></li>
+<li><p><strong>weight</strong> (<a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – convolution kernel.</p></li>
+<li><p><strong>offset</strong> (<a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – input offset to kernel, channel of this tensor should match the deformable settings.</p></li>
+<li><p><strong>mask</strong> (<a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>) – input mask to kernel, channel of this tensor should match the deformable settings.</p></li>
+<li><p><strong>bias</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>]) – bias added to the result of convolution (if given).</p></li>
+<li><p><strong>stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]) – stride of the 2D convolution operation. Default: 1</p></li>
+<li><p><strong>padding</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]) – size of the paddings added to the input on both sides of its
+spatial dimensions. Only zero-padding is supported. Default: 0</p></li>
+<li><p><strong>dilation</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(在 Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]) – dilation of the 2D convolution operation. Default: 1</p></li>
+<li><p><strong>groups</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – number of groups into which the input and output channels are divided,
+so as to perform a <code class="docutils literal notranslate"><span class="pre">grouped</span> <span class="pre">convolution</span></code>. When <code class="docutils literal notranslate"><span class="pre">groups</span></code> is not 1,
+<code class="docutils literal notranslate"><span class="pre">in_channels</span></code> and <code class="docutils literal notranslate"><span class="pre">out_channels</span></code> must be divisible by groups,
+and the shape of weight should be <cite>(groups, out_channel // groups,
+in_channels // groups, height, width)</cite>. Default: 1</p></li>
+<li><p><strong>conv_mode</strong> (string or <code class="xref py py-class docutils literal notranslate"><span class="pre">Convolution.Mode</span></code>) – supports “CROSS_CORRELATION”. Default:
+“CROSS_CORRELATION”</p></li>
+<li><p><strong>compute_mode</strong> (string or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Convolution.ComputeMode</span></code>) – when set to “DEFAULT”, no special requirements will be
+placed on the precision of intermediate results. When set to “FLOAT32”,
+“Float32” would be used for accumulator and intermediate result, but only
+effective when input and output are of Float16 dtype.</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p><a class="reference internal" href="megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a></p>
+</dd>
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>output tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.c9faddf98927557166f1.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

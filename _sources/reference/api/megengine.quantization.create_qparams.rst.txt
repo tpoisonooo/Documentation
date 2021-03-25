@@ -1,0 +1,6 @@
+megengine.quantization.create\_qparams
+======================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: create_qparams

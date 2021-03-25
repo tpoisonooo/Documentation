@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.data.sampler &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.data.sampler &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -196,7 +196,7 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
@@ -213,7 +213,7 @@
 
 <div class="viewcode-block" id="Sampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.Sampler.html#megengine.data.Sampler">[文档]</a><span class="k">class</span> <span class="nc">Sampler</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    An abstract class for all Sampler</span>
+<span class="sd">    An abstract base class for all Sampler</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@abstractmethod</span>
@@ -222,6 +222,28 @@
 
 
 <div class="viewcode-block" id="MapSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.MapSampler.html#megengine.data.MapSampler">[文档]</a><span class="k">class</span> <span class="nc">MapSampler</span><span class="p">(</span><span class="n">Sampler</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sampler for map dataset.</span>
+
+<span class="sd">    :type dataset: `dataset`</span>
+<span class="sd">    :param dataset: dataset to sample from.</span>
+<span class="sd">    :type batch_size: positive integer</span>
+<span class="sd">    :param batch_size: batch size for batch method.</span>
+<span class="sd">    :type drop_last: bool</span>
+<span class="sd">    :param drop_last: set ``True`` to drop the last incomplete batch,</span>
+<span class="sd">        if the dataset size is not divisible by the batch size. If ``False`` and </span>
+<span class="sd">        the size of dataset is not divisible by the batch_size, then the last batch will</span>
+<span class="sd">        be smaller. Default: False</span>
+<span class="sd">    :type num_samples: positive integer</span>
+<span class="sd">    :param num_samples: number of samples assigned to one rank.</span>
+<span class="sd">    :type world_size: positive integer</span>
+<span class="sd">    :param world_size: number of ranks.</span>
+<span class="sd">    :type rank: non-negative integer within 0 and world_size</span>
+<span class="sd">    :param rank: rank id, non-negative interger within 0 and ``world_size``.</span>
+<span class="sd">    :type seed: non-negative integer</span>
+<span class="sd">    :param seed: seed for random operators.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">dataset</span><span class="p">,</span>
@@ -232,27 +254,6 @@
         <span class="n">rank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        An abstract class for all sampler.</span>
-
-<span class="sd">        :type dataset: `dataset`</span>
-<span class="sd">        :param dataset: dataset to sample from.</span>
-<span class="sd">        :type batch_size: positive integer</span>
-<span class="sd">        :param batch_size: batch size for batch method.</span>
-<span class="sd">        :type drop_last: bool</span>
-<span class="sd">        :param drop_last: set ``True`` to drop the last incomplete batch,</span>
-<span class="sd">            if the dataset size is not divisible by the batch size. If ``False`` and </span>
-<span class="sd">            the size of dataset is not divisible by the batch_size, then the last batch will</span>
-<span class="sd">            be smaller. Default: False</span>
-<span class="sd">        :type num_samples: positive integer</span>
-<span class="sd">        :param num_samples: number of samples assigned to one rank.</span>
-<span class="sd">        :type world_size: positive integer</span>
-<span class="sd">        :param world_size: number of ranks.</span>
-<span class="sd">        :type rank: non-negative integer within 0 and world_size</span>
-<span class="sd">        :param rank: rank id, non-negative interger within 0 and ``world_size``.</span>
-<span class="sd">        :type seed: non-negative integer</span>
-<span class="sd">        :param seed: seed for random operators.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="p">(</span>
             <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
             <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
@@ -351,7 +352,7 @@
 
 
 <div class="viewcode-block" id="StreamSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.StreamSampler.html#megengine.data.StreamSampler">[文档]</a><span class="k">class</span> <span class="nc">StreamSampler</span><span class="p">(</span><span class="n">Sampler</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sampler for stream dataset.</span>
 
 <span class="sd">    .. warning::</span>
@@ -376,6 +377,10 @@
 
 
 <div class="viewcode-block" id="SequentialSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.SequentialSampler.html#megengine.data.SequentialSampler">[文档]</a><span class="k">class</span> <span class="nc">SequentialSampler</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample elements sequentially.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">dataset</span><span class="p">,</span>
@@ -385,9 +390,6 @@
         <span class="n">world_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">rank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sample elements sequentially.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">drop_last</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">world_size</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">indices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -407,6 +409,10 @@
 
 
 <div class="viewcode-block" id="RandomSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.RandomSampler.html#megengine.data.RandomSampler">[文档]</a><span class="k">class</span> <span class="nc">RandomSampler</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample elements randomly without replacement.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">dataset</span><span class="p">,</span>
@@ -417,9 +423,6 @@
         <span class="n">rank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sample elements randomly without replacement.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">drop_last</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">world_size</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">indices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -436,6 +439,13 @@
 
 
 <div class="viewcode-block" id="ReplacementSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.ReplacementSampler.html#megengine.data.ReplacementSampler">[文档]</a><span class="k">class</span> <span class="nc">ReplacementSampler</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sample elements randomly with replacement.</span>
+
+<span class="sd">    :type weights: List</span>
+<span class="sd">    :param weights: weights for sampling indices, it could be unnormalized weights.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">dataset</span><span class="p">,</span>
@@ -447,12 +457,6 @@
         <span class="n">rank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sample elements randomly with replacement.</span>
-
-<span class="sd">        :type weights: List</span>
-<span class="sd">        :param weights: weights for sampling indices, it could be unnormalized weights.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">drop_last</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">world_size</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">seed</span>
         <span class="p">)</span>
@@ -521,7 +525,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

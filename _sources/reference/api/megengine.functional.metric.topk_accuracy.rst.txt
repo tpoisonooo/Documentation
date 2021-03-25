@@ -1,0 +1,6 @@
+megengine.functional.metric.topk\_accuracy
+==========================================
+
+.. currentmodule:: megengine.functional.metric
+
+.. autofunction:: topk_accuracy

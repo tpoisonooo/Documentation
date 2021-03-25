@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.distributed.functional &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.distributed.functional &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -196,7 +196,7 @@
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
@@ -206,6 +206,7 @@
 <span class="kn">from</span> <span class="nn">..core._imperative_rt.core2</span> <span class="kn">import</span> <span class="n">apply</span>
 <span class="kn">from</span> <span class="nn">..core.autodiff.grad</span> <span class="kn">import</span> <span class="n">_grad_manager_dict</span>
 <span class="kn">from</span> <span class="nn">..core.ops.builtin</span> <span class="kn">import</span> <span class="n">CollectiveComm</span><span class="p">,</span> <span class="n">Copy</span><span class="p">,</span> <span class="n">PyOpBase</span><span class="p">,</span> <span class="n">RemoteRecv</span><span class="p">,</span> <span class="n">RemoteSend</span>
+<span class="kn">from</span> <span class="nn">..core.tensor.utils</span> <span class="kn">import</span> <span class="n">isscalar</span><span class="p">,</span> <span class="n">setscalar</span>
 <span class="kn">from</span> <span class="nn">..device</span> <span class="kn">import</span> <span class="n">get_default_device</span>
 <span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">from</span> <span class="nn">.group</span> <span class="kn">import</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">Group</span><span class="p">,</span> <span class="n">get_backend</span><span class="p">,</span> <span class="n">get_client</span><span class="p">,</span> <span class="n">get_mm_server_addr</span><span class="p">,</span> <span class="n">get_rank</span>
@@ -245,7 +246,18 @@
         <span class="n">backend</span><span class="o">=</span><span class="n">get_backend</span><span class="p">(),</span>
         <span class="n">comp_node</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">(</span><span class="n">result</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">inp</span><span class="p">)</span>
+    <span class="c1"># assume all workers have homogeneous shape</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">REDUCE_SUM</span><span class="p">,</span>
+        <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">BROADCAST</span><span class="p">,</span>
+        <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ALL_REDUCE_SUM</span><span class="p">,</span>
+        <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ALL_REDUCE_MAX</span><span class="p">,</span>
+        <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ALL_REDUCE_MIN</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">isscalar</span><span class="p">(</span><span class="n">inp</span><span class="p">):</span>
+            <span class="n">setscalar</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
 
 
 <div class="viewcode-block" id="reduce_sum"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.reduce_sum.html#megengine.functional.distributed.reduce_sum">[文档]</a><span class="k">def</span> <span class="nf">reduce_sum</span><span class="p">(</span>
@@ -484,6 +496,11 @@
             <span class="n">g</span><span class="o">.</span><span class="n">wrt</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
             <span class="n">g</span><span class="o">.</span><span class="n">_refkeeper</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
 
+    <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+        <span class="n">_isscalar</span> <span class="o">=</span> <span class="kc">True</span>
+
     <span class="n">op</span> <span class="o">=</span> <span class="n">RemoteRecv</span><span class="p">()</span>
     <span class="n">op</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
     <span class="n">op</span><span class="o">.</span><span class="n">cn</span> <span class="o">=</span> <span class="n">device</span>
@@ -493,6 +510,8 @@
     <span class="n">op</span><span class="o">.</span><span class="n">rank_from</span> <span class="o">=</span> <span class="n">src_rank</span>
 
     <span class="p">(</span><span class="n">ret</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">_RemoteRecv</span><span class="p">(</span><span class="n">op</span><span class="p">),</span> <span class="n">inp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">_isscalar</span><span class="p">:</span>
+        <span class="n">setscalar</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ret</span></div>
 </pre></div>
 
@@ -513,7 +532,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>

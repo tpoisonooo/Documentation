@@ -1,0 +1,6 @@
+megengine.quantization.enable\_observer
+=======================================
+
+.. currentmodule:: megengine.quantization
+
+.. autofunction:: enable_observer

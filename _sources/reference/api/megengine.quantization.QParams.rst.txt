@@ -1,0 +1,30 @@
+megengine.quantization.QParams
+==============================
+
+.. currentmodule:: megengine.quantization
+
+.. autoclass:: QParams
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~QParams.__init__
+      ~QParams.update
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~QParams.dtype_meta
+      ~QParams.mode
+      ~QParams.scale
+      ~QParams.zero_point
+   
+   

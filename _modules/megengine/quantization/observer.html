@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>megengine.quantization.observer &#8212; MegEngine 1.2.0 文档</title>
+    <title>megengine.quantization.observer &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
@@ -195,7 +195,7 @@
   <h1>megengine.quantization.observer 源代码</h1><div class="highlight"><pre>
 <span></span><span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (c) 2014-2020 Megvii Inc. All rights reserved.</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Unless required by applicable law or agreed to in writing,</span>
 <span class="c1"># software distributed under the License is distributed on an</span>
@@ -203,50 +203,51 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
-<span class="kn">from</span> <span class="nn">..core.tensor.dtype</span> <span class="kn">import</span> <span class="n">_metadata_dict</span><span class="p">,</span> <span class="n">get_quantized_dtype</span>
+<span class="kn">from</span> <span class="nn">..core.tensor.dtype</span> <span class="kn">import</span> <span class="n">QuantDtypeMeta</span><span class="p">,</span> <span class="n">_builtin_quant_dtypes</span>
 <span class="kn">from</span> <span class="nn">..distributed</span> <span class="kn">import</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">get_rank</span><span class="p">,</span> <span class="n">is_distributed</span>
 <span class="kn">from</span> <span class="nn">..functional.distributed</span> <span class="kn">import</span> <span class="n">all_reduce_max</span><span class="p">,</span> <span class="n">all_reduce_min</span>
+<span class="kn">from</span> <span class="nn">..logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">..module</span> <span class="kn">import</span> <span class="n">Module</span>
 <span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">QuantMode</span><span class="p">,</span> <span class="n">Round</span><span class="p">,</span> <span class="n">get_qparam_dict</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">QParams</span><span class="p">,</span> <span class="n">QParamsModuleMixin</span><span class="p">,</span> <span class="n">QuantMode</span><span class="p">,</span> <span class="n">create_qparams</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Observer"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.Observer.html#megengine.quantization.Observer">[文档]</a><span class="k">class</span> <span class="nc">Observer</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+<div class="viewcode-block" id="Observer"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.Observer.html#megengine.quantization.Observer">[文档]</a><span class="k">class</span> <span class="nc">Observer</span><span class="p">(</span><span class="n">Module</span><span class="p">,</span> <span class="n">QParamsModuleMixin</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A base class for Observer Module.</span>
+<span class="sd">    A base class for Observer Module. Used to record input tensor&#39;s statistics for</span>
+<span class="sd">    quantization.</span>
 
-<span class="sd">    :param dtype: a string indicating to collect scale and zero_point of which dtype.</span>
-<span class="sd">    :param narrow_range: whether the absolute value of ``qmin`` is the same as ``qmax``,</span>
-<span class="sd">        instead of 1 greater. Usually True for weight and False for activation.</span>
+<span class="sd">    :param dtype: a string indicating which dtype to collect scale and zero_point of.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">narrow_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QuantDtypeMeta</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">dtype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_metadata_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;unknown dtype: </span><span class="si">{}</span><span class="s2">, only support </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">dtype</span><span class="p">,</span> <span class="n">_metadata_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">_builtin_quant_dtypes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;unknown dtype: </span><span class="si">{}</span><span class="s2">, only support </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">dtype</span><span class="p">,</span> <span class="n">_builtin_quant_dtypes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                    <span class="p">)</span>
                 <span class="p">)</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">_builtin_quant_dtypes</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;narrow_range&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;narrow_range&quot;</span><span class="p">]</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;FakeQuantize currently has no narrow_range param &quot;</span>
+                <span class="s2">&quot;so it is ignored here&quot;</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">narrow_range</span> <span class="o">=</span> <span class="n">narrow_range</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">qmin</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="o">-</span><span class="n">_metadata_dict</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span><span class="o">.</span><span class="n">qmax</span> <span class="k">if</span> <span class="n">narrow_range</span> <span class="k">else</span> <span class="n">_metadata_dict</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span><span class="o">.</span><span class="n">qmin</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span> <span class="o">=</span> <span class="n">_metadata_dict</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span><span class="o">.</span><span class="n">qmax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qmin</span> <span class="o">=</span> <span class="n">dtype</span><span class="o">.</span><span class="n">qmin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qmax</span> <span class="o">=</span> <span class="n">dtype</span><span class="o">.</span><span class="n">qmax</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="k">def</span> <span class="nf">get_dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">q_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_qparams</span><span class="p">()</span>
-        <span class="n">numpy_scale</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="s2">&quot;scale&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">q_dict</span> <span class="k">else</span> <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">numpy_zero_point</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="kc">None</span> <span class="k">if</span> <span class="s2">&quot;zero_point&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">q_dict</span> <span class="k">else</span> <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;zero_point&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">get_quantized_dtype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">numpy_scale</span><span class="p">,</span> <span class="n">numpy_zero_point</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
@@ -263,23 +264,26 @@
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_qparams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="MinMaxObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.MinMaxObserver.html#megengine.quantization.MinMaxObserver">[文档]</a><span class="k">class</span> <span class="nc">MinMaxObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">MinMaxObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Observer Module records input tensor&#39;s running min and max values to calc scale.</span>
+
+<span class="sd">    :param mode: set quantization mode.</span>
+<span class="sd">    :param eps: a initial maximum value to avoid division by zero problem.</span>
+<span class="sd">    :param dtype: a string indicating which dtype to collect scale and zero_point of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">mode</span><span class="o">=</span><span class="n">QuantMode</span><span class="o">.</span><span class="n">SYMMERTIC</span><span class="p">,</span>
-        <span class="n">eps</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;qint8&quot;</span><span class="p">,</span>
-        <span class="n">narrow_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">mode</span><span class="p">:</span> <span class="n">QuantMode</span> <span class="o">=</span> <span class="n">QuantMode</span><span class="o">.</span><span class="n">SYMMERTIC</span><span class="p">,</span>
+        <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00001</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QuantDtypeMeta</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;qint8&quot;</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">narrow_range</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -288,26 +292,22 @@
     <span class="k">def</span> <span class="nf">_calculate_qparams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp_min_val</span><span class="p">,</span> <span class="n">inp_max_val</span><span class="p">):</span>
         <span class="n">min_val</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">inp_min_val</span><span class="p">)</span>
         <span class="n">max_val</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">inp_max_val</span><span class="p">)</span>
-        <span class="n">q_dict</span> <span class="o">=</span> <span class="n">get_qparam_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-        <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;min_val&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inp_min_val</span>
-        <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;max_val&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inp_max_val</span>
-        <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;enable_observer&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">QuantMode</span><span class="o">.</span><span class="n">SYMMERTIC</span><span class="p">:</span>
             <span class="n">symmetric_max_vals</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="o">-</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
             <span class="c1"># use maximun to avoid scale too small at the begin</span>
-            <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
                 <span class="n">symmetric_max_vals</span> <span class="o">/</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">qmax</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmin</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_limit</span>
             <span class="p">)</span>
-            <span class="c1"># zero_point = self.zero_point</span>
+            <span class="n">zero_point</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># use maximun to avoid scale too small at the begin</span>
-            <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
                 <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qmax</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmin</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_limit</span>
             <span class="p">)</span>
             <span class="c1"># caculate zero_point</span>
-            <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;zero_point&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmin</span> <span class="o">-</span> <span class="n">Round</span><span class="p">()((</span><span class="n">min_val</span> <span class="o">/</span> <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]))</span>
+            <span class="n">zero_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qmin</span> <span class="o">-</span> <span class="n">F</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">min_val</span> <span class="o">/</span> <span class="n">scale</span><span class="p">))</span>
 
-        <span class="k">return</span> <span class="n">q_dict</span>
+        <span class="k">return</span> <span class="n">create_qparams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">zero_point</span><span class="o">=</span><span class="n">zero_point</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_qparams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_qparams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">)</span>
@@ -317,12 +317,20 @@
             <span class="c1"># stop gradient</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x_orig</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
             <span class="c1"># find max and min</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
-        <span class="k">return</span> <span class="n">x_orig</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">x_orig</span>
 
 
-<div class="viewcode-block" id="SyncMinMaxObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.SyncMinMaxObserver.html#megengine.quantization.SyncMinMaxObserver">[文档]</a><span class="k">class</span> <span class="nc">SyncMinMaxObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">SyncMinMaxObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A distributed version of :class:`~.MinMaxObserver`.</span>
+
+<span class="sd">    :param mode: set quantization mode.</span>
+<span class="sd">    :param eps: a initial maximum value to avoid division by zero problem.</span>
+<span class="sd">    :param dtype: a string indicating which dtype to collect scale and zero_point of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_orig</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x_orig</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
@@ -332,47 +340,66 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">min_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
                 <span class="n">max_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">,</span> <span class="n">min_x</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">,</span> <span class="n">max_x</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">x_orig</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">,</span> <span class="n">min_x</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">,</span> <span class="n">max_x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x_orig</span>
 
 
-<div class="viewcode-block" id="ExponentialMovingAverageObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.ExponentialMovingAverageObserver.html#megengine.quantization.ExponentialMovingAverageObserver">[文档]</a><span class="k">class</span> <span class="nc">ExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A :class:`~.MinMaxObserver` with momentum support for min/max updating.</span>
+
+<span class="sd">    :param momentum: momentum ratio for min/max updating.</span>
+<span class="sd">    :param mode: set quantization mode.</span>
+<span class="sd">    :param eps: a initial maximum value to avoid division by zero problem.</span>
+<span class="sd">    :param dtype: a string indicating which dtype to collect scale and zero_point of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
-        <span class="n">mode</span><span class="o">=</span><span class="n">QuantMode</span><span class="o">.</span><span class="n">SYMMERTIC</span><span class="p">,</span>
-        <span class="n">eps</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;qint8&quot;</span><span class="p">,</span>
-        <span class="n">narrow_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">momentum</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span>
+        <span class="n">mode</span><span class="p">:</span> <span class="n">QuantMode</span> <span class="o">=</span> <span class="n">QuantMode</span><span class="o">.</span><span class="n">SYMMERTIC</span><span class="p">,</span>
+        <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00001</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QuantDtypeMeta</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;qint8&quot;</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">narrow_range</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">momentum</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">momentum</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+        <span class="c1"># used to avoid if-clauses in the first forward which is not supported</span>
+        <span class="c1"># in trace mode.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">set_momentum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">momentum</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">momentum</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">momentum</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_orig</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
             <span class="c1"># stop gradient</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x_orig</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
             <span class="c1"># Exponential Moving Average</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span>
                 <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span>
                 <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span>
 
-        <span class="k">return</span> <span class="n">x_orig</span></div>
+        <span class="k">return</span> <span class="n">x_orig</span>
 
 
-<div class="viewcode-block" id="SyncExponentialMovingAverageObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.SyncExponentialMovingAverageObserver.html#megengine.quantization.SyncExponentialMovingAverageObserver">[文档]</a><span class="k">class</span> <span class="nc">SyncExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">ExponentialMovingAverageObserver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">SyncExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">ExponentialMovingAverageObserver</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A distributed version of :class:`~.ExponentialMovingAverageObserver`.</span>
+
+<span class="sd">    :param momentum: momentum ratio for min/max updating.</span>
+<span class="sd">    :param mode: set quantization mode.</span>
+<span class="sd">    :param eps: a initial maximum value to avoid division by zero problem.</span>
+<span class="sd">    :param dtype: a string indicating which dtype to collect scale and zero_point of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_orig</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x_orig</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
@@ -382,33 +409,45 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">min_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
                 <span class="n">max_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span>
                 <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">)</span> <span class="o">*</span> <span class="n">min_x</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span>
                 <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_x</span>
             <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span>
-        <span class="k">return</span> <span class="n">x_orig</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span>
+        <span class="k">return</span> <span class="n">x_orig</span>
 
 
-<div class="viewcode-block" id="HistogramObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.HistogramObserver.html#megengine.quantization.HistogramObserver">[文档]</a><span class="k">class</span> <span class="nc">HistogramObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">HistogramObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A :class:`~.MinMaxObserver` using running histogram of tensor values</span>
+<span class="sd">    for min/max updating. Usually used for calibration quantization.</span>
+
+<span class="sd">    :param bins: number of bins to use for the histogram.</span>
+<span class="sd">    :param upsample_rate: which ratio to interpolate histograms in.</span>
+<span class="sd">    :param mode: set quantization mode.</span>
+<span class="sd">    :param eps: a initial maximum value to avoid division by zero problem.</span>
+<span class="sd">    :param dtype: a string indicating which dtype to collect scale and zero_point of.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">bins</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
-        <span class="n">upsample_rate</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-        <span class="n">mode</span><span class="o">=</span><span class="n">QuantMode</span><span class="o">.</span><span class="n">SYMMERTIC</span><span class="p">,</span>
-        <span class="n">eps</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;qint8&quot;</span><span class="p">,</span>
-        <span class="n">narrow_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2048</span><span class="p">,</span>
+        <span class="n">upsample_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+        <span class="n">mode</span><span class="p">:</span> <span class="n">QuantMode</span> <span class="o">=</span> <span class="n">QuantMode</span><span class="o">.</span><span class="n">SYMMERTIC</span><span class="p">,</span>
+        <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.00001</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QuantDtypeMeta</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;qint8&quot;</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">narrow_range</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">bins</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upsample_rate</span> <span class="o">=</span> <span class="n">upsample_rate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dst_nbins</span> <span class="o">=</span> <span class="n">_metadata_dict</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span><span class="o">.</span><span class="n">qmax</span> <span class="o">-</span> <span class="n">_metadata_dict</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span><span class="o">.</span><span class="n">qmin</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dst_nbins</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">_builtin_quant_dtypes</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span><span class="o">.</span><span class="n">qmax</span> <span class="o">-</span> <span class="n">_builtin_quant_dtypes</span><span class="p">[</span><span class="n">dtype</span><span class="p">]</span><span class="o">.</span><span class="n">qmin</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">histogram</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">bins</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_non_linear_param_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -634,44 +673,59 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">,</span>
                 <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">histogram</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">new_histogram</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">new_min</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="o">.</span><span class="n">_reset</span><span class="p">(</span><span class="n">new_max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">histogram</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">new_histogram</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">new_min</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">new_max</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_orig</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sideeffect_forward</span><span class="p">(</span><span class="n">x_orig</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x_orig</span></div>
+        <span class="k">return</span> <span class="n">x_orig</span>
 
 
-<div class="viewcode-block" id="PassiveObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.PassiveObserver.html#megengine.quantization.PassiveObserver">[文档]</a><span class="k">class</span> <span class="nc">PassiveObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">PassiveObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This class can be set :attr:`scale` derectly.</span>
+<span class="sd">    An Observer that supports setting :attr:`scale` directly.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q_dict</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">narrow_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">narrow_range</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">q_dict</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">q_dict</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;scale&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">q_dict</span> <span class="ow">or</span> <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Can not get an initialized scale&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">orig_scale</span> <span class="o">=</span> <span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QuantDtypeMeta</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qparams</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig_scale</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qparams</span><span class="o">.</span><span class="n">scale</span>
 
     <span class="nd">@scale</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">q_dict</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qparams</span><span class="o">.</span><span class="n">scale</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_qparams</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_dict</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qparams</span>
+
+    <span class="k">def</span> <span class="nf">set_qparams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qparams</span><span class="p">:</span> <span class="n">QParams</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param qparams: used to set initial scale.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qparams</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">qparams</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">qparams</span><span class="o">.</span><span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Can not get an initialized scale&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">qparams</span><span class="o">.</span><span class="n">dtype_meta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">qparams</span><span class="o">.</span><span class="n">dtype_meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="n">qparams</span><span class="o">.</span><span class="n">dtype_meta</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="p">),</span> <span class="s2">&quot;input qparams&#39; dtype is not equal to self.dtype.</span><span class="se">\n</span><span class="s2">qparams.dtype_meta=</span><span class="si">{}</span><span class="se">\n</span><span class="s2">self.dtype=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">qparams</span><span class="o">.</span><span class="n">dtype_meta</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orig_scale</span> <span class="o">=</span> <span class="n">qparams</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Just return input because :attr:`q_dict` is set by :func:`~.apply_easy_quant`.</span>
+<span class="sd">        Just return input because :attr:`qparams` is set by :func:`~.apply_easy_quant`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">x</span></div>
+        <span class="k">return</span> <span class="n">x</span>
 </pre></div>
 
               </div>
@@ -691,7 +745,7 @@
   <div class="container">
     <p>
           &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
-        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
     </p>
   </div>
 </footer>
