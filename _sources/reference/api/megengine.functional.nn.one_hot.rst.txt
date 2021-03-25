@@ -1,6 +1,0 @@
-megengine.functional.nn.one\_hot
-================================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: one_hot

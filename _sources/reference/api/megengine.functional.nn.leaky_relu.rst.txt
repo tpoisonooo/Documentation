@@ -1,6 +1,0 @@
-megengine.functional.nn.leaky\_relu
-===================================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: leaky_relu

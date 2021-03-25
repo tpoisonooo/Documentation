@@ -1,0 +1,6 @@
+megengine.functional.logsigmoid
+===============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: logsigmoid

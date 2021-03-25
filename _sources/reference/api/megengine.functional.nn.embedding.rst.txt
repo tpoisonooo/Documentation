@@ -1,6 +1,0 @@
-megengine.functional.nn.embedding
-=================================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: embedding

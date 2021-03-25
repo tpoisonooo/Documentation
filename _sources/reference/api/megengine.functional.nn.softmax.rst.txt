@@ -1,6 +1,0 @@
-megengine.functional.nn.softmax
-===============================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: softmax

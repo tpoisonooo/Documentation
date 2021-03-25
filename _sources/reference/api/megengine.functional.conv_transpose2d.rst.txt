@@ -1,0 +1,6 @@
+megengine.functional.conv\_transpose2d
+======================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: conv_transpose2d

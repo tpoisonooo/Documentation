@@ -8,7 +8,7 @@
     <title>新手入门 &#8212; MegEngine 1.2.0 文档</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.101715efdecc9b59cb6e1ddfa685c31f.css" rel="stylesheet" />
+  <link href="../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -28,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.d8bbf5861d671d414e1a.js">
+  <link rel="preload" as="script" href="../_static/js/index.c9faddf98927557166f1.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -42,7 +42,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="安装" href="install.html" />
+    <link rel="next" title="天元 MegEngine 快速上手" href="quick-start.html" />
     <link rel="prev" title="欢迎使用天元 MegEngine (๑•̀ㅂ•́)و✧" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -86,7 +86,7 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../developmet/index.html">
+ <a class="reference internal nav-link" href="../development/index.html">
   开发者指南
  </a>
 </li>
@@ -114,6 +114,46 @@
           </a>
         </li>
       </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "getting-started/index.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
     </div>
 </div>
     </nav>
@@ -127,11 +167,6 @@
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="nav bd-sidenav">
- <li class="toctree-l2">
-  <a class="reference internal" href="install.html">
-   安装
-  </a>
- </li>
  <li class="toctree-l2">
   <a class="reference internal" href="quick-start.html">
    天元 MegEngine 快速上手
@@ -201,11 +236,11 @@
 </div>
 <div class="section" id="id2">
 <h2>安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>天元 MegEngine 可以使用 Python 包管理器 pip 直接进行安装：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install megengine
+<p>天元 MegEngine 可以使用 Python 包管理器 <code class="docutils literal notranslate"><span class="pre">pip</span></code> 直接进行安装：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install megengine -f https://megengine.org.cn/whl/mge.html
 </pre></div>
 </div>
-<p>如果想要安装特定的版本，或需要从源码进行编译？ <a class="reference internal" href="install.html#install"><span class="std std-ref">了解更多安装方式</span></a> 。</p>
+<p>如果想要安装特定的版本，或需要从源码进行编译？ <a class="reference internal" href="../user-guide/install/index.html#install"><span class="std std-ref">了解更多安装方式</span></a> 。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
 <p>MegEngine 安装包中集成了使用 GPU 运行代码所需的 CUDA 环境，不用区分 CPU 和 GPU 版。
@@ -232,7 +267,7 @@
     </div>
 
     
-  <script src="../_static/js/index.d8bbf5861d671d414e1a.js"></script>
+  <script src="../_static/js/index.c9faddf98927557166f1.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">

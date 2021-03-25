@@ -1,6 +1,0 @@
-megengine.functional.nn.remap
-=============================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: remap

@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>开发流程概述 &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.c9faddf98927557166f1.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="调试工具" href="debugging-tools.html" />
+    <link rel="prev" title="开发环境设置" href="environment/index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../index.html">
+        <img src="../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "development/workflow.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2">
+  <a class="reference internal" href="architecture-design.html">
+   MegEngine 架构设计
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="roadmap/index.html">
+   MegEngine 开发路线图
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="meps.html">
+   MegEngine 增强提案（MEPs）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="environment/index.html">
+   开发环境设置
+  </a>
+ </li>
+ <li class="toctree-l2 current active">
+  <a class="current reference internal" href="#">
+   开发流程概述
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="debugging-tools.html">
+   调试工具
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="benchmark.html">
+   基准测试（Benchmark）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="governance.html">
+   MegEngine 社区治理
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="contribute-to-docs/index.html">
+   如何为文档做贡献
+  </a>
+ </li>
+</ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pull-request">
+   Pull Request 的一生
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   保持和上游同步
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   仅修改最后的提交
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="workflow">
+<span id="id1"></span><h1>开发流程概述<a class="headerlink" href="#workflow" title="永久链接至标题">¶</a></h1>
+<div class="section" id="pull-request">
+<span id="pull-request-guide"></span><h2>Pull Request 的一生<a class="headerlink" href="#pull-request" title="永久链接至标题">¶</a></h2>
+<p>假设你已经 <code class="docutils literal notranslate"><span class="pre">fork</span></code> 并 <code class="docutils literal notranslate"><span class="pre">clone</span></code> 了 <code class="docutils literal notranslate"><span class="pre">&lt;your-username&gt;/MegEngine</span></code> 的代码：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 基于上游的 master 分支，创建并切换到一个新分支用于开发</span>
+git fetch upstream
+git checkout -b &lt;branch-name&gt; upstream/master
+
+<span class="c1"># 做一些相应的代码修改</span>
+<span class="c1"># ....</span>
+
+<span class="c1"># 做一些相应的本地测试</span>
+
+<span class="c1"># 将修改过的代码提交记录到本地，并推送到默认的远端分支</span>
+git add &lt;filenames&gt;
+git commit -m <span class="s1">&#39;&lt;message&gt;&#39;</span>
+git push origin &lt;branch-name&gt;
+
+<span class="c1"># 跑到 https://github.com/&lt;your-username&gt;/MegEngine</span>
+<span class="c1"># 根据相应的提示创建一个 Pull Request 并留下说明</span>
+<span class="c1"># 开发者将 Review 你的代码并给出相应的答复</span>
+<span class="c1"># 如果无需新的改动，则会被合入上游 master 分支</span>
+
+<span class="c1"># 删除本地分支和远端分支</span>
+git branch -D &lt;branch-name&gt;
+git push origin -d &lt;branch-name&gt;
+</pre></div>
+</div>
+<p>如果你在发起 Pull Request 后有新增的改动，如果 Commits 记录很混乱，
+为了保持历史记录的整洁，请使用 <code class="docutils literal notranslate"><span class="pre">squash</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">rebase</span></code> 进行整理。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>一些开源项目要求避免使用 <code class="docutils literal notranslate"><span class="pre">squash</span></code> 和 <code class="docutils literal notranslate"><span class="pre">rebase</span></code>
+以保证历史记录的完整性，在 MegEngine 中提倡使用这些操作，
+目的是防止出现过多的 <code class="docutils literal notranslate"><span class="pre">fix</span></code> 性质的提交历史，请勿滥用。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>保持和上游同步<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>如果上游 <code class="docutils literal notranslate"><span class="pre">master</span></code> 分支有更新，为了避免存在冲突导致无法合并，
+请同时更新你的本地 <code class="docutils literal notranslate"><span class="pre">master</span></code> 分支：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout master
+git pull upstream master  <span class="c1"># pull = fetch + merge</span>
+</pre></div>
+</div>
+<p>接下来需要用 <code class="docutils literal notranslate"><span class="pre">rebase</span></code> 命令更新你所开发的分支：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout &lt;branch-name&gt;
+git rebase master
+git push origin --force &lt;branch-name&gt;
+</pre></div>
+</div>
+<p>这个过程中可能需要解决一些冲突。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>如果你已经用 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">&lt;branch-name&gt;</span></code> 将开发分支推送到远端，
+则在进行 <code class="docutils literal notranslate"><span class="pre">rebase</span></code> 后再次 <code class="docutils literal notranslate"><span class="pre">push</span></code> 时需要添加 <code class="docutils literal notranslate"><span class="pre">--force</span></code> 参数。</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>仅修改最后的提交<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>有些时候你只需要小修小补最后一次的提交，但不希望多出一次提交记录，可以使用：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git add &lt;filenames&gt;
+git commit --amend
+git push origin --force &lt;brach-name&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.c9faddf98927557166f1.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

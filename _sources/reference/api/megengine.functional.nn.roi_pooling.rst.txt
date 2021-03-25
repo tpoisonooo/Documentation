@@ -1,6 +1,0 @@
-megengine.functional.nn.roi\_pooling
-====================================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: roi_pooling

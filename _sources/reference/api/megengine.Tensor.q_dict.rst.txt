@@ -1,6 +1,0 @@
-megengine.Tensor.q\_dict
-========================
-
-.. currentmodule:: megengine
-
-.. autoattribute:: Tensor.q_dict

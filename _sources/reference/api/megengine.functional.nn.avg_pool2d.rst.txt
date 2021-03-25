@@ -1,6 +1,0 @@
-megengine.functional.nn.avg\_pool2d
-===================================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: avg_pool2d

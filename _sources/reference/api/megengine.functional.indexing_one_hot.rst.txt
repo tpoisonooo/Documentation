@@ -1,0 +1,6 @@
+megengine.functional.indexing\_one\_hot
+=======================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: indexing_one_hot

@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>如何为文档做贡献 &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.c9faddf98927557166f1.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="MegEngine 文档风格指南" href="document-style-guide.html" />
+    <link rel="prev" title="MegEngine 社区治理" href="../governance.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "development/contribute-to-docs/index.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2">
+  <a class="reference internal" href="../architecture-design.html">
+   MegEngine 架构设计
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../roadmap/index.html">
+   MegEngine 开发路线图
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../meps.html">
+   MegEngine 增强提案（MEPs）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../environment/index.html">
+   开发环境设置
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../workflow.html">
+   开发流程概述
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../debugging-tools.html">
+   调试工具
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../benchmark.html">
+   基准测试（Benchmark）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../governance.html">
+   MegEngine 社区治理
+  </a>
+ </li>
+ <li class="toctree-l2 current active">
+  <a class="current reference internal" href="#">
+   如何为文档做贡献
+  </a>
+  <ul>
+   <li class="toctree-l3">
+    <a class="reference internal" href="document-style-guide.html">
+     MegEngine 文档风格指南
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="restructuredtext.html">
+     Sphinx reStructuredText 语法入门
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="commit-message.html">
+     Commit message 书写指南
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="how-to-build-the-doc-locally.html">
+     如何在本地构建文档
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="how-to-translate-the-doc.html">
+     如何帮助翻译文档内容
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   源码组织逻辑
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#doc-content">
+   内容分类逻辑
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#git">
+   Git 协作流程
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pull-request">
+     Pull Request 如何被合并
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   官方文档维护人员
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="contribute-to-docs">
+<span id="id1"></span><h1>如何为文档做贡献<a class="headerlink" href="#contribute-to-docs" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>GitHub 地址：<a class="reference external" href="https://github.com/MegEngine/Documentation">https://github.com/MegEngine/Documentation</a> （欢迎 Star～）</p>
+<p>MegEngine 文档的贡献者大致可参考以下几个方向（由易到难）：</p>
+<ul class="simple">
+<li><p>在 MegEngine/Documentation Issues 或论坛中提供各种各样建设性的意见；</p></li>
+<li><p>更正文档中的拼写错误（Typographical error，简称 Typo）或格式错误（Format error）；</p></li>
+<li><p>更正文档中的其它类型错误，需要详细说明理由，方便进行讨论和采纳；</p></li>
+<li><p>帮助我们进行对 Python API 源码中 Docstring 的翻译，参考 <a class="reference internal" href="how-to-translate-the-doc.html#how-to-translate-the-doc"><span class="std std-ref">如何帮助翻译文档内容</span></a> ；</p></li>
+<li><p>帮助我们将中文文档内容翻译成对应的英文版本，参考 <a class="reference internal" href="how-to-translate-the-doc.html#how-to-translate-the-doc"><span class="std std-ref">如何帮助翻译文档内容</span></a> ；</p></li>
+<li><p>帮助我们补充完善 <a class="reference internal" href="#doc-content"><span class="std std-ref">文档内容</span></a> ，比如提供大家都需要的教程，不断追求更高的质量。</p></li>
+</ul>
+<p>你也可以浏览处于 Open 状态的 <a class="reference external" href="https://github.com/MegEngine/Documentation/issues">Issues</a>
+列表，从里面接下任务或找到一些灵感。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>请勿将对文档（Documentation）的 Issues 提交到 MegEngine/MegEngine 存储库。</p>
+</div>
+<p>如果你发现了文档中一些很容易改正的细节错误（比如错字、格式不正确等），
+但不熟悉 MegEngine 文档的 <a class="reference internal" href="#github-collaborate"><span class="std std-ref">Git 协作流程</span></a> ，觉得提 Pull Request 太麻烦，
+则可以通过 Issues、交流群和论坛等渠道友好地提出来，由我们负责进行后续处理，
+并在对应的 Commit 中将你以共同作者（Co-author）的形式加入历史记录：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git commit -m <span class="s2">&quot;Refactor usability tests.</span>
+<span class="s2">&gt;</span>
+<span class="s2">&gt;</span>
+<span class="s2">Co-authored-by: name &lt;name@example.com&gt;</span>
+<span class="s2">Co-authored-by: another-name &lt;another-name@example.com&gt;&quot;</span>
+</pre></div>
+</div>
+<p>这样的方法虽然简单直接，但 MegEngine 团队不能保证处理此类 Issues 的优先级。</p>
+<p>俗话说得好：“众人拾柴火焰高”，快来尝试一下吧～ n(*≧▽≦*)n</p>
+<div class="section" id="id2">
+<h2>源码组织逻辑<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>MegEngine 文档的源码结构如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>Documentation
+├── <span class="nb">source</span>
+│   ├── _static           <span class="c1"># 静态资源文件统一放在这里</span>
+│   ├── _templates
+│   ├── getting-started   <span class="c1">#########################</span>
+│   ├── user-guide        <span class="c1">#  文档内容主要覆盖区域    #</span>
+│   ├── reference         <span class="c1">#  与网页 URL 路径一致    #</span>
+│   ├── development       <span class="c1">#########################</span>
+│   ├── conf.py
+│   ├── favicon.ico
+│   ├── logo.png
+│   └── index.rst
+├── build                 <span class="c1"># 生成的文档一般在 build 目录</span>
+│   ├── doctrees
+│   └── html
+├── examples
+├── locales               <span class="c1"># Sphinx 多语言支持，内部结构和 source 高度对齐</span>
+│   ├── zh-CN             <span class="c1"># 中文：主要需要翻译 API 的 Docstring 部分</span>
+│   └── en                <span class="c1"># 英文：需要翻译除 API Docstring 外的全部内容</span>
+├── Makefile
+├── requirements.txt
+├── LICENSE
+├── CONTRIBUTING.md
+└── README.md
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>与常见的软件文档 “以英文撰写原文，后续提供多语言翻译” 的逻辑不同，
+MegEngine 文档默认以中文作为原稿，后续提供其它语言的翻译版本。
+但由于 Python Docstring 属于源代码注释的一部分，而代码注释提倡用英文撰写，
+因此 MegEngine 的 Python API 文档将先从源代码提取出英文 Docstring，
+再通过翻译对应的 <code class="docutils literal notranslate"><span class="pre">locales/zh-CN/LC_MESSAGES/reference/api/*.po</span></code> 文件变为中文。</p>
+</div>
+<p>如果你曾经使用 Sphinx 构建过 Python 项目的文档，想必会对上面的源码结构非常熟悉。
+有的时候，为了在本地预览自己的改动效果，我们需要学会 <a class="reference internal" href="how-to-build-the-doc-locally.html#how-to-build-the-doc-locally"><span class="std std-ref">如何在本地构建文档</span></a> 。</p>
+</div>
+<div class="section" id="doc-content">
+<span id="id3"></span><h2>内容分类逻辑<a class="headerlink" href="#doc-content" title="永久链接至标题">¶</a></h2>
+<p>MegEngine 的文档主要包括以下方面的内容：</p>
+<ul class="simple">
+<li><p>教程（Tutorial）：可从零开始完整跑通的教学性材料，适合快速上手</p></li>
+<li><p>指南（Guide）：针对特定情景/特定功能进行详细说明的操作手册</p></li>
+<li><p>参考（Reference）：用于 API 查询和浏览，方便网络引擎检索的字典</p></li>
+</ul>
+</div>
+<div class="section" id="git">
+<span id="github-collaborate"></span><h2>Git 协作流程<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p><strong>请不要突然直接发起一个 Pull Request!!!</strong></p>
+</div>
+<p>高效清晰的沟通是合作的前提，标准的 MegEngine 文档协作流程如下：</p>
+<ol class="arabic simple">
+<li><p>创建一个 Issue，讨论接下来你打算进行什么样的尝试，交流想法；</p></li>
+<li><p>一旦确定了初步方案，Fork 并 Clone 存储库，创建一个新的本地分支；</p></li>
+<li><p>修改代码，<a class="reference internal" href="commit-message.html#commit-message"><span class="std std-ref">提交 Commit</span></a> 并 Push 到你 Fork 的远端分支（Origin）；</p></li>
+<li><p>在 GitHub 创建一个 Pull Request 并向上游（Upstream）申请将其合并；</p></li>
+<li><p>根据 Review 意见进行交流，如有需要则修改你的代码；</p></li>
+<li><p>当你的分支被合并了，便可以删除对应的本地和远程分支。</p></li>
+</ol>
+<p>我们还提供了更加详细的 <a class="reference internal" href="../workflow.html#pull-request-guide"><span class="std std-ref">Pull Request 的一生</span></a> （里面的规则适用于 MegEngine ）。</p>
+<div class="section" id="pull-request">
+<h3>Pull Request 如何被合并<a class="headerlink" href="#pull-request" title="永久链接至标题">¶</a></h3>
+<p>我们为 <code class="docutils literal notranslate"><span class="pre">main</span></code> 分支启用了保护规则，满足以下条件的 Pull Request 才能被成功 Merge:</p>
+<ul class="simple">
+<li><p>必须签署贡献者协议（Contributor License Agreement，简称 CLA）；</p></li>
+<li><p>必须至少有一位官方维护人员审核（Review）完成并批准（Approve）了你的所有代码</p></li>
+<li><p>必须通过 Actions 中触发的状态检查（Status check），如 Sphinx Build and Test.</p></li>
+<li><p>必须将你的 Commits 历史记录整理为线性，消息内容符合 <a class="reference external" href="commit-message">规范</a>.</p></li>
+</ul>
+<p>当 Pull Request 被成功合入 <code class="docutils literal notranslate"><span class="pre">main</span></code> 分支，将自动触发 <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> 分支上的部署流程。
+<code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> 分支将被用于 GitHub Pages 静态网站服务的部署，
+可作为 MegEngine 官网由于不可抗力等因素无法访问时的镜像站点。</p>
+<p>官网文档页面的更新将会有一定的处理流程延迟，请耐心等待官网服务器更新文档内容。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>官方文档维护人员<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>当代码需要找人审核时，可以从下面的人员名单中进行选择：</p>
+<ul class="simple">
+<li><p>架构相关：<a class="reference external" href="https://github.com/MegChai">Chai</a></p></li>
+<li><p>主题相关：<a class="reference external" href="https://github.com/MegChai">Chai</a> （上游主题 Pydata 的研发请直接向上游负责人员反馈）</p></li>
+<li><p>教程相关：<a class="reference external" href="https://github.com/MegChai">Chai</a></p></li>
+<li><p>文档相关：<a class="reference external" href="https://github.com/MegChai">Chai</a></p></li>
+</ul>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.c9faddf98927557166f1.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

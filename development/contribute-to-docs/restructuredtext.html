@@ -1,0 +1,968 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sphinx reStructuredText 语法入门 &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.c9faddf98927557166f1.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"], "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Commit message 书写指南" href="commit-message.html" />
+    <link rel="prev" title="MegEngine 文档风格指南" href="document-style-guide.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "development/contribute-to-docs/restructuredtext.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2">
+  <a class="reference internal" href="../architecture-design.html">
+   MegEngine 架构设计
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../roadmap/index.html">
+   MegEngine 开发路线图
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../meps.html">
+   MegEngine 增强提案（MEPs）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../environment/index.html">
+   开发环境设置
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../workflow.html">
+   开发流程概述
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../debugging-tools.html">
+   调试工具
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../benchmark.html">
+   基准测试（Benchmark）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../governance.html">
+   MegEngine 社区治理
+  </a>
+ </li>
+ <li class="toctree-l2 current active">
+  <a class="reference internal" href="index.html">
+   如何为文档做贡献
+  </a>
+  <ul class="current">
+   <li class="toctree-l3">
+    <a class="reference internal" href="document-style-guide.html">
+     MegEngine 文档风格指南
+    </a>
+   </li>
+   <li class="toctree-l3 current active">
+    <a class="current reference internal" href="#">
+     Sphinx reStructuredText 语法入门
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="commit-message.html">
+     Commit message 书写指南
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="how-to-build-the-doc-locally.html">
+     如何在本地构建文档
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="how-to-translate-the-doc.html">
+     如何帮助翻译文档内容
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sections">
+   章节（Sections）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#paragraphs">
+   段落（Paragraphs）
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     保留换行特性
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inline-markup">
+   内联标记（Inline markup）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#list">
+   列表（List）
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     无序列表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     有序列表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     嵌套列表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     定义列表
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tables">
+   表格（Tables）
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     网格表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     简单表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#csv">
+     CSV 表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     List 表
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hyperlinks">
+   超链接（Hyperlinks）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#images">
+   图片（Images）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cross-reference">
+   交叉引用（Cross-reference）
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ref">
+     通过 ref 进行引用
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python">
+     交叉引用 Python 对象
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#footnotes">
+   脚注（Footnotes）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#citation">
+   引用（Citation）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#math">
+   数学公式（Math）
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#graphviz">
+   Graphviz 语法支持
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mermaid">
+   Mermaid 语法支持
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="sphinx-restructuredtext">
+<span id="restructuredtext"></span><h1>Sphinx reStructuredText 语法入门<a class="headerlink" href="#sphinx-restructuredtext" title="永久链接至标题">¶</a></h1>
+<p>本文是一篇符合 MegEngine 文档特色的
+《<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext">Sphinx reStructuredText</a> 》
+入门教程，同时也请文档内容的编写人员遵循其中的各项规范。除了这篇供初学者入门的教程以外，
+《<a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText User Documentation</a> 》
+也是一份比较权威的文档，本页面中的所有 <strong>参考</strong> 链接已经指向了权威文档中对应的部分。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>如果你有 MarkDown 语法经验，学习 RST 语法会更加简单。</p>
+</div>
+<div class="section" id="sections">
+<h2>章节（Sections）<a class="headerlink" href="#sections" title="永久链接至标题">¶</a></h2>
+<p>通过使用标点符号对节标题加下划线（并可选地对它们进行加上划线）来创建节标题（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#sections">参考</a> ），</p>
+<p>节标题需要与文本一样长。MegEngine 采用如下的章节结构语法规范：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="gh">========</span>
+<span class="gh">一级标题</span>
+<span class="gh">========</span>
+
+<span class="gh">二级标题</span>
+<span class="gh">--------</span>
+
+<span class="gh">三级标题</span>
+<span class="gh">~~~~~~~~</span>
+</pre></div>
+</div>
+<p>你可以采用更深的嵌套级别，但在文档中应当避免出现四级甚至更深的标题。</p>
+</div>
+<div class="section" id="paragraphs">
+<h2>段落（Paragraphs）<a class="headerlink" href="#paragraphs" title="永久链接至标题">¶</a></h2>
+<p>段落（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#paragraphs">参考</a> ）即一个或多个空白行分隔的文本块，是 reST 文档中最基本的部分。
+缩进在 reST 语法中很重要（与 Python 一样），因此同一段落的所有行都必须左对齐到相同的缩进级别。</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>第一段内容的第一部分，
+第一段内容的第二部分，将与前一句话连续（即不会换行）。
+
+第二段内容。
+</pre></div>
+</div>
+<p>第一段内容的第一部分，
+第一段内容的第二部分，将与前一句话连续（即不会换行）。</p>
+<p>第二段内容。</p>
+<div class="section" id="id2">
+<h3>保留换行特性<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>行块（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#line-blocks">参考</a> ）是保留换行符的一种方法：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> 第一段内容的第一部分，
+<span class="o">|</span> 第一段内容的第二部分，将会进行换行。
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">第一段内容的第一部分，</div>
+<div class="line">第一段内容的第二部分，将会进行换行。</div>
+</div>
+</div>
+</div>
+<div class="section" id="inline-markup">
+<h2>内联标记（Inline markup）<a class="headerlink" href="#inline-markup" title="永久链接至标题">¶</a></h2>
+<p>标准的 reST 内联标记用法十分简单：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="ge">*使用单个星号表示标记重点。（粗体）*</span>
+
+<span class="gs">**使用两个星号表示强调重点。（斜体）**</span>
+
+<span class="s">``使用两个反引号表示代码示例。``</span>
+</pre></div>
+</div>
+<p><em>使用单个星号表示标记重点。（粗体）</em></p>
+<p><strong>使用两个星号表示强调重点。（斜体）</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">使用两个反引号表示代码示例。</span></code></p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<ul class="simple">
+<li><p>内联标记不支持嵌套语法</p></li>
+<li><p>内容不能以空格开头或结尾，如 <code class="docutils literal notranslate"><span class="pre">*</span> <span class="pre">文本*</span></code> 这样的用法是错误的</p></li>
+<li><p>必须用非单词字符将其和周围的文本分开</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="list">
+<h2>列表（List）<a class="headerlink" href="#list" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>无序列表<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>无序列表（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#bullet-lists">参考</a> ）的用法很自然。
+只需要在段落开头放置星号，然后正确地缩进：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="m">*</span> 这是一个无序列表。
+<span class="m">*</span> 它有两个元素，
+  第二个元素占据两行源码，实际上视作同一个段落。
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>这是一个无序列表。</p></li>
+<li><p>它有两个元素，
+第二个元素占据两行源码，实际上视作同一个段落。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>有序列表<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>对于有序列表，可以自己编号，也可以使用 # 来自动编号：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="m">1.</span> 这是一个有序列表。
+<span class="m">2.</span> 它也有两个元素。
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>这是一个有序列表。</p></li>
+<li><p>它也有两个元素。</p></li>
+</ol>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="m">#.</span> 这又是一个有序列表。
+<span class="m">#.</span> 但是它能够自动编号～
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>这又是一个有序列表。</p></li>
+<li><p>但是它能够自动编号～</p></li>
+</ol>
+<p>考虑到内容修改的方便，推荐使用自动编号的有序列表。</p>
+</div>
+<div class="section" id="id5">
+<h3>嵌套列表<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>嵌套列表必须使用空白行和父列表项目隔开：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="m">*</span> 这是一个列表。
+
+  <span class="m">*</span> 它嵌套了一个子列表，
+  <span class="m">*</span> 并且有自己的子元素。
+
+<span class="m">*</span> 这里是父列表的后续元素。
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>这是一个列表。</p>
+<ul>
+<li><p>它嵌套了一个子列表，</p></li>
+<li><p>并且有自己的子元素。</p></li>
+</ul>
+</li>
+<li><p>这里是父列表的后续元素。</p></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>定义列表<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>定义列表（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#definition-lists">参考</a> ）在 API 文档很常见，使用方法如下：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>术语 （限定在一行文本）
+   术语的定义，必须使用缩进。
+
+   支持使用多个段落。
+
+下一个术语
+   下一个术语对应的定义。
+</pre></div>
+</div>
+<dl>
+<dt>术语 （限定在一行文本）</dt><dd><p>术语的定义，必须使用缩进。</p>
+<p>支持使用多个段落。</p>
+</dd>
+<dt>下一个术语</dt><dd><p>下一个术语对应的定义。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="tables">
+<h2>表格（Tables）<a class="headerlink" href="#tables" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id7">
+<h3>网格表<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>对于网格表（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#grid-tables">参考</a> ），必须手动“画”出单元格：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>+------------------------+------------+----------+----------+
+<span class="o">|</span> Header row, column 1   | Header 2   | Header 3 | Header 4 |
+<span class="o">|</span> (header rows optional) |            |          |          |
++========================+============+==========+==========+
+<span class="o">|</span> body row 1, column 1   | column 2   | column 3 | column 4 |
++------------------------+------------+----------+----------+
+<span class="o">|</span> body row 2             | ...        | ...      |          |
++------------------------+------------+----------+----------+
+</pre></div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 21%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Header row, column 1
+(header rows optional)</p></th>
+<th class="head"><p>Header 2</p></th>
+<th class="head"><p>Header 3</p></th>
+<th class="head"><p>Header 4</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>body row 1, column 1</p></td>
+<td><p>column 2</p></td>
+<td><p>column 3</p></td>
+<td><p>column 4</p></td>
+</tr>
+<tr class="row-odd"><td><p>body row 2</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id8">
+<h3>简单表<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>简单表（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#simple-tables">参考</a> ）写起来很简单，但有局限性：
+它们必须包含多个行，并且第一列单元格不能包含多行。</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>=====  =====  =======
+A      B      A and B
+=====  =====  =======
+False  False  False
+True   False  False
+False  True   False
+True   True   True
+=====  =====  =======
+</pre></div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 29%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>A</p></th>
+<th class="head"><p>B</p></th>
+<th class="head"><p>A and B</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>False</p></td>
+<td><p>False</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>True</p></td>
+<td><p>False</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-even"><td><p>False</p></td>
+<td><p>True</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>True</p></td>
+<td><p>True</p></td>
+<td><p>True</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="csv">
+<h3>CSV 表<a class="headerlink" href="#csv" title="永久链接至标题">¶</a></h3>
+<p>CSV 表格可以根据 CSV（逗号分隔值）数据创建表。</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">csv-table</span><span class="p">::</span> Frozen Delights!
+<span class="nc">:header:</span> &quot;Treat&quot;, &quot;Quantity&quot;, &quot;Description&quot;
+<span class="nc">:widths:</span> 15, 10, 30
+
+&quot;Albatross&quot;, 2.99, &quot;On a stick!&quot;
+&quot;Crunchy Frog&quot;, 1.49, &quot;If we took the bones out, it wouldn&#39;t be
+crunchy, now would it?&quot;
+&quot;Gannet Ripple&quot;, 1.99, &quot;On a stick!&quot;
+</pre></div>
+</div>
+<table class="colwidths-given table" id="id18">
+<caption><span class="caption-text">Frozen Delights!</span><a class="headerlink" href="#id18" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 18%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Treat</p></th>
+<th class="head"><p>Quantity</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Albatross</p></td>
+<td><p>2.99</p></td>
+<td><p>On a stick!</p></td>
+</tr>
+<tr class="row-odd"><td><p>Crunchy Frog</p></td>
+<td><p>1.49</p></td>
+<td><p>If we took the bones out, it wouldn’t be
+crunchy, now would it?</p></td>
+</tr>
+<tr class="row-even"><td><p>Gannet Ripple</p></td>
+<td><p>1.99</p></td>
+<td><p>On a stick!</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id9">
+<h3>List 表<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>List 表可以根据两级无序列表来生成表格：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">list-table</span><span class="p">::</span> Frozen Delights!
+<span class="nc">:widths:</span> 15 10 30
+<span class="nc">:header-rows:</span> 1
+
+<span class="m">*</span> - Treat
+  <span class="m">-</span> Quantity
+  <span class="m">-</span> Description
+<span class="m">*</span> - Albatross
+  <span class="m">-</span> 2.99
+  <span class="m">-</span> On a stick!
+<span class="m">*</span> - Crunchy Frog
+  <span class="m">-</span> 1.49
+  <span class="m">-</span> If we took the bones out, it wouldn&#39;t be
+    crunchy, now would it?
+<span class="m">*</span> - Gannet Ripple
+  <span class="m">-</span> 1.99
+  <span class="m">-</span> On a stick!
+</pre></div>
+</div>
+<table class="colwidths-given table" id="id19">
+<caption><span class="caption-text">Frozen Delights!</span><a class="headerlink" href="#id19" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 18%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Treat</p></th>
+<th class="head"><p>Quantity</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Albatross</p></td>
+<td><p>2.99</p></td>
+<td><p>On a stick!</p></td>
+</tr>
+<tr class="row-odd"><td><p>Crunchy Frog</p></td>
+<td><p>1.49</p></td>
+<td><p>If we took the bones out, it wouldn’t be
+crunchy, now would it?</p></td>
+</tr>
+<tr class="row-even"><td><p>Gannet Ripple</p></td>
+<td><p>1.99</p></td>
+<td><p>On a stick!</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="hyperlinks">
+<h2>超链接（Hyperlinks）<a class="headerlink" href="#hyperlinks" title="永久链接至标题">¶</a></h2>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">`链接文本</span> <span class="pre">&lt;https://domain.invalid&gt;`_</span></code> 来插入内联网页链接。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>在链接文本和 <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> 符号之间必须有一个空格。</p>
+</div>
+<p>你也可以使用目标定义（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#hyperlink-targets">参考</a> ）的形式分离文本和链接：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>这个段落包含一个 <span class="s">`超链接`_</span>.
+
+<span class="p">..</span> <span class="nt">_超链接:</span> https://domain.invalid/
+</pre></div>
+</div>
+<p>这个段落包含一个 <a class="reference external" href="https://domain.invalid/">超链接</a>.</p>
+</div>
+<div class="section" id="images">
+<h2>图片（Images）<a class="headerlink" href="#images" title="永久链接至标题">¶</a></h2>
+<p>reST 支持图像指令，用法如下：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">image</span><span class="p">::</span> gnu.png
+   (options)
+</pre></div>
+</div>
+<p>当在 Sphinx 中使用时，给定的文件名（在此处为 <code class="docutils literal notranslate"><span class="pre">gnu.png</span></code> ）必须相对于源文件。</p>
+<ul class="simple">
+<li><p>MegEngine 文档中所使用的图片请统一放置在 <code class="docutils literal notranslate"><span class="pre">source/_static/images</span></code> 目录内。</p></li>
+<li><p>一般情况下请优先使用 SVG 格式的矢量图，使用位图请权衡好图片体积和清晰度。</p></li>
+<li><p>尽可能使用 Graphviz 或 Mermaid 语法绘制示意图（后续章节有说明）。</p></li>
+<li><p>图片文件名需要有相应的语义信息，不可使用完全随机生成的字符。</p></li>
+</ul>
+</div>
+<div class="section" id="cross-reference">
+<h2>交叉引用（Cross-reference）<a class="headerlink" href="#cross-reference" title="永久链接至标题">¶</a></h2>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">:role:`target`</span></code> 语法，就会创造一个 <code class="docutils literal notranslate"><span class="pre">role</span></code> 类型的指向 <code class="docutils literal notranslate"><span class="pre">target</span></code> 的链接。</p>
+<ul class="simple">
+<li><p>显示的链接文本会和 <code class="docutils literal notranslate"><span class="pre">target</span></code> 一致</p></li>
+<li><p>你也可以使用 <code class="docutils literal notranslate"><span class="pre">:role:`title</span> <span class="pre">&lt;target&gt;`</span></code> 来将链接文本指定为 <code class="docutils literal notranslate"><span class="pre">title</span></code></p></li>
+<li><p>如果使用前缀 <code class="docutils literal notranslate"><span class="pre">~</span></code> , 链接文本将会只显示 <code class="docutils literal notranslate"><span class="pre">target</span></code> 的最后一部分。
+例如 <code class="docutils literal notranslate"><span class="pre">:py:func:`~megengine.functional.add`</span></code> 将会指向 <code class="docutils literal notranslate"><span class="pre">megengine.functional.add</span></code>
+但显示为 <a class="reference internal" href="../../reference/api/megengine.functional.add.html#megengine.functional.add" title="megengine.functional.add"><code class="xref py py-func docutils literal notranslate"><span class="pre">add</span></code></a> .</p></li>
+</ul>
+<div class="section" id="ref">
+<h3>通过 ref 进行引用<a class="headerlink" href="#ref" title="永久链接至标题">¶</a></h3>
+<p>为了支持对任意位置的交叉引用，使用了标准的 reST 标签（标签名称在整个文档中必须唯一）。</p>
+<p>可以通过两种方式引用标签：</p>
+<ul>
+<li><p>在章节标题之前放置一个标签，引用时则可以使用 <code class="docutils literal notranslate"><span class="pre">:ref:`label-name`</span></code> , 比如：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_my-reference-label:</span>
+
+<span class="gh">Section to cross-reference</span>
+<span class="gh">--------------------------</span>
+
+This is the text of the section.
+
+It refers to the section itself, see <span class="na">:ref:</span><span class="nv">`my-reference-label`</span>.
+</pre></div>
+</div>
+<p>这种方法将自动获取章节标题作为链接文本，且对图片和表格也一样有效。</p>
+</li>
+<li><p>如果标签没有放在标题之前，则需要使用 <code class="docutils literal notranslate"><span class="pre">:ref:`Link</span> <span class="pre">title</span> <span class="pre">&lt;label-name&gt;`</span></code> 在其它地方引用。</p></li>
+</ul>
+</div>
+<div class="section" id="python">
+<h3>交叉引用 Python 对象<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
+<p>MegEngine 文档按照 Sphinx <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html#the-python-domain">Python Domain</a> 组织好了 Python API 页面，通常这些信息由 Sphinx 的 <code class="docutils literal notranslate"><span class="pre">autodoc</span></code> 插件从 MegEngine Python 接口源码的 docstring 处获得并自动生成。不同的 Python API 的 docstring 之间可以交叉引用，其它类型的文档也可以借此快速跳转到 API 页面。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>你可以在 MegEngine 的用户指南文档源码中找到非常多的使用参考。</p>
+</div>
+<p>如果找到匹配的标识符，则会自动生成对应的超链接：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:mod:</span></code> 引用一个模块（Module）；可以使用点名。也适用于包（Package）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:func:</span></code> 引用一个 Python 函数；可以使用点名。可不添加括号以增强可读性。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:data:</span></code> 引用模块级变量。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:const:</span></code> 引用一个 “已定义的” 常量。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:class:</span></code> 引用一个类（Class）；可以使用点名。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:meth:</span></code> 引用一个对象的方法（Method）；可以使用点名。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:attr:</span></code> 引用一个对象的特性（Attribute），也适用于属性（Property）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:exc:</span></code> 引用一个异常（Exception）；可以使用点名。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:py:obj:</span></code> 引用未指定类型的对象。</p></li>
+</ul>
+<p>默认情况下，将在 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html#directive-py-currentmodule">当前的模块</a> 中进行搜索。
+比如 <code class="docutils literal notranslate"><span class="pre">:py:func:`add`</span></code> 可以指向当前模块名为 <code class="docutils literal notranslate"><span class="pre">add</span></code> 的一个函数或者 built-in 的函数。
+如果使用 <code class="docutils literal notranslate"><span class="pre">:py:func:`functional.add`</span></code> 则可以明确指向到 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块中的 <code class="docutils literal notranslate"><span class="pre">add</span></code> 函数。</p>
+<p>如果使用点名，在没有找到完全匹配的内容时，会将点名作为后缀，
+并开始搜索和匹配带有该后缀的所有对象的名称（即使匹配到的结果不在当前模块）。
+例如在已知当前模块为 <code class="docutils literal notranslate"><span class="pre">data</span></code> 时，使用 <code class="docutils literal notranslate"><span class="pre">:py:func:`.functional.add`</span></code>
+会找到 <a class="reference internal" href="../../reference/api/megengine.functional.add.html#megengine.functional.add" title="megengine.functional.add"><code class="xref py py-func docutils literal notranslate"><span class="pre">functional.add</span></code></a> . 我们也可以结合使用 <code class="docutils literal notranslate"><span class="pre">~</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.</span></code> ，
+如 <code class="docutils literal notranslate"><span class="pre">:py:func:`~.functional.add`</span></code> 将只显示 <a class="reference internal" href="../../reference/api/megengine.functional.add.html#megengine.functional.add" title="megengine.functional.add"><code class="xref py py-func docutils literal notranslate"><span class="pre">add</span></code></a> .</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>MegEngine 文档列举出的 Python API 有些是使用 import 得到的较短的路径。
+比如 <code class="docutils literal notranslate"><span class="pre">add</span></code> 的实际路径是 <code class="docutils literal notranslate"><span class="pre">megengine.functional.elemwise.add</span></code> ，
+但在文档中能够搜索到的路径只有 <code class="docutils literal notranslate"><span class="pre">megengine.functional.add</span></code> .</p>
+<p>可以参考文档中 <code class="docutils literal notranslate"><span class="pre">functional</span></code> 模块的结构进行理解：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">py:module</span><span class="p">::</span> megengine.functional.elemwise
+<span class="p">..</span> <span class="ow">currentmodule</span><span class="p">::</span> megengine.functional
+</pre></div>
+</div>
+<p>因此在引用时应当使用 <code class="docutils literal notranslate"><span class="pre">:py:func:`~.functional.add`</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">:py:func:`~.functional.elemwise.add`</span></code>
+（后者会因为匹配失败而无法生成超链接），前者是我们推荐 MegEngine 用户的 API 调用方式。</p>
+</div>
+</div>
+</div>
+<div class="section" id="footnotes">
+<h2>脚注（Footnotes）<a class="headerlink" href="#footnotes" title="永久链接至标题">¶</a></h2>
+<p>脚注（<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#footnotes">参考</a> ）使用 <code class="docutils literal notranslate"><span class="pre">[#name]_</span></code> 来标记脚注的位置，并在 <code class="docutils literal notranslate"><span class="pre">Footnotes</span></code> 专栏（rubic）后显示，例如：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>Lorem ipsum <span class="s">[#f1]_</span> dolor sit amet ... <span class="s">[#f2]_</span>
+
+<span class="p">..</span> <span class="ow">rubric</span><span class="p">::</span> Footnotes
+
+<span class="p">..</span> <span class="nt">[#f1]</span> Text of the first footnote.
+<span class="p">..</span> <span class="nt">[#f2]</span> Text of the second footnote.
+</pre></div>
+</div>
+<p>Lorem ipsum <a class="footnote-reference brackets" href="#f1" id="id12">1</a> dolor sit amet … <a class="footnote-reference brackets" href="#f2" id="id13">2</a></p>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id12">1</a></span></dt>
+<dd><p>Text of the first footnote.</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id13">2</a></span></dt>
+<dd><p>Text of the second footnote.</p>
+</dd>
+</dl>
+<p>你可以显式使用 <code class="docutils literal notranslate"><span class="pre">[1]_</span></code> 来编号，否则使用 <code class="docutils literal notranslate"><span class="pre">[#]_</span></code> 进行自动编号。</p>
+</div>
+<div class="section" id="citation">
+<h2>引用（Citation）<a class="headerlink" href="#citation" title="永久链接至标题">¶</a></h2>
+<p>引用和脚注类似，但不需要进行编号，且全局可用：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>Lorem ipsum <span class="s">[Ref]_</span> dolor sit amet.
+
+<span class="p">..</span> <span class="nt">[Ref]</span> Book or article reference, URL or whatever.
+</pre></div>
+</div>
+<p>Lorem ipsum <a class="reference internal" href="#id15" id="id14"><span>[Ref]</span></a> dolor sit amet.</p>
+<dl class="citation">
+<dt class="label" id="id15"><span class="brackets"><a class="fn-backref" href="#id14">Ref</a></span></dt>
+<dd><p>Book or article reference, URL or whatever.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="math">
+<h2>数学公式（Math）<a class="headerlink" href="#math" title="永久链接至标题">¶</a></h2>
+<p>只需要使用类似的语法：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>Since Pythagoras, we know that <span class="na">:math:</span><span class="nv">`a^2 + b^2 = c^2`</span>.
+</pre></div>
+</div>
+<p>就会得到由 <a class="reference external" href="https://www.mathjax.org/">MathJax</a> 渲染得到的数学公式：</p>
+<p>Since Pythagoras, we know that <span class="math notranslate nohighlight">\(a^2 + b^2 = c^2\)</span>.</p>
+</div>
+<div class="section" id="graphviz">
+<h2>Graphviz 语法支持<a class="headerlink" href="#graphviz" title="永久链接至标题">¶</a></h2>
+<p>文档已经通过 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/graphviz.html">sphinx.ext.graphviz</a> 插件支持
+<a class="reference external" href="https://graphviz.org/">Graphviz</a> 语法，样例如下：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">graphviz</span><span class="p">::</span>
+
+   digraph foo {
+      &quot;bar&quot; -&gt; &quot;baz&quot;;
+   }
+</pre></div>
+</div>
+digraph foo {
+   &quot;bar&quot; -&gt; &quot;baz&quot;;
+}</div>
+<div class="section" id="mermaid">
+<h2>Mermaid 语法支持<a class="headerlink" href="#mermaid" title="永久链接至标题">¶</a></h2>
+<p>文档已经通过 <a class="reference external" href="https://sphinxcontrib-mermaid-demo.readthedocs.io/en/latest/">sphinxcontrib-mermaid</a> 插件支持
+<a class="reference external" href="https://mermaid-js.github.io/mermaid/">Mermaid</a> 语法，样例如下：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">mermaid</span><span class="p">::</span>
+
+sequenceDiagram
+   participant Alice
+   participant Bob
+   Alice-&gt;John: Hello John, how are you?
+   loop Healthcheck
+       John-&gt;John: Fight against hypochondria
+   end
+   Note right of John: Rational thoughts &lt;br/&gt;prevail...
+   John--&gt;Alice: Great!
+   John-&gt;Bob: How about you?
+   Bob--&gt;John: Jolly good!
+</pre></div>
+</div>
+<script>mermaid.initialize({startOnLoad:true});</script><div class="mermaid">
+            sequenceDiagram
+   participant Alice
+   participant Bob
+   Alice-&gt;John: Hello John, how are you?
+   loop Healthcheck
+       John-&gt;John: Fight against hypochondria
+   end
+   Note right of John: Rational thoughts &lt;br/&gt;prevail...
+   John--&gt;Alice: Great!
+   John-&gt;Bob: How about you?
+   Bob--&gt;John: Jolly good!
+        </div></div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.c9faddf98927557166f1.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+megengine.functional.local\_conv2d
+==================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: local_conv2d

@@ -1,0 +1,6 @@
+megengine.functional.dropout
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: dropout

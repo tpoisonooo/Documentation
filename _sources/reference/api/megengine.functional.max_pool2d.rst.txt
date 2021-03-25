@@ -1,0 +1,6 @@
+megengine.functional.max\_pool2d
+================================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: max_pool2d

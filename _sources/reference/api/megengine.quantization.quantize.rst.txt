@@ -1,0 +1,39 @@
+megengine.quantization.quantize
+===============================
+
+.. automodule:: megengine.quantization.quantize
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      apply_easy_quant
+      disable_fake_quant
+      disable_observer
+      enable_fake_quant
+      enable_observer
+      hook_qat_module
+      is_qat
+      propagate_qconfig
+      quantize
+      quantize_qat
+      reset_qconfig
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

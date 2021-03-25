@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>使用 midout 进行端上裁剪 &#8212; MegEngine 1.2.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.c9faddf98927557166f1.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="API 参考" href="../../reference/index.html" />
+    <link rel="prev" title="使用 codegen 减少访存操作" href="codegen.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "user-guide/deployment/midout.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2">
+  <a class="reference internal" href="../faq.html">
+   常见问题汇总（FAQ）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../install/index.html">
+   编译、构建与安装
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../basic-concepts/index.html">
+   基本概念
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../data-engineering/index.html">
+   数据工程
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../model-development/index.html">
+   模型开发
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../model-evaluation/index.html">
+   模型评估
+  </a>
+ </li>
+ <li class="toctree-l2 current active">
+  <a class="reference internal" href="index.html">
+   模型部署
+  </a>
+  <ul class="current">
+   <li class="toctree-l3">
+    <a class="reference internal" href="load-and-run.html">
+     模型正确性、速度验证与性能调试
+    </a>
+   </li>
+   <li class="toctree-l3">
+    <a class="reference internal" href="codegen.html">
+     使用 codegen 减少访存操作
+    </a>
+   </li>
+   <li class="toctree-l3 current active">
+    <a class="current reference internal" href="#">
+     使用 midout 进行端上裁剪
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-and-run">
+   编译静态链接的 load_and_run
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   裁剪 load_and_run
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dump-opr">
+     dump 模型获得 opr 类型名称
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#trace">
+     执行模型获得 trace 文件
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   使用裁剪后的 load_and_run
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   多个模型合并裁剪
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   编译选项
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#megengine">
+   裁剪基于 MegEngine 的应用
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="midout">
+<span id="id1"></span><h1>使用 midout 进行端上裁剪<a class="headerlink" href="#midout" title="永久链接至标题">¶</a></h1>
+<p>midout 是 MegEngine 中用来减小生成的二进制文件体积的工具，有助于在空间受限的设备上部署应用。
+midout 通过记录模型推理时用到的 opr 和执行流，使用 <code class="docutils literal notranslate"><span class="pre">if(0)</span></code> 关闭未被记录的代码段后重新编译，
+利用 <code class="docutils literal notranslate"><span class="pre">-flto</span></code> 链接参数，可以大幅度减少静态链接的可执行文件的大小。
+现在基于 MegEngine 提供模型验证工具 <a class="reference internal" href="load-and-run.html#load-and-run"><span class="std std-ref">模型正确性、速度验证与性能调试</span></a> ，
+展示怎样在某 AArch64 架构的 Android 端上裁剪 MegEngine 库。</p>
+<div class="section" id="load-and-run">
+<h2>编译静态链接的 load_and_run<a class="headerlink" href="#load-and-run" title="永久链接至标题">¶</a></h2>
+<p>端上裁剪 MegEngine 库需要一个静态连接 MegEngine 的可执行程序，编译方法详见 load-and-run 的编译部分。
+稍有不同的是编译时需要先设置 load_and_run 静态链接 MegEngine.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">EXTRA_CMAKE_ARGS</span><span class="o">=</span><span class="s2">&quot;-DBUILD_SHARED_LIBS=OFF&quot;</span>
+</pre></div>
+</div>
+<p>否则，MegEngine 会自动编译成动态库。然后执行：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./cross_build_android_arm_inference.sh
+</pre></div>
+</div>
+<p>查看一下 load_and_run 的大小：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>du ./build_dir/android/arm64-v8a/Release/install/bin/load_and_run
+<span class="m">23200</span>
+</pre></div>
+</div>
+<p>此时 load_and_run 大小超过 20MB. load_and_run 的执行，请参考下文“代码执行”部分。</p>
+</div>
+<div class="section" id="id2">
+<h2>裁剪 load_and_run<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>MegEngine 的裁剪可以从两方面进行：</p>
+<ol class="arabic simple">
+<li><p>通过opr 裁剪。在 dump 模型时，可以同时将模型用到的 opr 信息以 json 文件的形式输出，
+midout 在编译期裁掉没有被模型使用到的所有 opr.</p></li>
+<li><p>通过 trace 流裁剪。运行一次模型推理，根据代码的执行流生成 trace 文件，
+通过trace文件，在二次编译时将没有执行的代码段裁剪掉。</p></li>
+</ol>
+<p>整个裁剪过程分为两个步骤：</p>
+<ol class="arabic simple">
+<li><p>第一步，dump 模型，获得模型 opr 信息；通过一次推理，获得 trace 文件。</p></li>
+<li><p>第二步，使用MegEngine的头文件生成工具 <code class="docutils literal notranslate"><span class="pre">tools/gen_header_for_bin_reduce.py</span></code> 将 opr 信息和 trace 文件作为输入，
+生成 <code class="docutils literal notranslate"><span class="pre">bin_reduce.h</span></code> 并将该头文件加入编译 Release 版的应用程序。
+当然也可以单独使用模型 opr 信息或是 trace 文件来生成 <code class="docutils literal notranslate"><span class="pre">bin_reduce.h</span></code> ，
+单独使用 opr 信息时，默认保留所有 kernel，单独使用 trace 文件时，默认保留所有 opr.</p></li>
+</ol>
+<div class="section" id="dump-opr">
+<h3>dump 模型获得 opr 类型名称<a class="headerlink" href="#dump-opr" title="永久链接至标题">¶</a></h3>
+<p>一个模型通常不会用到所有的opr，根据模型使用的opr，可以裁掉那些模型没有使用的 opr.
+在转换模型时，我们可以通过如下方式获得模型的 opr 信息。
+使用 <code class="docutils literal notranslate"><span class="pre">load_and_run/dump_with_testcase_mge.py</span></code> 准备模型时，加上 <code class="docutils literal notranslate"><span class="pre">--output-strip-info</span></code> 参数。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 sdk/load-and-run/dump_with_testcase_mge.py --optimize-for-inference resnet50.pkl -o resnet50.mge --enable-fuse-conv-bias-nonlinearity --data <span class="s2">&quot;#rand(0,1)&quot;</span> --no-assert --output-strip-info
+</pre></div>
+</div>
+<p>执行完毕后，会生成 <code class="docutils literal notranslate"><span class="pre">resnet50.mge</span></code> 和 <code class="docutils literal notranslate"><span class="pre">resnet50.mge.json</span></code> . 查看这个 JSON 文件，它记录了模型用到的 opr 名称。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat resnet50.mge.json
+<span class="o">{</span><span class="s2">&quot;hash&quot;</span>: <span class="m">238912597679531219</span>, <span class="s2">&quot;dtypes&quot;</span>: <span class="o">[</span><span class="s2">&quot;Byte&quot;</span>, <span class="s2">&quot;Float32&quot;</span>, <span class="s2">&quot;Int32&quot;</span><span class="o">]</span>, <span class="s2">&quot;opr_types&quot;</span>: <span class="o">[</span><span class="s2">&quot;Concat&quot;</span>, <span class="s2">&quot;ConvBiasForward&quot;</span>, <span class="s2">&quot;ConvolutionForward&quot;</span>, <span class="s2">&quot;Elemwise&quot;</span>, <span class="s2">&quot;GetVarShape&quot;</span>, <span class="s2">&quot;Host2DeviceCopy&quot;</span>, <span class="s2">&quot;ImmutableTensor&quot;</span>, <span class="s2">&quot;MatrixMul&quot;</span>, <span class="s2">&quot;MultipleDeviceTensorHolder&quot;</span>, <span class="s2">&quot;PoolingForward&quot;</span>, <span class="s2">&quot;Reshape&quot;</span>, <span class="s2">&quot;Subtensor&quot;</span><span class="o">]</span>, <span class="s2">&quot;elemwise_modes&quot;</span>: <span class="o">[</span><span class="s2">&quot;ADD&quot;</span>, <span class="s2">&quot;FUSE_ADD_RELU&quot;</span><span class="o">]}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trace">
+<h3>执行模型获得 trace 文件<a class="headerlink" href="#trace" title="永久链接至标题">¶</a></h3>
+<p>基于 trace 的裁剪需要通过一次推理获得模型的执行 trace 文件。具体步骤如下：</p>
+<ol class="arabic">
+<li><p>CMake 构建时，打开 <code class="docutils literal notranslate"><span class="pre">MGE_WITH_MIDOUT_PROFILE</span></code> 开关，编译 load_and_run：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">EXTRA_CMAKE_ARGS</span><span class="o">=</span><span class="s2">&quot;-DMGE_WITH_MIDOUT_PROFILE=ON -DBUILD_SHARED_LIBS=OFF&quot;</span>
+./cross_build_android_arm_inference.sh -r
+</pre></div>
+</div>
+<p>编译完成后，将 <code class="docutils literal notranslate"><span class="pre">build_dir/android/arm64-v8a/Release/install/bin</span></code> 下的 <code class="docutils literal notranslate"><span class="pre">load_and_run</span></code> 推至设备并执行：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./load_and_run ./resnet50.mge
+</pre></div>
+</div>
+<p>得到如下输出：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mgb load-and-run: using MegBrain MegBrain <span class="m">8</span>.4.1<span class="o">(</span><span class="m">0</span><span class="o">)</span> and MegDNN <span class="m">9</span>.3.0
+load model: <span class="m">70</span>.888ms
+<span class="o">===</span> going to run <span class="m">1</span> testcases<span class="p">;</span> output vars: ADD<span class="o">(</span>reshape<span class="o">[</span><span class="m">2655</span><span class="o">]</span>,reshape<span class="o">[</span><span class="m">2663</span><span class="o">])[</span><span class="m">2665</span><span class="o">]{</span><span class="m">1</span>,1000<span class="o">}</span>
+<span class="o">===</span> prepare: <span class="m">4</span>.873ms<span class="p">;</span> going to warmup
+warmup <span class="m">0</span>: <span class="m">877</span>.578ms
+<span class="o">===</span> going to run <span class="nb">test</span> <span class="c1">#0 for 10 times</span>
+iter <span class="m">0</span>/10: <span class="m">481</span>.445ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">481</span>.436,device<span class="o">=</span><span class="m">480</span>.794<span class="o">)</span>
+iter <span class="m">1</span>/10: <span class="m">481</span>.192ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">481</span>.183,device<span class="o">=</span><span class="m">481</span>.152<span class="o">)</span>
+iter <span class="m">2</span>/10: <span class="m">480</span>.430ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">480</span>.420,device<span class="o">=</span><span class="m">480</span>.389<span class="o">)</span>
+iter <span class="m">3</span>/10: <span class="m">479</span>.593ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">479</span>.585,device<span class="o">=</span><span class="m">479</span>.553<span class="o">)</span>
+iter <span class="m">4</span>/10: <span class="m">479</span>.851ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">479</span>.843,device<span class="o">=</span><span class="m">479</span>.811<span class="o">)</span>
+iter <span class="m">5</span>/10: <span class="m">479</span>.581ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">479</span>.572,device<span class="o">=</span><span class="m">479</span>.541<span class="o">)</span>
+iter <span class="m">6</span>/10: <span class="m">480</span>.174ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">480</span>.165,device<span class="o">=</span><span class="m">480</span>.134<span class="o">)</span>
+iter <span class="m">7</span>/10: <span class="m">479</span>.443ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">479</span>.435,device<span class="o">=</span><span class="m">479</span>.404<span class="o">)</span>
+iter <span class="m">8</span>/10: <span class="m">479</span>.987ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">479</span>.978,device<span class="o">=</span><span class="m">479</span>.948<span class="o">)</span>
+iter <span class="m">9</span>/10: <span class="m">480</span>.637ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">480</span>.628,device<span class="o">=</span><span class="m">480</span>.598<span class="o">)</span>
+<span class="o">===</span> finished <span class="nb">test</span> <span class="c1">#0: time=4802.333ms avg_time=480.233ms sd=0.688ms minmax=479.443,481.445</span>
+
+<span class="o">===</span> total time: <span class="m">4802</span>.333ms
+midout: <span class="m">110</span> items written to midout_trace.20717
+</pre></div>
+</div>
+<p>注意到执行模型后，生成了 <code class="docutils literal notranslate"><span class="pre">midout_trace.20717</span></code> 文件，该文件记录了模型在底层执行了哪些 kernel.</p>
+</li>
+<li><p>生成 <code class="docutils literal notranslate"><span class="pre">bin_recude.h</span></code> 并再次编译 load_and_run：</p>
+<p>将生成的 <code class="docutils literal notranslate"><span class="pre">midout_trace.20717</span></code> 拷贝至本地，
+使用上文提到的头文件生成工具 <code class="docutils literal notranslate"><span class="pre">gen_header_for_bin_reduce.py</span></code> 生成 <code class="docutils literal notranslate"><span class="pre">bin_reduce.h</span></code> .</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 ./tools/gen_header_for_bin_reduce.py resnet50.mge.json midout_trace.20717 -o bin_reduce.h
+</pre></div>
+</div>
+<p>再次编译 load_and_run，注意要将 <code class="docutils literal notranslate"><span class="pre">bin_reduce.h</span></code> 加入并编译 Release 版本。设置 CMake 编译选项：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">EXTRA_CMAKE_ARGS</span><span class="o">=</span><span class="s2">&quot;-DMGE_BIN_REDUCE=/absolute/path/to/bin_reduce.h -DBUILD_SHARED_LIBS=OFF&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/cmake-build/cross_build_android_arm_inference.sh -r
+</pre></div>
+</div>
+<p>编译完成后，检查 load_and_run 的大小：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>du build_dir/android/arm64-v8a/release/install/bin/load_and_run
+<span class="m">2264</span>
+</pre></div>
+</div>
+<p>此时 load_and_run 的大小减小到 2MB 多。推到设备上运行，得到如下输出：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mgb load-and-run: using MegBrain <span class="m">8</span>.4.1<span class="o">(</span><span class="m">0</span><span class="o">)</span> and MegDNN <span class="m">9</span>.3.0
+<span class="o">[</span><span class="m">02</span> <span class="m">15</span>:03:11 check_magic@serializer_mdl.cpp:744<span class="o">][</span>WARN<span class="o">]</span> Graph <span class="o">(</span>with <span class="nb">hash</span> <span class="m">10003400899095033006</span><span class="o">)</span> is not among the graphs fed to midout, may caused by midout json is not create by org pkl also to compat <span class="k">for</span> model operation after dump_with_testcase.py
+load model: <span class="m">74</span>.208ms
+<span class="o">===</span> going to run <span class="m">1</span> testcases<span class="p">;</span> output vars: ADD<span class="o">(</span>reshape<span class="o">[</span><span class="m">2655</span><span class="o">]</span>,reshape<span class="o">[</span><span class="m">2663</span><span class="o">])[</span><span class="m">2665</span><span class="o">]{</span><span class="m">1</span>,1000<span class="o">}</span>
+<span class="o">===</span> prepare: <span class="m">1</span>.251ms<span class="p">;</span> going to warmup
+warmup <span class="m">0</span>: <span class="m">377</span>.813ms
+<span class="o">===</span> going to run <span class="nb">test</span> <span class="c1">#0 for 10 times</span>
+iter <span class="m">0</span>/10: <span class="m">266</span>.996ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">266</span>.993,device<span class="o">=</span><span class="m">266</span>.854<span class="o">)</span>
+iter <span class="m">1</span>/10: <span class="m">266</span>.717ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">266</span>.715,device<span class="o">=</span><span class="m">266</span>.702<span class="o">)</span>
+iter <span class="m">2</span>/10: <span class="m">266</span>.867ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">266</span>.865,device<span class="o">=</span><span class="m">266</span>.855<span class="o">)</span>
+iter <span class="m">3</span>/10: <span class="m">267</span>.172ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">267</span>.171,device<span class="o">=</span><span class="m">267</span>.159<span class="o">)</span>
+iter <span class="m">4</span>/10: <span class="m">266</span>.820ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">266</span>.819,device<span class="o">=</span><span class="m">266</span>.807<span class="o">)</span>
+iter <span class="m">5</span>/10: <span class="m">266</span>.852ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">266</span>.850,device<span class="o">=</span><span class="m">266</span>.838<span class="o">)</span>
+iter <span class="m">6</span>/10: <span class="m">267</span>.376ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">267</span>.374,device<span class="o">=</span><span class="m">267</span>.363<span class="o">)</span>
+iter <span class="m">7</span>/10: <span class="m">267</span>.005ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">267</span>.003,device<span class="o">=</span><span class="m">266</span>.991<span class="o">)</span>
+iter <span class="m">8</span>/10: <span class="m">266</span>.685ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">266</span>.684,device<span class="o">=</span><span class="m">266</span>.671<span class="o">)</span>
+iter <span class="m">9</span>/10: <span class="m">266</span>.767ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">266</span>.766,device<span class="o">=</span><span class="m">266</span>.755<span class="o">)</span>
+<span class="o">===</span> finished <span class="nb">test</span> <span class="c1">#0: time=2669.257ms avg_time=266.926ms sd=0.216ms minmax=266.685,267.376</span>
+
+<span class="o">===</span> total time: <span class="m">2669</span>.257ms
+</pre></div>
+</div>
+</li>
+</ol>
+<p>可以看到模型依然正常运行，并且运行速度正常。</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>使用裁剪后的 load_and_run<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>想要裁剪前后的应用能够正常运行，需要保证裁剪前后两次推理使用同样的命令行参数。
+如果使用上文裁剪的 load_and_fun 的 fast-run功能（详见 <a class="reference internal" href="load-and-run.html#load-and-run"><span class="std std-ref">模型正确性、速度验证与性能调试</span></a> ）。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./load_and_run resnet50.mge --fast-run --fast-run-algo-policy resnet50.cache
+</pre></div>
+</div>
+<p>可能得到如下输出：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mgb load-and-run: using MegBrain <span class="m">8</span>.4.1<span class="o">(</span><span class="m">0</span><span class="o">)</span> and MegDNN <span class="m">9</span>.3.0
+<span class="o">[</span><span class="m">02</span> <span class="m">15</span>:05:50 check_magic@serializer_mdl.cpp:744<span class="o">][</span>WARN<span class="o">]</span> Graph <span class="o">(</span>with <span class="nb">hash</span> <span class="m">10003400899095033006</span><span class="o">)</span> is not among the graphs fed to midout, may caused by midout json is not create by org pkl also to compat <span class="k">for</span> model operation after dump_with_testcase.py
+load model: <span class="m">71</span>.927ms
+<span class="o">===</span> going to run <span class="m">1</span> testcases<span class="p">;</span> output vars: ADD<span class="o">(</span>reshape<span class="o">[</span><span class="m">2655</span><span class="o">]</span>,reshape<span class="o">[</span><span class="m">2663</span><span class="o">])[</span><span class="m">2665</span><span class="o">]{</span><span class="m">1</span>,1000<span class="o">}</span>
+<span class="o">===</span> prepare: <span class="m">1</span>.251ms<span class="p">;</span> going to warmup
+ Trap
+</pre></div>
+</div>
+<p>这是因为程序运行到了已经被裁剪掉的函数中，未被记录在 trace 文件中的函数的实现已经被替换成 <code class="docutils literal notranslate"><span class="pre">trap()</span></code> .
+如果想要裁剪与 fast-run 配合使用，需要按如下流程获得 trace 文件：</p>
+<ol class="arabic">
+<li><p>开启 fast-run 模式，执行未裁剪的 load_and_run 获得 <code class="docutils literal notranslate"><span class="pre">.cache</span></code> 文件，注意本次执行生成的 trace 应该被丢弃：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./load_and_run resnet50.mge --fast-run --fast-run-algo-policy resnet50.cache
+</pre></div>
+</div>
+</li>
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">.cache</span></code> 文件，执行 load_and_run 获得 trace 文件：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./load_and_run resnet50.mge --fast-run-algo-policy resnet50.cache --winograd-transform
+</pre></div>
+</div>
+</li>
+<li><p>如上节，将 trace 文件拷贝回本机，生成 <code class="docutils literal notranslate"><span class="pre">bin_reduce.h</span></code> ，再次编译 load_and_run 并推至设备。</p></li>
+<li><p>使用裁剪后的 load_and_run 的 fast-run 功能，执行同 2 的命令，得到如下输出：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mgb load-and-run: using MegBrain <span class="m">8</span>.4.1<span class="o">(</span><span class="m">0</span><span class="o">)</span> and MegDNN <span class="m">9</span>.3.0
+<span class="o">[</span><span class="m">04</span> <span class="m">15</span>:34:18 from_argv@mgblar.cpp:1392<span class="o">][</span>WARN<span class="o">]</span> <span class="nb">enable</span> winograd transform
+<span class="o">[</span><span class="m">04</span> <span class="m">15</span>:34:18 check_magic@serializer_mdl.cpp:744<span class="o">][</span>WARN<span class="o">]</span> Graph <span class="o">(</span>with <span class="nb">hash</span> <span class="m">10003400899095033006</span><span class="o">)</span> is not among the graphs fed to midout, may caused by midout json is not create by org pkl also to compat <span class="k">for</span> model operation after dump_with_testcase.py
+load model: <span class="m">64</span>.228ms
+<span class="o">===</span> going to run <span class="m">1</span> testcases<span class="p">;</span> output vars: ADD<span class="o">(</span>reshape<span class="o">[</span><span class="m">2655</span><span class="o">]</span>,reshape<span class="o">[</span><span class="m">2663</span><span class="o">])[</span><span class="m">2665</span><span class="o">]{</span><span class="m">1</span>,1000<span class="o">}</span>
+<span class="o">===</span> prepare: <span class="m">260</span>.058ms<span class="p">;</span> going to warmup
+warmup <span class="m">0</span>: <span class="m">279</span>.550ms
+<span class="o">===</span> going to run <span class="nb">test</span> <span class="c1">#0 for 10 times</span>
+iter <span class="m">0</span>/10: <span class="m">209</span>.177ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">209</span>.164,device<span class="o">=</span><span class="m">209</span>.031<span class="o">)</span>
+iter <span class="m">1</span>/10: <span class="m">209</span>.010ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">209</span>.008,device<span class="o">=</span><span class="m">208</span>.997<span class="o">)</span>
+iter <span class="m">2</span>/10: <span class="m">209</span>.024ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">209</span>.022,device<span class="o">=</span><span class="m">209</span>.011<span class="o">)</span>
+iter <span class="m">3</span>/10: <span class="m">208</span>.584ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">208</span>.583,device<span class="o">=</span><span class="m">208</span>.573<span class="o">)</span>
+iter <span class="m">4</span>/10: <span class="m">208</span>.669ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">208</span>.667,device<span class="o">=</span><span class="m">208</span>.658<span class="o">)</span>
+iter <span class="m">5</span>/10: <span class="m">208</span>.849ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">208</span>.847,device<span class="o">=</span><span class="m">208</span>.838<span class="o">)</span>
+iter <span class="m">6</span>/10: <span class="m">208</span>.787ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">208</span>.785,device<span class="o">=</span><span class="m">208</span>.774<span class="o">)</span>
+iter <span class="m">7</span>/10: <span class="m">208</span>.703ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">208</span>.701,device<span class="o">=</span><span class="m">208</span>.692<span class="o">)</span>
+iter <span class="m">8</span>/10: <span class="m">208</span>.918ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">208</span>.916,device<span class="o">=</span><span class="m">208</span>.905<span class="o">)</span>
+iter <span class="m">9</span>/10: <span class="m">208</span>.669ms <span class="o">(</span><span class="nv">exec</span><span class="o">=</span><span class="m">208</span>.667,device<span class="o">=</span><span class="m">208</span>.656<span class="o">)</span>
+<span class="o">===</span> finished <span class="nb">test</span> <span class="c1">#0: time=2088.390ms avg_time=208.839ms sd=0.191ms minmax=208.584,209.177</span>
+
+<span class="o">===</span> total time: <span class="m">2088</span>.390ms
+</pre></div>
+</div>
+</li>
+</ol>
+<p>使用其他 load_and_run 提供的功能也是如此，想要裁剪前后的应用能够正常运行，
+需要保证裁剪前后两次推理使用同样的命令行参数。</p>
+</div>
+<div class="section" id="id4">
+<h2>多个模型合并裁剪<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>多个模型的合并裁剪与单个模型流程相同。 <code class="docutils literal notranslate"><span class="pre">gen_header_for_bin_reduce.py</span></code> 接受多个输入。
+假设有模型 A 与模型 B, 已经获得 <code class="docutils literal notranslate"><span class="pre">A.mge.json</span></code> , <code class="docutils literal notranslate"><span class="pre">B.mge.json</span></code> 以及 <code class="docutils literal notranslate"><span class="pre">A.trace</span></code> , <code class="docutils literal notranslate"><span class="pre">B.trace</span></code> . 执行：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 ./tools/gen_header_for_bin_reduce.py A.mge.json A.trace B.mge.json B.trace -o bin_reduce.h
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>编译选项<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>MegEngine 的 CMake 中有一些开关是默认打开的，它们提供了 RTTI、异常抛出等特性，
+可以在第二次构建时关闭它们，以获得体积更小的 load_and_run. 它们是：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MGB_WITH_FLATBUFFERS</span></code> : FLABUFFERS格式支持</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MGE_ENABLE_RTTI</span></code> : C++ RTTI特性</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MGE_ENABLE_LOGGING</span></code> : 日志功能</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MGE_ENABLE_EXCEPTIONS</span></code> : 异常功能</p></li>
+</ul>
+<p>MegEngine 提供一个总开关 <code class="docutils literal notranslate"><span class="pre">MGE_WITH_MINIMUM_SIZE</span></code> 来关闭上述特性。
+需要注意的是，只有在 <code class="docutils literal notranslate"><span class="pre">MGE_BIN_REDUCE</span></code> 被设置时，此开关才会被检查并生效。</p>
+</div>
+<div class="section" id="megengine">
+<h2>裁剪基于 MegEngine 的应用<a class="headerlink" href="#megengine" title="永久链接至标题">¶</a></h2>
+<p>可以通过如下几种方式集成 MegEngine，对应的裁剪方法相差无几：</p>
+<ol class="arabic simple">
+<li><p>参照 <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> ，将应用集成到整个 MegEngine 的工程。
+假设已经将 <code class="docutils literal notranslate"><span class="pre">app.cpp</span></code> 集成到 MegEngine ，那么会编译出静态链接 MegEngine 的可执行程序 <code class="docutils literal notranslate"><span class="pre">app</span></code> .
+只需要按照上文中裁剪 load_and_run 的流程裁剪 <code class="docutils literal notranslate"><span class="pre">app</span></code> 即可。</p></li>
+<li><p>可能一个应用想要通过静态库集成 MegEngine。此时需要获得一个裁剪过的 <code class="docutils literal notranslate"><span class="pre">libmegengine.a</span></code> .
+可以依然使用 load_and_run 运行模型获得 trace 文件，
+生成 <code class="docutils literal notranslate"><span class="pre">bin_reduce.h</span></code> ，并二次编译获得裁剪过的 <code class="docutils literal notranslate"><span class="pre">libmegengine.a</span></code> .
+此时，用户使用自己编写的构建脚本构建应用程序，并静态链接 <code class="docutils literal notranslate"><span class="pre">libmegengine.a</span></code> ，
+加上链接参数 <code class="docutils literal notranslate"><span class="pre">-flto=full</span></code> . 即可得到裁剪过的基于 MegEngine 的应用。</p></li>
+<li><p>上述流程亦可以用于 <code class="docutils literal notranslate"><span class="pre">libmegengine.so</span></code> 的裁剪，但是动态库的裁剪效果远不及静态库。
+原因在于动态库并不知道某段代码是否会被调用，因此链接器不会进行激进的优化。</p></li>
+</ol>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.c9faddf98927557166f1.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.2 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

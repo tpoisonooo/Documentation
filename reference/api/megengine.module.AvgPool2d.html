@@ -8,7 +8,7 @@
     <title>megengine.module.AvgPool2d &#8212; MegEngine 1.2.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
-  <link href="../../_static/css/index.101715efdecc9b59cb6e1ddfa685c31f.css" rel="stylesheet" />
+  <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -28,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.d8bbf5861d671d414e1a.js">
+  <link rel="preload" as="script" href="../../_static/js/index.c9faddf98927557166f1.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -88,7 +88,7 @@
 </li>
 
 <li class="toctree-l1 nav-item">
- <a class="reference internal nav-link" href="../../developmet/index.html">
+ <a class="reference internal nav-link" href="../../development/index.html">
   开发者指南
  </a>
 </li>
@@ -114,6 +114,46 @@
             <span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label>
           </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "reference/api/megengine.module.AvgPool2d.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
         </li>
       </ul>
     </div>
@@ -653,10 +693,10 @@ both sides for <code class="xref py py-attr docutils literal notranslate"><span 
 <td><p>Returns an iterable of key-module pairs for all the modules within this module, including itself, where ‘key’ is the dotted path from this module to the submodules.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_parameters</span></code>([prefix, recursive])</p></td>
-<td><p>Returns an iterable for key <a class="reference internal" href="megengine.Parameter.html#megengine.Parameter" title="megengine.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> pairs of the module, where <code class="docutils literal notranslate"><span class="pre">key</span></code> is the dotted path from this module to the <a class="reference internal" href="megengine.Parameter.html#megengine.Parameter" title="megengine.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>.</p></td>
+<td><p>Returns an iterable for key <a class="reference internal" href="megengine.tensor.Parameter.html#megengine.tensor.Parameter" title="megengine.tensor.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> pairs of the module, where <code class="docutils literal notranslate"><span class="pre">key</span></code> is the dotted path from this module to the <a class="reference internal" href="megengine.tensor.Parameter.html#megengine.tensor.Parameter" title="megengine.tensor.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parameters</span></code>([recursive])</p></td>
-<td><p>Returns an iterable for the <a class="reference internal" href="megengine.Parameter.html#megengine.Parameter" title="megengine.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> of the module.</p></td>
+<td><p>Returns an iterable for the <a class="reference internal" href="megengine.tensor.Parameter.html#megengine.tensor.Parameter" title="megengine.tensor.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a> of the module.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_forward_hook</span></code>(hook)</p></td>
 <td><p>Registers a hook to handle forward results.</p></td>
@@ -693,7 +733,7 @@ both sides for <code class="xref py py-attr docutils literal notranslate"><span 
     </div>
 
     
-  <script src="../../_static/js/index.d8bbf5861d671d414e1a.js"></script>
+  <script src="../../_static/js/index.c9faddf98927557166f1.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">

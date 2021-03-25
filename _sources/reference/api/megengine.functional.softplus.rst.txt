@@ -1,0 +1,6 @@
+megengine.functional.softplus
+=============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: softplus

@@ -1,0 +1,6 @@
+megengine.functional.softmax
+============================
+
+.. currentmodule:: megengine.functional
+
+.. autofunction:: softmax

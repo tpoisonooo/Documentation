@@ -1,6 +1,0 @@
-megengine.quantization.quantize.quantize
-========================================
-
-.. currentmodule:: megengine.quantization.quantize
-
-.. autofunction:: quantize

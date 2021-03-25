@@ -1,6 +1,0 @@
-megengine.functional.nn.prelu
-=============================
-
-.. currentmodule:: megengine.functional.nn
-
-.. autofunction:: prelu
