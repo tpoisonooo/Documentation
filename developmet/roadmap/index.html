@@ -8,7 +8,7 @@
     <title>MegEngine 开发路线图 &#8212; MegEngine 1.2.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
-  <link href="../../_static/css/index.57d3cd9fdfd1e83932aa4eb4774f9fb9.css" rel="stylesheet" />
+  <link href="../../_static/css/index.101715efdecc9b59cb6e1ddfa685c31f.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -20,10 +20,6 @@
 
     
       
-  <link rel="stylesheet"
-    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -32,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.109f8ec7af5a9d176fcd.js">
+  <link rel="preload" as="script" href="../../_static/js/index.d8bbf5861d671d414e1a.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -118,77 +114,6 @@
           </a>
         </li>
       </ul>
-
-      <ul class="navbar-nav">
-        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
-    (function () {
-
-        // TODO: Handle with api.json file to get the meta-data.
-
-        // Select versions that could be switched by user
-        var all_versions = {
-            'latest': 'v1.2.0',
-            'v1.1': 'v1.1.0',
-            'v1.0': 'v1.0.0',
-        };
-
-        function change_version(url, new_version) {
-            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
-            return url.replace(version_regex, '/' + new_version + '/');
-        }
-
-        function on_switch() {
-            var selected = $(this).children('option:selected').attr('value');
-
-            // original url
-            var url = window.location.href;
-            // changed url
-            var new_url = change_version(url, selected);
-
-            if (new_url != url) {
-                // check beforehand if url exists, otherwise redirect to the version's start page
-                $.ajax({
-                    url: new_url,
-                    success: function () {
-                        window.location.href = new_url;
-                    },
-                    error: function () {
-                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
-                    }
-                });
-            }
-        }
-
-        $(document).ready(function () {
-            // var version = DOCUMENTATION_OPTIONS.VERSION;
-            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
-            // version = version.split('.').slice(0, 2).join('.');
-
-            // fill the current version in the dropdown
-            document.getElementById("version-dropdown").innerText = 'latest';
-
-            const getVersionLink = () => {
-                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
-            }
-            // fill the version menu
-            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
-
-            // bind the changes to this menu to trigger the switching function
-            // TODO: Change this to use the dropdown button's on_select() callback function
-            $('.version-dropdown select').bind('change', on_switch);
-        });
-    })();
-
-</script>
-
-<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <!-- placeholder for javascript filling above -->
-</button>
-<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
-    <!-- placeholder for javascript filling above -->
-</div> 
-        </li>
-      </ul>
     </div>
 </div>
     </nav>
@@ -201,74 +126,63 @@
             <!-- Only show if we have sidebars configured, else just a small margin  -->
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    <ul class="nav bd-sidenav">
-      <li class="toctree-l2">
- <a class="reference internal" href="../git-and-github.html">
-  Git 与 GitHub 基础
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../environment/index.html">
-  开发环境设置
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../workflow.html">
-  开发流程概述
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../debugging-tools.html">
-  调试工具
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../benchmark.html">
-  基准测试（Benchmark）
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../architecture-design.html">
-  MegEngine 架构设计
- </a>
-</li>
-
-<li class="toctree-l2 current active">
- <a class="current reference internal" href="#">
-  MegEngine 开发路线图
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../mep/index.html">
-  MegEngine 增强提案（MEP）
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../releasing.html">
-  版本发布流程
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../governance.html">
-  MegEngine 社区治理
- </a>
-</li>
-
-<li class="toctree-l2">
- <a class="reference internal" href="../contribute-to-docs.html">
-  如何为文档做贡献
- </a>
-</li>
-
-    </ul>
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l2">
+  <a class="reference internal" href="../git-and-github.html">
+   Git 与 GitHub 基础
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../environment/index.html">
+   开发环境设置
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../workflow.html">
+   开发流程概述
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../debugging-tools.html">
+   调试工具
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../benchmark.html">
+   基准测试（Benchmark）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../architecture-design.html">
+   MegEngine 架构设计
+  </a>
+ </li>
+ <li class="toctree-l2 current active">
+  <a class="current reference internal" href="#">
+   MegEngine 开发路线图
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../mep/index.html">
+   MegEngine 增强提案（MEP）
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../releasing.html">
+   版本发布流程
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../governance.html">
+   MegEngine 社区治理
+  </a>
+ </li>
+ <li class="toctree-l2">
+  <a class="reference internal" href="../contribute-to-docs.html">
+   如何为文档做贡献
+  </a>
+ </li>
+</ul>
   </div>
 </nav>
             </div>
@@ -312,7 +226,7 @@
     </div>
 
     
-  <script src="../../_static/js/index.109f8ec7af5a9d176fcd.js"></script>
+  <script src="../../_static/js/index.d8bbf5861d671d414e1a.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">

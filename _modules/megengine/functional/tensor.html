@@ -8,7 +8,7 @@
     <title>megengine.functional.tensor &#8212; MegEngine 1.2.0 文档</title>
     
   <link href="../../../_static/css/theme.css" rel="stylesheet" />
-  <link href="../../../_static/css/index.57d3cd9fdfd1e83932aa4eb4774f9fb9.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.101715efdecc9b59cb6e1ddfa685c31f.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -20,10 +20,6 @@
 
     
       
-  <link rel="stylesheet"
-    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -32,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
     
-  <link rel="preload" as="script" href="../../../_static/js/index.109f8ec7af5a9d176fcd.js">
+  <link rel="preload" as="script" href="../../../_static/js/index.d8bbf5861d671d414e1a.js">
 
     <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
@@ -116,77 +112,6 @@
           </a>
         </li>
       </ul>
-
-      <ul class="navbar-nav">
-        <li class="version_switcher nav-item dropdown"><script type="text/javascript">
-    (function () {
-
-        // TODO: Handle with api.json file to get the meta-data.
-
-        // Select versions that could be switched by user
-        var all_versions = {
-            'latest': 'v1.2.0',
-            'v1.1': 'v1.1.0',
-            'v1.0': 'v1.0.0',
-        };
-
-        function change_version(url, new_version) {
-            var version_regex = /\/(latest|(v\d+\.\d+.\d+))\//;
-            return url.replace(version_regex, '/' + new_version + '/');
-        }
-
-        function on_switch() {
-            var selected = $(this).children('option:selected').attr('value');
-
-            // original url
-            var url = window.location.href;
-            // changed url
-            var new_url = change_version(url, selected);
-
-            if (new_url != url) {
-                // check beforehand if url exists, otherwise redirect to the version's start page
-                $.ajax({
-                    url: new_url,
-                    success: function () {
-                        window.location.href = new_url;
-                    },
-                    error: function () {
-                        window.location.href = "https://pydata-sphinx-theme.readthedocs.io/en/" + selected;
-                    }
-                });
-            }
-        }
-
-        $(document).ready(function () {
-            // var version = DOCUMENTATION_OPTIONS.VERSION;
-            // Take the first 2 parts of the release (e.g. "3.4.5" -> "3.4")
-            // version = version.split('.').slice(0, 2).join('.');
-
-            // fill the current version in the dropdown
-            document.getElementById("version-dropdown").innerText = 'latest';
-
-            const getVersionLink = () => {
-                return Object.keys(all_versions).map(key => `<button class="dropdown-item">${key}</button>`)
-            }
-            // fill the version menu
-            document.getElementById("version-menu").innerHTML = getVersionLink().join('');
-
-            // bind the changes to this menu to trigger the switching function
-            // TODO: Change this to use the dropdown button's on_select() callback function
-            $('.version-dropdown select').bind('change', on_switch);
-        });
-    })();
-
-</script>
-
-<button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <!-- placeholder for javascript filling above -->
-</button>
-<div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
-    <!-- placeholder for javascript filling above -->
-</div> 
-        </li>
-      </ul>
     </div>
 </div>
     </nav>
@@ -199,9 +124,7 @@
             <!-- Only show if we have sidebars configured, else just a small margin  -->
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    <ul class="nav bd-sidenav">
-      
-    </ul>
+    
   </div>
 </nav>
             </div>
@@ -345,7 +268,7 @@
     <span class="k">return</span> <span class="n">broadcast_to</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="ones"><a class="viewcode-back" href="../../../reference/api/megengine.functional.ones.html#megengine.functional.ones">[文档]</a><span class="k">def</span> <span class="nf">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a ones tensor with given shape.</span>
 
@@ -369,17 +292,17 @@
 <span class="sd">         [1.]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="zeros"><a class="viewcode-back" href="../../../reference/api/megengine.functional.zeros.html#megengine.functional.zeros">[文档]</a><span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float32&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a zero tensor with given shape.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">zeros_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="zeros_like"><a class="viewcode-back" href="../../../reference/api/megengine.functional.zeros_like.html#megengine.functional.zeros_like">[文档]</a><span class="k">def</span> <span class="nf">zeros_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a zero tensor with the same shape as input tensor.</span>
 
@@ -406,14 +329,14 @@
 <span class="sd">         [0 0 0]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">zeros</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">zeros</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ones_like"><a class="viewcode-back" href="../../../reference/api/megengine.functional.ones_like.html#megengine.functional.ones_like">[文档]</a><span class="k">def</span> <span class="nf">ones_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">ones_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns a ones tensor with the same shape as input tensor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">ones</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">ones</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">full_like</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -502,7 +425,7 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<span class="k">def</span> <span class="nf">stack</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="stack"><a class="viewcode-back" href="../../../reference/api/megengine.functional.stack.html#megengine.functional.stack">[文档]</a><span class="k">def</span> <span class="nf">stack</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Concats a sequence of tensors along a new axis.</span>
 <span class="sd">    The input tensors must have the same shape.</span>
@@ -539,10 +462,10 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All input tensors must have the same shape&quot;</span><span class="p">)</span>
 
     <span class="n">inps</span> <span class="o">=</span> <span class="p">[</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span> <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inps</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">concat</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">concat</span><span class="p">(</span><span class="n">inps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">nsplits_or_sections</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="split"><a class="viewcode-back" href="../../../reference/api/megengine.functional.split.html#megengine.functional.split">[文档]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">nsplits_or_sections</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits the input tensor into several smaller tensors.</span>
 <span class="sd">    When nsplits_or_sections is int, the last tensor may be smaller than others.</span>
@@ -623,7 +546,7 @@
             <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="n">axis</span> <span class="o">+</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ndim</span> <span class="o">-</span> <span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">sub_tensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="n">slices</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">sub_tensors</span>
+    <span class="k">return</span> <span class="n">sub_tensors</span></div>
 
 
 <span class="k">def</span> <span class="nf">_get_idx</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
@@ -720,7 +643,7 @@
     <span class="k">return</span> <span class="n">inp</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># pylint: disable=no-member</span>
 
 
-<span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="scatter"><a class="viewcode-back" href="../../../reference/api/megengine.functional.scatter.html#megengine.functional.scatter">[文档]</a><span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="c1"># TODO: rewrite doc</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Writes all values from the tensor source into input tensor</span>
@@ -824,10 +747,10 @@
 
     <span class="n">idx</span> <span class="o">=</span> <span class="n">_get_idx</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
     <span class="n">inp</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">inp</span>
+    <span class="k">return</span> <span class="n">inp</span></div>
 
 
-<span class="k">def</span> <span class="nf">where</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="where"><a class="viewcode-back" href="../../../reference/api/megengine.functional.where.html#megengine.functional.where">[文档]</a><span class="k">def</span> <span class="nf">where</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Selects elements either from Tensor x or Tensor y, according to mask.</span>
 
@@ -886,7 +809,7 @@
     <span class="n">out</span><span class="p">[</span><span class="n">index0</span><span class="p">]</span> <span class="o">=</span> <span class="n">v0</span>
     <span class="n">out</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
+    <span class="k">return</span> <span class="n">out</span></div>
 
 
 <div class="viewcode-block" id="cond_take"><a class="viewcode-back" href="../../../reference/api/megengine.functional.cond_take.html#megengine.functional.cond_take">[文档]</a><span class="k">def</span> <span class="nf">cond_take</span><span class="p">(</span><span class="n">mask</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -933,7 +856,7 @@
     <span class="k">return</span> <span class="n">v</span><span class="p">,</span> <span class="n">index</span></div>
 
 
-<span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="transpose"><a class="viewcode-back" href="../../../reference/api/megengine.functional.transpose.html#megengine.functional.transpose">[文档]</a><span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Swaps shapes and strides according to given pattern.</span>
 
@@ -972,10 +895,10 @@
 <span class="sd">         [1 0]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">_</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span> <span class="k">else</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">_</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span> <span class="k">else</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pattern</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="reshape"><a class="viewcode-back" href="../../../reference/api/megengine.functional.reshape.html#megengine.functional.reshape">[文档]</a><span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">target_shape</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">target_shape</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reshapes a tensor to given target shape; total number of logical elements must</span>
 <span class="sd">    remain unchanged</span>
@@ -1003,7 +926,7 @@
 <span class="sd">         [ 8  9 10 11]]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">inp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">target_shape</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">start_axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end_axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
@@ -1089,7 +1012,7 @@
     <span class="k">return</span> <span class="n">result</span>
 
 
-<span class="k">def</span> <span class="nf">squeeze</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="squeeze"><a class="viewcode-back" href="../../../reference/api/megengine.functional.squeeze.html#megengine.functional.squeeze">[文档]</a><span class="k">def</span> <span class="nf">squeeze</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Removes dimension of shape 1.</span>
 
@@ -1116,7 +1039,7 @@
 <span class="sd">        (1, 1, 2)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_remove_axis</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_remove_axis</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">linspace</span><span class="p">(</span>
@@ -1225,7 +1148,7 @@
     </div>
 
     
-  <script src="../../../_static/js/index.109f8ec7af5a9d176fcd.js"></script>
+  <script src="../../../_static/js/index.d8bbf5861d671d414e1a.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
