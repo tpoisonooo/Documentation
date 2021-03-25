@@ -42,7 +42,7 @@
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="天元 MegEngine 快速上手" href="quick-start.html" />
+    <link rel="next" title="为深度学习新手准备的教程" href="beginner/index.html" />
     <link rel="prev" title="欢迎使用天元 MegEngine (๑•̀ㅂ•́)و✧" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -168,11 +168,6 @@
   <div class="bd-toc-item active">
     <ul class="nav bd-sidenav">
  <li class="toctree-l2">
-  <a class="reference internal" href="quick-start.html">
-   天元 MegEngine 快速上手
-  </a>
- </li>
- <li class="toctree-l2">
   <a class="reference internal" href="beginner/index.html">
    为深度学习新手准备的教程
   </a>
@@ -250,9 +245,87 @@
 </div>
 <div class="section" id="id3">
 <h2>一个最简单的使用样例<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>以下代码仅简单展示了使用 MegEngine 进行模型开发的基础流程，并未展示所有特性</p>
+<p>我们使用线性分类器来对 MNIST 手写数字进行分类：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span>
+<span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.data.dataset</span> <span class="kn">import</span> <span class="n">MNIST</span>
+<span class="kn">from</span> <span class="nn">megengine.data</span> <span class="kn">import</span> <span class="n">SequentialSampler</span><span class="p">,</span> <span class="n">RandomSampler</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">megengine.autodiff</span> <span class="kn">import</span> <span class="n">GradManager</span>
+<span class="kn">import</span> <span class="nn">megengine.optimizer</span> <span class="k">as</span> <span class="nn">optim</span>
+
+<span class="n">MNIST_DATA_PATH</span> <span class="o">=</span> <span class="s2">&quot;/data/datasets/MNIST/&quot;</span>
+
+<span class="c1"># 设置超参数</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-6</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="c1"># 读取原始数据集</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">MNIST_DATA_PATH</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+<span class="n">num_features</span> <span class="o">=</span> <span class="mi">784</span>   <span class="c1"># (28, 28, 1) Flatten -&gt; 784</span>
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 训练数据加载与预处理</span>
+<span class="n">train_sampler</span> <span class="o">=</span> <span class="n">SequentialSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">bs</span><span class="p">)</span>
+<span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">train_sampler</span><span class="p">)</span>
+
+<span class="c1"># 初始化参数</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_features</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_classes</span><span class="p">,)))</span>
+
+<span class="c1"># 定义模型</span>
+<span class="k">def</span> <span class="nf">linear_cls</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="c1"># 定义求导器和优化器</span>
+<span class="n">gm</span> <span class="o">=</span> <span class="n">GradManager</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">([</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+<span class="c1"># 模型训练</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span> <span class="ow">in</span> <span class="n">train_dataloader</span><span class="p">:</span>
+        <span class="n">batch_data</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">batch_label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">linear_cls</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">batch_label</span><span class="p">)</span>
+            <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
+        <span class="n">total_loss</span> <span class="o">+=</span>  <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch = </span><span class="si">{}</span><span class="s2">, loss = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>epoch = 0, loss = 0.533</p></li>
+<li><p>epoch = 1, loss = 0.362</p></li>
+<li><p>epoch = 2, loss = 0.335</p></li>
+<li><p>epoch = 3, loss = 0.322</p></li>
+<li><p>epoch = 4, loss = 0.313</p></li>
+</ul>
+<p>可以看见 loss 在不断下降，接下来测试该模型的性能：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">MNIST_DATA_PATH</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">test_sampler</span> <span class="o">=</span> <span class="n">RandomSampler</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">test_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="n">test_sampler</span><span class="p">)</span>
+
+<span class="n">nums_correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span> <span class="ow">in</span> <span class="n">test_dataloader</span><span class="p">:</span>
+    <span class="n">batch_data</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">batch_label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">linear_cls</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nums_correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">==</span> <span class="n">batch_label</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy = </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nums_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>我们只训练了 5 个周期的线性分类器，在测试集的 10,000 张图片中，就有 9,170 张图片被正确地预测了分类。</p>
 </div>
 <div class="section" id="id4">
 <h2>接下来做什么<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>如果你感觉上面的流程比较陌生（深度学习新手？不知道 MNIST 数据集？），可以参考我们的 <a class="reference internal" href="beginner/index.html#beginner"><span class="std std-ref">为深度学习新手准备的教程</span></a> .</p>
 </div>
 </div>
 

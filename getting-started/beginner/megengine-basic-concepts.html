@@ -169,11 +169,6 @@
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
- <li class="toctree-l2">
-  <a class="reference internal" href="../quick-start.html">
-   天元 MegEngine 快速上手
-  </a>
- </li>
  <li class="toctree-l2 current active">
   <a class="reference internal" href="index.html">
    为深度学习新手准备的教程
@@ -571,7 +566,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1.2.0
+1.3.0
 </pre></div></div>
 </div>
 <p>接下来，我们将学习框架中一些基本模块的使用，先从最基础的张量（Tensor）和算子（Operator）开始吧～</p>
@@ -1030,7 +1025,7 @@ Tensor([[35. 44.]
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Tensor([2.], device=xpux:0)
-Tensor([1.], device=xpux:0)
+Tensor(1.0, device=xpux:0)
 </pre></div></div>
 </div>
 <ul class="simple">
@@ -1100,7 +1095,7 @@ Tensor([1.], device=xpux:0)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Tensor([2.98], device=xpux:0) None
+Parameter([2.98], device=xpux:0) None
 </pre></div></div>
 </div>
 <p><strong>提示：</strong>多次实践表明，用户经常忘记在更新参数后做梯度清空操作，因此推荐使用这样的写法：<code class="docutils literal notranslate"><span class="pre">optimizer.step().clear_grad()</span></code></p>
@@ -1220,7 +1215,7 @@ S &amp;= \{(x_1, y_1), (x_2, y_2), \ldots (x_n, y_n)\}
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The real w: 7, b: 7
+The real w: 6, b: 1
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1310,7 +1305,7 @@ The real w: 7, b: 7
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-epoch = 0, w = 4.866, b = 0.154, loss = 1799.225
+epoch = 0, w = 3.830, b = 0.113, loss = 1155.939
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1325,7 +1320,7 @@ epoch = 0, w = 4.866, b = 0.154, loss = 1799.225
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-epoch = 1, w = 6.426, b = 0.296, loss = 233.461
+epoch = 1, w = 5.208, b = 0.160, loss = 157.764
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1340,7 +1335,7 @@ epoch = 1, w = 6.426, b = 0.296, loss = 233.461
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-epoch = 2, w = 6.926, b = 0.432, loss = 70.735
+epoch = 2, w = 5.704, b = 0.184, loss = 28.424
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1355,7 +1350,7 @@ epoch = 2, w = 6.926, b = 0.432, loss = 70.735
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-epoch = 3, w = 7.087, b = 0.565, loss = 52.384
+epoch = 3, w = 5.882, b = 0.198, loss = 11.657
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1370,7 +1365,7 @@ epoch = 3, w = 7.087, b = 0.565, loss = 52.384
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-epoch = 4, w = 7.138, b = 0.695, loss = 48.946
+epoch = 4, w = 5.946, b = 0.209, loss = 9.476
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1433,11 +1428,11 @@ epoch = 4, w = 7.138, b = 0.695, loss = 48.946
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-epoch = 0, w = 4.866, b = 0.154, loss = 1799.225
-epoch = 1, w = 6.426, b = 0.296, loss = 233.461
-epoch = 2, w = 6.926, b = 0.432, loss = 70.735
-epoch = 3, w = 7.087, b = 0.565, loss = 52.384
-epoch = 4, w = 7.138, b = 0.695, loss = 48.946
+epoch = 0, w = 3.830, b = 0.113, loss = 1155.939
+epoch = 1, w = 5.208, b = 0.160, loss = 157.764
+epoch = 2, w = 5.704, b = 0.184, loss = 28.424
+epoch = 3, w = 5.882, b = 0.198, loss = 11.657
+epoch = 4, w = 5.946, b = 0.209, loss = 9.476
 </pre></div></div>
 </div>
 <p>你应该会得到相同的 <code class="docutils literal notranslate"><span class="pre">w</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> 以及 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 值，下面直线的拟合程度也应该和 Numpy 实现一致：</p>

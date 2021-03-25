@@ -169,11 +169,6 @@
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
- <li class="toctree-l2">
-  <a class="reference internal" href="../quick-start.html">
-   天元 MegEngine 快速上手
-  </a>
- </li>
  <li class="toctree-l2 current active">
   <a class="reference internal" href="index.html">
    为深度学习新手准备的教程
@@ -585,7 +580,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1.2.0
+1.3.0
 </pre></div></div>
 </div>
 <p>接下来，我们将对将要使用的数据集 <a class="reference external" href="https://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html">波士顿房价数据集</a> 进行一定的了解。</p>
@@ -1136,8 +1131,8 @@ Average error = 4.920
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-For loop version: 492.236852645874 ms
-Vectorized version: 5.43975830078125 ms
+For loop version: 354.91228103637695 ms
+Vectorized version: 1.2269020080566406 ms
 </pre></div></div>
 </div>
 <p>重新阅读模型训练的代码，不难发现，每个 <code class="docutils literal notranslate"><span class="pre">epoch</span></code> 内部存在着 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环，根据模型定义的 <span class="math notranslate nohighlight">\(y_i = \mathbf {w} \cdot \mathbf {x_i} + b\)</span> 进行了 <span class="math notranslate nohighlight">\(n\)</span> 次计算。</p>
@@ -1217,10 +1212,10 @@ b
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-For loop version: [1.12491947 1.58637594 1.41419402]
-np.dot() version: [1.12491947 1.58637594 1.41419402]
-np.einsum() version: [1.12491947 1.58637594 1.41419402]
-np.matmul() version: [1.12491947 1.58637594 1.41419402]
+For loop version: [0.93044708 0.86239961 1.1775819 ]
+np.dot() version: [0.93044708 0.86239961 1.1775819 ]
+np.einsum() version: [0.93044708 0.86239961 1.1775819 ]
+np.matmul() version: [0.93044708 0.86239961 1.1775819 ]
 </pre></div></div>
 </div>
 <p>接下来加大数据规模，测试向量化是否起到了加速效果：</p>
@@ -1268,10 +1263,10 @@ np.matmul() version: [1.12491947 1.58637594 1.41419402]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-For loop version: 129.14156913757324 ms
-np.dot() version: 10.778427124023438 ms
-np.einsum() version: 42.95825958251953 ms
-np.matmul() version: 10.247468948364258 ms
+For loop version: 139.1618251800537 ms
+np.dot() version: 9.843826293945312 ms
+np.einsum() version: 36.226511001586914 ms
+np.matmul() version: 5.5789947509765625 ms
 </pre></div></div>
 </div>
 <p>可以发现 <code class="docutils literal notranslate"><span class="pre">dot()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">matmul()</span></code> 的向量化实现都有明显的加速效果，<code class="docutils literal notranslate"><span class="pre">einsum()</span></code> 虽然是全能型选手，但也以更多的开销作为了代价，一般不做考虑。</p>
@@ -1431,12 +1426,12 @@ epoch = 4, loss = 110.772
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Pred = 18.916, Real = 22.400
-Pred = 19.173, Real = 20.600
-Pred = 19.733, Real = 16.800
 Pred = 19.251, Real = 23.900
-Pred = 19.195, Real = 11.900
+Pred = 19.173, Real = 20.600
 Pred = 19.091, Real = 22.000
+Pred = 19.195, Real = 11.900
+Pred = 19.733, Real = 16.800
+Pred = 18.916, Real = 22.400
 Average error = 3.783
 </pre></div></div>
 </div>
