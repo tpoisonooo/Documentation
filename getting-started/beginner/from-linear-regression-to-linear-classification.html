@@ -8,7 +8,7 @@
     <title>从线性回归到线性分类 &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
-  <link href="../../_static/css/index.9cd52f7647f75bcab1282abf07de7a52.css" rel="stylesheet" />
+  <link href="../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -28,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.c9faddf98927557166f1.js">
+  <link rel="preload" as="script" href="../../_static/js/index.3c6125c0ae68274ddd1b.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -169,34 +169,35 @@
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
     <ul class="current nav bd-sidenav">
- <li class="toctree-l2 current active">
+ <li class="toctree-l1 current active">
   <a class="reference internal" href="index.html">
    为深度学习新手准备的教程
   </a>
   <ul class="current">
-   <li class="toctree-l3">
+   <li class="toctree-l2">
     <a class="reference internal" href="megengine-basic-concepts.html">
      天元 MegEngine 基础概念
     </a>
    </li>
-   <li class="toctree-l3">
+   <li class="toctree-l2">
     <a class="reference internal" href="learning-from-linear-regression.html">
      一个稍微复杂些的线性回归模型
     </a>
    </li>
-   <li class="toctree-l3 current active">
+   <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      从线性回归到线性分类
     </a>
    </li>
   </ul>
  </li>
- <li class="toctree-l2">
+ <li class="toctree-l1">
   <a class="reference internal" href="../more-tutorials.html">
    更多教程资源
   </a>
  </li>
 </ul>
+
   </div>
 </nav>
             </div>
@@ -563,9 +564,10 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-1.2.0
+1.3.0
 </pre></div></div>
 </div>
+<p>或者你可以前往 <strong>MegStudio</strong> fork 公开项目，无需本地安装，直接线上体验（<a class="reference external" href="https://studio.brainpp.com/project/4643">开始学习</a>）</p>
 <p>接下来，我们将先了解一下这次要使用到的分类问题经典数据集：<a class="reference external" href="http://yann.lecun.com/exdb/mnist/">MNIST 手写数字数据集</a>。</p>
 <div class="section" id="MNIST-手写数字数据集">
 <h2>MNIST 手写数字数据集<a class="headerlink" href="#MNIST-手写数字数据集" title="永久链接至标题">¶</a></h2>
@@ -601,9 +603,9 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-<span class="ansi-green-fg">19 20:11:04 </span>process the raw files of train set...
-100%|██████████████████████████████████| 60000/60000 [00:03&lt;00:00, 18365.46it/s]
-100%|████████████████████████████████| 60000/60000 [00:00&lt;00:00, 1359286.16it/s]
+<span class="ansi-green-fg">30 15:40:37 </span>process the raw files of train set...
+100%|██████████████████████████████████| 60000/60000 [00:02&lt;00:00, 22618.87it/s]
+100%|█████████████████████████████████| 60000/60000 [00:00&lt;00:00, 947112.61it/s]
 </pre></div></div>
 </div>
 <p>以训练集为例，你最终将得到一个长度为 60000 的 <code class="docutils literal notranslate"><span class="pre">train_dataset</span></code> 列表，其中的每个元素是一个包含样本和标签的元组。</p>
@@ -1164,9 +1166,9 @@ p(y=0 \mid \mathbf {x}) &amp;= 1 - p(y=1 \mid \mathbf {x})
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-<span class="ansi-green-fg">19 20:11:15 </span>process the raw files of train set...
-100%|██████████████████████████████████| 60000/60000 [00:03&lt;00:00, 19249.91it/s]
-100%|████████████████████████████████| 60000/60000 [00:00&lt;00:00, 1334384.47it/s]
+<span class="ansi-green-fg">30 15:40:49 </span>process the raw files of train set...
+100%|██████████████████████████████████| 60000/60000 [00:02&lt;00:00, 21526.95it/s]
+100%|████████████████████████████████| 60000/60000 [00:00&lt;00:00, 1111957.58it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1207,25 +1209,17 @@ epoch = 4, loss = 0.313
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-<span class="ansi-green-fg">19 20:11:27 </span>process the raw files of test set...
-100%|██████████████████████████████████| 10000/10000 [00:00&lt;00:00, 20024.93it/s]
-100%|████████████████████████████████| 10000/10000 [00:00&lt;00:00, 1334448.16it/s]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Accuracy = 91.700
+<span class="ansi-green-fg">30 15:41:01 </span>process the raw files of test set...
+100%|██████████████████████████████████| 10000/10000 [00:00&lt;00:00, 19919.07it/s]
+100%|████████████████████████████████| 10000/10000 [00:00&lt;00:00, 1207341.39it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-
+Accuracy = 91.700
 </pre></div></div>
 </div>
 <p>这意味着我们只训练了 5 个周期的线性分类器，在测试集的 10,000 张图片中，就有 9,170 张图片被正确地预测了分类。</p>
@@ -1292,7 +1286,7 @@ Accuracy = 91.700
     </div>
 
     
-  <script src="../../_static/js/index.c9faddf98927557166f1.js"></script>
+  <script src="../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
