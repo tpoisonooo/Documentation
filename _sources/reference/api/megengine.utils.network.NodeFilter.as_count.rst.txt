@@ -1,0 +1,6 @@
+megengine.utils.network.NodeFilter.as\_count
+============================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: NodeFilter.as_count

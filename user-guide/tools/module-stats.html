@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>参数量与计算量统计 &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="RuntimeOpr 使用说明" href="runtimeopr.html" />
+    <link rel="prev" title="减少二进制文件体积" href="../deployment/midout.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "user-guide/tools/module-stats.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <p class="caption">
+ <span class="caption-text">
+  安装
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../install/index.html">
+   安装 MegEngine
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型开发
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-development/advanced-parameter-optimization.html">
+   参数优化进阶配置
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-development/trace.html">
+   将动态图转为静态图
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-development/dump.html">
+   导出模型序列化文件
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  分布式训练
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../distributed-training.html">
+   分布式训练
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型压缩
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-compression/quantization.html">
+   量化
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型部署
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deployment/index.html">
+   将模型部署到 C++ 环境
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deployment/midout.html">
+   减少二进制文件体积
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  各类工具
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   参数量与计算量统计
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="runtimeopr.html">
+   RuntimeOpr 使用说明
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="graphsurgeon.html">
+   图手术操作指南
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="load-and-run.html">
+   如何使用 Load and Run（C++）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="load-and-run-py.html">
+   如何使用 Load and Run（Python）
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module">
+   基于 module 的统计
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dump">
+   基于 dump 图的可视化与统计
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     命令行调用
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#python">
+     Python 中调用
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     进行可视化
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="module-stats">
+<span id="id1"></span><h1>参数量与计算量统计<a class="headerlink" href="#module-stats" title="永久链接至标题">¶</a></h1>
+<p>有时候我们经常需要统计模型的参数量和计算量，目前的实现方式有两种：</p>
+<ul class="simple">
+<li><p>基于 <code class="xref py py-class docutils literal notranslate"><span class="pre">module</span></code> 的实现</p>
+<ul>
+<li><p>优点：可以在 Python 代码中嵌入调用，随时可以看统计信息</p></li>
+<li><p>缺点：由于是利用 module 的 hook 实现的，只能统计 module 的信息，无法统计 functional 的调用，如 F.matmul</p></li>
+</ul>
+</li>
+<li><p>基于 <a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a> 的实现</p>
+<ul>
+<li><p>优点：可以覆盖所有的 op，包括 matmul 或 batched matmul 等</p></li>
+<li><p>缺点：需要先进行 dump 操作</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="module">
+<h2>基于 module 的统计<a class="headerlink" href="#module" title="永久链接至标题">¶</a></h2>
+<p>实现在 <code class="xref py py-func docutils literal notranslate"><span class="pre">module_stats</span></code>, 可以支持 float32/qat/qint8 模型的统计，使用方式很简单：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 构建一个 net module，这里从 model hub 中获取 resnet18 模型</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s2">&quot;megengine/models&quot;</span><span class="p">,</span> <span class="s2">&quot;resnet18&quot;</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 指定输入shape</span>
+<span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+
+<span class="c1"># float model.</span>
+<span class="n">total_params</span><span class="p">,</span> <span class="n">total_flops</span> <span class="o">=</span> <span class="n">module_stats</span><span class="p">(</span>
+    <span class="n">net</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">log_params</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_flops</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;params </span><span class="si">{}</span><span class="s2"> flops </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_params</span><span class="p">,</span> <span class="n">total_flops</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>可以通过 log_params 和 log_flops 来控制是否输出细节 parameter 和 flops 信息，返回总的参数量和计算量。</p>
+</div>
+<div class="section" id="dump">
+<h2>基于 dump 图的可视化与统计<a class="headerlink" href="#dump" title="永久链接至标题">¶</a></h2>
+<p>基于 Python Graph 的图结构解析功能，输入 mge 格式的 dump 模型路径，
+以及 log 存储目录，可将图结构信息存成 TensorBoard 可读的格式。</p>
+<div class="section" id="id2">
+<h3>命令行调用<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m megengine.tools.network_visualize ./resnet18.mge ./log --log_flops --log_params
+</pre></div>
+</div>
+<p>其中各个参数说明如下：</p>
+<p><code class="docutils literal notranslate"><span class="pre">./resnet18.mge</span></code> （第一个参数）</p>
+<blockquote>
+<div><p><strong>必填参数</strong> ，指定模型文件名。</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">./log</span></code> （第二个参数）</p>
+<blockquote>
+<div><p><strong>必填参数</strong> ，指定 log 存储目录。</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">--log_flops</span></code></p>
+<blockquote>
+<div><p>指定当前屏打印出 FLOPs 信息。</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">--log_params</span></code></p>
+<blockquote>
+<div><p>指定当前屏打印出 Parameters 信息。</p>
+</div></blockquote>
+</div>
+<div class="section" id="python">
+<h3>Python 中调用<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
+<p>以下代码等效于上方的命令行调用方式：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.tools.network_visualize</span> <span class="kn">import</span> <span class="n">visualize</span>
+
+<span class="n">total_params</span><span class="p">,</span> <span class="n">total_flops</span> <span class="o">=</span> <span class="n">visualize</span><span class="p">(</span>
+    <span class="s2">&quot;./resnet18.mge&quot;</span><span class="p">,</span> <span class="s2">&quot;./log&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;params </span><span class="si">{}</span><span class="s2"> flops </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_params</span><span class="p">,</span> <span class="n">total_flops</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>进行可视化<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>完成上面的步骤后，再在对应目录（例子中为 <code class="docutils literal notranslate"><span class="pre">./log</span></code> ）启动 tensorboard, 即可在本机打开 tensorboard 进程：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>tensorboard --logdir ./log
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>TensorBoard 的安装和使用请参考 <a class="reference external" href="https://www.tensorflow.org/tensorboard">TensorBoard 官网</a></p>
+</div>
+<p>如果启动服务器为远程 ssh 登陆，可用以下命令映射端口到本地（可使用 sshconfig 中的服务器名缩写）：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ssh &lt;user&gt;@&lt;host_name&gt; -L <span class="m">6006</span>:0.0.0.0:6006 -N
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

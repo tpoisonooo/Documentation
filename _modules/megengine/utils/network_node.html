@@ -1,0 +1,891 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.utils.network_node &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "_modules/megengine/utils/network_node.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.utils.network_node 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="kn">import</span> <span class="n">_imperative_rt</span> <span class="k">as</span> <span class="n">rt</span>
+<span class="kn">from</span> <span class="nn">..core._wrap</span> <span class="kn">import</span> <span class="n">Device</span>
+<span class="kn">from</span> <span class="nn">..core.ops</span> <span class="kn">import</span> <span class="n">builtin</span>
+<span class="kn">from</span> <span class="nn">..core.tensor.megbrain_graph</span> <span class="kn">import</span> <span class="n">InputNode</span>
+<span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">.comp_graph_tools</span> <span class="kn">import</span> <span class="n">replace_vars</span>
+
+
+<div class="viewcode-block" id="NetworkNode"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network_node.NetworkNode.html#megengine.utils.network_node.NetworkNode">[文档]</a><span class="k">class</span> <span class="nc">NetworkNode</span><span class="p">:</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="VarNode"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network_node.VarNode.html#megengine.utils.network_node.VarNode">[文档]</a><span class="k">class</span> <span class="nc">VarNode</span><span class="p">(</span><span class="n">NetworkNode</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner_opr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner_opr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sym_var</span><span class="p">,</span> <span class="n">owner_opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">sym_var</span>  <span class="c1"># mgb varnode</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">sym_var</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner_opr</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">rst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">shape</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">rst</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">rst</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">dtype</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">set_owner_opr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">owner_opr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">owner_opr</span></div>
+
+
+<div class="viewcode-block" id="OpNode"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network_node.OpNode.html#megengine.utils.network_node.OpNode">[文档]</a><span class="k">class</span> <span class="nc">OpNode</span><span class="p">(</span><span class="n">NetworkNode</span><span class="p">):</span>
+
+    <span class="n">opdef</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># mgb opnode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">opr</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">opr</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opdef</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">var</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">]</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">invoke_op</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span> <span class="ow">is</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">add_inp_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_out_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">str_to_mge_class</span><span class="p">(</span><span class="n">classname</span><span class="p">):</span>
+    <span class="c1"># TODO: use megbrain C++ RTTI to replace type string</span>
+    <span class="k">if</span> <span class="n">classname</span> <span class="o">==</span> <span class="s2">&quot;RNGOpr&lt;MegDNNOpr&gt;&quot;</span><span class="p">:</span>
+        <span class="n">classname</span> <span class="o">=</span> <span class="s2">&quot;RNGOpr&quot;</span>
+    <span class="n">oprcls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">],</span> <span class="n">classname</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">oprcls</span> <span class="k">if</span> <span class="n">oprcls</span> <span class="k">else</span> <span class="n">ReadOnlyOpNode</span>
+
+
+<span class="k">class</span> <span class="nc">Host2DeviceCopy</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Host2DeviceCopy&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">to_c</span><span class="p">()</span> <span class="k">if</span> <span class="n">device</span> <span class="k">else</span> <span class="n">Device</span><span class="p">(</span><span class="s2">&quot;xpux&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_c</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="bp">self</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;wrong number of outputs&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">comp_node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">opr</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">make_h2d</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">owner</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VarNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">outputs</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span> <span class="ow">is</span> <span class="bp">self</span>
+
+
+<span class="k">class</span> <span class="nc">ImmutableTensor</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;ImmutableTensor&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">comp_node</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@device</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">device</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">cn</span> <span class="o">=</span> <span class="n">device</span> <span class="k">if</span> <span class="n">device</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">varnode</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cn</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VarNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">varnode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">varnode</span><span class="o">.</span><span class="n">owner</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="bp">self</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">opr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">graph</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">var</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span> <span class="ow">is</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">!=</span> <span class="n">graph</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+
+<span class="k">class</span> <span class="nc">ReadOnlyOpNode</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ReadOnlyOpNode</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="n">repl_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">var</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">ind</span><span class="p">]:</span>
+                <span class="n">repl_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">ind</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">var</span>
+        <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">repl_dict</span><span class="p">):</span>
+            <span class="n">out_vars</span> <span class="o">=</span> <span class="n">replace_vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span> <span class="n">repl_dict</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">):</span>
+                <span class="n">o</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">out_vars</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">Elemwise</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Elemwise&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Elemwise</span>
+
+    <span class="k">def</span> <span class="nf">calc_flops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Reduce</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Reduce&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Reduce</span>
+
+
+<span class="k">class</span> <span class="nc">TypeCvt</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;TypeCvt&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">TypeCvt</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TypeCvt</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">t_dtype</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_dtype</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">MatrixInverse</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;MatrixInverse&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">MatrixInverse</span>
+
+
+<span class="k">class</span> <span class="nc">MatrixMul</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;MatrixMul&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">MatrixMul</span>
+
+    <span class="k">def</span> <span class="nf">calc_flops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">mid_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">mid_shape</span>
+
+
+<span class="k">class</span> <span class="nc">BatchedMatrixMul</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;BatchedMatmul&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">BatchedMatrixMul</span>
+
+    <span class="k">def</span> <span class="nf">calc_flops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+        <span class="n">mid_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">mid_shape</span>
+
+
+<span class="k">class</span> <span class="nc">Dot</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Dot&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Dot</span>
+
+
+<span class="k">class</span> <span class="nc">SVD</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;SVD&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">SVD</span>
+
+
+<span class="k">class</span> <span class="nc">ConvolutionForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Convolution&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Convolution</span>
+
+    <span class="k">def</span> <span class="nf">calc_flops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">param_W_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">kh</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">kw</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">param_W_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">num_input</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_input</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">NCHW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="c1"># N x Cout x H x W x  (Cin x Kw x Kh)</span>
+        <span class="k">return</span> <span class="n">NCHW</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_input</span> <span class="o">*</span> <span class="n">kw</span> <span class="o">*</span> <span class="n">kh</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">ConvolutionBackwardData</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;ConvTranspose&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ConvolutionBackwardData</span>
+
+
+<span class="k">class</span> <span class="nc">DeformableConvForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;DeformableConv&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">DeformableConv</span>
+
+
+<span class="k">class</span> <span class="nc">GroupLocalForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;GroupLocal&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">GroupLocal</span>
+
+
+<span class="k">class</span> <span class="nc">PoolingForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Pooling&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Pooling</span>
+
+
+<span class="k">class</span> <span class="nc">AdaptivePoolingForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;AdaptivePooling&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">AdaptivePooling</span>
+
+
+<span class="k">class</span> <span class="nc">ROIPoolingForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;ROIPooling&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ROIPooling</span>
+
+
+<span class="k">class</span> <span class="nc">DeformablePSROIPoolingForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;DeformablePSROIPooling&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">DeformablePSROIPooling</span>
+
+
+<span class="k">class</span> <span class="nc">ConvBiasForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;ConvBias&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ConvBias</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ConvBiasForward</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="nf">calc_flops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">param_W_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">kh</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">kw</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">param_W_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">num_input</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_input</span> <span class="o">=</span> <span class="n">param_W_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">NCHW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="c1"># N x Cout x H x W x  (Cin x Kw x Kh + bias)</span>
+        <span class="k">return</span> <span class="n">NCHW</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_input</span> <span class="o">*</span> <span class="n">kw</span> <span class="o">*</span> <span class="n">kh</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BatchConvBiasForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;BatchConvBias&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">BatchConvBias</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">BatchConvBiasForward</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">BatchNormForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;BatchNorm&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">BatchNorm</span>
+    <span class="n">output_idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+
+<span class="k">class</span> <span class="nc">ROIAlignForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;ROIAlign&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ROIAlign</span>
+
+
+<span class="k">class</span> <span class="nc">WarpPerspectiveForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;WarpPerspective&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">WarpPerspective</span>
+
+
+<span class="k">class</span> <span class="nc">WarpAffineForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;WarpAffine&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">WarpAffine</span>
+
+
+<span class="k">class</span> <span class="nc">RemapForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Remap&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Remap</span>
+
+
+<span class="k">class</span> <span class="nc">ResizeForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Resize&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Resize</span>
+
+
+<span class="k">class</span> <span class="nc">IndexingOneHot</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;IndexingOneHot&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">IndexingOneHot</span>
+
+
+<span class="k">class</span> <span class="nc">IndexingSetOneHot</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;IndexingSetOneHot&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">IndexingSetOneHot</span>
+
+
+<span class="k">class</span> <span class="nc">Copy</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Copy&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Copy</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Copy</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;comp_node&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">comp_node</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">ArgsortForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Argsort&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Argsort</span>
+
+
+<span class="k">class</span> <span class="nc">Argmax</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Argmax&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Argmax</span>
+
+
+<span class="k">class</span> <span class="nc">Argmin</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Argmin&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Argmin</span>
+
+
+<span class="k">class</span> <span class="nc">CondTake</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;CondTake&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">CondTake</span>
+
+
+<span class="k">class</span> <span class="nc">TopK</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;TopK&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">TopK</span>
+
+
+<span class="k">class</span> <span class="nc">NvOf</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;NvOf&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">NvOf</span>
+
+
+<span class="k">class</span> <span class="nc">RNGOpr</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">RNGOpr</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">GaussianRNG</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;GaussianRNG&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">UniformRNG</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;UniformRNG&quot;</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">Linspace</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Linspace&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Linspace</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Linspace</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;comp_node&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">comp_node</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">Eye</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Eye&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Eye</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Eye</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;comp_node&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">comp_node</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">GetVarShape</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;GetVarShape&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">GetVarShape</span>
+
+
+<span class="k">class</span> <span class="nc">Concat</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Concat&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Concat</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Concat</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;comp_node&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="s2">&quot;xpux&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_c</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">Broadcast</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Broadcast&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Broadcast</span>
+
+
+<span class="k">class</span> <span class="nc">Identity</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Identity&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Identity</span>
+
+
+<span class="k">class</span> <span class="nc">NMSKeep</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;NMSKeep&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">NMSKeep</span>
+
+
+<span class="c1"># class ParamPackSplit</span>
+<span class="c1"># class ParamPackConcat</span>
+
+
+<span class="k">class</span> <span class="nc">Dimshuffle</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Dimshuffle&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Dimshuffle</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Dimshuffle</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;ndim&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">Reshape</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Reshape&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Reshape</span>
+
+
+<span class="k">class</span> <span class="nc">AxisAddRemove</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;AxisAddRemove&quot;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">opr</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">opr</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">desc</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="s2">&quot;desc&quot;</span><span class="p">]</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">desc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">method</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="n">method</span> <span class="o">==</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>
+            <span class="n">axis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;axisnum&quot;</span><span class="p">])</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;axis&quot;</span><span class="p">:</span> <span class="n">axis</span><span class="p">}</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">AddAxis</span> <span class="k">if</span> <span class="n">desc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;method&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">builtin</span><span class="o">.</span><span class="n">RemoveAxis</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">IndexingBase</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">_opr</span> <span class="o">=</span> <span class="n">opr</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">opr</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="n">p</span><span class="p">[</span><span class="s2">&quot;axis&quot;</span><span class="p">],</span>
+                <span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;begin&quot;</span><span class="p">]),</span>
+                <span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]),</span>
+                <span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]),</span>
+                <span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]),</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span>
+        <span class="p">]</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">items</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">Subtensor</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;Subtensor&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">Subtensor</span>
+
+
+<span class="k">class</span> <span class="nc">SetSubtensor</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;SetSubtensor&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">SetSubtensor</span>
+
+
+<span class="k">class</span> <span class="nc">IncrSubtensor</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;IncrSubtensor&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">IncrSubtensor</span>
+
+
+<span class="k">class</span> <span class="nc">IndexingMultiAxisVec</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;IndexingMultiAxisVec&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">IndexingMultiAxisVec</span>
+
+
+<span class="k">class</span> <span class="nc">IndexingSetMultiAxisVec</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;IndexingSetMultiAxisVec&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">IndexingSetMultiAxisVec</span>
+
+
+<span class="k">class</span> <span class="nc">IndexingIncrMultiAxisVec</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;IndexingIncrMultiAxisVec&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">IndexingIncrMultiAxisVec</span>
+
+
+<span class="k">class</span> <span class="nc">MeshIndexing</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;MeshIndexing&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">MeshIndexing</span>
+
+
+<span class="k">class</span> <span class="nc">SetMeshIndexing</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;SetMeshIndexing&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">SetMeshIndexing</span>
+
+
+<span class="k">class</span> <span class="nc">IncrMeshIndexing</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;IncrMeshIndexing&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">IncrMeshIndexing</span>
+
+
+<span class="k">class</span> <span class="nc">BatchedMeshIndexing</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;BatchedMeshIndexing&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">BatchedMeshIndexing</span>
+
+
+<span class="k">class</span> <span class="nc">BatchedSetMeshIndexing</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;BatchedSetMeshIndexing&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">BatchedSetMeshIndexing</span>
+
+
+<span class="k">class</span> <span class="nc">BatchedIncrMeshIndexing</span><span class="p">(</span><span class="n">IndexingBase</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;BatchedIncrMeshIndexing&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">BatchedIncrMeshIndexing</span>
+
+
+<span class="c1"># class CollectiveComm</span>
+<span class="c1"># class RemoteSend</span>
+<span class="c1"># class RemoteRecv</span>
+<span class="c1"># class TQT</span>
+<span class="c1"># class FakeQuant</span>
+<span class="c1"># class InplaceAdd</span>
+
+
+<span class="k">class</span> <span class="nc">AssertEqual</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;AssertEqual&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">AssertEqual</span>
+
+
+<span class="k">class</span> <span class="nc">ElemwiseMultiType</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;ElemwiseMultiType&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">ElemwiseMultiType</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">opr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ElemwiseMultiType</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="nf">calc_flops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">CvtColorForward</span><span class="p">(</span><span class="n">OpNode</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;CvtColor&quot;</span>
+    <span class="n">opdef</span> <span class="o">=</span> <span class="n">builtin</span><span class="o">.</span><span class="n">CvtColor</span>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

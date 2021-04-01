@@ -1,0 +1,6 @@
+megengine.utils.module\_stats.module\_stats
+===========================================
+
+.. currentmodule:: megengine.utils.module_stats
+
+.. autofunction:: module_stats

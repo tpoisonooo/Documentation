@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.utils.network &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "_modules/megengine/utils/network.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.utils.network 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..core._imperative_rt</span> <span class="kn">import</span> <span class="n">ComputingGraph</span>
+<span class="kn">from</span> <span class="nn">..core.tensor</span> <span class="kn">import</span> <span class="n">megbrain_graph</span> <span class="k">as</span> <span class="n">G</span>
+<span class="kn">from</span> <span class="nn">.comp_graph_tools</span> <span class="kn">import</span> <span class="n">get_dep_vars</span><span class="p">,</span> <span class="n">get_opr_type</span><span class="p">,</span> <span class="n">get_oprs_seq</span>
+<span class="kn">from</span> <span class="nn">.network_node</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Host2DeviceCopy</span><span class="p">,</span>
+    <span class="n">ImmutableTensor</span><span class="p">,</span>
+    <span class="n">NetworkNode</span><span class="p">,</span>
+    <span class="n">OpNode</span><span class="p">,</span>
+    <span class="n">VarNode</span><span class="p">,</span>
+    <span class="n">str_to_mge_class</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Network</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_vars</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># input var of graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orig_inputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># output var of graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orig_outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_vars_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">ComputingGraph</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">outspec</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads a computing graph as a Network object.</span>
+<span class="sd">        :param model_path: file path of mge model.</span>
+<span class="sd">        :param outspec: only load the subgraph with outspec as its endpoints.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">load_graph</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">outspec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output_spec</span> <span class="o">=</span> <span class="n">outspec</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">all_vars</span> <span class="o">=</span> <span class="n">get_dep_vars</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="o">+</span> <span class="n">outputs</span>
+            <span class="n">new_outputs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_vars</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">output_spec</span><span class="p">:</span>
+                    <span class="n">new_outputs</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="n">output_spec</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_spec</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Can not find </span><span class="si">{}</span><span class="s2"> in this model&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">output_spec</span>
+            <span class="p">)</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_outputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">outspec</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_orig_outputs</span> <span class="o">=</span> <span class="n">outputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dep_oprs</span><span class="p">(</span><span class="o">*</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_inputs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_outputs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_orig_outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">graph</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_compile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_vars_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">opr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opr</span><span class="p">,</span> <span class="p">(</span><span class="n">ImmutableTensor</span><span class="p">,</span> <span class="n">Host2DeviceCopy</span><span class="p">)):</span>
+                <span class="n">opr</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">opr</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">opr</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">opr</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span><span class="p">[</span><span class="n">opr</span><span class="o">.</span><span class="n">_opr</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">opr</span>
+            <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_vars_map</span><span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span>
+
+    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">keep_var_name</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">keep_opr_name</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">keep_param_name</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">keep_opr_priority</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">strip_info_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">append_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">optimize_for_inference</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">append</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Serializes graph to file.</span>
+
+<span class="sd">        :param file: output file, could be file object or filename.</span>
+<span class="sd">        :param append: whether output is appended to ``file``.</span>
+<span class="sd">            Only works when ``file`` is str.</span>
+<span class="sd">        :param keep_var_name: level for keeping variable names:</span>
+
+<span class="sd">            * 0: none of the names are kept</span>
+<span class="sd">            * 1: (default)keep names of output vars</span>
+<span class="sd">            * 2: keep names of all (output and internal) vars</span>
+<span class="sd">        :param keep_opr_name: whether to keep operator names.</span>
+<span class="sd">        :param keep_param_name: whether to keep param names, so param values can be</span>
+<span class="sd">            easily manipulated after loading model</span>
+<span class="sd">        :param keep_opr_priority: whether to keep priority setting for operators</span>
+<span class="sd">        :param strip_info_file: a string for path or a file handler. if is not None,</span>
+<span class="sd">            then the dump information for code strip would be written to ``strip_info_file``</span>
+<span class="sd">        :param append_json: will be check when `strip_info_file` is not None. if set</span>
+<span class="sd">            true, the information for code strip will be append to strip_info_file.</span>
+<span class="sd">            if set false, will rewrite strip_info_file</span>
+<span class="sd">        :param optimize_for_inference: enbale optmizations,</span>
+<span class="sd">            will skip all optimize options if this is False. Default: True</span>
+
+<span class="sd">        :Keyword Arguments:</span>
+
+<span class="sd">            * enable_io16xc32 --</span>
+<span class="sd">                whether to use float16 for I/O between oprs and use</span>
+<span class="sd">                float32 as internal computation precision. Note the output var would be</span>
+<span class="sd">                changed to float16.</span>
+<span class="sd">            * enable_ioc16 --</span>
+<span class="sd">                whether to use float16 for both I/O and computation</span>
+<span class="sd">                precision.</span>
+
+<span class="sd">            * enable_hwcd4 --</span>
+<span class="sd">                whether to use NHWCD4 data layout. This is faster on some</span>
+<span class="sd">                OpenCL backend.</span>
+<span class="sd">            * enable_nchw88 --</span>
+<span class="sd">                whether to use NCHW88 data layout, currently</span>
+<span class="sd">                used in X86 AVX backend.</span>
+<span class="sd">            * enable_nchw44 --</span>
+<span class="sd">                whether to use NCHW44 data layout, currently</span>
+<span class="sd">                used in arm backend.</span>
+<span class="sd">            * enable_nchw44_dot --</span>
+<span class="sd">                whether to use NCHW44_dot data layout, currently</span>
+<span class="sd">                used in armv8.2+dotprod backend.</span>
+<span class="sd">            * enable_nchw4 --</span>
+<span class="sd">                whether to use NCHW4 data layout, currently</span>
+<span class="sd">                used in nvidia backend(based on cudnn).</span>
+<span class="sd">            * enable_nchw32 --</span>
+<span class="sd">                whether to use NCHW32 data layout, currently</span>
+<span class="sd">                used in nvidia backend with tensorcore(based on cudnn).</span>
+<span class="sd">            * enable_chwn4 --</span>
+<span class="sd">                whether to use CHWN4 data layout, currently</span>
+<span class="sd">                used in nvidia backend with tensorcore.</span>
+
+<span class="sd">            * enable_fuse_conv_bias_nonlinearity: whether to fuse conv+bias+nonlinearty</span>
+<span class="sd">                into one opr.</span>
+<span class="sd">            * enable_fuse_conv_bias_with_z: whether to fuse conv_bias with z</span>
+<span class="sd">                input for inference on nvidia backend(this optimization pass will</span>
+<span class="sd">                result in mismatch of the precision of output of training and</span>
+<span class="sd">                inference)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compile</span><span class="p">()</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">G</span><span class="o">.</span><span class="n">VarNode</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">optimize_for_inference</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">optimize_for_inference</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">dump_content</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">dump_graph</span><span class="p">(</span>
+            <span class="n">out</span><span class="p">,</span>
+            <span class="n">keep_var_name</span><span class="o">=</span><span class="n">keep_var_name</span><span class="p">,</span>
+            <span class="n">keep_opr_name</span><span class="o">=</span><span class="n">keep_opr_name</span><span class="p">,</span>
+            <span class="n">keep_param_name</span><span class="o">=</span><span class="n">keep_param_name</span><span class="p">,</span>
+            <span class="n">keep_opr_priority</span><span class="o">=</span><span class="n">keep_opr_priority</span><span class="p">,</span>
+            <span class="n">strip_info_file</span><span class="o">=</span><span class="n">strip_info_file</span><span class="p">,</span>
+            <span class="n">append_json</span><span class="o">=</span><span class="n">append_json</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">permission</span> <span class="o">=</span> <span class="s2">&quot;wb&quot;</span> <span class="k">if</span> <span class="n">append</span> <span class="o">==</span> <span class="kc">False</span> <span class="k">else</span> <span class="s2">&quot;ab&quot;</span>
+            <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">permission</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dump_content</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">make_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes an ImmutableTensor OpNode to provide a parameter for the network.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">ImmutableTensor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">make_input_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a Host2DeviceCopy OpNode to provide an input varnode for the network.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">Host2DeviceCopy</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">add_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="nb">vars</span><span class="p">:</span> <span class="n">VarNode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds vars into the network output node list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="nb">vars</span><span class="p">:</span> <span class="n">VarNode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Removes vars from the network output node list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_dep_oprs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="nb">vars</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds dependent opnodes and varnodes of vars into network</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">oprs</span> <span class="o">=</span> <span class="n">get_oprs_seq</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mge_opr</span> <span class="ow">in</span> <span class="n">oprs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">get_opr_type</span><span class="p">(</span><span class="n">mge_opr</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Host2DeviceCopy&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_orig_inputs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mge_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+            <span class="n">opr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_opr</span><span class="p">(</span><span class="n">mge_opr</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mge_opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                    <span class="n">opr</span><span class="o">.</span><span class="n">add_inp_var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                <span class="c1"># set out var</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">mge_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+                    <span class="n">opr</span><span class="o">.</span><span class="n">add_out_var</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_var</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_vars_map</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">modify_opr_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">modifier</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Modifies names of operators **inplace**; useful for merging loaded</span>
+<span class="sd">        network into another network</span>
+
+<span class="sd">        :param modifier: a string to be prepended to the name, or a function</span>
+<span class="sd">            that maps from name to name</span>
+<span class="sd">        :type modifier: str or callable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modifier</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">om</span> <span class="o">=</span> <span class="n">modifier</span>
+            <span class="n">modifier</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">om</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modifier</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Callable</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs</span><span class="p">:</span>
+            <span class="n">v0</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">v1</span> <span class="o">=</span> <span class="n">modifier</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">v1</span>
+
+    <span class="k">def</span> <span class="nf">reset_batch_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batchsize</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">blacklist</span><span class="o">=</span><span class="p">()):</span>
+        <span class="sd">&quot;&quot;&quot;Helper for reset batch size; first dimension of all data providers</span>
+<span class="sd">        not in blacklist are assumed to be the batch size</span>
+
+<span class="sd">        :param blacklist: data provider names whose first dimension is not</span>
+<span class="sd">            batchbatch size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">blacklist</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">blacklist</span><span class="p">)</span>
+        <span class="n">prev_batchsize</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_providers_filter</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">blacklist</span><span class="p">:</span>
+                <span class="n">blacklist</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">shp</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">prev_batchsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">prev_batchsize</span> <span class="o">=</span> <span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="n">prev_batchsize</span> <span class="o">==</span> <span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span>
+                        <span class="s2">&quot;batchsize mismatch: batchsize=</span><span class="si">{}</span><span class="s2"> &quot;</span>
+                        <span class="s2">&quot;shape=</span><span class="si">{}</span><span class="s2"> dp=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prev_batchsize</span><span class="p">,</span> <span class="n">shp</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="n">shp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">batchsize</span>
+                <span class="n">i</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shp</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="n">prev_batchsize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;no data provider found&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">blacklist</span><span class="p">,</span> <span class="s2">&quot;unused items in blacklist: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blacklist</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">replace_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repl_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">VarNode</span><span class="p">,</span> <span class="n">VarNode</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Replaces vars in the graph.</span>
+<span class="sd">        :param repl_dict: the map {old_var: new_var} that specifies how to replace the vars.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_vars</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">repl_dict</span><span class="p">:</span>
+                <span class="n">repl_var</span> <span class="o">=</span> <span class="n">repl_dict</span><span class="p">[</span><span class="n">var</span><span class="p">]</span>
+                <span class="n">owner</span> <span class="o">=</span> <span class="n">repl_var</span><span class="o">.</span><span class="n">owner</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">owner</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">repl_var</span><span class="p">)</span>
+                <span class="n">owner</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span>
+                <span class="n">var</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">repl_var</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">replace_oprs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repl_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">OpNode</span><span class="p">,</span> <span class="n">OpNode</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Replaces operators in the graph.</span>
+<span class="sd">        :param oprmap: the map {old_opr: new_opr} that specifies how to replace the operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">opr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">opr</span> <span class="ow">in</span> <span class="n">repl_dict</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+                    <span class="n">repl_dict</span><span class="p">[</span><span class="n">opr</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span>
+                <span class="p">),</span> <span class="s2">&quot;can not replace </span><span class="si">{}</span><span class="s2"> with </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">opr</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">repl_dict</span><span class="p">[</span><span class="n">opr</span><span class="p">]))</span>
+                <span class="n">repl_dict</span><span class="p">[</span><span class="n">opr</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">opr</span><span class="o">.</span><span class="n">outputs</span>
+                <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">):</span>
+                    <span class="n">var</span><span class="o">.</span><span class="n">owner</span> <span class="o">=</span> <span class="n">repl_dict</span><span class="p">[</span><span class="n">opr</span><span class="p">]</span>
+                    <span class="n">var</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">repl_dict</span><span class="p">[</span><span class="n">opr</span><span class="p">]</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_opr_by_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oprcls</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">oprcls</span><span class="p">,</span> <span class="n">OpNode</span><span class="p">)</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">oprcls</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">unique</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> operators of type </span><span class="si">{}</span><span class="s2"> found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">rst</span><span class="p">),</span> <span class="n">oprcls</span>
+            <span class="p">)</span>
+            <span class="p">(</span><span class="n">rst</span><span class="p">,)</span> <span class="o">=</span> <span class="n">rst</span>
+        <span class="k">return</span> <span class="n">rst</span>
+
+    <span class="k">def</span> <span class="nf">get_opr_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">unique</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> operators of type </span><span class="si">{}</span><span class="s2"> found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rst</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">rst</span><span class="p">,)</span> <span class="o">=</span> <span class="n">rst</span>
+        <span class="k">return</span> <span class="n">rst</span>
+
+    <span class="k">def</span> <span class="nf">get_var_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">unique</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rst</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> operators of type </span><span class="si">{}</span><span class="s2"> found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rst</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">rst</span><span class="p">,)</span> <span class="o">=</span> <span class="n">rst</span>
+        <span class="k">return</span> <span class="n">rst</span>
+
+    <span class="k">def</span> <span class="nf">get_var_receive_oprs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Gets all oprs which use var as input</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">has_input</span><span class="p">(</span><span class="n">var</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_dep_oprs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets dependent oprs of var</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">get_oprs_seq</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">opr_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Filter on all opnodes of the Network.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">oprs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs</span>
+        <span class="k">return</span> <span class="n">NodeFilter</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">oprs</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">oprs</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">var_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Filter on all varnode of the Network.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_vars</span>
+        <span class="k">return</span> <span class="n">NodeFilter</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">vars</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">params_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># all immutable tensor</span>
+        <span class="sd">&quot;&quot;&quot;Filter on all parameters (ImmutableTensor Opr) of the Network</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">param_provider</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_providers_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># all host2devicecopy</span>
+        <span class="sd">&quot;&quot;&quot;Filter on all input nodes (Host2DeviceCopy Opr) of the Network</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">data_provider</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dest_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Output varnodes of the Network.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">all_oprs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_oprs_seq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">all_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">get_dep_vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_vars</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">all_vars_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_filter</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">all_oprs_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+
+    <span class="c1"># used for loading and building graph</span>
+    <span class="k">def</span> <span class="nf">_add_opr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># TODO: use megbrain C++ RTTI to replace type string</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">str_to_mge_class</span><span class="p">(</span><span class="n">get_opr_type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_opr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_oprs_map</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># auto convert to VarNode of Network</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_vars_map</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_vars_map</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">VarNode</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_opr</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">owner</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_vars_map</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="as_varnode"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.as_varnode.html#megengine.utils.network.as_varnode">[文档]</a><span class="k">def</span> <span class="nf">as_varnode</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;convert a :class:`.VarNode` compatible object to :class:`.VarNode`.</span>
+
+<span class="sd">    :param obj: it must be one of the following:</span>
+
+<span class="sd">        1. a :class:`.VarNode` object</span>
+<span class="sd">        2. a :class:`.OpNode` object that has unique output</span>
+<span class="sd">        3. an iterable that produces either type 1 or 2, with length 1</span>
+
+<span class="sd">    :rtype: :class:`.VarNode`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">is</span> <span class="n">VarNode</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">OpNode</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;operator </span><span class="si">{}</span><span class="s2"> must have one output to be converted to VarNode; &quot;</span>
+            <span class="s2">&quot;got </span><span class="si">{}</span><span class="s2"> actually&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">outputs</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="ow">is</span> <span class="n">VarNode</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">obj</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span>
+    <span class="p">),</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not compatible with VarNode&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="n">val</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="p">),</span> <span class="s2">&quot;can not convert sequence of length </span><span class="si">{}</span><span class="s2"> to VarNode (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="k">else</span> <span class="n">s</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; ...&quot;</span><span class="p">)(</span><span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">as_varnode</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="as_oprnode"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.as_oprnode.html#megengine.utils.network.as_oprnode">[文档]</a><span class="k">def</span> <span class="nf">as_oprnode</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;convert a :class:`.OpNode` compatible object to</span>
+<span class="sd">    :class:`.OpNode`; it works like :func:`as_varnode`.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">is</span> <span class="n">VarNode</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">owner</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">OpNode</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+        <span class="n">obj</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span>
+    <span class="p">),</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not compatible with OpNode&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="n">val</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="p">),</span> <span class="s2">&quot;can not convert sequence of length </span><span class="si">{}</span><span class="s2"> to &quot;</span> <span class="s2">&quot;OpNode(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">as_oprnode</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<span class="k">class</span> <span class="nc">NodeFilter</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Filter on node iterator. This class is an iterator of</span>
+<span class="sd">    :class:`.NetworkNode` objects and multiple filtering conditions and</span>
+<span class="sd">    mappers can be chained.</span>
+
+<span class="sd">    Example::</span>
+
+<span class="sd">        # find all :class:`.ImmutableTensor` nodes</span>
+<span class="sd">        for i in NodeFilter(node_iter).param_provider():</span>
+<span class="sd">            print(i)</span>
+
+<span class="sd">        # find all :class:`.ImmutableTensor` nodes that end with &#39;:W&#39;</span>
+<span class="sd">        for i in NodeFilter(node_iter).param_provider().name(&#39;*:W&#39;):</span>
+<span class="sd">            print(i)</span>
+
+<span class="sd">        # number of inputs</span>
+<span class="sd">        nr_input = NodeFilter(node_iter).data_provider().as_count()</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_iter</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_iter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param node_iter: iterator to :class:`.NetworkNode`, or a</span>
+<span class="sd">            :class:`.VarNode`-compatible object; in the later case, its</span>
+<span class="sd">            dependent oprs would be used</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_iter</span><span class="p">,</span> <span class="n">VarNode</span><span class="p">):</span>
+            <span class="n">oprs</span> <span class="o">=</span> <span class="n">get_oprs_seq</span><span class="p">(</span><span class="n">node_iter</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">node_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">oprs</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">oprs</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_iter</span><span class="p">,</span> <span class="n">OpNode</span><span class="p">):</span>
+            <span class="n">oprs</span> <span class="o">=</span> <span class="n">get_oprs_seq</span><span class="p">(</span><span class="n">node_iter</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">node_iter</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">oprs</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">oprs</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_iter</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_iter</span><span class="p">,</span> <span class="n">NodeFilter</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span>
+            <span class="bp">self</span>
+        <span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">NodeFilterCheckType</span><span class="p">:</span>
+            <span class="n">node_iter</span> <span class="o">=</span> <span class="n">NodeFilterCheckType</span><span class="p">(</span><span class="n">node_iter</span><span class="p">,</span> <span class="n">NetworkNode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span> <span class="o">=</span> <span class="n">node_iter</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">make_all_deps</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">dest_vars</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;make a :class:`NodeFilter` that contains all deps of given vars&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">get_oprs_seq</span><span class="p">(</span><span class="n">dest_vars</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;to be overwritten by subclass to implement filters&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NodeFilter.type"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilter.type.html#megengine.utils.network.NodeFilter.type">[文档]</a>    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;filter by specific node type</span>
+
+<span class="sd">        :param node_type: node type class</span>
+<span class="sd">        :return: a new :class:`NodeFilter` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NodeFilterType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">check_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;assert that all oprs produced by this iterator are instances of</span>
+<span class="sd">        certain type</span>
+
+<span class="sd">        :param node_type: node type class</span>
+<span class="sd">        :return: a new :class:`NodeFilter` object</span>
+<span class="sd">        :raises TypeError: if type check failed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NodeFilterCheckType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NodeFilter.not_type"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilter.not_type.html#megengine.utils.network.NodeFilter.not_type">[文档]</a>    <span class="k">def</span> <span class="nf">not_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;remove oprs of specific type</span>
+
+<span class="sd">        :param node_type: node type class</span>
+<span class="sd">        :return: a new :class:`NodeFilter` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NodeFilterNotType</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NodeFilter.param_provider"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilter.param_provider.html#megengine.utils.network.NodeFilter.param_provider">[文档]</a>    <span class="k">def</span> <span class="nf">param_provider</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get :class:`.ParamProvider` oprs; shorthand for</span>
+<span class="sd">        ``.type(ParamProvider)``&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">ImmutableTensor</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">data_provider</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get :class:`.DataProvider` oprs; shorthand for</span>
+<span class="sd">        ``.type(DataProvider)``&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">Host2DeviceCopy</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NodeFilter.name"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilter.name.html#megengine.utils.network.NodeFilter.name">[文档]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">ignorecase</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;filter by node name</span>
+
+<span class="sd">        :param pattern: a string in glob syntax that can contain ``?`` and</span>
+<span class="sd">            ``*`` to match a single or arbitrary characters.</span>
+<span class="sd">        :type pattern: :class:`str`</span>
+<span class="sd">        :param ignorecase: whether to ignroe case</span>
+<span class="sd">        :type ignorecase: bool</span>
+<span class="sd">        :return: a new :class:`NodeFilter` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NodeFilterName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">ignorecase</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">has_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;an opr is kept if it has given var as one of its inputs</span>
+
+<span class="sd">        :param var: var node to checked</span>
+<span class="sd">        :return: a new :class:`NodeFilter` object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">NodeFilterHasInput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">as_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;consume this iterator and return its content as a list</span>
+
+<span class="sd">        :rtype: [:class:`.GraphNodeBase`]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">as_unique</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;assert that this iterator yields only one node and return it</span>
+
+<span class="sd">        :return: the unique node</span>
+<span class="sd">        :rtype: :class:`.GraphNodeBase`</span>
+<span class="sd">        :raises ValueError: if this iterator does not yield a unique node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">opr</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="n">opr</span>
+
+    <span class="k">def</span> <span class="nf">as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;construct an ordered dict to map from node names to objects in</span>
+<span class="sd">        this iterator</span>
+
+<span class="sd">        :rtype: :class:`OrderedDict`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">((</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">as_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;consume this iterator and get the number of elements</span>
+
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NodeFilterType"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilterType.html#megengine.utils.network.NodeFilterType">[文档]</a><span class="k">class</span> <span class="nc">NodeFilterType</span><span class="p">(</span><span class="n">NodeFilter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;see :meth:`NodeFilter.type`&quot;&quot;&quot;</span>
+
+    <span class="n">_node_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_iter</span><span class="p">,</span> <span class="n">node_type</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">node_type</span><span class="p">,</span> <span class="n">NetworkNode</span><span class="p">),</span> <span class="s2">&quot;bad opr type: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_type</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">node_iter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span> <span class="o">=</span> <span class="n">node_type</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">i</span></div>
+
+
+<div class="viewcode-block" id="NodeFilterNotType"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilterNotType.html#megengine.utils.network.NodeFilterNotType">[文档]</a><span class="k">class</span> <span class="nc">NodeFilterNotType</span><span class="p">(</span><span class="n">NodeFilterType</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;see :meth:`NodeFilter.not_type`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">i</span></div>
+
+
+<div class="viewcode-block" id="NodeFilterCheckType"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilterCheckType.html#megengine.utils.network.NodeFilterCheckType">[文档]</a><span class="k">class</span> <span class="nc">NodeFilterCheckType</span><span class="p">(</span><span class="n">NodeFilterType</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;see :meth:`NodeFilter.check_type`&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;all nodes should be </span><span class="si">{}</span><span class="s2">; got </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_node_type</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">yield</span> <span class="n">i</span></div>
+
+
+<div class="viewcode-block" id="NodeFilterHasInput"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilterHasInput.html#megengine.utils.network.NodeFilterHasInput">[文档]</a><span class="k">class</span> <span class="nc">NodeFilterHasInput</span><span class="p">(</span><span class="n">NodeFilter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;see :meth:`NodeFilter.has_input`&quot;&quot;&quot;</span>
+
+    <span class="n">_var</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_iter</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">as_varnode</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">node_iter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var</span> <span class="o">=</span> <span class="n">var</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">OpNode</span>
+            <span class="p">),</span> <span class="s2">&quot;has_input() must be used with OpNode; &quot;</span> <span class="s2">&quot;got </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">i</span></div>
+
+
+<div class="viewcode-block" id="NodeFilterName"><a class="viewcode-back" href="../../../reference/api/megengine.utils.network.NodeFilterName.html#megengine.utils.network.NodeFilterName">[文档]</a><span class="k">class</span> <span class="nc">NodeFilterName</span><span class="p">(</span><span class="n">NodeFilter</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;see :meth:`NodeFilter.name`&quot;&quot;&quot;</span>
+
+    <span class="n">_re</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_iter</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">ignorecase</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">node_iter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_re</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_re</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">ignorecase</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">make_re</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">ignorecase</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="s2">&quot;bad pattern: </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ignorecase</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+        <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">ignorecase</span><span class="p">:</span>
+            <span class="n">flags</span> <span class="o">|=</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">fnmatch</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">pattern</span><span class="p">),</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iter</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="n">i</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

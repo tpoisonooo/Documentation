@@ -1,0 +1,624 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.utils.network.Network.var_filter &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="megengine.utils.network.Network.params_filter" href="megengine.utils.network.Network.params_filter.html" />
+    <link rel="prev" title="megengine.utils.network.Network.opr_filter" href="megengine.utils.network.Network.opr_filter.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "reference/api/megengine.utils.network.Network.var_filter.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../data.html">
+   数据（Data）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tensor.html">
+   张量（Tensor）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../functional.html">
+   函数式（Functional）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../module.html">
+   模块式（Module）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../autodiff.html">
+   自动微分（Auto-diff）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimizer.html">
+   优化器（Optimizer）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../jit.html">
+   即时编译（JIT）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../distributed.html">
+   分布式训练（Distributed）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantization.html">
+   量化（Quantization）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../serialization.html">
+   序列化（Serialization）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../random.html">
+   随机（Random）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../hub.html">
+   模型中心（Hub）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../logger.html">
+   日志（Logger）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../device.html">
+   设备（Device）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../version.html">
+   查询版本信息
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="../utils.html">
+   Utils 模块
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.get_dep_vars.html">
+     megengine.utils.comp_graph_tools.get_dep_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.get_owner_opr_inputs.html">
+     megengine.utils.comp_graph_tools.get_owner_opr_inputs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.get_owner_opr_type.html">
+     megengine.utils.comp_graph_tools.get_owner_opr_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.get_opr_type.html">
+     megengine.utils.comp_graph_tools.get_opr_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.graph_traversal.html">
+     megengine.utils.comp_graph_tools.graph_traversal
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.get_oprs_seq.html">
+     megengine.utils.comp_graph_tools.get_oprs_seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.replace_vars.html">
+     megengine.utils.comp_graph_tools.replace_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.replace_oprs.html">
+     megengine.utils.comp_graph_tools.replace_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.set_priority_to_id.html">
+     megengine.utils.comp_graph_tools.set_priority_to_id
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.comp_graph_tools.GraphInference.html">
+     megengine.utils.comp_graph_tools.GraphInference
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.hook.HookHandler.html">
+     megengine.utils.hook.HookHandler
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.html">
+     megengine.utils.network.Network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.load.html">
+     megengine.utils.network.Network.load
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.dump.html">
+     megengine.utils.network.Network.dump
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.make_const.html">
+     megengine.utils.network.Network.make_const
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.make_input_node.html">
+     megengine.utils.network.Network.make_input_node
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.add_output.html">
+     megengine.utils.network.Network.add_output
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.remove_output.html">
+     megengine.utils.network.Network.remove_output
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.add_dep_oprs.html">
+     megengine.utils.network.Network.add_dep_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.modify_opr_names.html">
+     megengine.utils.network.Network.modify_opr_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.reset_batch_size.html">
+     megengine.utils.network.Network.reset_batch_size
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.replace_vars.html">
+     megengine.utils.network.Network.replace_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.replace_oprs.html">
+     megengine.utils.network.Network.replace_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.get_opr_by_type.html">
+     megengine.utils.network.Network.get_opr_by_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.get_opr_by_name.html">
+     megengine.utils.network.Network.get_opr_by_name
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.get_var_by_name.html">
+     megengine.utils.network.Network.get_var_by_name
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.get_var_receive_oprs.html">
+     megengine.utils.network.Network.get_var_receive_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.get_dep_oprs.html">
+     megengine.utils.network.Network.get_dep_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.opr_filter.html">
+     megengine.utils.network.Network.opr_filter
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     megengine.utils.network.Network.var_filter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.params_filter.html">
+     megengine.utils.network.Network.params_filter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.data_providers_filter.html">
+     megengine.utils.network.Network.data_providers_filter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.dest_vars.html">
+     megengine.utils.network.Network.dest_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.all_oprs.html">
+     megengine.utils.network.Network.all_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.all_vars.html">
+     megengine.utils.network.Network.all_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.all_oprs_dict.html">
+     megengine.utils.network.Network.all_oprs_dict
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.Network.all_vars_dict.html">
+     megengine.utils.network.Network.all_vars_dict
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.as_varnode.html">
+     megengine.utils.network.as_varnode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.as_oprnode.html">
+     megengine.utils.network.as_oprnode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.html">
+     megengine.utils.network.NodeFilter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.type.html">
+     megengine.utils.network.NodeFilter.type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.check_type.html">
+     megengine.utils.network.NodeFilter.check_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.not_type.html">
+     megengine.utils.network.NodeFilter.not_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.param_provider.html">
+     megengine.utils.network.NodeFilter.param_provider
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.data_provider.html">
+     megengine.utils.network.NodeFilter.data_provider
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.name.html">
+     megengine.utils.network.NodeFilter.name
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.has_input.html">
+     megengine.utils.network.NodeFilter.has_input
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.as_list.html">
+     megengine.utils.network.NodeFilter.as_list
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.as_unique.html">
+     megengine.utils.network.NodeFilter.as_unique
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.as_dict.html">
+     megengine.utils.network.NodeFilter.as_dict
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilter.as_count.html">
+     megengine.utils.network.NodeFilter.as_count
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilterType.html">
+     megengine.utils.network.NodeFilterType
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilterNotType.html">
+     megengine.utils.network.NodeFilterNotType
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilterCheckType.html">
+     megengine.utils.network.NodeFilterCheckType
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilterHasInput.html">
+     megengine.utils.network.NodeFilterHasInput
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network.NodeFilterName.html">
+     megengine.utils.network.NodeFilterName
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network_node.NetworkNode.html">
+     megengine.utils.network_node.NetworkNode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network_node.VarNode.html">
+     megengine.utils.network_node.VarNode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.network_node.OpNode.html">
+     megengine.utils.network_node.OpNode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.module_stats.module_stats.html">
+     megengine.utils.module_stats.module_stats
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.profiler.Profiler.html">
+     megengine.utils.profiler.Profiler
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="megengine.utils.profiler.profile.html">
+     megengine.utils.profiler.profile
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="megengine-utils-network-network-var-filter">
+<h1>megengine.utils.network.Network.var_filter<a class="headerlink" href="#megengine-utils-network-network-var-filter" title="永久链接至标题">¶</a></h1>
+<dl class="py method">
+<dt id="megengine.utils.network.Network.var_filter">
+<em class="property"><span class="pre">property</span> </em><code class="sig-prename descclassname"><span class="pre">Network.</span></code><code class="sig-name descname"><span class="pre">var_filter</span></code><a class="headerlink" href="#megengine.utils.network.Network.var_filter" title="永久链接至目标">¶</a></dt>
+<dd><p>Filter on all varnode of the Network.</p>
+</dd></dl>
+
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

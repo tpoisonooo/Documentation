@@ -1,0 +1,31 @@
+megengine.utils.network\_node.OpNode
+====================================
+
+.. currentmodule:: megengine.utils.network_node
+
+.. autoclass:: OpNode
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OpNode.__init__
+      ~OpNode.add_inp_var
+      ~OpNode.add_out_var
+      ~OpNode.compile
+      ~OpNode.load
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OpNode.opdef
+      ~OpNode.type
+   
+   

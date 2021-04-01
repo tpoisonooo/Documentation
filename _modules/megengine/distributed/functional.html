@@ -260,7 +260,7 @@
     <span class="k">return</span> <span class="n">result</span>
 
 
-<span class="k">def</span> <span class="nf">reduce_sum</span><span class="p">(</span>
+<div class="viewcode-block" id="reduce_sum"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.reduce_sum.html#megengine.functional.distributed.reduce_sum">[文档]</a><span class="k">def</span> <span class="nf">reduce_sum</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -271,10 +271,10 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">REDUCE_SUM</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">broadcast</span><span class="p">(</span>
+<div class="viewcode-block" id="broadcast"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.broadcast.html#megengine.functional.distributed.broadcast">[文档]</a><span class="k">def</span> <span class="nf">broadcast</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -285,7 +285,7 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">BROADCAST</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="all_gather"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.all_gather.html#megengine.functional.distributed.all_gather">[文档]</a><span class="k">def</span> <span class="nf">all_gather</span><span class="p">(</span>
@@ -302,7 +302,7 @@
     <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">reduce_scatter_sum</span><span class="p">(</span>
+<div class="viewcode-block" id="reduce_scatter_sum"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.reduce_scatter_sum.html#megengine.functional.distributed.reduce_scatter_sum">[文档]</a><span class="k">def</span> <span class="nf">reduce_scatter_sum</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -313,10 +313,10 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">REDUCE_SCATTER_SUM</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">all_reduce_sum</span><span class="p">(</span>
+<div class="viewcode-block" id="all_reduce_sum"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.all_reduce_sum.html#megengine.functional.distributed.all_reduce_sum">[文档]</a><span class="k">def</span> <span class="nf">all_reduce_sum</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -327,10 +327,10 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ALL_REDUCE_SUM</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">all_reduce_max</span><span class="p">(</span>
+<div class="viewcode-block" id="all_reduce_max"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.all_reduce_max.html#megengine.functional.distributed.all_reduce_max">[文档]</a><span class="k">def</span> <span class="nf">all_reduce_max</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -341,10 +341,10 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ALL_REDUCE_MAX</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">all_reduce_min</span><span class="p">(</span>
+<div class="viewcode-block" id="all_reduce_min"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.all_reduce_min.html#megengine.functional.distributed.all_reduce_min">[文档]</a><span class="k">def</span> <span class="nf">all_reduce_min</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -355,10 +355,10 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ALL_REDUCE_MIN</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">gather</span><span class="p">(</span>
+<div class="viewcode-block" id="gather"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.gather.html#megengine.functional.distributed.gather">[文档]</a><span class="k">def</span> <span class="nf">gather</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -369,7 +369,7 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">GATHER</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">scatter</span><span class="p">(</span>
@@ -386,7 +386,7 @@
     <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">all_to_all</span><span class="p">(</span>
+<div class="viewcode-block" id="all_to_all"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.all_to_all.html#megengine.functional.distributed.all_to_all">[文档]</a><span class="k">def</span> <span class="nf">all_to_all</span><span class="p">(</span>
     <span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span> <span class="o">=</span> <span class="n">WORLD</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -397,7 +397,7 @@
 <span class="sd">    :param device: execution device.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mode</span> <span class="o">=</span> <span class="n">CollectiveComm</span><span class="o">.</span><span class="n">Mode</span><span class="o">.</span><span class="n">ALL_TO_ALL</span>
-    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">collective_comm</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
 
 
 <span class="k">class</span> <span class="nc">_RemoteSend</span><span class="p">(</span><span class="n">PyOpBase</span><span class="p">):</span>
@@ -442,7 +442,7 @@
             <span class="n">remote_send</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">rank_from</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">remote_send</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">dest_rank</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
+<div class="viewcode-block" id="remote_send"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.remote_send.html#megengine.functional.distributed.remote_send">[文档]</a><span class="k">def</span> <span class="nf">remote_send</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="n">dest_rank</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Send a Tensor to a remote process.</span>
 
@@ -463,10 +463,10 @@
     <span class="p">(</span><span class="n">dummy</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">_RemoteSend</span><span class="p">(</span><span class="n">op</span><span class="p">),</span> <span class="n">inp</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grad_keys</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="n">g</span><span class="o">.</span><span class="n">_refkeeper</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">_refkeeper</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">remote_recv</span><span class="p">(</span>
+<div class="viewcode-block" id="remote_recv"><a class="viewcode-back" href="../../../reference/api/megengine.functional.distributed.remote_recv.html#megengine.functional.distributed.remote_recv">[文档]</a><span class="k">def</span> <span class="nf">remote_recv</span><span class="p">(</span>
     <span class="n">src_rank</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
     <span class="n">dtype</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
@@ -512,7 +512,7 @@
     <span class="p">(</span><span class="n">ret</span><span class="p">,)</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="n">_RemoteRecv</span><span class="p">(</span><span class="n">op</span><span class="p">),</span> <span class="n">inp</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">_isscalar</span><span class="p">:</span>
         <span class="n">setscalar</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
 </pre></div>
 
               </div>

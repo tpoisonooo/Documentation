@@ -1,0 +1,6 @@
+megengine.utils.network.Network.get\_var\_receive\_oprs
+=======================================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.get_var_receive_oprs

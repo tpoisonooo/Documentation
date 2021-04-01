@@ -1,0 +1,6 @@
+megengine.utils.network.NodeFilter.has\_input
+=============================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: NodeFilter.has_input

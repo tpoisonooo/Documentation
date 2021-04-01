@@ -1,0 +1,21 @@
+megengine.utils.comp\_graph\_tools.GraphInference
+=================================================
+
+.. currentmodule:: megengine.utils.comp_graph_tools
+
+.. autoclass:: GraphInference
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~GraphInference.__init__
+      ~GraphInference.run
+   
+   
+
+   
+   
+   

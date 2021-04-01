@@ -1,0 +1,32 @@
+megengine.utils.network.NodeFilter
+==================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoclass:: NodeFilter
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NodeFilter.__init__
+      ~NodeFilter.as_count
+      ~NodeFilter.as_dict
+      ~NodeFilter.as_list
+      ~NodeFilter.as_unique
+      ~NodeFilter.check_type
+      ~NodeFilter.data_provider
+      ~NodeFilter.has_input
+      ~NodeFilter.make_all_deps
+      ~NodeFilter.name
+      ~NodeFilter.not_type
+      ~NodeFilter.param_provider
+      ~NodeFilter.type
+   
+   
+
+   
+   
+   

@@ -1,0 +1,6 @@
+megengine.utils.network.Network.params\_filter
+==============================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoproperty:: Network.params_filter

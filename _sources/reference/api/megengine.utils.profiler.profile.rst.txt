@@ -1,0 +1,33 @@
+megengine.utils.profiler.profile
+================================
+
+.. currentmodule:: megengine.utils.profiler
+
+.. autoclass:: profile
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~profile.__init__
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~profile.ALL
+      ~profile.CHROME_TIMELINE
+      ~profile.COMMAND
+      ~profile.OPERATOR
+      ~profile.SCOPE
+      ~profile.SYNC
+      ~profile.TENSOR_LIFETIME
+      ~profile.TENSOR_PROP
+   
+   

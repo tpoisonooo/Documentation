@@ -1,0 +1,6 @@
+megengine.utils.network.NodeFilter.type
+=======================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: NodeFilter.type

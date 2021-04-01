@@ -1,0 +1,29 @@
+megengine.utils.network\_node.VarNode
+=====================================
+
+.. currentmodule:: megengine.utils.network_node
+
+.. autoclass:: VarNode
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~VarNode.__init__
+      ~VarNode.load
+      ~VarNode.set_owner_opr
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~VarNode.dtype
+      ~VarNode.shape
+   
+   

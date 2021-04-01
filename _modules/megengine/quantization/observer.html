@@ -267,7 +267,7 @@
         <span class="k">pass</span></div>
 
 
-<span class="k">class</span> <span class="nc">MinMaxObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+<div class="viewcode-block" id="MinMaxObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.MinMaxObserver.html#megengine.quantization.MinMaxObserver">[文档]</a><span class="k">class</span> <span class="nc">MinMaxObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Observer Module records input tensor&#39;s running min and max values to calc scale.</span>
 
@@ -319,10 +319,10 @@
             <span class="c1"># find max and min</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-        <span class="k">return</span> <span class="n">x_orig</span>
+        <span class="k">return</span> <span class="n">x_orig</span></div>
 
 
-<span class="k">class</span> <span class="nc">SyncMinMaxObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+<div class="viewcode-block" id="SyncMinMaxObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.SyncMinMaxObserver.html#megengine.quantization.SyncMinMaxObserver">[文档]</a><span class="k">class</span> <span class="nc">SyncMinMaxObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A distributed version of :class:`~.MinMaxObserver`.</span>
 
@@ -342,10 +342,10 @@
                 <span class="n">max_x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_val</span><span class="p">,</span> <span class="n">min_x</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_val</span><span class="p">,</span> <span class="n">max_x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x_orig</span>
+        <span class="k">return</span> <span class="n">x_orig</span></div>
 
 
-<span class="k">class</span> <span class="nc">ExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+<div class="viewcode-block" id="ExponentialMovingAverageObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.ExponentialMovingAverageObserver.html#megengine.quantization.ExponentialMovingAverageObserver">[文档]</a><span class="k">class</span> <span class="nc">ExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A :class:`~.MinMaxObserver` with momentum support for min/max updating.</span>
 
@@ -387,10 +387,10 @@
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span>
 
-        <span class="k">return</span> <span class="n">x_orig</span>
+        <span class="k">return</span> <span class="n">x_orig</span></div>
 
 
-<span class="k">class</span> <span class="nc">SyncExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">ExponentialMovingAverageObserver</span><span class="p">):</span>
+<div class="viewcode-block" id="SyncExponentialMovingAverageObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.SyncExponentialMovingAverageObserver.html#megengine.quantization.SyncExponentialMovingAverageObserver">[文档]</a><span class="k">class</span> <span class="nc">SyncExponentialMovingAverageObserver</span><span class="p">(</span><span class="n">ExponentialMovingAverageObserver</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A distributed version of :class:`~.ExponentialMovingAverageObserver`.</span>
 
@@ -418,10 +418,10 @@
                 <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">)</span> <span class="o">*</span> <span class="n">max_x</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">runtime_momentum</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span>
-        <span class="k">return</span> <span class="n">x_orig</span>
+        <span class="k">return</span> <span class="n">x_orig</span></div>
 
 
-<span class="k">class</span> <span class="nc">HistogramObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
+<div class="viewcode-block" id="HistogramObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.HistogramObserver.html#megengine.quantization.HistogramObserver">[文档]</a><span class="k">class</span> <span class="nc">HistogramObserver</span><span class="p">(</span><span class="n">MinMaxObserver</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A :class:`~.MinMaxObserver` using running histogram of tensor values</span>
 <span class="sd">    for min/max updating. Usually used for calibration quantization.</span>
@@ -679,10 +679,10 @@
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_orig</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sideeffect_forward</span><span class="p">(</span><span class="n">x_orig</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">x_orig</span>
+        <span class="k">return</span> <span class="n">x_orig</span></div>
 
 
-<span class="k">class</span> <span class="nc">PassiveObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
+<div class="viewcode-block" id="PassiveObserver"><a class="viewcode-back" href="../../../reference/api/megengine.quantization.observer.PassiveObserver.html#megengine.quantization.PassiveObserver">[文档]</a><span class="k">class</span> <span class="nc">PassiveObserver</span><span class="p">(</span><span class="n">Observer</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An Observer that supports setting :attr:`scale` directly.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -725,7 +725,7 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Just return input because :attr:`qparams` is set by :func:`~.apply_easy_quant`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">x</span>
+        <span class="k">return</span> <span class="n">x</span></div>
 </pre></div>
 
               </div>

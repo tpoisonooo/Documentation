@@ -221,7 +221,7 @@
         <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="MapSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.MapSampler.html#megengine.data.MapSampler">[文档]</a><span class="k">class</span> <span class="nc">MapSampler</span><span class="p">(</span><span class="n">Sampler</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">MapSampler</span><span class="p">(</span><span class="n">Sampler</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sampler for map dataset.</span>
 
@@ -348,7 +348,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch_index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">:</span>
             <span class="n">batch_index</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">batch_index</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="n">batch_index</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="StreamSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.StreamSampler.html#megengine.data.StreamSampler">[文档]</a><span class="k">class</span> <span class="nc">StreamSampler</span><span class="p">(</span><span class="n">Sampler</span><span class="p">):</span>
@@ -408,7 +408,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span></div>
 
 
-<div class="viewcode-block" id="RandomSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.RandomSampler.html#megengine.data.RandomSampler">[文档]</a><span class="k">class</span> <span class="nc">RandomSampler</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">RandomSampler</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sample elements randomly without replacement.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -435,10 +435,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="ReplacementSampler"><a class="viewcode-back" href="../../../reference/api/megengine.data.ReplacementSampler.html#megengine.data.ReplacementSampler">[文档]</a><span class="k">class</span> <span class="nc">ReplacementSampler</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ReplacementSampler</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sample elements randomly with replacement.</span>
 
@@ -480,10 +480,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_samples</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="Infinite"><a class="viewcode-back" href="../../../reference/api/megengine.data.Infinite.html#megengine.data.Infinite">[文档]</a><span class="k">class</span> <span class="nc">Infinite</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Infinite</span><span class="p">(</span><span class="n">MapSampler</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Infinite Sampler warper for basic sampler.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -505,7 +505,7 @@
         <span class="k">return</span> <span class="n">index</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">max</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>
 </pre></div>
 
               </div>

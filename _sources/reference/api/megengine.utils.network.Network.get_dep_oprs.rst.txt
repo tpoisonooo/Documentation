@@ -1,0 +1,6 @@
+megengine.utils.network.Network.get\_dep\_oprs
+==============================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.get_dep_oprs

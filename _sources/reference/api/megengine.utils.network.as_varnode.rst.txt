@@ -1,0 +1,6 @@
+megengine.utils.network.as\_varnode
+===================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autofunction:: as_varnode

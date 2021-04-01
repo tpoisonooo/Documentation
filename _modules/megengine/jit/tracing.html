@@ -257,7 +257,7 @@
         <span class="k">return</span> <span class="ow">not</span> <span class="n">skip_tracing</span>
 
 
-<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<div class="viewcode-block" id="exclude_from_trace"><a class="viewcode-back" href="../../../reference/api/megengine.jit.exclude_from_trace.html#megengine.jit.exclude_from_trace">[文档]</a><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
 <span class="k">def</span> <span class="nf">exclude_from_trace</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">skip_tracing</span>
     <span class="k">if</span> <span class="n">skip_tracing</span><span class="p">:</span>
@@ -271,7 +271,7 @@
         <span class="k">yield</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">skip_tracing</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">set_tracing</span><span class="p">()</span>
+        <span class="n">set_tracing</span><span class="p">()</span></div>
 
 
 <span class="k">class</span> <span class="nc">TensorInfo</span><span class="p">:</span>

@@ -1,0 +1,6 @@
+megengine.utils.network.Network.get\_opr\_by\_name
+==================================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.get_opr_by_name

@@ -209,7 +209,7 @@
 <span class="kn">from</span> <span class="nn">.module</span> <span class="kn">import</span> <span class="n">Module</span>
 
 
-<div class="viewcode-block" id="GroupNorm"><a class="viewcode-back" href="../../../reference/api/megengine.module.GroupNorm.html#megengine.module.GroupNorm">[文档]</a><span class="k">class</span> <span class="nc">GroupNorm</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">GroupNorm</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Simple implementation of GroupNorm. Only support 4d tensor now.</span>
 <span class="sd">    Reference: https://arxiv.org/pdf/1803.08494.pdf.</span>
@@ -255,7 +255,7 @@
             <span class="s2">&quot;groups=</span><span class="si">{num_groups}</span><span class="s2">, channels=</span><span class="si">{num_channels}</span><span class="s2">, &quot;</span>
             <span class="s2">&quot;eps=</span><span class="si">{eps}</span><span class="s2">, affine=</span><span class="si">{affine}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="InstanceNorm"><a class="viewcode-back" href="../../../reference/api/megengine.module.InstanceNorm.html#megengine.module.InstanceNorm">[文档]</a><span class="k">class</span> <span class="nc">InstanceNorm</span><span class="p">(</span><span class="n">Module</span><span class="p">):</span>

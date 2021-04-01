@@ -1,0 +1,6 @@
+megengine.utils.network.Network.all\_oprs\_dict
+===============================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoproperty:: Network.all_oprs_dict

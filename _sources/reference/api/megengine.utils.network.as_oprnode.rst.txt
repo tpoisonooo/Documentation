@@ -1,0 +1,6 @@
+megengine.utils.network.as\_oprnode
+===================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autofunction:: as_oprnode

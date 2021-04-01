@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>动态图转静态图 &#8212; MegEngine 1.3.0 文档</title>
+    <title>将动态图转为静态图 &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
@@ -42,8 +42,8 @@
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="导出序列化模型" href="dump.html" />
-    <link rel="prev" title="模型开发" href="index.html" />
+    <link rel="next" title="导出模型序列化文件" href="dump.html" />
+    <link rel="prev" title="参数优化进阶配置" href="advanced-parameter-optimization.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
   </head>
@@ -166,72 +166,110 @@
             <!-- Only show if we have sidebars configured, else just a small margin  -->
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../faq.html">
-   常见问题汇总（FAQ）
-  </a>
- </li>
+    <p class="caption">
+ <span class="caption-text">
+  安装
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../install/index.html">
-   编译、构建与安装
+   安装 MegEngine
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型开发
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../basic-concepts/index.html">
-   基本概念
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../data-engineering/index.html">
-   数据工程
+  <a class="reference internal" href="advanced-parameter-optimization.html">
+   参数优化进阶配置
   </a>
  </li>
  <li class="toctree-l1 current active">
-  <a class="reference internal" href="index.html">
-   模型开发
+  <a class="current reference internal" href="#">
+   将动态图转为静态图
   </a>
-  <ul class="current">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     动态图转静态图
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="dump.html">
-     导出序列化模型
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="sublinear-memory.html">
-     亚线性内存优化
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="advanced-parameter-optimization.html">
-     参数优化进阶配置
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="distributed-training.html">
-     分布式训练
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="quantization.html">
-     量化训练
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../model-evaluation/index.html">
-   模型评估
+  <a class="reference internal" href="dump.html">
+   导出模型序列化文件
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  分布式训练
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../distributed-training.html">
+   分布式训练
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型压缩
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-compression/quantization.html">
+   量化
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型部署
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../deployment/index.html">
-   模型部署
+   将模型部署到 C++ 环境
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deployment/midout.html">
+   减少二进制文件体积
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  各类工具
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/module-stats.html">
+   参数量与计算量统计
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/runtimeopr.html">
+   RuntimeOpr 使用说明
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/graphsurgeon.html">
+   图手术操作指南
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/load-and-run.html">
+   如何使用 Load and Run（C++）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/load-and-run-py.html">
+   如何使用 Load and Run（Python）
   </a>
  </li>
 </ul>
@@ -252,14 +290,41 @@
 <nav id="bd-toc-nav">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#symbolic">
-   symbolic 参数
+  <a class="reference internal nav-link" href="#tracing-optim-example">
+   静态图编译优化举例
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#exclude-from-trace">
-   使用 exclude_from_trace
+  <a class="reference internal nav-link" href="#trace">
+   使用 trace 装饰器
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trace-advanced-setting">
+   trace 进阶设置
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#symbolic">
+     指定静态图构造方式
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#exclude-from-trace">
+     指定代码不被转换
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sublinear-memory">
+     亚线性内存优化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#codegen">
+     减少访寸操作
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -278,60 +343,153 @@
               
               <div>
                 
-  <div class="section" id="trace-rst">
-<span id="id1"></span><h1>动态图转静态图<a class="headerlink" href="#trace-rst" title="永久链接至标题">¶</a></h1>
-<p>一般模型训练中我们推荐使用动态图，但仍存在一些场景静态图是必要的。
-静态图相比起动态图，对全局的信息掌握更丰富，可做的优化也会更多。
-比如下节 <a class="reference internal" href="sublinear-memory.html#sublinear-memory"><span class="std std-ref">亚线性内存优化</span></a> 技术，就依赖静态图。</p>
-<p>我们使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code> 功能实现动态图到静态图的转换。</p>
+  <div class="section" id="convert-dynamic-graph-to-static">
+<span id="id1"></span><h1>将动态图转为静态图<a class="headerlink" href="#convert-dynamic-graph-to-static" title="永久链接至标题">¶</a></h1>
+<p>MegEngine 默认使用 <strong>动态计算图</strong> ，其核心特点是计算图的构建和计算同时发生（Define by run）。</p>
+<ul class="simple">
+<li><p>在计算图中定义一个 <a class="reference internal" href="../../reference/api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a> 时，其值就已经被计算且确定了。</p></li>
+<li><p>这种模式在调试模型时较为方便，能够实时得到中间结果的值。</p></li>
+<li><p>但是由于所有节点都需要被保存，这就导致我们难以对整个计算图进行优化。</p></li>
+</ul>
+<p>MegEngine 也支持 <strong>静态计算图</strong> 模式，将计算图的构建和实际计算分开（Define and run）。</p>
+<ul class="simple">
+<li><p>在构建阶段，MegEngine 根据完整的计算流程对原始的计算图进行优化和调整，
+得到更省内存和计算量更少的计算图，这个过程称之为 “编译” 。编译之后图的结构不再改变，也就是所谓的 “静态” 。</p></li>
+<li><p>在计算阶段，MegEngine 根据输入数据执行编译好的计算图得到计算结果。</p></li>
+<li><p>静态图相比起动态图，对全局的信息掌握更丰富，可做的优化也会更多。</p></li>
+<li><p>但中间过程对于用户来说是个黑盒，无法像动态图一样随时拿到中间计算结果。</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>一般的模型训练中，我们推荐使用动态图，只在有必要的情况下转化为静态图。</p>
+</div>
+<div class="section" id="tracing-optim-example">
+<span id="id2"></span><h2>静态图编译优化举例<a class="headerlink" href="#tracing-optim-example" title="永久链接至标题">¶</a></h2>
+<p>下面我们举例说明静态图编译过程中可能进行的内存和计算优化：</p>
+<img alt="../../_images/op_fuse.png" class="align-center" src="../../_images/op_fuse.png" />
+<p>在上图左侧的计算图中，为了存储 <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">w</span></code>, <code class="docutils literal notranslate"><span class="pre">p</span></code>,  <code class="docutils literal notranslate"><span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> 五个变量，
+动态图需要 40 个字节（假设每个变量占用 8 字节的内存）。
+在静态图中，由于我们只需要知道结果 <code class="docutils literal notranslate"><span class="pre">y</span></code>, 可以让 <code class="docutils literal notranslate"><span class="pre">y</span></code> 复用中间变量 <code class="docutils literal notranslate"><span class="pre">p</span></code> 的内存，
+实现 “原地”（inplace）修改。这样，静态图所占用的内存就减少为 32 个字节。</p>
+</div>
+<div class="section" id="trace">
+<span id="id3"></span><h2>使用 trace 装饰器<a class="headerlink" href="#trace" title="永久链接至标题">¶</a></h2>
+<p>MegEngine 提供了很方便的动静态图转换的方法，几乎无需代码改动即可实现转换。</p>
+<p>假设我们写好了一份动态图代码，其中训练部分代码如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_epochs</span><span class="p">):</span>
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+
+        <span class="c1"># 以下代码为网络的计算和优化，后续转静态图时将进行处理</span>
+        <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+            <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+            <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
+
+        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch: </span><span class="si">{}</span><span class="s2">, loss </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">total_loss</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>我们可以通过以下三步将上面的动态图转换为静态图：</p>
+<ol class="arabic simple">
+<li><p>将循环内的网络计算和优化代码提取成一个单独的训练函数，如下面例子中的 <code class="docutils literal notranslate"><span class="pre">train_func()</span></code> ；</p></li>
+<li><p>将网络所需输入作为训练函数的参数，并返回任意你需要的结果（如计算图的结果和损失函数值）；</p></li>
+<li><p>用 <a class="reference internal" href="../../reference/jit.html#module-megengine.jit" title="megengine.jit"><code class="xref py py-mod docutils literal notranslate"><span class="pre">jit</span></code></a> 模块中的 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 装饰器来装饰这个函数，将其中的代码变为静态图代码。</p></li>
+</ol>
+<p>修改后的代码如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.jit</span> <span class="kn">import</span> <span class="n">trace</span>
+
+<span class="nd">@trace</span>
+<span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">gm</span><span class="p">,</span> <span class="n">net</span><span class="p">):</span> <span class="c1"># *号前为位置参数，*号后为关键字参数</span>
+    <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+        <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">opt</span><span class="o">.</span><span class="n">step</span><span class="p">()</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">loss</span>
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">total_epochs</span><span class="p">):</span>
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_data</span><span class="p">,</span> <span class="n">batch_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">)</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">)</span>
+
+        <span class="c1"># 调用被 trace 装饰后的函数</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">train_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">gm</span><span class="o">=</span><span class="n">gm</span><span class="p">,</span> <span class="n">net</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;epoch: </span><span class="si">{}</span><span class="s2">, loss </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">total_loss</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>对于上述代码，我们作进一步的解释：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">jit</span></code> ： 即时编译 （Just-in-time compilation）的缩写，这里作为整个静态图相关模块的名字。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trace</span></code> ：得到静态图的一种方式，直译为 “追溯”，
+含义为通过追溯输出（比如损失值、预测值）所依赖的网络结构，得到整体的计算图，再进行编译。</p></li>
+<li><p>参数列表 ： <code class="docutils literal notranslate"><span class="pre">trace</span></code> 在编译静态图时会根据传入参数是位置参数还是关键字参数来采取不同的处理方式。
+其中位置参数用于传入网络的输入如数据和标签，关键字参数用于传入其它变量，如网络和优化器等。</p></li>
+</ul>
+</div>
+<div class="section" id="trace-advanced-setting">
+<span id="id4"></span><h2>trace 进阶设置<a class="headerlink" href="#trace-advanced-setting" title="永久链接至标题">¶</a></h2>
 <div class="section" id="symbolic">
-<h2>symbolic 参数<a class="headerlink" href="#symbolic" title="永久链接至标题">¶</a></h2>
-<p>用 trace 来装饰一个训练（或者测试）函数时，可以指定 <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> 参数，示例代码如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.jit</span> <span class="kn">import</span> <span class="n">trace</span>
-<span class="nd">@trace</span><span class="p">(</span><span class="n">symbolic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 设置为静态图模式</span>
-<span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">gm</span><span class="p">,</span> <span class="n">net</span><span class="p">):</span>
+<span id="id5"></span><h3>指定静态图构造方式<a class="headerlink" href="#symbolic" title="永久链接至标题">¶</a></h3>
+<p>用 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 来装饰一个训练（或测试）函数时，
+可以指定 <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> 参数来指定构造方式，示例代码如下:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.jit</span> <span class="kn">import</span> <span class="n">trace</span>
+
+<span class="nd">@trace</span><span class="p">(</span><span class="n">symbolic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">opt</span><span class="p">,</span> <span class="n">gm</span><span class="p">,</span> <span class="n">net</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">symbolic</span></code> 的取值为 True 或者 False，其含义如下:</p>
-<ol class="arabic simple">
-<li><p>True 表示“静态构造”或者“根据符号构造”。此时，计算图中的所有数据节点（即张量）被视为符号（即 <code class="docutils literal notranslate"><span class="pre">symbolic</span></code>）。它们仅仅作为占位符（placeholder），不产生实际的内存分配，也没有实际的值。此时计算图的编译过程完全取决于计算图的结构，而不取决于张量的具体值，是真正的“静态”。</p></li>
-<li><p>False 表示“动态构造”或者“根据值构造”。此时，被 <code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code> 装饰的函数在第一次被调用时，会根据输入的数据执行一次计算，这次计算会构建出一个动态图。然后，这个动态图会被编译为一个静态图。此后，该函数的所有调用都会运行这个静态图，而不再依赖调用时输入的值。此种模式可以视为“动态构建第一次，此后静态运行”。 <strong>MegEngine 默认使用此模式。</strong> 这也是 PyTorch 中的 trace 功能所采用的模式。</p></li>
-</ol>
-<p>下面我们通过示例代码说明两种模式下构图过程的区别。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.jit</span> <span class="kn">import</span> <span class="n">trace</span>
-
-<span class="c1"># @trace(symbolic=False) # “动态构造”</span>
-<span class="nd">@trace</span><span class="p">(</span><span class="n">symbolic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># “静态构造”</span>
-<span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">gm</span><span class="p">,</span> <span class="n">net</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
-        <span class="n">logits</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">logits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># 因网络输出太多，此处仅打印部分</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-        <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">logits</span><span class="p">,</span> <span class="n">loss</span>
-</pre></div>
+<p><code class="docutils literal notranslate"><span class="pre">symbolic</span></code> 的取值为 True 或者 False, 其含义如下:</p>
+<ul>
+<li><p>True 表示 “静态构造” 或者 “根据符号构造”。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>此时，计算图中的所有数据节点（即张量）被视为符号（即 <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> ）。</p></li>
+<li><p>它们仅仅作为占位符（Placeholder），不产生实际的内存分配，也没有实际的值。</p></li>
+<li><p>此时计算图的编译过程完全取决于计算图的结构，而不取决于张量的具体值，是真正的 “静态”。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>False 表示 “动态构造” 或者 “根据值构造”。</p>
+<ul class="simple">
+<li><p>此时，被 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 装饰的函数在第一次被调用时会根据输入的数据执行一次计算构建出一个动态图。</p></li>
+<li><p>然后，这个动态图会被编译为一个静态图。此后该函数的所有调用都会运行这个静态图，而不再依赖调用时输入的值。</p></li>
+<li><p>此种模式可以视为 “动态构建第一次，此后静态运行”。</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>MegEngine 默认使用动态构造模式，这也是 PyTorch 中的 trace 功能所采用的模式。</p>
 </div>
-<p>输出为：</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Tensor(None)
-</pre></div>
-</div>
-<p>如上所示，当 <code class="docutils literal notranslate"><span class="pre">symbolic=True</span></code> 时，网络的输出 Tensor 并未被赋值。如果我们将 <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> 改为 False，重新执行上面的代码将得到：</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Tensor([-0.2423  0.0192  0.3368  0.5445 -0.1023  0.3589 -0.5626 -0.472  -0.4287 0.2468])
-</pre></div>
-</div>
-<p>可以看到，此时网络的输出 Tensor 是有结果值的。也就说，计算图确实被构造和执行了。</p>
-<p>在绝大部分情况下，两种模式下构造出的静态图并没有区别，使用中也没有分别。然而，它们有一些细微的区别需要注意。</p>
-<p><code class="docutils literal notranslate"><span class="pre">symbolic=False</span></code> 的模式下，由于第一次运行和构建计算图的过程依赖于输入，这提供了一定的“动态灵活性”。根据第一次运行时信息的不同，可以构建出不同的静态图。这种灵活性是 <code class="docutils literal notranslate"><span class="pre">symbolic=True</span></code> 的模式无法提供的。例如，可以在网络搭建中写诸如“如果条件满足，则执行分支1，否则执行分支2”的语句。注意，如果这样的条件语句在循环中，那么在循环的第一次执行中构造出的静态图将固定不再改变，即使在循环的后续执行中，该条件语句的结果发生了变化。这是容易造成问题和误解的地方。</p>
-<p><code class="docutils literal notranslate"><span class="pre">symbolic=False</span></code> 的模式的一个缺点是，由于第一次的运行在动态图模式下，无法利用静态图的内存优化，通常会耗费更大的内存。这可能导致本来在静态图模式下可以运行的网络，在第一次运行时由于内存不够而失败。</p>
-<p>与之相对，<code class="docutils literal notranslate"><span class="pre">symbolic=True</span></code> 的模式具有静态图完全的优点和缺点：始终高效，但缺乏灵活性。如果网络中包含了需要运行时动态信息才能计算的条件语句，该模式将会失败。</p>
+<p>在绝大部分情况下，两种模式下构造出的静态图并没有区别，使用中也没有分别。</p>
+<p>然而，它们有一些细微的区别需要注意：</p>
+<ul class="simple">
+<li><p>在 <code class="docutils literal notranslate"><span class="pre">symbolic=False</span></code> 的模式下，由于第一次运行和构建计算图的过程依赖于输入，这提供了一定的 “动态灵活性”。
+根据第一次运行时信息的不同，可以构建出不同的静态图。这种灵活性是 <code class="docutils literal notranslate"><span class="pre">symbolic=True</span></code> 的模式无法提供的。</p>
+<ul>
+<li><p>例如，可以在网络搭建中写诸如 “如果条件满足，则执行分支 1，否则执行分支 2” 的语句。</p></li>
+<li><p>注意，如果这样的条件语句在循环中，那么在循环的第一次执行中构造出的静态图将固定不再改变
+（即使在循环的后续执行中，该条件语句的结果发生了变化）。这是容易造成问题和误解的地方。</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">symbolic=False</span></code> 的模式的一个缺点是，由于第一次的运行在动态图模式下，无法利用静态图的内存优化，
+通常会耗费更大的内存。这可能导致本来在静态图模式下可以运行的网络，在第一次运行时由于内存不够而失败。</p></li>
+<li><p>与之相对，<code class="docutils literal notranslate"><span class="pre">symbolic=True</span></code> 的模式具有静态图完全的优点和缺点：始终高效，但缺乏灵活性。
+如果网络中包含了需要运行时动态信息才能计算的条件语句，该模式将会失败。</p></li>
+</ul>
 <p>具体应用中，用户需要根据情况灵活选择使用哪种模式。</p>
 </div>
 <div class="section" id="exclude-from-trace">
-<h2>使用 exclude_from_trace<a class="headerlink" href="#exclude-from-trace" title="永久链接至标题">¶</a></h2>
-<p>exclude_from_trace 中的代码不会被 trace，而且其中的代码允许访问静态区域的 Tensor。
-可在模型中关键位置用来打印 tensor 信息，或者做多卡参数同步。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">tensor</span>
+<span id="id6"></span><h3>指定代码不被转换<a class="headerlink" href="#exclude-from-trace" title="永久链接至标题">¶</a></h3>
+<p><a class="reference internal" href="../../reference/api/megengine.jit.exclude_from_trace.html#megengine.jit.exclude_from_trace" title="megengine.jit.exclude_from_trace"><code class="xref py py-func docutils literal notranslate"><span class="pre">exclude_from_trace</span></code></a> 中的代码不会被 trace，且其中的代码允许访问静态区域的 <a class="reference internal" href="../../reference/api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">tensor</span>
 <span class="nd">@jit</span><span class="o">.</span><span class="n">trace</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -351,7 +509,123 @@ Tensor([2], dtype=int32, device=xpux:0)
 Tensor([3], dtype=int32, device=xpux:0)
 </pre></div>
 </div>
-<p>由于 exclude_from_trace 会把整体的执行序列分割为多个子序列，因此不建议在内部插入影响执行状态的语句。</p>
+</div>
+<div class="section" id="sublinear-memory">
+<span id="id7"></span><h3>亚线性内存优化<a class="headerlink" href="#sublinear-memory" title="永久链接至标题">¶</a></h3>
+<p>使用大 Batch size 通常能够提升深度学习模型性能。
+然而我们经常会遇到 GPU 内存资源有限，无法满足大 Batch size 模型训练的需求。
+为了缓解这一问题， MegEngine 提供了亚线性内存 ( sublinear memory ) 优化技术用于降低网络训练的内存占用量。
+该技术基于 <a class="reference external" href="https://arxiv.org/abs/1604.06174">Gradient Checkpointing</a> 算法，
+通过事先搜索最优的计算图节点作为前向传播和反向传播检查点（ checkpoints ），
+省去其它中间结果存储，大幅节约了内（显）存使用。</p>
+<p>用户在编译静态图时使用 <a class="reference internal" href="../../reference/api/megengine.jit.SublinearMemoryConfig.html#megengine.jit.SublinearMemoryConfig" title="megengine.jit.SublinearMemoryConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SublinearMemoryConfig</span></code></a> 设置 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a>
+的参数 <code class="docutils literal notranslate"><span class="pre">sublinear_memory_config</span></code> ，就可以打开亚线性内存优化。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.jit</span> <span class="kn">import</span> <span class="n">trace</span><span class="p">,</span> <span class="n">SublinearMemoryConfig</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">SublinearMemoryConfig</span><span class="p">()</span>
+
+<span class="nd">@trace</span><span class="p">(</span><span class="n">symbolic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sublinear_memory_config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span> <span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">gm</span><span class="p">):</span>
+     <span class="o">...</span>
+</pre></div>
+</div>
+<p>使用亚线性内存在编译计算图和训练模型时有少量的额外时间开销，但是可以大幅减少显存的开销。
+下面我们以 ResNet50 为例，说明如何使用亚线性内存优化技术，突破显存瓶颈来训练更大 batch size 的模型。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+
+<span class="k">def</span> <span class="nf">train_resnet_demo</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">enable_sublinear</span><span class="p">,</span> <span class="n">genetic_nr_iter</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span>
+    <span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+    <span class="kn">import</span> <span class="nn">megengine.hub</span> <span class="k">as</span> <span class="nn">hub</span>
+    <span class="kn">import</span> <span class="nn">megengine.optimizer</span> <span class="k">as</span> <span class="nn">optim</span>
+    <span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">tensor</span>
+    <span class="kn">from</span> <span class="nn">megengine.jit</span> <span class="kn">import</span> <span class="n">trace</span><span class="p">,</span> <span class="n">SublinearMemoryConfig</span>
+    <span class="kn">from</span> <span class="nn">megengine.autodiff</span> <span class="kn">import</span> <span class="n">GradManager</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Run with batch_size=</span><span class="si">{}</span><span class="s2">, enable_sublinear=</span><span class="si">{}</span><span class="s2">, genetic_nr_iter=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">batch_size</span><span class="p">,</span> <span class="n">enable_sublinear</span><span class="p">,</span> <span class="n">genetic_nr_iter</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 使用GPU运行这个例子</span>
+    <span class="k">assert</span> <span class="n">mge</span><span class="o">.</span><span class="n">is_cuda_available</span><span class="p">(),</span> <span class="s2">&quot;Please run with GPU&quot;</span>
+    <span class="kn">import</span> <span class="nn">resnet</span> <span class="k">as</span> <span class="nn">models</span>
+    <span class="n">resnet</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s1">&#39;resnet50&#39;</span><span class="p">](</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">resnet</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,)</span>
+    <span class="n">gm</span> <span class="o">=</span> <span class="n">GradManager</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">resnet</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">enable_sublinear</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">SublinearMemoryConfig</span><span class="p">(</span><span class="n">genetic_nr_iter</span><span class="o">=</span><span class="n">genetic_nr_iter</span><span class="p">)</span>
+
+    <span class="nd">@trace</span><span class="p">(</span><span class="n">symbolic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sublinear_memory_config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="o">*</span> <span class="p">,</span> <span class="n">net</span><span class="p">,</span> <span class="n">gm</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">gm</span><span class="p">:</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+            <span class="n">gm</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+    <span class="n">resnet</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">batch_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">batch_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">train_func</span><span class="p">(</span><span class="n">tensor</span><span class="p">(</span><span class="n">batch_data</span><span class="p">),</span> <span class="n">tensor</span><span class="p">(</span><span class="n">batch_label</span><span class="p">),</span> <span class="n">net</span><span class="o">=</span><span class="n">resnet</span><span class="p">,</span> <span class="n">gm</span><span class="o">=</span><span class="n">gm</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">clear_grad</span><span class="p">()</span>
+
+<span class="c1"># 以下示例结果在 2080Ti GPU 运行得到，显存容量为 11 GB</span>
+
+<span class="c1"># 不使用亚线性内存优化，允许的 batch_size 最大为 100 左右</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">train_resnet_demo</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="c1"># 报错显存不足</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">train_resnet_demo</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="c1"># 使用亚线性内存优化，允许的 batch_size 最大为 200 左右</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">train_resnet_demo</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="codegen">
+<span id="id8"></span><h3>减少访寸操作<a class="headerlink" href="#codegen" title="永久链接至标题">¶</a></h3>
+<p>通常，模型中不仅含有计算受限的操作，还含有一些访存受限操作（如 Elemwsie ）.
+MegEngine 内嵌了 codegen 优化机制，它可以在运行时将模型中多个操作融合起来，
+并生成可以在目标机器上运行的代码，以此减少访存操作从而达到加速的目的。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>我们在 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 接口中传入 <code class="docutils literal notranslate"><span class="pre">symbolic=True,</span> <span class="pre">opt_level=3</span></code>, 即可打开 codegen 优化。</p>
+<p>关于 <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> 参数的说明，请参考 <a class="reference internal" href="#symbolic"><span class="std std-ref">指定静态图构造方式</span></a> 。</p>
+</div>
+<p>MegEngine 的 codegen 目前集成了三种后端，分别是 NVRTC, HALIDE 和 MLIR.
+其中 NVRTC 和 HALIDE 仅支持在 GPU 上使用，MLIR 则同时支持 GPU 和 CPU,
+不同的后端生成代码的策略有所不同，所以运行效率也各异。</p>
+<p>我们可以通过设置 <code class="docutils literal notranslate"><span class="pre">MGB_JIT_BACKEND</span></code> 环境变量来改变 codegen 的后端，例如：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MGB_JIT_BACKEND</span><span class="o">=</span><span class="s2">&quot;NVRTC&quot;</span>
+</pre></div>
+</div>
+<p>该环境变量在 NVIDIA GPU 环境下可取的值为 NVRTC, HALIDE 和 MLIR, 默认值为 HALIDE.</p>
+<p>对于 CPU, 目前暂时仅支持 MLIR 后端。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>如果想要使用 MLIR 后端, 需要单独编译 MegEngine. 在使用 CMake 时换成如下命令：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake .. -DMGE_WITH_JIT<span class="o">=</span>ON -DMGE_WITH_JIT_MLIR<span class="o">=</span>ON -DMGE_WITH_HALIDE<span class="o">=</span>OFF
+</pre></div>
+</div>
+<p>然后设置如下的环境变量：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">MGB_JIT_BACKEND</span><span class="o">=</span><span class="s2">&quot;MLIR&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 

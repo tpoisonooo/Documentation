@@ -1,0 +1,6 @@
+megengine.utils.network.Network.replace\_oprs
+=============================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.replace_oprs

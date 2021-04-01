@@ -1,0 +1,6 @@
+megengine.utils.network.Network.var\_filter
+===========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoproperty:: Network.var_filter

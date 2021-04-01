@@ -1,0 +1,6 @@
+megengine.utils.network.Network.dump
+====================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.dump

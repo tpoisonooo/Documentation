@@ -1,0 +1,6 @@
+megengine.utils.network.Network.make\_input\_node
+=================================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.make_input_node

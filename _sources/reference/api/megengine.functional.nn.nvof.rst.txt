@@ -1,0 +1,6 @@
+megengine.functional.nn.nvof
+============================
+
+.. currentmodule:: megengine.functional.nn
+
+.. autofunction:: nvof

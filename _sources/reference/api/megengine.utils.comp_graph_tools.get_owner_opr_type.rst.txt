@@ -1,0 +1,6 @@
+megengine.utils.comp\_graph\_tools.get\_owner\_opr\_type
+========================================================
+
+.. currentmodule:: megengine.utils.comp_graph_tools
+
+.. autofunction:: get_owner_opr_type

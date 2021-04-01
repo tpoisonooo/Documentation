@@ -412,7 +412,7 @@
         <span class="k">return</span> <span class="n">output</span></div>
 
 
-<div class="viewcode-block" id="BatchNorm1d"><a class="viewcode-back" href="../../../reference/api/megengine.module.BatchNorm1d.html#megengine.module.BatchNorm1d">[文档]</a><span class="k">class</span> <span class="nc">BatchNorm1d</span><span class="p">(</span><span class="n">_BatchNorm</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">BatchNorm1d</span><span class="p">(</span><span class="n">_BatchNorm</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies Batch Normalization over a 2D/3D tensor.</span>
 
@@ -423,10 +423,10 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s2">&quot;expected 2D or 3D input (got </span><span class="si">{}</span><span class="s2">D input)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
-            <span class="p">)</span></div>
+            <span class="p">)</span>
 
 
-<div class="viewcode-block" id="BatchNorm2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.BatchNorm2d.html#megengine.module.BatchNorm2d">[文档]</a><span class="k">class</span> <span class="nc">BatchNorm2d</span><span class="p">(</span><span class="n">_BatchNorm</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">BatchNorm2d</span><span class="p">(</span><span class="n">_BatchNorm</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies Batch Normalization over a 4D tensor.</span>
 
@@ -513,7 +513,7 @@
 
     <span class="k">def</span> <span class="nf">_check_input_ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;expected 4D input (got </span><span class="si">{}</span><span class="s2">D input)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;expected 4D input (got </span><span class="si">{}</span><span class="s2">D input)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">)))</span>
 </pre></div>
 
               </div>

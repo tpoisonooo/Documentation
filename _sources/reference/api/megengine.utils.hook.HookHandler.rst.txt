@@ -1,0 +1,27 @@
+megengine.utils.hook.HookHandler
+================================
+
+.. currentmodule:: megengine.utils.hook
+
+.. autoclass:: HookHandler
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~HookHandler.__init__
+      ~HookHandler.remove
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~HookHandler.hook_num
+   
+   

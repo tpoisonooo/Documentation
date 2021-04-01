@@ -1,0 +1,6 @@
+megengine.utils.network.Network.all\_vars
+=========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoproperty:: Network.all_vars

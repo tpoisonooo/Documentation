@@ -1,0 +1,6 @@
+megengine.utils.network.Network.make\_const
+===========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.make_const

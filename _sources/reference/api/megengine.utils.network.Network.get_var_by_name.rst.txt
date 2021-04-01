@@ -1,0 +1,6 @@
+megengine.utils.network.Network.get\_var\_by\_name
+==================================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.get_var_by_name

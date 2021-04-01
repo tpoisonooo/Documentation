@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图手术操作指南 &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="如何使用 Load and Run（C++）" href="load-and-run.html" />
+    <link rel="prev" title="RuntimeOpr 使用说明" href="runtimeopr.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../index.html">
+        <img src="../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "user-guide/tools/graphsurgeon.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <p class="caption">
+ <span class="caption-text">
+  安装
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../install/index.html">
+   安装 MegEngine
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型开发
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-development/advanced-parameter-optimization.html">
+   参数优化进阶配置
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-development/trace.html">
+   将动态图转为静态图
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-development/dump.html">
+   导出模型序列化文件
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  分布式训练
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../distributed-training.html">
+   分布式训练
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型压缩
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-compression/quantization.html">
+   量化
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型部署
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deployment/index.html">
+   将模型部署到 C++ 环境
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deployment/midout.html">
+   减少二进制文件体积
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  各类工具
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="module-stats.html">
+   参数量与计算量统计
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="runtimeopr.html">
+   RuntimeOpr 使用说明
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   图手术操作指南
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="load-and-run.html">
+   如何使用 Load and Run（C++）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="load-and-run-py.html">
+   如何使用 Load and Run（Python）
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#network">
+   使用 Network 加载/保存模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nodefilter-node">
+   使用 Nodefilter 查找 Node
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     一些使用示例
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   修改模型的方法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     替换节点
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     添加新的参数/输入
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     添加/删除输出节点
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#opr">
+     修改 Opr 名字
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#batch-size">
+     修改 Batch Size
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     模型修改示例
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="graphsurgeon">
+<span id="id1"></span><h1>图手术操作指南<a class="headerlink" href="#graphsurgeon" title="永久链接至标题">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>图手术相关 API 在 <a class="reference internal" href="../../reference/utils.html#module-megengine.utils.network" title="megengine.utils.network"><code class="xref py py-mod docutils literal notranslate"><span class="pre">megengine.utils.network</span></code></a> 中。
+需要先通过 <a class="reference internal" href="../model-development/trace.html#trace"><span class="std std-ref">trace</span></a> 和 <a class="reference internal" href="../model-development/dump.html#dump"><span class="std std-ref">dump</span></a> 得到导出后的 MegEngine 模型，
+如果需要对保存的模型进行修改（保存 opr/var 的名字），建议 <a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a> 时加上选项：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optimize_for_inference</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">keep_var_name</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>  <span class="n">keep_opr_name</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="network">
+<h2>使用 Network 加载/保存模型<a class="headerlink" href="#network" title="永久链接至标题">¶</a></h2>
+<p>相关的定义和实现在 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.html#megengine.utils.network.Network" title="megengine.utils.network.Network"><code class="xref py py-class docutils literal notranslate"><span class="pre">Network</span></code></a> 类，其中：</p>
+<ul class="simple">
+<li><p>模型的加载使用 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.load.html#megengine.utils.network.Network.load" title="megengine.utils.network.Network.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.load</span></code></a> 接口，参数 <code class="docutils literal notranslate"><span class="pre">model_path</span></code> 指模型路径，<code class="docutils literal notranslate"><span class="pre">outspec</span></code> 指加载 varnode 依赖的子图</p></li>
+<li><p>模型的保存使用 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.dump.html#megengine.utils.network.Network.dump" title="megengine.utils.network.Network.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.dump</span></code></a> 接口，与 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 的 <a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a>
+接口基本一致，可以指定 <code class="docutils literal notranslate"><span class="pre">optimize_for_inference</span></code> 选项， 会 dump 模型输出节点（ <code class="docutils literal notranslate"><span class="pre">Network.output_vars</span></code> ）依赖的计算图</p></li>
+</ul>
+<p>假设 <code class="docutils literal notranslate"><span class="pre">xxx.mge</span></code> 的实现如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>则可以参考下面的例子进行加载和保存：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.utils.network</span> <span class="kn">import</span> <span class="n">Network</span> <span class="k">as</span> <span class="n">Net</span>
+
+<span class="c1"># 模型加载</span>
+<span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/path/to/xxx.mge&quot;</span><span class="p">)</span> <span class="c1"># 未指定 outspec，加载完整的模型，x = a * b, y= a + b</span>
+<span class="n">net1</span> <span class="o">=</span> <span class="n">Net</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/path/to/xxx.mge&quot;</span><span class="p">,</span> <span class="n">outspec</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">])</span> <span class="c1"># 指定 outspec，加载 x 依赖的子图，即 x = a * b</span>
+
+<span class="c1"># 模型修改，在本页后边部分将提到几类修改模型的方法</span>
+<span class="o">...</span>
+
+<span class="c1"># 模型保存</span>
+<span class="n">net</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;/path/to/new_xxx.mge&quot;</span><span class="p">)</span> <span class="c1"># 保存修改后的.mge 模型</span>
+<span class="n">net</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;/path/to/new_xxx.mge&quot;</span><span class="p">,</span> <span class="n">enable_io16xc32</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># 保存修改后的 .mge 模型，开启了 enable_io16xc32 优化</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nodefilter-node">
+<h2>使用 Nodefilter 查找 Node<a class="headerlink" href="#nodefilter-node" title="永久链接至标题">¶</a></h2>
+<p>通过调用 <a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.html#megengine.utils.network.NodeFilter" title="megengine.utils.network.NodeFilter"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeFilter</span></code></a> 类中的实现，可以按一定条件对计算图中的 VarNode/OpNode 进行查找。</p>
+<p>NodeFilter 提供了按类型、名字，是否以某个 VarNode 作为输入等条件进行查找的功能：</p>
+<ul class="simple">
+<li><p>按类型：<a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.type.html#megengine.utils.network.NodeFilter.type" title="megengine.utils.network.NodeFilter.type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.type</span></code></a> <code class="docutils literal notranslate"><span class="pre">(cls)</span></code> , 查找类型是 <code class="docutils literal notranslate"><span class="pre">cls</span></code> 的 Node</p></li>
+<li><p>按名字：<a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.name.html#megengine.utils.network.NodeFilter.name" title="megengine.utils.network.NodeFilter.name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.name</span></code></a> <code class="docutils literal notranslate"><span class="pre">(name)</span></code> , 查找名字为 <code class="docutils literal notranslate"><span class="pre">name</span></code> 的 Node, 可以是 UNIX 正则表达式（如 <code class="docutils literal notranslate"><span class="pre">*bias</span></code> ）</p></li>
+<li><p>按输入：<a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.has_input.html#megengine.utils.network.NodeFilter.has_input" title="megengine.utils.network.NodeFilter.has_input"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.has_input</span></code></a> <code class="docutils literal notranslate"><span class="pre">(var)</span></code> , 查找以 <code class="docutils literal notranslate"><span class="pre">var</span></code> 为输入的 Node</p></li>
+</ul>
+<p>NodeFilter 还支持将返回结果变成列表/字典/单个 Node 类型（默认返回 NodeFilter），方便后续操作：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_list.html#megengine.utils.network.NodeFilter.as_list" title="megengine.utils.network.NodeFilter.as_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.as_list</span></code></a> : 返回 Node 列表</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_dict.html#megengine.utils.network.NodeFilter.as_dict" title="megengine.utils.network.NodeFilter.as_dict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.as_dict</span></code></a> : 返回 Node 名字和 Node 组成的字典</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_unique.html#megengine.utils.network.NodeFilter.as_unique" title="megengine.utils.network.NodeFilter.as_unique"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.as_unique</span></code></a> : 如果查找到的 Node 只有一个，直接返回该 Node, 否则报错</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_count.html#megengine.utils.network.NodeFilter.as_count" title="megengine.utils.network.NodeFilter.as_count"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.as_count</span></code></a> : 返回查找到 Node 的数量</p></li>
+</ul>
+<p>此外，在 Network 中提供了一些 opr/var 的 Nodefilter 用于在计算图中查找节点：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.opr_filter.html#megengine.utils.network.Network.opr_filter" title="megengine.utils.network.Network.opr_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.opr_filter</span></code></a> : 所有 opr 的 Nodefilter</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.var_filter.html#megengine.utils.network.Network.var_filter" title="megengine.utils.network.Network.var_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.var_filter</span></code></a> : 所有 var 的 Nodefilter</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.params_filter.html#megengine.utils.network.Network.params_filter" title="megengine.utils.network.Network.params_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.params_filter</span></code></a> : 所有的 ImmutalbeTensor opr (parameter provider) 的 Nodefilter, ImmutalbeTensor 为模型提供参数。</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.data_providers_filter.html#megengine.utils.network.Network.data_providers_filter" title="megengine.utils.network.Network.data_providers_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.data_providers_filter</span></code></a> : 所有 Host2DeviceCopy opr (data provider) 的 Nodefilter, Host2DeviceCopy 为模型提供输入。</p></li>
+</ul>
+<p>对应地，Network 中提供了常见的按条件查询的 API，
+其中 <code class="docutils literal notranslate"><span class="pre">unique=True</span></code> 表示按若该条件只能查到一个 Node，返回该 Node. 而当 <code class="docutils literal notranslate"><span class="pre">unique=False</span></code> 时，返回一个 Node 列表：</p>
+<ul>
+<li><p>按类型查找 OpNode: <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.get_opr_by_type.html#megengine.utils.network.Network.get_opr_by_type" title="megengine.utils.network.Network.get_opr_by_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.get_opr_by_type</span></code></a> <code class="docutils literal notranslate"><span class="pre">(oprcls,</span> <span class="pre">unique=True)</span></code></p>
+<p>等价于 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.opr_filter.html#megengine.utils.network.Network.opr_filter" title="megengine.utils.network.Network.opr_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.opr_filter</span></code></a>. <a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.type.html#megengine.utils.network.NodeFilter.type" title="megengine.utils.network.NodeFilter.type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">type</span></code></a> <code class="docutils literal notranslate"><span class="pre">(oprcls).</span></code><a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_unique.html#megengine.utils.network.NodeFilter.as_unique" title="megengine.utils.network.NodeFilter.as_unique"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_unique</span></code></a>/<a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_list.html#megengine.utils.network.NodeFilter.as_list" title="megengine.utils.network.NodeFilter.as_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_list</span></code></a></p>
+</li>
+<li><p>按名字查找 OpNode: <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.get_opr_by_name.html#megengine.utils.network.Network.get_opr_by_name" title="megengine.utils.network.Network.get_opr_by_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.get_opr_by_name</span></code></a> <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">unique=True)</span></code></p>
+<p>等价于 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.opr_filter.html#megengine.utils.network.Network.opr_filter" title="megengine.utils.network.Network.opr_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.opr_filter</span></code></a>. <a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.name.html#megengine.utils.network.NodeFilter.name" title="megengine.utils.network.NodeFilter.name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">name</span></code></a> <code class="docutils literal notranslate"><span class="pre">(name).</span></code><a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_unique.html#megengine.utils.network.NodeFilter.as_unique" title="megengine.utils.network.NodeFilter.as_unique"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_unique</span></code></a>/<a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_list.html#megengine.utils.network.NodeFilter.as_list" title="megengine.utils.network.NodeFilter.as_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_list</span></code></a></p>
+</li>
+<li><p>按名字查找 VarNode: <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.get_var_by_name.html#megengine.utils.network.Network.get_var_by_name" title="megengine.utils.network.Network.get_var_by_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.get_var_by_name</span></code></a> <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">unique=True)</span></code></p>
+<p>等价于 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.var_filter.html#megengine.utils.network.Network.var_filter" title="megengine.utils.network.Network.var_filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.var_filter</span></code></a>. <a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.name.html#megengine.utils.network.NodeFilter.name" title="megengine.utils.network.NodeFilter.name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">name</span></code></a> <code class="docutils literal notranslate"><span class="pre">(name).</span></code><a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_unique.html#megengine.utils.network.NodeFilter.as_unique" title="megengine.utils.network.NodeFilter.as_unique"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_unique</span></code></a>/<a class="reference internal" href="../../reference/api/megengine.utils.network.NodeFilter.as_list.html#megengine.utils.network.NodeFilter.as_list" title="megengine.utils.network.NodeFilter.as_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">as_list</span></code></a></p>
+</li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.get_var_receive_oprs.html#megengine.utils.network.Network.get_var_receive_oprs" title="megengine.utils.network.Network.get_var_receive_oprs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.get_var_receive_oprs</span></code></a> <code class="docutils literal notranslate"><span class="pre">(var)</span></code> , 获取以 var 为输入的 OpNode</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.get_dep_oprs.html#megengine.utils.network.Network.get_dep_oprs" title="megengine.utils.network.Network.get_dep_oprs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.get_dep_oprs</span></code></a> <code class="docutils literal notranslate"><span class="pre">(var)</span></code> , 获取 var 依赖的所有 opr（即得到 var 计算结果所需的所有 opr）</p></li>
+</ul>
+<div class="section" id="id2">
+<h3>一些使用示例<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.utils.network</span> <span class="kn">import</span> <span class="n">Network</span> <span class="k">as</span> <span class="n">Net</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/path/to/xxx.mge&quot;</span><span class="p">)</span>
+
+<span class="c1"># 使用 var_filter 查 找varnode</span>
+<span class="n">arg_0</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">var_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&quot;arg_0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_unique</span><span class="p">()</span> <span class="c1"># 返回名字是 &quot;arg_0&quot; 的 varnode</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">var_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&quot;arg_*&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>    <span class="c1"># 返回名字是 &quot;arg_&quot; 开头的 varnode 的列表</span>
+
+<span class="c1"># 使用 opr_filter 查找 opnode</span>
+<span class="c1"># 按类型查找opnode查找</span>
+<span class="kn">from</span> <span class="nn">megengine.utils.network_node</span> <span class="kn">import</span> <span class="n">ConvolutionForward</span>
+
+<span class="n">conv</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">ConvolutionForward</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>         <span class="c1"># 返回所有的卷积 Op</span>
+<span class="n">not_conv</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">not_type</span><span class="p">(</span><span class="n">ConvolutionForward</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span> <span class="c1"># 返回所有的非卷积 Op</span>
+
+<span class="c1"># 按输入是否包含某个 varnode 查找</span>
+<span class="n">has_input_a</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">has_input</span><span class="p">(</span><span class="n">vara</span><span class="p">)</span><span class="o">.</span><span class="n">as_list</span><span class="p">()</span>           <span class="c1"># 返回所有以 vara 作为输入的 Op</span>
+
+<span class="c1"># 使用 params_filter 查找网络的 parameter</span>
+<span class="n">all_bias</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">params_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&quot;*bias&quot;</span><span class="p">)</span> <span class="c1"># 查找以 bias 结尾的 parameter</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">all_bias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>                 <span class="c1"># 可以通 过numpy() 读取 parameter 的值</span>
+<span class="n">all_bias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">data</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>              <span class="c1"># 可以通过 set_value() 修改 parameter 的值</span>
+
+<span class="c1"># 使用 data_providers_filter 查找网络的输入</span>
+<span class="n">input0</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">data_providers_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&quot;arg_0&quot;</span><span class="p">)</span> <span class="c1"># 获取名字是 &quot;arg_0&quot; 的输入，可以通过 shape, dtype 等查看/修改 input node 属性。</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>修改模型的方法<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h3>替换节点<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>我们可以通过替换 OpNode/VarNode 来修改图结构：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.replace_vars.html#megengine.utils.network.Network.replace_vars" title="megengine.utils.network.Network.replace_vars"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.replace_vars</span></code></a> <code class="docutils literal notranslate"><span class="pre">(repl_dict)</span></code> / <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.replace_oprs.html#megengine.utils.network.Network.replace_oprs" title="megengine.utils.network.Network.replace_oprs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.replace_oprs</span></code></a> <code class="docutils literal notranslate"><span class="pre">(repl_dict)</span></code> ,
+其中 <code class="docutils literal notranslate"><span class="pre">repl_dict</span></code> 存储由 被替换节点、新节点 组成的字典，该方法将图中的旧节点替换为新节点。</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.add_dep_oprs.html#megengine.utils.network.Network.add_dep_oprs" title="megengine.utils.network.Network.add_dep_oprs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.add_dep_oprs</span></code></a> <code class="docutils literal notranslate"><span class="pre">(*vars)</span></code> , 把 <code class="docutils literal notranslate"><span class="pre">vars</span></code> 依赖的 mgb OperatorNode/VarNode 转换成 Network 的 OpNode/VarNode
+添加到图中，返回值是 <code class="docutils literal notranslate"><span class="pre">var</span></code> 对应的 Network VarNode.</p></li>
+</ul>
+<p>下面的例子通过 <code class="docutils literal notranslate"><span class="pre">replace_vars/replace_oprs</span></code> 将 <code class="docutils literal notranslate"><span class="pre">(a+b)*2</span></code> 修改为 <code class="docutils literal notranslate"><span class="pre">relu(a*b)*2</span></code> ：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.utils.network</span> <span class="kn">import</span> <span class="n">Network</span> <span class="k">as</span> <span class="n">Net</span>
+
+<span class="n">graph</span> <span class="o">=</span> <span class="n">Net</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/path/to/xxx.mge&quot;</span><span class="p">)</span>
+
+<span class="n">vara</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">var_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_unique</span><span class="p">()</span> <span class="c1"># 找到 vara</span>
+<span class="n">varb</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">var_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_unique</span><span class="p">()</span> <span class="c1"># 找到 varb</span>
+
+<span class="c1"># 使用 megengine functional api 构造 relu(a*b) 计算图</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">vara</span><span class="o">.</span><span class="n">var</span><span class="p">,</span> <span class="n">varb</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+<span class="c1"># 将out 及其依赖的 opnode 添加到 graph 中，返回值是添加到 graph 中的 out 对应的 VarNode</span>
+<span class="n">var_list</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">add_dep_oprs</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+<span class="c1"># 找到需要被替换的 opnode，即a+b的输出</span>
+<span class="n">ori_opnode</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">has_input</span><span class="p">(</span><span class="n">vara</span><span class="p">)</span><span class="o">.</span><span class="n">as_unique</span><span class="p">()</span>
+
+<span class="c1"># 通过替换 vars，修改图结构</span>
+<span class="n">repl_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">ori_opnode</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">var_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">replace_vars</span><span class="p">(</span><span class="n">repl_dict</span><span class="p">)</span>
+
+<span class="c1"># 通过替换 oprs，修改图结构</span>
+<span class="n">repl_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">ori_opnode</span><span class="p">:</span> <span class="n">var_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span><span class="p">}</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">replace_oprs</span><span class="p">(</span><span class="n">repl_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>添加新的参数/输入<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>通常分为以下两种情况：</p>
+<ul class="simple">
+<li><p>通过 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.make_const.html#megengine.utils.network.Network.make_const" title="megengine.utils.network.Network.make_const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.make_const</span></code></a> 产生一个 ImmutableTensor Opr， 返回该 opr 的输出 varnode 作为 parameter</p></li>
+<li><p>通过 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.make_input_node.html#megengine.utils.network.Network.make_input_node" title="megengine.utils.network.Network.make_input_node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.make_input_node</span></code></a> 产生一个 Host2DeviceCopy Opr,  返回该 opr 输出 varnode 作为 input</p></li>
+</ul>
+<p>比如将 <code class="docutils literal notranslate"><span class="pre">(a+b)*2</span></code> 修改为 <code class="docutils literal notranslate"><span class="pre">(a+3)*2</span></code> :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.utils.network</span> <span class="kn">import</span> <span class="n">Network</span> <span class="k">as</span> <span class="n">Net</span>
+
+<span class="n">graph</span> <span class="o">=</span> <span class="n">Net</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/path/to/xxx.mge&quot;</span><span class="p">)</span>
+
+<span class="n">const_b</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_const</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">varb</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">var_filter</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">as_unique</span><span class="p">()</span>
+<span class="n">repl_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">varb</span><span class="p">:</span> <span class="n">const_b</span><span class="p">}</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">replace_vars</span><span class="p">(</span><span class="n">repl_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>或者将 <code class="docutils literal notranslate"><span class="pre">(a+b)*2</span></code> 修改为 <code class="docutils literal notranslate"><span class="pre">(a+b)*c</span></code> :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inp_c</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">make_input_node</span><span class="p">((</span><span class="mi">1</span><span class="p">,),</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
+<span class="n">const_c</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">params_filter</span><span class="o">.</span><span class="n">as_unique</span><span class="p">()</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">repl_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">const_c</span><span class="p">:</span> <span class="n">inp_c</span><span class="p">}</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">replaces_vars</span><span class="p">(</span><span class="n">repl_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>添加/删除输出节点<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>由于网络在 <a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a> 时只会将 <code class="docutils literal notranslate"><span class="pre">output_vars</span></code> 列表中的 varnode 所依赖的 opnode/varnode 保存到 .mge 文件中，
+因此需要提供一些方法对 <code class="docutils literal notranslate"><span class="pre">output_vars</span></code> 列表进行修改：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.add_output.html#megengine.utils.network.Network.add_output" title="megengine.utils.network.Network.add_output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.add_output</span></code></a> <code class="docutils literal notranslate"><span class="pre">(*vars)</span></code>  : 将某些 varnode 添加到网络输出节点列表 <code class="docutils literal notranslate"><span class="pre">output_vars</span></code> 中</p></li>
+<li><p><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.remove_output.html#megengine.utils.network.Network.remove_output" title="megengine.utils.network.Network.remove_output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.remove_output</span></code></a> <code class="docutils literal notranslate"><span class="pre">(*vars)</span></code> : 将某些 varnode 从网络输出节点列表 <code class="docutils literal notranslate"><span class="pre">output_vars</span></code> 中移除</p></li>
+</ul>
+<p>例如将 <code class="docutils literal notranslate"><span class="pre">(a+b)*2</span></code> 修改为 <code class="docutils literal notranslate"><span class="pre">relu((a+b)*2)</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.utils.network</span> <span class="kn">import</span> <span class="n">Network</span> <span class="k">as</span> <span class="n">Net</span>
+
+<span class="n">orig_output</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">output_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># 获取模型输出</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">remove_output</span><span class="p">(</span><span class="n">orig_output</span><span class="p">)</span>   <span class="c1"># 将 orig_output 从 graph.output_vars 列表删除</span>
+
+<span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">orig_output</span><span class="o">.</span><span class="n">var</span><span class="p">)</span>
+<span class="n">new_output</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">add_dep_oprs</span><span class="p">(</span><span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">graph</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">new_output</span><span class="p">)</span> <span class="c1"># 将 new_output 添加到 graph.output_vars 列表中</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="opr">
+<h3>修改 Opr 名字<a class="headerlink" href="#opr" title="永久链接至标题">¶</a></h3>
+<dl class="simple">
+<dt><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.modify_opr_names.html#megengine.utils.network.Network.modify_opr_names" title="megengine.utils.network.Network.modify_opr_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.modify_opr_names</span></code></a> <code class="docutils literal notranslate"><span class="pre">(modifier)</span></code></dt><dd><p>批量修改 opr 名字： 其中 <code class="docutils literal notranslate"><span class="pre">modifier</span></code> 可以是字符串/函数——</p>
+<ul class="simple">
+<li><p>当 <code class="docutils literal notranslate"><span class="pre">modifier</span></code> 是字符串 <code class="docutils literal notranslate"><span class="pre">s</span></code> 时，会在所有 opr 原有名字前添加 <code class="docutils literal notranslate"><span class="pre">&quot;s.&quot;</span></code> 前缀</p></li>
+<li><p>如果 <code class="docutils literal notranslate"><span class="pre">modifier</span></code> 是函数，该函数接收原有名字做参数，返回新名字</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="batch-size">
+<h3>修改 Batch Size<a class="headerlink" href="#batch-size" title="永久链接至标题">¶</a></h3>
+<dl class="simple">
+<dt><a class="reference internal" href="../../reference/api/megengine.utils.network.Network.reset_batch_size.html#megengine.utils.network.Network.reset_batch_size" title="megengine.utils.network.Network.reset_batch_size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.reset_batch_size</span></code></a> <code class="docutils literal notranslate"><span class="pre">(batchsize,</span> <span class="pre">blacklist)</span></code></dt><dd><p>修改所有输入节点（Host2DeviceCopy）的 <code class="docutils literal notranslate"><span class="pre">batchsize</span></code> ，在 <code class="docutils literal notranslate"><span class="pre">blacklist</span></code> 内的节点不会被修改。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id7">
+<h3>模型修改示例<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>下面的代码使用 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 构造静态图，并在原模型输出上添加 <code class="xref py py-meth docutils literal notranslate"><span class="pre">warp_perspective</span></code> 变换：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span>
+<span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">module</span> <span class="k">as</span> <span class="n">M</span>
+<span class="kn">import</span> <span class="nn">megengine.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">megengine.jit.tracing</span> <span class="kn">import</span> <span class="n">trace</span>
+<span class="kn">from</span> <span class="nn">megengine.utils.network</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="nd">@trace</span><span class="p">(</span><span class="n">symbolic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_as_const</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">perspective_transform</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># M = xxxx 省略计算 transform matrix 代码</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">warp_perspective</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">160</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">def</span> <span class="nf">edit</span><span class="p">():</span>
+
+    <span class="c1"># 通过 trace 得到 perspec_transform 对应的计算图</span>
+    <span class="n">perspective_transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">perspective_transform</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;transform.mge&quot;</span><span class="p">,</span> <span class="n">optimize_for_inference</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># 使用Network API 加载原模型和 perspective_transform 子模块</span>
+    <span class="n">origin_model</span> <span class="o">=</span> <span class="n">Network</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/path/to/origin_model&quot;</span><span class="p">)</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">Network</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;transform.mge&quot;</span><span class="p">)</span>
+
+
+    <span class="c1"># 获取原模型输出</span>
+    <span class="n">orig_output</span> <span class="o">=</span> <span class="n">origin_model</span><span class="o">.</span><span class="n">output_vars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># 把 perspective transform 对应的计算图添加到原模型中</span>
+    <span class="c1"># Network 中的图结构包括了输出节点依赖的所有 var/op，因此只需要把 perspective_transform 输出加到原模型的 output_vars 列表中即可</span>
+    <span class="n">origin_model</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="o">*</span><span class="n">transform</span><span class="o">.</span><span class="n">output_vars</span><span class="p">)</span>
+
+    <span class="c1"># 获取 perspective_transform 输入</span>
+    <span class="n">transform_input</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">data_providers_filter</span><span class="o">.</span><span class="n">as_unique</span><span class="p">()</span>
+
+    <span class="c1"># 通过替换输入VarNode，把原模型输出接到 perspective_transform 输入上，完成模型拼接</span>
+    <span class="k">for</span> <span class="n">opr</span> <span class="ow">in</span> <span class="n">origin_model</span><span class="o">.</span><span class="n">opr_filter</span><span class="o">.</span><span class="n">has_input</span><span class="p">(</span><span class="n">transform_input</span><span class="p">):</span>
+        <span class="n">opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">orig_output</span>
+
+    <span class="c1"># 如果只需要拿到 warp perspective 结果，应该把原模型输出从 output_vars 列表中移除</span>
+    <span class="n">origin_model</span><span class="o">.</span><span class="n">remove_output</span><span class="p">(</span><span class="n">orig_output</span><span class="p">)</span>
+    <span class="n">origin_model</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;out.mge&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../../reference/api/megengine.tensor.Tensor.html#megengine.tensor.Tensor" title="megengine.tensor.Tensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">megengine.tensor.Tensor</span></code></a> 只用于动态图，不能与 VarNode 混用，
+例如 Tensor 与 VarNode 相互赋值，functional API 同时接收 Tensor 和 VarNode 作为输入等。
+对应地，向计算图中添加常量可以使用 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.make_const.html#megengine.utils.network.Network.make_const" title="megengine.utils.network.Network.make_const"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.make_const</span></code></a> <code class="docutils literal notranslate"><span class="pre">(data)</span></code> ，不能使用 <code class="docutils literal notranslate"><span class="pre">megengine.tensor(data)</span></code> ;
+添加新输入可以使用 <a class="reference internal" href="../../reference/api/megengine.utils.network.Network.make_input_node.html#megengine.utils.network.Network.make_input_node" title="megengine.utils.network.Network.make_input_node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Network.make_input_node</span></code></a> .</p></li>
+<li><p>向 <code class="docutils literal notranslate"><span class="pre">.mge</span></code> 模型的计算图中添加新 opr 可以使用 megengine functional API.
+functional API 接 收mgb VarNode 作为输入时会向 VarNode 所属计算图插入 opr，返回该 opr 输出的 mgb VarNode</p></li>
+<li><p>目前 Network 提供的 make_const make_input_node, 各类查找 VarNode API 返回值类型为 network_node.VarNode
+(network_node.VarNode 中的 var 属性是mgb VarNode)，因此使用 Network API 获取 network_node.VarNode 后，
+如果需要传给 functional 造计算图，需要手动调用 <code class="docutils literal notranslate"><span class="pre">.var</span></code> 后再传给 functional （具体可参考上述.mge模型修改示例）。
+近期会添加 functional API 直接接收 Network.VarNode 的支持。</p></li>
+<li><p>目前  network_node.VarNode  不支持 array method（不支持 + - * / 等操作符 和 advance indexing)/.
+遇到 VarNode 不支持的操作（例如advance indexing），可以考虑用 trace + 动态图 构造出静态图，
+把该静态图拼接到原模型上。近期会为network_node.VarNode 加上 arraymethodmixin.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

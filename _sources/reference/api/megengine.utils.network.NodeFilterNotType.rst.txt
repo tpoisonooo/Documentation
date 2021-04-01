@@ -1,0 +1,32 @@
+megengine.utils.network.NodeFilterNotType
+=========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoclass:: NodeFilterNotType
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NodeFilterNotType.__init__
+      ~NodeFilterNotType.as_count
+      ~NodeFilterNotType.as_dict
+      ~NodeFilterNotType.as_list
+      ~NodeFilterNotType.as_unique
+      ~NodeFilterNotType.check_type
+      ~NodeFilterNotType.data_provider
+      ~NodeFilterNotType.has_input
+      ~NodeFilterNotType.make_all_deps
+      ~NodeFilterNotType.name
+      ~NodeFilterNotType.not_type
+      ~NodeFilterNotType.param_provider
+      ~NodeFilterNotType.type
+   
+   
+
+   
+   
+   

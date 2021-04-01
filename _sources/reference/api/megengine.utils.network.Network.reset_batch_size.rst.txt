@@ -1,0 +1,6 @@
+megengine.utils.network.Network.reset\_batch\_size
+==================================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.reset_batch_size

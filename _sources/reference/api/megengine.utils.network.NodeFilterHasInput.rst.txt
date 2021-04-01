@@ -1,0 +1,32 @@
+megengine.utils.network.NodeFilterHasInput
+==========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoclass:: NodeFilterHasInput
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~NodeFilterHasInput.__init__
+      ~NodeFilterHasInput.as_count
+      ~NodeFilterHasInput.as_dict
+      ~NodeFilterHasInput.as_list
+      ~NodeFilterHasInput.as_unique
+      ~NodeFilterHasInput.check_type
+      ~NodeFilterHasInput.data_provider
+      ~NodeFilterHasInput.has_input
+      ~NodeFilterHasInput.make_all_deps
+      ~NodeFilterHasInput.name
+      ~NodeFilterHasInput.not_type
+      ~NodeFilterHasInput.param_provider
+      ~NodeFilterHasInput.type
+   
+   
+
+   
+   
+   

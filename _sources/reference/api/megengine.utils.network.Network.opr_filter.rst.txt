@@ -1,0 +1,6 @@
+megengine.utils.network.Network.opr\_filter
+===========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoproperty:: Network.opr_filter

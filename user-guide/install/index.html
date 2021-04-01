@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>编译、构建与安装 &#8212; MegEngine 1.3.0 文档</title>
+    <title>安装 MegEngine &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
@@ -42,8 +42,8 @@
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="基本概念" href="../basic-concepts/index.html" />
-    <link rel="prev" title="常见问题汇总（FAQ）" href="../faq.html" />
+    <link rel="next" title="参数优化进阶配置" href="../model-development/advanced-parameter-optimization.html" />
+    <link rel="prev" title="用户指南" href="../index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
   </head>
@@ -166,40 +166,110 @@
             <!-- Only show if we have sidebars configured, else just a small margin  -->
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../faq.html">
-   常见问题汇总（FAQ）
-  </a>
- </li>
+    <p class="caption">
+ <span class="caption-text">
+  安装
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   编译、构建与安装
+   安装 MegEngine
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型开发
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-development/advanced-parameter-optimization.html">
+   参数优化进阶配置
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../basic-concepts/index.html">
-   基本概念
+  <a class="reference internal" href="../model-development/trace.html">
+   将动态图转为静态图
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../data-engineering/index.html">
-   数据工程
+  <a class="reference internal" href="../model-development/dump.html">
+   导出模型序列化文件
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  分布式训练
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../model-development/index.html">
-   模型开发
+  <a class="reference internal" href="../distributed-training.html">
+   分布式训练
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型压缩
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../model-evaluation/index.html">
-   模型评估
+  <a class="reference internal" href="../model-compression/quantization.html">
+   量化
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型部署
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../deployment/index.html">
-   模型部署
+   将模型部署到 C++ 环境
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deployment/midout.html">
+   减少二进制文件体积
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  各类工具
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/module-stats.html">
+   参数量与计算量统计
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/runtimeopr.html">
+   RuntimeOpr 使用说明
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/graphsurgeon.html">
+   图手术操作指南
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/load-and-run.html">
+   如何使用 Load and Run（C++）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/load-and-run-py.html">
+   如何使用 Load and Run（Python）
   </a>
  </li>
 </ul>
@@ -213,9 +283,36 @@
           
           <div class="d-none d-xl-block col-xl-2 bd-toc">
               
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
-    
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   通过包管理器安装
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   通过源码编译安装
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     环境依赖
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     开始编译
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
 </nav>
 
 
@@ -231,9 +328,83 @@
               
               <div>
                 
-  <div class="section" id="install">
-<span id="id1"></span><h1>编译、构建与安装<a class="headerlink" href="#install" title="永久链接至标题">¶</a></h1>
-<p>内容正在建设中…</p>
+  <div class="section" id="megengine">
+<span id="install"></span><h1>安装 MegEngine<a class="headerlink" href="#megengine" title="永久链接至标题">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>MegEngine 目前支持在以下环境安装 Python 包：</p>
+<ul class="simple">
+<li><p>操作系统： Linux-64bit/Windows-64bit/MacOS-10.14 及其以上</p></li>
+<li><p>Python 版本：3.5 到 3.8</p></li>
+</ul>
+<p>其中 MacOS 只支持 Intel x86 CPU；
+此外，MegEngine 也支持在很多其它平台上进行推理运算。</p>
+</div>
+<div class="section" id="id1">
+<h2>通过包管理器安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">pip</span></code> 包管理器安装 MegEngine 的命令如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m pip install megengine -f https://megengine.org.cn/whl/mge.html
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>对于 <code class="docutils literal notranslate"><span class="pre">conda</span></code> 用户, 可以选择通过在环境中先安装 <code class="docutils literal notranslate"><span class="pre">pip</span></code>,
+再按照上述方式进行 MegEngine 的安装。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>通过源码编译安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>如果包管理器安装的方式无法满足你的需求，则可以尝试自行通过源码编译安装。</p>
+<div class="section" id="id3">
+<h3>环境依赖<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>大多数编译 MegEngine 的依赖位于 <a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master/third_party">third_party</a> 目录，可以通过以下命令自动安装：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./third_party/prepare.sh
+./third_party/install-mkl.sh
+</pre></div>
+</div>
+<p>上述过程中需要从国外获取软件源，建议使用比较通畅的网络环境。</p>
+<p>一些依赖需要手动安装：</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://developer.nvidia.com/cuda-toolkit-archive">CUDA</a> (&gt;=10.1),
+<a class="reference external" href="https://developer.nvidia.com/cudnn">cuDNN</a> (&gt;=7.6),
+如果需要编译支持 CUDA 的版本。</p></li>
+<li><p><a class="reference external" href="https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html">TensorRT</a> (&gt;=5.1.5) ，
+如果需要编译支持 TensorRT 的版本。</p></li>
+<li><p>LLVM/Clang(&gt;=6.0) ，如果需要编译支持 Halide JIT 的版本（默认开启）。</p></li>
+<li><p>Python(&gt;=3.5), Numpy, SWIG(&gt;=3.0), 如果需要编译生成 Python 模块。</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>开始编译<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p><a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master/scripts/cmake-build/host_build.sh">scripts/cmake-build/host_build.sh</a> 用于本地编译。</p>
+<p>参数 <code class="docutils literal notranslate"><span class="pre">-h</span></code> 可用于查询脚本支持的参数:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scripts/cmake-build/host_build.sh -h
+</pre></div>
+</div>
+</li>
+<li><p><a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master/scripts/cmake-build/cross_build_android_arm_inference.sh">scripts/cmake-build/cross_build_android_arm_inference.sh</a> 用于 ARM-安卓 交叉编译。</p>
+<p>参数 <code class="docutils literal notranslate"><span class="pre">-h</span></code> 可用于查询脚本支持的参数:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scripts/cmake-build/cross_build_android_arm_inference.sh -h
+</pre></div>
+</div>
+</li>
+<li><p><a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master/scripts/cmake-build/cross_build_linux_arm_inference.sh">scripts/cmake-build/cross_build_linux_arm_inference.sh</a> 用于 ARM-Linux 交叉编译。</p>
+<p>参数 <code class="docutils literal notranslate"><span class="pre">-h</span></code> 可用于查询脚本支持的参数:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scripts/cmake-build/cross_build_linux_arm_inference.sh -h
+</pre></div>
+</div>
+</li>
+<li><p><a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master/scripts/cmake-build/cross_build_ios_arm_inference.sh">scripts/cmake-build/cross_build_ios_arm_inference.sh</a> 用于 iOS 交叉编译。</p>
+<p>参数 <code class="docutils literal notranslate"><span class="pre">-h</span></code> 可用于查询脚本支持的参数:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>scripts/cmake-build/cross_build_ios_arm_inference.sh -h
+</pre></div>
+</div>
+</li>
+</ul>
+<p>更多细节请参考 <a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master/scripts/cmake-build/BUILD_README.md">scripts/cmake-build/BUILD_README.md</a> .</p>
+</div>
+</div>
 </div>
 
 

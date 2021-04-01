@@ -1,0 +1,1017 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utils 模块 &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="megengine.utils.comp_graph_tools.get_dep_vars" href="api/megengine.utils.comp_graph_tools.get_dep_vars.html" />
+    <link rel="prev" title="查询版本信息" href="version.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../index.html">
+        <img src="../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "reference/utils.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="data.html">
+   数据（Data）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tensor.html">
+   张量（Tensor）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="functional.html">
+   函数式（Functional）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="module.html">
+   模块式（Module）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="autodiff.html">
+   自动微分（Auto-diff）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="optimizer.html">
+   优化器（Optimizer）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="jit.html">
+   即时编译（JIT）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="distributed.html">
+   分布式训练（Distributed）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantization.html">
+   量化（Quantization）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="serialization.html">
+   序列化（Serialization）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="random.html">
+   随机（Random）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="hub.html">
+   模型中心（Hub）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="logger.html">
+   日志（Logger）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="device.html">
+   设备（Device）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="version.html">
+   查询版本信息
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Utils 模块
+  </a>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_dep_vars.html">
+     megengine.utils.comp_graph_tools.get_dep_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_owner_opr_inputs.html">
+     megengine.utils.comp_graph_tools.get_owner_opr_inputs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_owner_opr_type.html">
+     megengine.utils.comp_graph_tools.get_owner_opr_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_opr_type.html">
+     megengine.utils.comp_graph_tools.get_opr_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.graph_traversal.html">
+     megengine.utils.comp_graph_tools.graph_traversal
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_oprs_seq.html">
+     megengine.utils.comp_graph_tools.get_oprs_seq
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.replace_vars.html">
+     megengine.utils.comp_graph_tools.replace_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.replace_oprs.html">
+     megengine.utils.comp_graph_tools.replace_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.set_priority_to_id.html">
+     megengine.utils.comp_graph_tools.set_priority_to_id
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.comp_graph_tools.GraphInference.html">
+     megengine.utils.comp_graph_tools.GraphInference
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.hook.HookHandler.html">
+     megengine.utils.hook.HookHandler
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.html">
+     megengine.utils.network.Network
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.load.html">
+     megengine.utils.network.Network.load
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.dump.html">
+     megengine.utils.network.Network.dump
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.make_const.html">
+     megengine.utils.network.Network.make_const
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.make_input_node.html">
+     megengine.utils.network.Network.make_input_node
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.add_output.html">
+     megengine.utils.network.Network.add_output
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.remove_output.html">
+     megengine.utils.network.Network.remove_output
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.add_dep_oprs.html">
+     megengine.utils.network.Network.add_dep_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.modify_opr_names.html">
+     megengine.utils.network.Network.modify_opr_names
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.reset_batch_size.html">
+     megengine.utils.network.Network.reset_batch_size
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.replace_vars.html">
+     megengine.utils.network.Network.replace_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.replace_oprs.html">
+     megengine.utils.network.Network.replace_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.get_opr_by_type.html">
+     megengine.utils.network.Network.get_opr_by_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.get_opr_by_name.html">
+     megengine.utils.network.Network.get_opr_by_name
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.get_var_by_name.html">
+     megengine.utils.network.Network.get_var_by_name
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.get_var_receive_oprs.html">
+     megengine.utils.network.Network.get_var_receive_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.get_dep_oprs.html">
+     megengine.utils.network.Network.get_dep_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.opr_filter.html">
+     megengine.utils.network.Network.opr_filter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.var_filter.html">
+     megengine.utils.network.Network.var_filter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.params_filter.html">
+     megengine.utils.network.Network.params_filter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.data_providers_filter.html">
+     megengine.utils.network.Network.data_providers_filter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.dest_vars.html">
+     megengine.utils.network.Network.dest_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.all_oprs.html">
+     megengine.utils.network.Network.all_oprs
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.all_vars.html">
+     megengine.utils.network.Network.all_vars
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.all_oprs_dict.html">
+     megengine.utils.network.Network.all_oprs_dict
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.Network.all_vars_dict.html">
+     megengine.utils.network.Network.all_vars_dict
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.as_varnode.html">
+     megengine.utils.network.as_varnode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.as_oprnode.html">
+     megengine.utils.network.as_oprnode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.html">
+     megengine.utils.network.NodeFilter
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.type.html">
+     megengine.utils.network.NodeFilter.type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.check_type.html">
+     megengine.utils.network.NodeFilter.check_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.not_type.html">
+     megengine.utils.network.NodeFilter.not_type
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.param_provider.html">
+     megengine.utils.network.NodeFilter.param_provider
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.data_provider.html">
+     megengine.utils.network.NodeFilter.data_provider
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.name.html">
+     megengine.utils.network.NodeFilter.name
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.has_input.html">
+     megengine.utils.network.NodeFilter.has_input
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_list.html">
+     megengine.utils.network.NodeFilter.as_list
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_unique.html">
+     megengine.utils.network.NodeFilter.as_unique
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_dict.html">
+     megengine.utils.network.NodeFilter.as_dict
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_count.html">
+     megengine.utils.network.NodeFilter.as_count
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilterType.html">
+     megengine.utils.network.NodeFilterType
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilterNotType.html">
+     megengine.utils.network.NodeFilterNotType
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilterCheckType.html">
+     megengine.utils.network.NodeFilterCheckType
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilterHasInput.html">
+     megengine.utils.network.NodeFilterHasInput
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network.NodeFilterName.html">
+     megengine.utils.network.NodeFilterName
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network_node.NetworkNode.html">
+     megengine.utils.network_node.NetworkNode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network_node.VarNode.html">
+     megengine.utils.network_node.VarNode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.network_node.OpNode.html">
+     megengine.utils.network_node.OpNode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.module_stats.module_stats.html">
+     megengine.utils.module_stats.module_stats
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.profiler.Profiler.html">
+     megengine.utils.profiler.Profiler
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="api/megengine.utils.profiler.profile.html">
+     megengine.utils.profiler.profile
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing-graph-tools">
+   Computing Graph Tools
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hook">
+   Hook
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#network">
+   Network
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nodefilter">
+     NodeFilter
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#others">
+     Others
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#network-node">
+   Network Node
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-stats">
+   Module Stats
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#profiler">
+   Profiler
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     默认常量
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <span class="target" id="module-megengine.utils"></span><div class="section" id="module-megengine.utils.comp_graph_tools">
+<span id="utils"></span><h1>Utils 模块<a class="headerlink" href="#module-megengine.utils.comp_graph_tools" title="永久链接至标题">¶</a></h1>
+<div class="section" id="computing-graph-tools">
+<h2>Computing Graph Tools<a class="headerlink" href="#computing-graph-tools" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_dep_vars.html#megengine.utils.comp_graph_tools.get_dep_vars" title="megengine.utils.comp_graph_tools.get_dep_vars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dep_vars</span></code></a></p></td>
+<td><p>Returns <code class="xref py py-class docutils literal notranslate"><span class="pre">tensor.core.megbrain_graph.VarNode</span></code> of type <code class="docutils literal notranslate"><span class="pre">var_type</span></code> that input <code class="docutils literal notranslate"><span class="pre">var</span></code> depands on.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_owner_opr_inputs.html#megengine.utils.comp_graph_tools.get_owner_opr_inputs" title="megengine.utils.comp_graph_tools.get_owner_opr_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_owner_opr_inputs</span></code></a></p></td>
+<td><p>Gets the inputs of owner opr of a variable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_owner_opr_type.html#megengine.utils.comp_graph_tools.get_owner_opr_type" title="megengine.utils.comp_graph_tools.get_owner_opr_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_owner_opr_type</span></code></a></p></td>
+<td><p>Gets the type of owner opr of a variable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_opr_type.html#megengine.utils.comp_graph_tools.get_opr_type" title="megengine.utils.comp_graph_tools.get_opr_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_opr_type</span></code></a></p></td>
+<td><p>Gets the type of an opr.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.graph_traversal.html#megengine.utils.comp_graph_tools.graph_traversal" title="megengine.utils.comp_graph_tools.graph_traversal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graph_traversal</span></code></a></p></td>
+<td><p>Helper function to traverse the computing graph and return enough useful information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.get_oprs_seq.html#megengine.utils.comp_graph_tools.get_oprs_seq" title="megengine.utils.comp_graph_tools.get_oprs_seq"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_oprs_seq</span></code></a></p></td>
+<td><p>Gets oprs in some topological order for a dumped model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.replace_vars.html#megengine.utils.comp_graph_tools.replace_vars" title="megengine.utils.comp_graph_tools.replace_vars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_vars</span></code></a></p></td>
+<td><p>Replaces vars in the graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.replace_oprs.html#megengine.utils.comp_graph_tools.replace_oprs" title="megengine.utils.comp_graph_tools.replace_oprs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_oprs</span></code></a></p></td>
+<td><p>Replaces operators in the graph.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.set_priority_to_id.html#megengine.utils.comp_graph_tools.set_priority_to_id" title="megengine.utils.comp_graph_tools.set_priority_to_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_priority_to_id</span></code></a></p></td>
+<td><p>For all oprs in the subgraph constructed by dest_vars,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.comp_graph_tools.GraphInference.html#megengine.utils.comp_graph_tools.GraphInference" title="megengine.utils.comp_graph_tools.GraphInference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GraphInference</span></code></a></p></td>
+<td><p>Loads a serialized computing graph as a GraphInference object which can be used to execute the computing graph.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.utils.hook"></span></div>
+<div class="section" id="hook">
+<h2>Hook<a class="headerlink" href="#hook" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.hook.HookHandler.html#megengine.utils.hook.HookHandler" title="megengine.utils.hook.HookHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HookHandler</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.utils.network"></span></div>
+<div class="section" id="network">
+<h2>Network<a class="headerlink" href="#network" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.html#megengine.utils.network.Network" title="megengine.utils.network.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">方法</p>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.load.html#megengine.utils.network.Network.load" title="megengine.utils.network.Network.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.load</span></code></a></p></td>
+<td><p>Loads a computing graph as a Network object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.dump.html#megengine.utils.network.Network.dump" title="megengine.utils.network.Network.dump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.dump</span></code></a></p></td>
+<td><p>Serializes graph to file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.make_const.html#megengine.utils.network.Network.make_const" title="megengine.utils.network.Network.make_const"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.make_const</span></code></a></p></td>
+<td><p>Makes an ImmutableTensor OpNode to provide a parameter for the network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.make_input_node.html#megengine.utils.network.Network.make_input_node" title="megengine.utils.network.Network.make_input_node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.make_input_node</span></code></a></p></td>
+<td><p>Makes a Host2DeviceCopy OpNode to provide an input varnode for the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.add_output.html#megengine.utils.network.Network.add_output" title="megengine.utils.network.Network.add_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.add_output</span></code></a></p></td>
+<td><p>Adds vars into the network output node list</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.remove_output.html#megengine.utils.network.Network.remove_output" title="megengine.utils.network.Network.remove_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.remove_output</span></code></a></p></td>
+<td><p>Removes vars from the network output node list.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.add_dep_oprs.html#megengine.utils.network.Network.add_dep_oprs" title="megengine.utils.network.Network.add_dep_oprs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.add_dep_oprs</span></code></a></p></td>
+<td><p>Adds dependent opnodes and varnodes of vars into network</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.modify_opr_names.html#megengine.utils.network.Network.modify_opr_names" title="megengine.utils.network.Network.modify_opr_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.modify_opr_names</span></code></a></p></td>
+<td><p>Modifies names of operators <strong>inplace</strong>; useful for merging loaded network into another network</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.reset_batch_size.html#megengine.utils.network.Network.reset_batch_size" title="megengine.utils.network.Network.reset_batch_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.reset_batch_size</span></code></a></p></td>
+<td><p>Helper for reset batch size; first dimension of all data providers not in blacklist are assumed to be the batch size</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.replace_vars.html#megengine.utils.network.Network.replace_vars" title="megengine.utils.network.Network.replace_vars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.replace_vars</span></code></a></p></td>
+<td><p>Replaces vars in the graph.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.replace_oprs.html#megengine.utils.network.Network.replace_oprs" title="megengine.utils.network.Network.replace_oprs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.replace_oprs</span></code></a></p></td>
+<td><p>Replaces operators in the graph.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.get_opr_by_type.html#megengine.utils.network.Network.get_opr_by_type" title="megengine.utils.network.Network.get_opr_by_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.get_opr_by_type</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.get_opr_by_name.html#megengine.utils.network.Network.get_opr_by_name" title="megengine.utils.network.Network.get_opr_by_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.get_opr_by_name</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.get_var_by_name.html#megengine.utils.network.Network.get_var_by_name" title="megengine.utils.network.Network.get_var_by_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.get_var_by_name</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.get_var_receive_oprs.html#megengine.utils.network.Network.get_var_receive_oprs" title="megengine.utils.network.Network.get_var_receive_oprs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.get_var_receive_oprs</span></code></a></p></td>
+<td><p>Gets all oprs which use var as input</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.get_dep_oprs.html#megengine.utils.network.Network.get_dep_oprs" title="megengine.utils.network.Network.get_dep_oprs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.get_dep_oprs</span></code></a></p></td>
+<td><p>Gets dependent oprs of var</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">属性</p>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.opr_filter.html#megengine.utils.network.Network.opr_filter" title="megengine.utils.network.Network.opr_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.opr_filter</span></code></a></p></td>
+<td><p>Filter on all opnodes of the Network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.var_filter.html#megengine.utils.network.Network.var_filter" title="megengine.utils.network.Network.var_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.var_filter</span></code></a></p></td>
+<td><p>Filter on all varnode of the Network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.params_filter.html#megengine.utils.network.Network.params_filter" title="megengine.utils.network.Network.params_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.params_filter</span></code></a></p></td>
+<td><p>Filter on all parameters (ImmutableTensor Opr) of the Network</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.data_providers_filter.html#megengine.utils.network.Network.data_providers_filter" title="megengine.utils.network.Network.data_providers_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.data_providers_filter</span></code></a></p></td>
+<td><p>Filter on all input nodes (Host2DeviceCopy Opr) of the Network</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.dest_vars.html#megengine.utils.network.Network.dest_vars" title="megengine.utils.network.Network.dest_vars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.dest_vars</span></code></a></p></td>
+<td><p>Output varnodes of the Network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.all_oprs.html#megengine.utils.network.Network.all_oprs" title="megengine.utils.network.Network.all_oprs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.all_oprs</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.all_vars.html#megengine.utils.network.Network.all_vars" title="megengine.utils.network.Network.all_vars"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.all_vars</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.all_oprs_dict.html#megengine.utils.network.Network.all_oprs_dict" title="megengine.utils.network.Network.all_oprs_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.all_oprs_dict</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.Network.all_vars_dict.html#megengine.utils.network.Network.all_vars_dict" title="megengine.utils.network.Network.all_vars_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Network.all_vars_dict</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Convert</p>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.as_varnode.html#megengine.utils.network.as_varnode" title="megengine.utils.network.as_varnode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">as_varnode</span></code></a></p></td>
+<td><p>convert a <a class="reference internal" href="api/megengine.utils.network_node.VarNode.html#megengine.utils.network_node.VarNode" title="megengine.utils.network_node.VarNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">VarNode</span></code></a> compatible object to <a class="reference internal" href="api/megengine.utils.network_node.VarNode.html#megengine.utils.network_node.VarNode" title="megengine.utils.network_node.VarNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">VarNode</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.as_oprnode.html#megengine.utils.network.as_oprnode" title="megengine.utils.network.as_oprnode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">as_oprnode</span></code></a></p></td>
+<td><p>convert a <a class="reference internal" href="api/megengine.utils.network_node.OpNode.html#megengine.utils.network_node.OpNode" title="megengine.utils.network_node.OpNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpNode</span></code></a> compatible object to <a class="reference internal" href="api/megengine.utils.network_node.OpNode.html#megengine.utils.network_node.OpNode" title="megengine.utils.network_node.OpNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpNode</span></code></a>; it works like <a class="reference internal" href="api/megengine.utils.network.as_varnode.html#megengine.utils.network.as_varnode" title="megengine.utils.network.as_varnode"><code class="xref py py-func docutils literal notranslate"><span class="pre">as_varnode</span></code></a>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="nodefilter">
+<h3>NodeFilter<a class="headerlink" href="#nodefilter" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.html#megengine.utils.network.NodeFilter" title="megengine.utils.network.NodeFilter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter</span></code></a></p></td>
+<td><p>Filter on node iterator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.type.html#megengine.utils.network.NodeFilter.type" title="megengine.utils.network.NodeFilter.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.type</span></code></a></p></td>
+<td><p>filter by specific node type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.check_type.html#megengine.utils.network.NodeFilter.check_type" title="megengine.utils.network.NodeFilter.check_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.check_type</span></code></a></p></td>
+<td><p>assert that all oprs produced by this iterator are instances of certain type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.not_type.html#megengine.utils.network.NodeFilter.not_type" title="megengine.utils.network.NodeFilter.not_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.not_type</span></code></a></p></td>
+<td><p>remove oprs of specific type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.param_provider.html#megengine.utils.network.NodeFilter.param_provider" title="megengine.utils.network.NodeFilter.param_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.param_provider</span></code></a></p></td>
+<td><p>get <code class="xref py py-class docutils literal notranslate"><span class="pre">ParamProvider</span></code> oprs; shorthand for <code class="docutils literal notranslate"><span class="pre">.type(ParamProvider)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.data_provider.html#megengine.utils.network.NodeFilter.data_provider" title="megengine.utils.network.NodeFilter.data_provider"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.data_provider</span></code></a></p></td>
+<td><p>get <code class="xref py py-class docutils literal notranslate"><span class="pre">DataProvider</span></code> oprs; shorthand for <code class="docutils literal notranslate"><span class="pre">.type(DataProvider)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.name.html#megengine.utils.network.NodeFilter.name" title="megengine.utils.network.NodeFilter.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.name</span></code></a></p></td>
+<td><p>filter by node name</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.has_input.html#megengine.utils.network.NodeFilter.has_input" title="megengine.utils.network.NodeFilter.has_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.has_input</span></code></a></p></td>
+<td><p>an opr is kept if it has given var as one of its inputs</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_list.html#megengine.utils.network.NodeFilter.as_list" title="megengine.utils.network.NodeFilter.as_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.as_list</span></code></a></p></td>
+<td><p>consume this iterator and return its content as a list</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_unique.html#megengine.utils.network.NodeFilter.as_unique" title="megengine.utils.network.NodeFilter.as_unique"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.as_unique</span></code></a></p></td>
+<td><p>assert that this iterator yields only one node and return it</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_dict.html#megengine.utils.network.NodeFilter.as_dict" title="megengine.utils.network.NodeFilter.as_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.as_dict</span></code></a></p></td>
+<td><p>construct an ordered dict to map from node names to objects in this iterator</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilter.as_count.html#megengine.utils.network.NodeFilter.as_count" title="megengine.utils.network.NodeFilter.as_count"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilter.as_count</span></code></a></p></td>
+<td><p>consume this iterator and get the number of elements</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="others">
+<h3>Others<a class="headerlink" href="#others" title="永久链接至标题">¶</a></h3>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilterType.html#megengine.utils.network.NodeFilterType" title="megengine.utils.network.NodeFilterType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilterType</span></code></a></p></td>
+<td><p>see <a class="reference internal" href="api/megengine.utils.network.NodeFilter.type.html#megengine.utils.network.NodeFilter.type" title="megengine.utils.network.NodeFilter.type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.type</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilterNotType.html#megengine.utils.network.NodeFilterNotType" title="megengine.utils.network.NodeFilterNotType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilterNotType</span></code></a></p></td>
+<td><p>see <a class="reference internal" href="api/megengine.utils.network.NodeFilter.not_type.html#megengine.utils.network.NodeFilter.not_type" title="megengine.utils.network.NodeFilter.not_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.not_type</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilterCheckType.html#megengine.utils.network.NodeFilterCheckType" title="megengine.utils.network.NodeFilterCheckType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilterCheckType</span></code></a></p></td>
+<td><p>see <a class="reference internal" href="api/megengine.utils.network.NodeFilter.check_type.html#megengine.utils.network.NodeFilter.check_type" title="megengine.utils.network.NodeFilter.check_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.check_type</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilterHasInput.html#megengine.utils.network.NodeFilterHasInput" title="megengine.utils.network.NodeFilterHasInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilterHasInput</span></code></a></p></td>
+<td><p>see <a class="reference internal" href="api/megengine.utils.network.NodeFilter.has_input.html#megengine.utils.network.NodeFilter.has_input" title="megengine.utils.network.NodeFilter.has_input"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.has_input</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network.NodeFilterName.html#megengine.utils.network.NodeFilterName" title="megengine.utils.network.NodeFilterName"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeFilterName</span></code></a></p></td>
+<td><p>see <a class="reference internal" href="api/megengine.utils.network.NodeFilter.name.html#megengine.utils.network.NodeFilter.name" title="megengine.utils.network.NodeFilter.name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">NodeFilter.name</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.utils.network_node"></span></div>
+</div>
+<div class="section" id="network-node">
+<h2>Network Node<a class="headerlink" href="#network-node" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network_node.NetworkNode.html#megengine.utils.network_node.NetworkNode" title="megengine.utils.network_node.NetworkNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NetworkNode</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.network_node.VarNode.html#megengine.utils.network_node.VarNode" title="megengine.utils.network_node.VarNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VarNode</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.network_node.OpNode.html#megengine.utils.network_node.OpNode" title="megengine.utils.network_node.OpNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OpNode</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>更多 Network Node 请查看源码。</p>
+<span class="target" id="module-megengine.utils.module_stats"></span></div>
+<div class="section" id="module-stats">
+<h2>Module Stats<a class="headerlink" href="#module-stats" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.module_stats.module_stats.html#megengine.utils.module_stats.module_stats" title="megengine.utils.module_stats.module_stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_stats</span></code></a></p></td>
+<td><p>Calculate and print <code class="docutils literal notranslate"><span class="pre">model</span></code>’s statistics by adding hook and record Module’s inputs outputs size.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-megengine.utils.profiler"></span></div>
+<div class="section" id="profiler">
+<h2>Profiler<a class="headerlink" href="#profiler" title="永久链接至标题">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/megengine.utils.profiler.Profiler.html#megengine.utils.profiler.Profiler" title="megengine.utils.profiler.Profiler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Profiler</span></code></a></p></td>
+<td><p>Profile graph execution in imperative mode.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/megengine.utils.profiler.profile.html#megengine.utils.profiler.profile" title="megengine.utils.profiler.profile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">profile</span></code></a></p></td>
+<td><p>alias of <a class="reference internal" href="api/megengine.utils.profiler.Profiler.html#megengine.utils.profiler.Profiler" title="megengine.utils.profiler.Profiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">megengine.utils.profiler.Profiler</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id1">
+<h3>默认常量<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.CHROME_TIMELINE">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">CHROME_TIMELINE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'chrome_timeline.json'</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.CHROME_TIMELINE" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.COMMAND">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">COMMAND</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.COMMAND" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.OPERATOR">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">OPERATOR</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.OPERATOR" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.TENSOR_LIFETIME">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">TENSOR_LIFETIME</span></code><em class="property"> <span class="pre">=</span> <span class="pre">4</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.TENSOR_LIFETIME" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.TENSOR_PROP">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">TENSOR_PROP</span></code><em class="property"> <span class="pre">=</span> <span class="pre">8</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.TENSOR_PROP" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.SYNC">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">SYNC</span></code><em class="property"> <span class="pre">=</span> <span class="pre">16</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.SYNC" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.SCOPE">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">SCOPE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">32</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.SCOPE" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="megengine.utils.profiler.Profiler.ALL">
+<code class="sig-prename descclassname"><span class="pre">Profiler.</span></code><code class="sig-name descname"><span class="pre">ALL</span></code><em class="property"> <span class="pre">=</span> <span class="pre">63</span></em><a class="headerlink" href="#megengine.utils.profiler.Profiler.ALL" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

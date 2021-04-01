@@ -289,7 +289,7 @@
         <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Conv1d"><a class="viewcode-back" href="../../../reference/api/megengine.module.Conv1d.html#megengine.module.Conv1d">[文档]</a><span class="k">class</span> <span class="nc">Conv1d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Conv1d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
 
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies a 1D convolution over an input tensor.</span>
@@ -433,10 +433,10 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Conv2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.Conv2d.html#megengine.module.Conv2d">[文档]</a><span class="k">class</span> <span class="nc">Conv2d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Conv2d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies a 2D convolution over an input tensor.</span>
 
@@ -593,7 +593,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">Conv3d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
@@ -732,7 +732,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="ConvTranspose2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.ConvTranspose2d.html#megengine.module.ConvTranspose2d">[文档]</a><span class="k">class</span> <span class="nc">ConvTranspose2d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ConvTranspose2d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies a 2D transposed convolution over an input tensor.</span>
 
@@ -838,7 +838,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">conv_mode</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">compute_mode</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
 
 <div class="viewcode-block" id="LocalConv2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.LocalConv2d.html#megengine.module.LocalConv2d">[文档]</a><span class="k">class</span> <span class="nc">LocalConv2d</span><span class="p">(</span><span class="n">Conv2d</span><span class="p">):</span>
@@ -922,17 +922,17 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ConvRelu2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.ConvRelu2d.html#megengine.module.ConvRelu2d">[文档]</a><span class="k">class</span> <span class="nc">ConvRelu2d</span><span class="p">(</span><span class="n">Conv2d</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ConvRelu2d</span><span class="p">(</span><span class="n">Conv2d</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A fused :class:`~.Module` including :class:`~.module.Conv2d` and :func:`~.relu`.</span>
 <span class="sd">    Could be replaced with :class:`~.QATModule` version :class:`~.qat.ConvRelu2d` using :func:`~.quantize.quantize_qat`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="DeformableConv2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.DeformableConv2d.html#megengine.module.DeformableConv2d">[文档]</a><span class="k">class</span> <span class="nc">DeformableConv2d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">DeformableConv2d</span><span class="p">(</span><span class="n">_ConvNd</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Deformable Convolution.</span>
 
@@ -1035,7 +1035,7 @@
         <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_conv</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
 </pre></div>
 
               </div>

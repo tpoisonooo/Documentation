@@ -1,0 +1,6 @@
+megengine.utils.network.Network.dest\_vars
+==========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoproperty:: Network.dest_vars

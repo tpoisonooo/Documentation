@@ -1,0 +1,6 @@
+megengine.utils.network.Network.remove\_output
+==============================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.remove_output

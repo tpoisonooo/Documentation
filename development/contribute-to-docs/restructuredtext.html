@@ -230,12 +230,12 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="how-to-build-the-doc-locally.html">
+    <a class="reference internal" href="build-the-doc-locally.html">
      如何在本地构建文档
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="how-to-translate-the-doc.html">
+    <a class="reference internal" href="translation.html">
      如何帮助翻译文档内容
     </a>
    </li>
@@ -384,6 +384,11 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#mermaid">
    Mermaid 语法支持
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#github-url">
+   GitHub URL 缩写
   </a>
  </li>
 </ul>
@@ -941,6 +946,23 @@ sequenceDiagram
    John-&gt;Bob: How about you?
    Bob--&gt;John: Jolly good!
         </div></div>
+<div class="section" id="github-url">
+<h2>GitHub URL 缩写<a class="headerlink" href="#github-url" title="永久链接至标题">¶</a></h2>
+<p>为了方面写文档时引用 GitHub 上的源代码，支持如下语法：</p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="m">*</span> <span class="na">:src:</span><span class="nv">`imperative/python/megengine/`</span>
+<span class="m">*</span> <span class="na">:docs:</span><span class="nv">`source/conf.py`</span>
+<span class="m">*</span> <span class="na">:issue:</span><span class="nv">`142`</span>
+<span class="m">*</span> <span class="na">:pr:</span><span class="nv">`148`</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master/imperative/python/megengine/">imperative/python/megengine/</a></p></li>
+<li><p><a class="reference external" href="https://github.com/MegEngine/Documentation/blob/master/source/conf.py">source/conf.py</a></p></li>
+<li><p><a class="reference external" href="https://github.com/MegEngine/MegEngine/issues/142">Issue #142</a></p></li>
+<li><p><a class="reference external" href="https://github.com/MegEngine/MegEngine/pull/148">Pull Requset #148</a></p></li>
+</ul>
+<p>该功能通过 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html">sphinx.ext.extlinks</a> 插件支持。</p>
+</div>
 </div>
 
 

@@ -1,0 +1,6 @@
+megengine.utils.comp\_graph\_tools.set\_priority\_to\_id
+========================================================
+
+.. currentmodule:: megengine.utils.comp_graph_tools
+
+.. autofunction:: set_priority_to_id

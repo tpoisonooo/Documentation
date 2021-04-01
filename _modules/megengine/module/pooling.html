@@ -231,7 +231,7 @@
         <span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">MaxPool2d</span><span class="p">(</span><span class="n">_PoolNd</span><span class="p">):</span>
+<div class="viewcode-block" id="MaxPool2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.MaxPool2d.html#megengine.module.MaxPool2d">[文档]</a><span class="k">class</span> <span class="nc">MaxPool2d</span><span class="p">(</span><span class="n">_PoolNd</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies a 2D max pooling over an input.</span>
 
@@ -276,10 +276,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">max_pool2d</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_pool2d</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="AvgPool2d"><a class="viewcode-back" href="../../../reference/api/megengine.module.AvgPool2d.html#megengine.module.AvgPool2d">[文档]</a><span class="k">class</span> <span class="nc">AvgPool2d</span><span class="p">(</span><span class="n">_PoolNd</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">AvgPool2d</span><span class="p">(</span><span class="n">_PoolNd</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Applies a 2D average pooling over an input.</span>
 
@@ -322,7 +322,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">avg_pool2d</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">avg_pool2d</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">)</span>
 </pre></div>
 
               </div>

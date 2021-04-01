@@ -1,0 +1,50 @@
+megengine.utils.network.Network
+===============================
+
+.. currentmodule:: megengine.utils.network
+
+.. autoclass:: Network
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Network.__init__
+      ~Network.add_dep_oprs
+      ~Network.add_output
+      ~Network.dump
+      ~Network.get_dep_oprs
+      ~Network.get_opr_by_name
+      ~Network.get_opr_by_type
+      ~Network.get_var_by_name
+      ~Network.get_var_receive_oprs
+      ~Network.load
+      ~Network.make_const
+      ~Network.make_input_node
+      ~Network.modify_opr_names
+      ~Network.remove_output
+      ~Network.replace_oprs
+      ~Network.replace_vars
+      ~Network.reset_batch_size
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Network.all_oprs
+      ~Network.all_oprs_dict
+      ~Network.all_vars
+      ~Network.all_vars_dict
+      ~Network.data_providers_filter
+      ~Network.dest_vars
+      ~Network.opr_filter
+      ~Network.params_filter
+      ~Network.var_filter
+   
+   

@@ -1,0 +1,6 @@
+megengine.jit.exclude\_from\_trace
+==================================
+
+.. currentmodule:: megengine.jit
+
+.. autofunction:: exclude_from_trace

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>导出序列化模型 &#8212; MegEngine 1.3.0 文档</title>
+    <title>导出模型序列化文件 &#8212; MegEngine 1.3.0 文档</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet" />
   <link href="../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
@@ -42,8 +42,8 @@
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="亚线性内存优化" href="sublinear-memory.html" />
-    <link rel="prev" title="动态图转静态图" href="trace.html" />
+    <link rel="next" title="分布式训练" href="../distributed-training.html" />
+    <link rel="prev" title="将动态图转为静态图" href="trace.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
   </head>
@@ -166,72 +166,110 @@
             <!-- Only show if we have sidebars configured, else just a small margin  -->
             <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../faq.html">
-   常见问题汇总（FAQ）
-  </a>
- </li>
+    <p class="caption">
+ <span class="caption-text">
+  安装
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../install/index.html">
-   编译、构建与安装
+   安装 MegEngine
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型开发
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="advanced-parameter-optimization.html">
+   参数优化进阶配置
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../basic-concepts/index.html">
-   基本概念
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../data-engineering/index.html">
-   数据工程
+  <a class="reference internal" href="trace.html">
+   将动态图转为静态图
   </a>
  </li>
  <li class="toctree-l1 current active">
-  <a class="reference internal" href="index.html">
-   模型开发
+  <a class="current reference internal" href="#">
+   导出模型序列化文件
   </a>
-  <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="trace.html">
-     动态图转静态图
-    </a>
-   </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     导出序列化模型
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="sublinear-memory.html">
-     亚线性内存优化
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="advanced-parameter-optimization.html">
-     参数优化进阶配置
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="distributed-training.html">
-     分布式训练
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="quantization.html">
-     量化训练
-    </a>
-   </li>
-  </ul>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  分布式训练
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../model-evaluation/index.html">
-   模型评估
+  <a class="reference internal" href="../distributed-training.html">
+   分布式训练
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型压缩
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../model-compression/quantization.html">
+   量化
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  模型部署
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../deployment/index.html">
-   模型部署
+   将模型部署到 C++ 环境
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../deployment/midout.html">
+   减少二进制文件体积
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  各类工具
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/module-stats.html">
+   参数量与计算量统计
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/runtimeopr.html">
+   RuntimeOpr 使用说明
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/graphsurgeon.html">
+   图手术操作指南
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/load-and-run.html">
+   如何使用 Load and Run（C++）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/load-and-run-py.html">
+   如何使用 Load and Run（Python）
   </a>
  </li>
 </ul>
@@ -253,20 +291,18 @@
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   模型序列化
+   常见参数配置方法
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#arg-names">
-     arg_names
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#optimize-for-inference">
-     optimize_for_inference
-    </a>
-   </li>
-  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   为导出模型添加测试用例
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimieze-for-inference-options">
+   推理优化选项表
+  </a>
  </li>
 </ul>
 
@@ -286,10 +322,11 @@
               <div>
                 
   <div class="section" id="dump">
-<span id="id1"></span><h1>导出序列化模型<a class="headerlink" href="#dump" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id2">
-<h2>模型序列化<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>MegEngine 依赖 trace 来序列化（<a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a> ）一个训练好的模型。并且为了把一些参数（比如卷积层的卷积核等）固化下来，需要在 trace 中多指定一项 <code class="docutils literal notranslate"><span class="pre">capture_as_const</span> <span class="pre">=</span> <span class="pre">True</span></code>。之后调用 <code class="docutils literal notranslate"><span class="pre">dump</span></code> 函数即可把模型序列化到一个文件或者文件对象中。如：</p>
+<span id="id1"></span><h1>导出模型序列化文件<a class="headerlink" href="#dump" title="永久链接至标题">¶</a></h1>
+<p>MegEngine 依赖 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 来序列化（<a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a> ）一个训练好的模型。
+并且为了把一些参数（比如卷积层的卷积核等）固化下来，
+需要在 <a class="reference internal" href="../../reference/api/megengine.jit.trace.html#megengine.jit.trace" title="megengine.jit.trace"><code class="xref py py-class docutils literal notranslate"><span class="pre">trace</span></code></a> 中多指定一项 <code class="docutils literal notranslate"><span class="pre">capture_as_const</span> <span class="pre">=</span> <span class="pre">True</span></code> .
+之后调用 <a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a> 方法即可把模型序列化到一个文件或者文件对象中。如：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">tensor</span>
 
 <span class="nd">@jit</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">capture_as_const</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -300,16 +337,19 @@
 <span class="n">f</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;test.mge&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">dump</span></code> 函数可接受多个参数，其中最常用的有如下两个。</p>
-<div class="section" id="arg-names">
-<h3>arg_names<a class="headerlink" href="#arg-names" title="永久链接至标题">¶</a></h3>
-<p>在序列化的时候统一设置模型输入 Tensor 的名字。由于不同的模型的差异，会导致输入 Tensor 的名字千差万别。
+<div class="section" id="id2">
+<h2>常见参数配置方法<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p><a class="reference internal" href="../../reference/api/megengine.jit.trace.dump.html#megengine.jit.trace.dump" title="megengine.jit.trace.dump"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code></a> 函数可接受多个参数，其中最常用的有如下两个：</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">arg_names</span></code></dt><dd><p>在序列化的时候统一设置模型输入 Tensor 的名字。由于不同的模型的差异，会导致输入 Tensor 的名字千差万别。
 为了减少理解和使用难度，可使用此参数统一设置模型输入为诸如 <code class="docutils literal notranslate"><span class="pre">arg_0</span></code>, <code class="docutils literal notranslate"><span class="pre">arg_1</span></code>, …</p>
-</div>
-<div class="section" id="optimize-for-inference">
-<h3>optimize_for_inference<a class="headerlink" href="#optimize-for-inference" title="永久链接至标题">¶</a></h3>
-<p>训练出的模型往往在部署时不能发挥最优的性能，而我们提供 <code class="docutils literal notranslate"><span class="pre">optimize_for_inference</span></code> 来保证序列化出的模型是经过特定优化的。详细的键值参数可见 <code class="xref py py-meth docutils literal notranslate"><span class="pre">dump</span></code>。
-使用上面的例子，通过指定 <cite>enable_io16xc32</cite> 来设置模型输入输出的 Tensor 的精度为 float16，但是运算的 Tensor 精度为 float32。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">optimize_for_inference</span></code></dt><dd><p>训练出的模型往往在部署时不能发挥最优的性能，
+而我们提供 <code class="docutils literal notranslate"><span class="pre">optimize_for_inference</span></code> 来保证序列化出的模型是经特定优化的。
+详细的键值参数可见 <a class="reference internal" href="#optimieze-for-inference-options"><span class="std std-ref">推理优化选项表</span></a> .</p>
+</dd>
+</dl>
+<p>使用上面的例子，通过指定 <code class="docutils literal notranslate"><span class="pre">enable_io16xc32</span></code> 来设置模型输入输出的 Tensor 的精度为 float16，但是运算的 Tensor 精度为 float32 .</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">megengine.core.tensor</span> <span class="kn">import</span> <span class="n">megbrain_graph</span> <span class="k">as</span> <span class="n">G</span>
 
 <span class="n">f</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="s2">&quot;test.mge&quot;</span><span class="p">,</span> <span class="n">enable_io16xc32</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -319,9 +359,96 @@
 <span class="k">assert</span> <span class="n">computing_input</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float16</span>
 </pre></div>
 </div>
-<p>值得注意的是，optimize_for_inference 参数默认是 True，
+<p>值得注意的是，<code class="docutils literal notranslate"><span class="pre">optimize_for_inference</span></code> 参数默认是 <code class="docutils literal notranslate"><span class="pre">True</span></code> ，
 所以即使不给任何键值优化参数，仍然会做一些基础的优化操作，这会导致序列化出来的模型相较之前的定义有细微的差别。</p>
 </div>
+<div class="section" id="id3">
+<h2>为导出模型添加测试用例<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在上一步，我们已经得到了序列化模型，假定为 <code class="docutils literal notranslate"><span class="pre">model</span></code> .
+在 <a class="reference external" href="https://github.com/MegEngine/MegEngine/blob/master//sdk/load-and-run/">/sdk/load-and-run/</a> 中，提供了 <code class="docutils literal notranslate"><span class="pre">dump_with_testcase_mge.py</span></code> 脚本，
+可进一步输出带测试用例的模型，其基本使用方法如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">dump_with_testcase_mge</span><span class="o">.</span><span class="n">py</span> <span class="n">model</span> <span class="o">-</span><span class="n">d</span> <span class="n">input_description</span> <span class="o">-</span><span class="n">o</span> <span class="n">model_with_testcases</span>
+</pre></div>
+</div>
+<p>其可用参数如下：</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">input</span></code></dt><dd><p><strong>必须参数</strong> ，执行需要添加输入的MegEngine模型文件地址</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-d</span> <span class="pre">--data</span></code></dt><dd><p><strong>必须参数</strong> ，指定模型的输入数据，指定方法为：<code class="docutils literal notranslate"><span class="pre">&lt;input0</span> <span class="pre">name&gt;:&lt;data0&gt;;&lt;input1</span> <span class="pre">name&gt;:&lt;data1&gt;...</span></code>
+当模型只有一个输入，则可以省略 input 的名字。数据支持以下三种类型——</p>
+<ol class="arabic">
+<li><p>使用随机数据，以 “#rand” 开头：</p>
+<ul class="simple">
+<li><p>仅指定输入数据的最大最小值，其中 shape 由输入模型推出：–data #rand(0,255)</p></li>
+<li><p>指定输入数据的最大最小值和 batchsize，其中 shape 由输入模型推出
+（注意省略号不可省略）：–data #rand(0,255,1,…)</p></li>
+<li><p>指定输入数据的全部维度：–data #rand(0,255,1,3,224,224)</p></li>
+</ul>
+</li>
+<li><p>使用图片或者 <code class="docutils literal notranslate"><span class="pre">npy</span></code> 文件：</p>
+<ul class="simple">
+<li><p>使用图片：–data image.png</p></li>
+<li><p>使用 npy：–data image.npy</p></li>
+</ul>
+</li>
+<li><p>使用包含多条数据的文本文件，以 “&#64;” 开头，文件中的每一行都符合上面两种形式：–data image.txt</p>
+<p>image.txt里面的内容可能是这样的：</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>var0:image0.png;va1:image1.npy
+var0:#rand(0,255);var1:image2.png
+</pre></div>
+</div>
+</li>
+</ol>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">--output</span></code></dt><dd><p><strong>必需参数</strong> ，指定输出模型地址</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--repeat</span></code></dt><dd><p>默认值为 1，指定 -d 传递的输入数据会重复多少份，常用于性能测试。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--silent</span></code></dt><dd><p>默认为 false，在启用推理正确性检查的时候，是否输出更加简洁的检查信息。比如说展示误差最大值。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--optimize-for-inference</span></code></dt><dd><p>默认为 false，是否开启计算图优化，经过优化后的图结构可能会发生改变，但是可以获得更好地推理性能，
+详见 <a class="reference internal" href="#optimieze-for-inference-options"><span class="std std-ref">推理优化选项表</span></a> 。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--no-assert</span></code></dt><dd><p>默认为 false，是否禁用推理正确性检查，常用于性能测试。
+assert 比较的对象为：输入模型 + 输入数据的推理结果 VS 输出模型（此时数据已纳入模型中）的推理结果。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--maxerr</span></code></dt><dd><p>默认为 1e-4，在开启推理正确性检查时允许的最大误差。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--resize-input</span></code></dt><dd><p>默认为 false，是否采用 cv2 库把输入图片的尺寸 resize 到模型要求的输入尺寸。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--input-transform</span></code></dt><dd><p>可选参数，有用户指定的一行 python 代码，用于操作输入数据。比如 <code class="docutils literal notranslate"><span class="pre">data/np.std(data)</span></code> .</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--discard-var-name</span></code></dt><dd><p>默认为 false，是否丢弃输入模型的变量 (varnode) 和参数 (param) 的名字。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--output-strip-info</span></code></dt><dd><p>默认为 false，是否保存模型的输出信息到 JSON 文件，默认路径为输出模型名 + “.json” .
+文件中包含模型 hash 码，所有输出的 opr 类型和计算数据类型。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="optimieze-for-inference-options">
+<span id="id4"></span><h2>推理优化选项表<a class="headerlink" href="#optimieze-for-inference-options" title="永久链接至标题">¶</a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-io16xc32</span></code></dt><dd><p>采用 float16 作为算子之间的数据传输类型，使用 float32 作为计算类型。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-ioc16</span></code></dt><dd><p>采用 float16 作为算子之间的数据传输类型以及计算类型。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-fuse-conv-bias-nonlinearity</span></code></dt><dd><p>是否融合 conv+bias+nonlinearity。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enalbe-hwcd4</span></code></dt><dd><p>采用 hwcd4 数据布局。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-nchw88</span></code></dt><dd><p>采用 nchw88 数据布局。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-nchw44</span></code></dt><dd><p>采用 nchw44 数据布局。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-nchw44-dot</span></code></dt><dd><p>采用 nchw44_dot 数据布局。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-nchw32</span></code></dt><dd><p>采用 nchw32 数据布局。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-chwn4</span></code></dt><dd><p>采用 chwn4 数据布局。</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--enable-fuse-conv-bias-with-z</span></code></dt><dd><p>仅在使用 GPU 平台下可用，把 conv，bias (elemwise add)，z(elemwise add) 融合成一个算子。</p>
+</dd>
+</dl>
 </div>
 </div>
 

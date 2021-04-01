@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.utils.module_stats &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "_modules/megengine/utils/module_stats.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.utils.module_stats 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tabulate</span>
+
+<span class="kn">import</span> <span class="nn">megengine</span> <span class="k">as</span> <span class="nn">mge</span>
+<span class="kn">import</span> <span class="nn">megengine.core.tensor.dtype</span> <span class="k">as</span> <span class="nn">dtype</span>
+<span class="kn">import</span> <span class="nn">megengine.module</span> <span class="k">as</span> <span class="nn">m</span>
+<span class="kn">import</span> <span class="nn">megengine.module.qat</span> <span class="k">as</span> <span class="nn">qatm</span>
+<span class="kn">import</span> <span class="nn">megengine.module.quantized</span> <span class="k">as</span> <span class="nn">qm</span>
+<span class="kn">from</span> <span class="nn">megengine.functional.tensor</span> <span class="kn">import</span> <span class="n">zeros</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mge</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">MegEngineLogFormatter</span><span class="o">.</span><span class="n">max_lines</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;set logger max lines failed&quot;</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">mge</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+
+
+<span class="n">CALC_FLOPS</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">_register_modules</span><span class="p">(</span><span class="o">*</span><span class="n">modules</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">impl</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+            <span class="n">CALC_FLOPS</span><span class="p">[</span><span class="n">module</span><span class="p">]</span> <span class="o">=</span> <span class="n">impl</span>
+        <span class="k">return</span> <span class="n">impl</span>
+
+    <span class="k">return</span> <span class="n">callback</span>
+
+
+<span class="nd">@_register_modules</span><span class="p">(</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">,</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">LocalConv2d</span><span class="p">,</span>
+    <span class="n">qm</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span>
+    <span class="n">qm</span><span class="o">.</span><span class="n">ConvRelu2d</span><span class="p">,</span>
+    <span class="n">qm</span><span class="o">.</span><span class="n">ConvBn2d</span><span class="p">,</span>
+    <span class="n">qm</span><span class="o">.</span><span class="n">ConvBnRelu2d</span><span class="p">,</span>
+    <span class="n">qatm</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span>
+    <span class="n">qatm</span><span class="o">.</span><span class="n">ConvRelu2d</span><span class="p">,</span>
+    <span class="n">qatm</span><span class="o">.</span><span class="n">ConvBn2d</span><span class="p">,</span>
+    <span class="n">qatm</span><span class="o">.</span><span class="n">ConvBnRelu2d</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">count_convNd</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+    <span class="n">bias</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">groups</span>
+    <span class="n">ic</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">oc</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">goc</span> <span class="o">=</span> <span class="n">oc</span> <span class="o">//</span> <span class="n">group</span>
+    <span class="n">gic</span> <span class="o">=</span> <span class="n">ic</span> <span class="o">//</span> <span class="n">group</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">HW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+    <span class="c1"># N x Cout x H x W x  (Cin x Kw x Kh + bias)</span>
+    <span class="k">return</span> <span class="n">N</span> <span class="o">*</span> <span class="n">HW</span> <span class="o">*</span> <span class="n">goc</span> <span class="o">*</span> <span class="p">(</span><span class="n">gic</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span> <span class="o">+</span> <span class="n">bias</span><span class="p">)</span>
+
+
+<span class="nd">@_register_modules</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">count_deconvNd</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+
+
+<span class="nd">@_register_modules</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">Linear</span><span class="p">,</span> <span class="n">qatm</span><span class="o">.</span><span class="n">Linear</span><span class="p">,</span> <span class="n">qm</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">count_linear</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">module</span><span class="o">.</span><span class="n">in_features</span>
+
+
+<span class="c1"># does not need import qat and quantized module since they inherit from float module.</span>
+<span class="n">hook_modules</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">,</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">,</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">LocalConv2d</span><span class="p">,</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">,</span>
+    <span class="n">m</span><span class="o">.</span><span class="n">Linear</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">dict2table</span><span class="p">(</span><span class="n">list_of_dict</span><span class="p">,</span> <span class="n">header</span><span class="p">):</span>
+    <span class="n">table_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">list_of_dict</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">header</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">table_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">table_data</span>
+
+
+<span class="k">def</span> <span class="nf">sizeof_fmt</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Ki&quot;</span><span class="p">,</span> <span class="s2">&quot;Mi&quot;</span><span class="p">,</span> <span class="s2">&quot;Gi&quot;</span><span class="p">,</span> <span class="s2">&quot;Ti&quot;</span><span class="p">,</span> <span class="s2">&quot;Pi&quot;</span><span class="p">,</span> <span class="s2">&quot;Ei&quot;</span><span class="p">,</span> <span class="s2">&quot;Zi&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:3.3f}</span><span class="s2"> </span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">num</span> <span class="o">/=</span> <span class="mf">1024.0</span>
+    <span class="n">sign_str</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span> <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}{:.1f}</span><span class="s2"> </span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sign_str</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="s2">&quot;Yi&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">print_flops_stats</span><span class="p">(</span><span class="n">flops</span><span class="p">,</span> <span class="n">bar_length_max</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">flops_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="s2">&quot;flops_num&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flops</span><span class="p">]</span>
+    <span class="n">max_flops_num</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">flops_list</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># calc total flops and set flops_cum</span>
+    <span class="n">total_flops_num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">flops</span><span class="p">:</span>
+        <span class="n">total_flops_num</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;flops_num&quot;</span><span class="p">])</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;flops_cum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sizeof_fmt</span><span class="p">(</span><span class="n">total_flops_num</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;OPs&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flops</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;flops_num&quot;</span><span class="p">]</span>
+        <span class="n">i</span><span class="p">[</span><span class="s2">&quot;flops&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sizeof_fmt</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;OPs&quot;</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span> <span class="o">/</span> <span class="n">total_flops_num</span>
+        <span class="n">i</span><span class="p">[</span><span class="s2">&quot;percentage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">bar_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span> <span class="o">/</span> <span class="n">max_flops_num</span> <span class="o">*</span> <span class="n">bar_length_max</span><span class="p">)</span>
+        <span class="n">i</span><span class="p">[</span><span class="s2">&quot;bar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="n">bar_length</span>
+
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;class_name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;input_shapes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;output_shapes&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flops&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;flops_cum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;percentage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bar&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">total_flops_str</span> <span class="o">=</span> <span class="n">sizeof_fmt</span><span class="p">(</span><span class="n">total_flops_num</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;OPs&quot;</span><span class="p">)</span>
+    <span class="n">total_var_size</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="nb">sum</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">i</span><span class="p">[</span><span class="s2">&quot;output_shapes&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flops</span>
+    <span class="p">)</span>
+    <span class="n">flops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">flops</span><span class="o">=</span><span class="n">total_flops_str</span><span class="p">,</span> <span class="n">output_shapes</span><span class="o">=</span><span class="n">total_var_size</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;flops stats: </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="n">dict2table</span><span class="p">(</span><span class="n">flops</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">total_flops_num</span>
+
+
+<span class="k">def</span> <span class="nf">print_params_stats</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">bar_length_max</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">total_param_dims</span><span class="p">,</span> <span class="n">total_param_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="n">total_param_dims</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;param_dim&quot;</span><span class="p">])</span>
+        <span class="n">total_param_size</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sizeof_fmt</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">])</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;size_cum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sizeof_fmt</span><span class="p">(</span><span class="n">total_param_size</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;param_dim&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_param_dims</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ratio</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;percentage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ratio</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># construct bar</span>
+    <span class="n">max_ratio</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">params</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="n">bar_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;ratio&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">max_ratio</span> <span class="o">*</span> <span class="n">bar_length_max</span><span class="p">)</span>
+        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;size_bar&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="n">bar_length</span>
+
+    <span class="n">param_size</span> <span class="o">=</span> <span class="n">sizeof_fmt</span><span class="p">(</span><span class="n">total_param_size</span><span class="p">)</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;total&quot;</span><span class="p">,</span> <span class="n">param_dim</span><span class="o">=</span><span class="n">total_param_dims</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">param_size</span><span class="p">,))</span>
+
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;shape&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mean&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;std&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;param_dim&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bits&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;size_cum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;percentage&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;size_bar&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s2">&quot;param stats: </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="n">dict2table</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_param_size</span>
+
+
+<div class="viewcode-block" id="module_stats"><a class="viewcode-back" href="../../../reference/api/megengine.utils.module_stats.module_stats.html#megengine.utils.module_stats.module_stats">[文档]</a><span class="k">def</span> <span class="nf">module_stats</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">input_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">bar_length_max</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">log_params</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">log_flops</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate and print ``model``&#39;s statistics by adding hook and record Module&#39;s inputs outputs size.</span>
+
+<span class="sd">    :param model: model that need to get stats info.</span>
+<span class="sd">    :param input_size: size of input for running model and calculating stats.</span>
+<span class="sd">    :param bar_length_max: size of bar indicating max flops or parameter size in net stats.</span>
+<span class="sd">    :param log_params: whether print and record params size.</span>
+<span class="sd">    :param log_flops: whether print and record op flops.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_byteswidth</span><span class="p">(</span><span class="n">tensor</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dtype</span><span class="o">.</span><span class="n">is_quantize</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="c1"># elif dtype.is_bfloat16(tensor.dtype):</span>
+        <span class="c1">#      return 2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">4</span>
+
+    <span class="k">def</span> <span class="nf">module_stats_hook</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">flops_fun</span> <span class="o">=</span> <span class="n">CALC_FLOPS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">module</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">flops_fun</span><span class="p">):</span>
+            <span class="n">flops_num</span> <span class="o">=</span> <span class="n">flops_fun</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="n">output</span><span class="p">]</span>
+
+            <span class="n">flops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">class_name</span><span class="o">=</span><span class="n">class_name</span><span class="p">,</span>
+                    <span class="n">input_shapes</span><span class="o">=</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">input</span><span class="p">],</span>
+                    <span class="n">output_shapes</span><span class="o">=</span><span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">output</span><span class="p">],</span>
+                    <span class="n">flops_num</span><span class="o">=</span><span class="n">flops_num</span><span class="p">,</span>
+                    <span class="n">flops_cum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">module</span><span class="o">.</span><span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">weight</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            <span class="n">param_dim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">param_bytes</span> <span class="o">=</span> <span class="n">get_byteswidth</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                    <span class="n">param_dim</span><span class="o">=</span><span class="n">param_dim</span><span class="p">,</span>
+                    <span class="n">bits</span><span class="o">=</span><span class="n">param_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+                    <span class="n">size</span><span class="o">=</span><span class="n">param_dim</span> <span class="o">*</span> <span class="n">param_bytes</span><span class="p">,</span>
+                    <span class="n">size_cum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">mean</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{:.2g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span>
+                    <span class="n">std</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{:.2g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">std</span><span class="p">()),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;bias&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">module</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">bias</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            <span class="n">param_dim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">param_bytes</span> <span class="o">=</span> <span class="n">get_byteswidth</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;-b&quot;</span><span class="p">,</span>
+                    <span class="n">shape</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                    <span class="n">param_dim</span><span class="o">=</span><span class="n">param_dim</span><span class="p">,</span>
+                    <span class="n">bits</span><span class="o">=</span><span class="n">param_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+                    <span class="n">size</span><span class="o">=</span><span class="n">param_dim</span> <span class="o">*</span> <span class="n">param_bytes</span><span class="p">,</span>
+                    <span class="n">size_cum</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">mean</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{:.2g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span>
+                    <span class="n">std</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{:.2g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">std</span><span class="p">()),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+    <span class="c1"># multiple inputs to the network</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">input_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_size</span><span class="p">]</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">flops</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">hooks</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">named_modules</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">hook_modules</span><span class="p">):</span>
+            <span class="n">hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">module</span><span class="o">.</span><span class="n">register_forward_hook</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">module_stats_hook</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+            <span class="p">)</span>
+
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">zeros</span><span class="p">(</span><span class="n">in_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">in_size</span> <span class="ow">in</span> <span class="n">input_size</span><span class="p">]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hooks</span><span class="p">:</span>
+        <span class="n">h</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+
+    <span class="n">total_flops</span><span class="p">,</span> <span class="n">total_params</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">log_params</span><span class="p">:</span>
+        <span class="n">total_params</span> <span class="o">=</span> <span class="n">print_params_stats</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">bar_length_max</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">log_flops</span><span class="p">:</span>
+        <span class="n">total_flops</span> <span class="o">=</span> <span class="n">print_flops_stats</span><span class="p">(</span><span class="n">flops</span><span class="p">,</span> <span class="n">bar_length_max</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">total_params</span><span class="p">,</span> <span class="n">total_flops</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

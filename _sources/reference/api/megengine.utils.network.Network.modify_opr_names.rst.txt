@@ -1,0 +1,6 @@
+megengine.utils.network.Network.modify\_opr\_names
+==================================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.modify_opr_names

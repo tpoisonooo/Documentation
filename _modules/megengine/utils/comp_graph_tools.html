@@ -1,0 +1,659 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>megengine.utils.comp_graph_tools &#8212; MegEngine 1.3.0 文档</title>
+    
+  <link href="../../../_static/css/theme.css" rel="stylesheet" />
+  <link href="../../../_static/css/index.93dda2a1e4f2b831d8345b5b3dbee4ea.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.3c6125c0ae68274ddd1b.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/translations.js"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+    <script src="../../../_static/js/custom.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+
+    
+      
+      <a class="navbar-brand" href="../../../index.html">
+        <img src="../../../_static/logo.png" class="logo" alt="logo">
+      </a>
+      
+    
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../getting-started/index.html">
+  新手入门
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../user-guide/index.html">
+  用户指南
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../reference/index.html">
+  API 参考
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../development/index.html">
+  开发者指南
+ </a>
+</li>
+
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://discuss.megengine.org.cn/">论坛<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+        <li class="nav-item">
+            <a class="nav-link nav-external" href="https://megengine.org.cn/">官网<i class="fas fa-external-link-alt"></i></a>
+        </li>
+        
+      </ul>
+
+      <form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="输入搜索文本..." aria-label="输入搜索文本..." autocomplete="off" >
+</form>
+      <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/MegEngine/MegEngine" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+      </ul>
+
+      <script type="text/javascript">
+  (function () {
+    window.versionSwitcher = {
+      pageName: "_modules/megengine/utils/comp_graph_tools.html",
+      versionJsonUrl: "/doc/version.json",
+      enableLocaleSupport: "True" === "True",
+      // TODO read from "zh, en"
+      allLocales: [
+        {
+          "locale": "zh",
+          "display": "中文"
+        },
+        {
+          "locale": "en",
+          "display": "EN"
+        }
+      ]
+    }
+  })();
+</script>
+
+<ul class="navbar-nav">
+  <li class="nav-item dropdown">
+    <button id="version-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <!-- placeholder for javascript filling above -->
+    </button>
+    <div id="version-menu" class="dropdown-menu" style="min-width: 6rem;">
+      <!-- placeholder for javascript filling above -->
+    </div>
+  </li>
+  <li class="nav-item">
+    <span id="locale-switcher">
+      <!-- placeholder for locale switcher -->
+    </span>
+  </li>
+</ul>
+      
+        </li>
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>megengine.utils.comp_graph_tools 源代码</h1><div class="highlight"><pre>
+<span></span><span class="c1"># MegEngine is Licensed under the Apache License, Version 2.0 (the &quot;License&quot;)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2021 Megvii Inc. All rights reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing,</span>
+<span class="c1"># software distributed under the License is distributed on an</span>
+<span class="c1"># &quot;AS IS&quot; BASIS, WITHOUT ARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="kn">import</span> <span class="n">_imperative_rt</span>
+<span class="kn">from</span> <span class="nn">..core._imperative_rt</span> <span class="kn">import</span> <span class="n">GraphProfiler</span>
+<span class="kn">from</span> <span class="nn">..core._imperative_rt</span> <span class="kn">import</span> <span class="n">OperatorNode</span> <span class="k">as</span> <span class="n">_OpNode</span>
+<span class="kn">from</span> <span class="nn">..core._imperative_rt</span> <span class="kn">import</span> <span class="n">VarNode</span> <span class="k">as</span> <span class="n">_VarNode</span>
+<span class="kn">from</span> <span class="nn">..core.tensor</span> <span class="kn">import</span> <span class="n">megbrain_graph</span> <span class="k">as</span> <span class="n">G</span>
+<span class="kn">from</span> <span class="nn">..core.tensor.megbrain_graph</span> <span class="kn">import</span> <span class="n">set_priority_to_id</span>
+<span class="kn">from</span> <span class="nn">..tensor</span> <span class="kn">import</span> <span class="n">Tensor</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;get_dep_vars&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_owner_opr_inputs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_owner_opr_type&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_opr_type&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;graph_traversal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;get_oprs_seq&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;replace_vars&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;replace_oprs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;set_priority_to_id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GraphInference&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_dep_vars"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.get_dep_vars.html#megengine.utils.comp_graph_tools.get_dep_vars">[文档]</a><span class="k">def</span> <span class="nf">get_dep_vars</span><span class="p">(</span>
+    <span class="n">var</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]],</span> <span class="n">var_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns :class:`.tensor.core.megbrain_graph.VarNode` of type ``var_type`` that input ``var``</span>
+<span class="sd">    depands on. If ``var_type`` is None, returns all types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">):</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">var_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">var_type</span> <span class="o">=</span> <span class="p">[</span><span class="n">var_type</span><span class="p">]</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">memo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">get_owner_opr_inputs</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">var_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">get_owner_opr_type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">var_type</span><span class="p">:</span>
+                <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">outputs</span></div>
+
+
+<div class="viewcode-block" id="get_owner_opr_inputs"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.get_owner_opr_inputs.html#megengine.utils.comp_graph_tools.get_owner_opr_inputs">[文档]</a><span class="k">def</span> <span class="nf">get_owner_opr_inputs</span><span class="p">(</span><span class="n">var</span><span class="p">:</span> <span class="n">_VarNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets the inputs of owner opr of a variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">var</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">inputs</span></div>
+
+
+<div class="viewcode-block" id="get_owner_opr_type"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.get_owner_opr_type.html#megengine.utils.comp_graph_tools.get_owner_opr_type">[文档]</a><span class="k">def</span> <span class="nf">get_owner_opr_type</span><span class="p">(</span><span class="n">var</span><span class="p">:</span> <span class="n">_VarNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets the type of owner opr of a variable.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">var</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">type</span></div>
+
+
+<div class="viewcode-block" id="get_opr_type"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.get_opr_type.html#megengine.utils.comp_graph_tools.get_opr_type">[文档]</a><span class="k">def</span> <span class="nf">get_opr_type</span><span class="p">(</span><span class="n">opr</span><span class="p">:</span> <span class="n">_OpNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets the type of an opr.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">opr</span><span class="p">,</span> <span class="n">_OpNode</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">opr</span><span class="o">.</span><span class="n">type</span></div>
+
+
+<div class="viewcode-block" id="graph_traversal"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.graph_traversal.html#megengine.utils.comp_graph_tools.graph_traversal">[文档]</a><span class="k">def</span> <span class="nf">graph_traversal</span><span class="p">(</span><span class="n">outputs</span><span class="p">:</span> <span class="n">_VarNode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper function to traverse the computing graph and return enough useful information.</span>
+
+<span class="sd">    :param outputs: model outputs.</span>
+<span class="sd">    :return:  tuple (map_oprs, map_vars, var2oprs, opr2receivers, indegree2opr, opr2indegree)</span>
+<span class="sd">        WHERE</span>
+<span class="sd">        map_oprs is dict from opr_id to actual opr</span>
+<span class="sd">        map_vars is dict from var_id to actual var</span>
+<span class="sd">        var2oprs is dict from var to dest oprs along with index</span>
+<span class="sd">        opr2receivers is dict from current opr to next opr</span>
+<span class="sd">        indegree2opr is dict from in_degree to opr in computing graph</span>
+<span class="sd">        opr2indegree is dict from opr in computing graph to in_degree</span>
+
+<span class="sd">        (indegree2opr, opr2indegree) are only used in topological sort in get_oprs_seq function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># meta information for comp graph</span>
+    <span class="n">map_oprs</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">map_vars</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+
+    <span class="n">var2oprs</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">opr2receivers</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="n">queue</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)))</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">queue</span><span class="p">))</span>
+
+    <span class="c1"># iterate through whole comp_graph, fill in meta information</span>
+    <span class="n">indegree2opr</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">opr2indegree</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
+        <span class="n">cur_opr</span> <span class="o">=</span> <span class="n">queue</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">map_oprs</span><span class="p">[</span><span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_opr</span>
+
+        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">indegree</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">var_idx</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cur_opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">):</span>
+            <span class="n">map_vars</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span>
+            <span class="n">var2oprs</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">))</span>
+
+            <span class="n">pre_opr</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">owner</span>
+
+            <span class="k">if</span> <span class="n">pre_opr</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pre_opr</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pre_opr</span><span class="p">)</span>
+
+            <span class="n">indegree</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">opr2receivers</span><span class="p">[</span><span class="n">pre_opr</span><span class="o">.</span><span class="n">id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="n">indegree2opr</span><span class="p">[</span><span class="n">indegree</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">opr2indegree</span><span class="p">[</span><span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">indegree</span>
+
+    <span class="k">return</span> <span class="n">map_oprs</span><span class="p">,</span> <span class="n">map_vars</span><span class="p">,</span> <span class="n">var2oprs</span><span class="p">,</span> <span class="n">opr2receivers</span><span class="p">,</span> <span class="n">indegree2opr</span><span class="p">,</span> <span class="n">opr2indegree</span></div>
+
+
+<div class="viewcode-block" id="get_oprs_seq"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.get_oprs_seq.html#megengine.utils.comp_graph_tools.get_oprs_seq">[文档]</a><span class="k">def</span> <span class="nf">get_oprs_seq</span><span class="p">(</span>
+    <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">prune_reshape</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prune_immtensor</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">_OpNode</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets oprs in some topological order for a dumped model.</span>
+
+<span class="sd">    :param outputs: model outputs.</span>
+<span class="sd">    :param prune_reshape: whether to prune the useless operators used by Reshape opr during inference.</span>
+<span class="sd">    :param prune_immtensor: whether to prune the ImmutableTensor opr.</span>
+<span class="sd">    :return: opr list with some correct execution order.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">topological_sort</span><span class="p">(</span><span class="n">map_oprs</span><span class="p">,</span> <span class="n">opr2receivers</span><span class="p">,</span> <span class="n">indegree2opr</span><span class="p">,</span> <span class="n">opr2indegree</span><span class="p">):</span>
+        <span class="c1"># generate an execution order with topological sort algorithm</span>
+        <span class="n">oprs_seq</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">nr_remain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">map_oprs</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">indegree2opr</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">opr_id</span> <span class="o">=</span> <span class="n">indegree2opr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">opr</span> <span class="o">=</span> <span class="n">map_oprs</span><span class="p">[</span><span class="n">opr_id</span><span class="p">]</span>
+            <span class="n">nr_remain</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">opr</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;ImmutableTensor&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">prune_immtensor</span><span class="p">:</span>
+                <span class="n">oprs_seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opr</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">post_id</span> <span class="ow">in</span> <span class="n">opr2receivers</span><span class="p">[</span><span class="n">opr_id</span><span class="p">]:</span>
+                <span class="n">indegree</span> <span class="o">=</span> <span class="n">opr2indegree</span><span class="p">[</span><span class="n">post_id</span><span class="p">]</span>
+                <span class="n">indegree2opr</span><span class="p">[</span><span class="n">indegree</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
+
+                <span class="n">indegree</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">indegree2opr</span><span class="p">[</span><span class="n">indegree</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">post_id</span><span class="p">)</span>
+                <span class="n">opr2indegree</span><span class="p">[</span><span class="n">post_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">indegree</span>
+
+        <span class="k">assert</span> <span class="n">nr_remain</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;there are </span><span class="si">{}</span><span class="s2"> remaining nodes; cyclic graph?&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">nr_remain</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">oprs_seq</span>
+
+    <span class="c1"># reshape op definition: reshape(input_tensor, dest_shape) -&gt; output_tensor</span>
+    <span class="c1"># when inferencing, shape of output_tensor is already known, so one can prune some operators related to dest_shape in the loaded graph</span>
+    <span class="k">def</span> <span class="nf">prune_reshape_oprs</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">oprs_seq</span><span class="p">,</span> <span class="n">var2oprs</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">iterative_pruning</span><span class="p">(</span><span class="n">cur_opr</span><span class="p">,</span> <span class="n">post_opr</span><span class="p">,</span> <span class="n">marked_opr_ids</span><span class="p">,</span> <span class="n">visited</span><span class="p">):</span>
+            <span class="n">useless</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">oup</span> <span class="ow">in</span> <span class="n">cur_opr</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;workspace&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">oup</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="n">var_idx</span> <span class="o">=</span> <span class="n">post_opr</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">oup</span><span class="p">)</span>
+                    <span class="n">var2oprs</span><span class="p">[</span><span class="n">oup</span><span class="o">.</span><span class="n">id</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">post_opr</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">var_idx</span><span class="p">))</span>
+                    <span class="n">useless</span> <span class="o">=</span> <span class="n">useless</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">var2oprs</span><span class="p">[</span><span class="n">oup</span><span class="o">.</span><span class="n">id</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">useless</span><span class="p">:</span>
+                <span class="n">marked_opr_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">opr</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">([</span><span class="n">var</span><span class="o">.</span><span class="n">owner</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">cur_opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">]):</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">opr</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                        <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">opr</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">cur_opr</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                        <span class="n">iterative_pruning</span><span class="p">(</span><span class="n">opr</span><span class="p">,</span> <span class="n">cur_opr</span><span class="p">,</span> <span class="n">marked_opr_ids</span><span class="p">,</span> <span class="n">visited</span><span class="p">)</span>
+
+        <span class="n">reshape_vars</span> <span class="o">=</span> <span class="n">get_dep_vars</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="s2">&quot;Reshape&quot;</span><span class="p">)</span>
+        <span class="n">reshape_oprs</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">owner</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">reshape_vars</span><span class="p">]</span>
+
+        <span class="n">marked_opr_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">reshape_opr</span> <span class="ow">in</span> <span class="n">reshape_oprs</span><span class="p">:</span>
+            <span class="n">iterative_pruning</span><span class="p">(</span>
+                <span class="n">reshape_opr</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span> <span class="n">reshape_opr</span><span class="p">,</span> <span class="n">marked_opr_ids</span><span class="p">,</span> <span class="n">visited</span>
+            <span class="p">)</span>
+
+        <span class="c1"># filter out all marked oprs</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">marked_opr_ids</span><span class="p">,</span> <span class="n">oprs_seq</span><span class="p">))</span>
+
+    <span class="n">map_oprs</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">var2oprs</span><span class="p">,</span> <span class="n">opr2receivers</span><span class="p">,</span> <span class="n">indegree2opr</span><span class="p">,</span> <span class="n">opr2indegree</span> <span class="o">=</span> <span class="n">graph_traversal</span><span class="p">(</span>
+        <span class="n">outputs</span>
+    <span class="p">)</span>
+    <span class="n">oprs_seq</span> <span class="o">=</span> <span class="n">topological_sort</span><span class="p">(</span><span class="n">map_oprs</span><span class="p">,</span> <span class="n">opr2receivers</span><span class="p">,</span> <span class="n">indegree2opr</span><span class="p">,</span> <span class="n">opr2indegree</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">prune_reshape</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">oprs_seq</span> <span class="o">=</span> <span class="n">prune_reshape_oprs</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">oprs_seq</span><span class="p">,</span> <span class="n">var2oprs</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">oprs_seq</span></div>
+
+
+<div class="viewcode-block" id="replace_vars"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.replace_vars.html#megengine.utils.comp_graph_tools.replace_vars">[文档]</a><span class="k">def</span> <span class="nf">replace_vars</span><span class="p">(</span>
+    <span class="n">dst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">varmap</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replaces vars in the graph.</span>
+
+<span class="sd">    :param dst: target vars representing the graph.</span>
+<span class="sd">    :param varmap: the map that specifies how to replace the vars.</span>
+
+<span class="sd">    :return: new vars that correspond to ``dst`` with all the dependencies</span>
+<span class="sd">        replaced.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dst_vec</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">repl_src_vec</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">repl_dst_vec</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dst</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">)</span>
+        <span class="n">dst_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">varmap</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">varmap</span><span class="p">)():</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">)</span>
+        <span class="n">repl_src_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">repl_dst_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_imperative_rt</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">_replace_vars</span><span class="p">(</span><span class="n">repl_src_vec</span><span class="p">,</span> <span class="n">repl_dst_vec</span><span class="p">,</span> <span class="n">dst_vec</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="replace_oprs"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.replace_oprs.html#megengine.utils.comp_graph_tools.replace_oprs">[文档]</a><span class="k">def</span> <span class="nf">replace_oprs</span><span class="p">(</span><span class="n">dst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">oprmap</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">_OpNode</span><span class="p">,</span> <span class="n">_OpNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replaces operators in the graph.</span>
+
+<span class="sd">    :param dst: target vars representing the graph.</span>
+<span class="sd">    :param oprmap: the map that specifies how to replace the operators.</span>
+
+<span class="sd">    :return: new vars that correspond to ``dst`` with all the dependencies</span>
+<span class="sd">        replaced.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dst_vec</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">repl_src_vec</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">repl_dst_vec</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dst</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">)</span>
+        <span class="n">dst_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">oprmap</span><span class="p">,</span> <span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">oprmap</span><span class="p">)():</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">_OpNode</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">_OpNode</span><span class="p">)</span>
+        <span class="n">repl_src_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">repl_dst_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_imperative_rt</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">_replace_oprs</span><span class="p">(</span><span class="n">repl_src_vec</span><span class="p">,</span> <span class="n">repl_dst_vec</span><span class="p">,</span> <span class="n">dst_vec</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">find_vars_by_name</span><span class="p">(</span><span class="n">dst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">names</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets VarNode list by names in the graph.</span>
+
+<span class="sd">    :param dst: target vars representing the graph.</span>
+<span class="sd">    :param names: name list for target VarNode.</span>
+
+<span class="sd">    :return: results found by names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output_names</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">all_vars</span> <span class="o">=</span> <span class="n">get_dep_vars</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span> <span class="o">+</span> <span class="n">dst</span>
+    <span class="c1"># use dict to keep outputs order the same as names.</span>
+    <span class="n">output_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_vars</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">output_names</span><span class="p">:</span>
+            <span class="n">output_dict</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">output_names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Can not find varnode </span><span class="si">{}</span><span class="s2"> in this model&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">output_names</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">output_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">convert_inputs</span><span class="p">(</span>
+    <span class="n">dst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replaces ``Host2DeviceCopy`` with :class:`~.InputNode` in the graph</span>
+<span class="sd">    to :meth:`~.InputNode.set_value` and run.</span>
+
+<span class="sd">    :param dst: target vars representing the graph.</span>
+<span class="sd">    :param inputs: indicates which inputs to be replaced. All</span>
+<span class="sd">        inputs(``Host2DeiceCopy``) will be replaced if not specified.</span>
+
+<span class="sd">    :return: new vars that correspond to ``dst`` with all inputs</span>
+<span class="sd">        replaced, and new inputs dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">inputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">get_dep_vars</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="s2">&quot;Host2DeviceCopy&quot;</span><span class="p">)</span>
+    <span class="n">input_dict</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">replace_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+        <span class="n">inp_node</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">InputNode</span><span class="p">(</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">comp_node</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">inp_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">input_dict</span><span class="p">[</span><span class="n">inp</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">inp_node</span>
+        <span class="n">replace_dict</span><span class="p">[</span><span class="n">inp</span><span class="p">]</span> <span class="o">=</span> <span class="n">inp_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">new_output_nodes</span> <span class="o">=</span> <span class="n">replace_vars</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">replace_dict</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">new_output_nodes</span><span class="p">):</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">return</span> <span class="n">new_output_nodes</span><span class="p">,</span> <span class="n">input_dict</span>
+
+
+<span class="k">def</span> <span class="nf">convert_outputs</span><span class="p">(</span><span class="n">dst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wraps ``dst`` with :class:`~.OutputNode` in the graph to get outputs</span>
+<span class="sd">    with :meth:`~.OutputNode.get_value`.</span>
+
+<span class="sd">    :param dst: target vars representing the graph.</span>
+
+<span class="sd">    :return: new vars that correspond to ``dst`` with all inputs</span>
+<span class="sd">        replaced, and outputs dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output_dict</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">OutputNode</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dst</span><span class="p">])</span>
+    <span class="n">new_output_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">output_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">new_output_nodes</span><span class="p">,</span> <span class="n">output_dict</span>
+
+
+<span class="k">def</span> <span class="nf">embed_inputs</span><span class="p">(</span>
+    <span class="n">dst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">_VarNode</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_VarNode</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Embeds ``data`` to the graph&#39;s inputs of ``dst``.</span>
+
+<span class="sd">    :param dst: target vars representing the graph.</span>
+<span class="sd">    :param data: data to be embeded.</span>
+<span class="sd">    :param inputs: indicates which inputs to be replaced. All</span>
+<span class="sd">        inputs(``Host2DeiceCopy``) will be replaced if not specified.</span>
+<span class="sd">    :return: new vars that correspond to ``dst`` with all inputs</span>
+<span class="sd">        replaced, and new inputs dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">inputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">get_dep_vars</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="s2">&quot;Host2DeviceCopy&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">input_dict</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">replace_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">inp</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">new_inp</span> <span class="o">=</span> <span class="n">_imperative_rt</span><span class="o">.</span><span class="n">make_shared</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">Tensor</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">())</span>
+        <span class="n">new_inp</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">inp</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">input_dict</span><span class="p">[</span><span class="n">inp</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_inp</span>
+        <span class="n">replace_dict</span><span class="p">[</span><span class="n">inp</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_inp</span>
+    <span class="n">new_output_nodes</span> <span class="o">=</span> <span class="n">replace_vars</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">replace_dict</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">new_output_nodes</span><span class="p">):</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">old</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">return</span> <span class="n">new_output_nodes</span><span class="p">,</span> <span class="n">input_dict</span>
+
+
+<div class="viewcode-block" id="GraphInference"><a class="viewcode-back" href="../../../reference/api/megengine.utils.comp_graph_tools.GraphInference.html#megengine.utils.comp_graph_tools.GraphInference">[文档]</a><span class="k">class</span> <span class="nc">GraphInference</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads a serialized computing graph as a GraphInference object which can be used</span>
+<span class="sd">    to execute the computing graph.</span>
+
+<span class="sd">    :param file: could be file object or filename.</span>
+<span class="sd">    :param outputs: only compile the subgraph with outputs as its endpoints.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">profiling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">optimize_for_inference</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">output_nodes</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">load_graph</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output_nodes</span> <span class="o">=</span> <span class="n">find_vars_by_name</span><span class="p">(</span><span class="n">output_nodes</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_origin_outputs</span> <span class="o">=</span> <span class="n">output_nodes</span>
+
+        <span class="c1"># replace inputs with `InputNode`</span>
+        <span class="n">output_nodes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span> <span class="o">=</span> <span class="n">convert_inputs</span><span class="p">(</span><span class="n">output_nodes</span><span class="p">)</span>
+
+        <span class="c1"># replace outputs with `OutputNode`</span>
+        <span class="n">output_nodes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oup_dict</span> <span class="o">=</span> <span class="n">convert_outputs</span><span class="p">(</span><span class="n">output_nodes</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">output_nodes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">inp_args</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">inp_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param inp_args: list of input datas.</span>
+<span class="sd">        :param inp_dict: dict of named input datas.</span>
+<span class="sd">        :return: a dict {output_name: output_value}.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_args</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span>
+        <span class="p">),</span> <span class="s2">&quot;This model expects </span><span class="si">{}</span><span class="s2"> inputs&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span><span class="p">))</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">inp_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">inp_args</span><span class="p">):</span>
+            <span class="n">inputs</span><span class="p">[</span><span class="n">inp_keys</span><span class="p">[</span><span class="n">ind</span><span class="p">]]</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="n">inp_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">inputs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">inp_dict</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">),</span> <span class="s2">&quot;This model expects inputs </span><span class="si">{}</span><span class="s2">, but gets inputs </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">list</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span>
+                <span class="n">Tensor</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">device</span><span class="p">)</span><span class="o">.</span><span class="n">_dev_tensor</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oup_dict</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_oup_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+</pre></div>
+
+              </div>
+              
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.3c6125c0ae68274ddd1b.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020-2021, The MegEngine Open Source Team.<br/>
+        由 <a href="http://sphinx-doc.org/">Sphinx</a> 3.5.3 创建。<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+megengine.utils.network.Network.add\_output
+===========================================
+
+.. currentmodule:: megengine.utils.network
+
+.. automethod:: Network.add_output
